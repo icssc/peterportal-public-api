@@ -1,0 +1,14 @@
+components:
+  parameters:
+    ucinetidParam:
+      in: path
+      name: ucinetid
+      required: true
+      schema:
+        $ref: '#/components/schemas/Ucinetid'
+    courseIDParam:
+      in: path
+      name: courseID
+      required: true
+      schema:
+        $ref: '#/components/schemas/CourseID'

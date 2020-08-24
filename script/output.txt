@@ -1,0 +1,33 @@
+type: object
+properties:
+  courseHistory:
+    type: array
+    items:
+      type: string
+      example: "I&C SCI 45C"
+  department:
+    type: string
+    example: "Computer Science"
+  name:
+    type: string
+    example: "Alexander W Thornton"
+  phone:
+    type: string
+    example: ""
+  relatedDepartments:
+    type: array
+    items:
+      type: string
+      example: "COMPSCI"
+  schools:
+    type: array
+    items:
+      type: string
+      example: "Donald Bren School of Information and Computer Sciences"
+  title:
+    type: string
+    example: "Continuing Lecturer"
+  ucinetid:
+    type: string
+    example: "thornton"
+

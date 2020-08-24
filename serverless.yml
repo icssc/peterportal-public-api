@@ -1,0 +1,10 @@
+org: icsscproject
+app: peterportal
+component: express
+name: api
+stage: prod
+
+inputs:
+  region: us-west-1
+  src: ./
+  domain: api.peter-portal.com
