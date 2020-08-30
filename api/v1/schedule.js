@@ -17,6 +17,8 @@ const TERM_SEASONS = ['Winter', 'Spring', 'Summer1','Summer10wk', 'Summer2',  'F
 // id: the courseID with no spaces (eg. "COMPSCI143A")
 // returns schedule information for a course 
 router.get("/:term/:id", function (req, res, next) {
+  console.log(req.params.term)
+  console.log(req.params.id)
   getCourse(req.params.id, function (err, data) {
     const opts = {
       term: req.params.term,

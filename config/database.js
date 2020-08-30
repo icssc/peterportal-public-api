@@ -20,7 +20,7 @@ var getConnection = function(callback) {
     });
 };
 
-var executeQuery = function(sql, callback) {
+var executeQueryWithCallback = function(sql, callback) {
     getConnection(function(err, connection) {
         if (err) throw err;
         connection.query(sql, function (error, results, fields) {
@@ -31,4 +31,14 @@ var executeQuery = function(sql, callback) {
       });
 }
 
-module.exports = {executeQuery: executeQuery, pool: pool, escape: mysql.escape};
+var executeQuery = function(sql) {
+    getConnection(function(err, connection) {
+        if (err) throw err;
+        connection.query(sql, function (error, results, fields) {
+          if(error) throw error;
+          connection.release();
+        });
+      });
+}
+
+module.exports = {executeQuery: executeQuery, executeQueryWithCallback: executeQueryWithCallback, pool: pool, escape: mysql.escape};

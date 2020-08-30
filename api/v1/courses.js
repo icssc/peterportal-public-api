@@ -2,7 +2,9 @@ var express = require("express");
 var router = express.Router();
 var fetch = require("node-fetch");
 var { executeQuery, escape } = require('../../config/database.js')
+const cache = require('../../cache/courses_cache.json')
 var { cacheMiddleware } = require("./cache_v2")
+var { apiKeyAuth } = require("../apiKeyAuth")
 
 const COURSE_INDEX = "courses";
 
@@ -30,50 +32,34 @@ const COURSE_INDEX = "courses";
  *                properties:
  *                  count:
  *                    type: integer
+ *                    description: Number of courses available in the API.
  *                    example: 1
- *                  courses:
+ *                  course:
  *                    type: object
  *                    properties:
- *                      I&CSCI46:
+ *                      id:
  *                        type: string
- *                        description: Course Name from the Catalogue.
+ *                        description: Course ID from PeterPortal API.
+ *                        example: I&CSCI46
+ *                      title:
+ *                        type: string
+ *                        description: Course name from the UCI Catalogue.
  *                        example: Data Structure Implementation and Analysis
  */
-router.get("/all", cacheMiddleware, function (req, res, next) {
-    getAllCourses(function (err, data) {
-        if (err)
-            res.status(400).send(err.toString());
-        else {
-            res.json(data);
-        }
-    });
+router.get("/all", apiKeyAuth, function (req, res, next) {
+    res.json(getAllCourses())
 });
+
 
 // result: data returned from elasticsearch
 // returns refined information about all courses
-function getAllCourses(callback) {
-    fetch(`${process.env.ELASTIC_ENDPOINT_URL}/${COURSE_INDEX}/_search`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body:
-            JSON.stringify({
-                "_source": ["id", "name"],
-                "query": {
-                    "match_all": {}
-                },
-                "size": 10000
-            })
-    }).then((response) => response.json())
-        .then((result) => {
-            var jsonResult = {}
-            result.hits.hits.forEach((e) => {
-                jsonResult[e._source.id.replace(/ /g, '')] = e._source.name
-            })
-            callback(null, { count: Object.keys(jsonResult).length, courses: jsonResult });
-        })
-        .catch((err) => callback(err, null));
+function getAllCourses() {
+    var result = {count: cache['hits']['total']['value'], course: []}
+    cache['hits']['hits'].forEach((e) => {
+        var json = {id: e['_id'], title: e['_source']['name']}
+        result['course'].push(json)
+    })
+    return result
 }
 
 /**
@@ -97,7 +83,7 @@ function getAllCourses(callback) {
  *              schema:
  *                $ref: '#/components/schemas/CourseDetails'
  */
-router.get("/:courseID", cacheMiddleware, function (req, res, next) {
+router.get("/:courseID", function (req, res, next) {
     getCourse(req.params.courseID, function (err, data) {
         if (err)
             res.status(400).send(err.toString());
