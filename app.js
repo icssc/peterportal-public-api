@@ -12,11 +12,11 @@ var {pool} = require("./config/database")
 
 // var indexRouter = require('./routes/index');
 var apiRouter = require('./api/versionController');
-var usersRouter = require('./routes/users');
-var reviewsRouter = require('./routes/reviews');
-var coursesRouter = require('./routes/courses');
-var professorsRouter = require('./routes/professors');
-var adminRouter = require('./routes/admin');
+// var usersRouter = require('./routes/users');
+// var reviewsRouter = require('./routes/reviews');
+// var coursesRouter = require('./routes/courses');
+// var professorsRouter = require('./routes/professors');
+// var adminRouter = require('./routes/admin');
 
 var app = express();
 
@@ -41,13 +41,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs')
 
-app.use('/users', usersRouter);
-app.use('/reviews', reviewsRouter);
-app.use("/courses", coursesRouter);
-app.use("/professors", professorsRouter);
-app.use("/api", apiRouter);
 app.use("/", apiRouter);
-app.use("/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

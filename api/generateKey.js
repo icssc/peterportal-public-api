@@ -4,7 +4,27 @@ const crypto = require('crypto')
 const nodemailer = require('nodemailer')
 const emailTemplates = require('email-templates')
 var path = require('path')
-var {executeQuery, escape} = require('../config/database.js')
+var {executeQuery, escape, executeQueryWithCallback} = require('../config/database.js')
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'peterportal.dev@gmail.com',
+    pass: '$P3terTh3Ant3at3r$'
+      }
+});
+
+const email = new emailTemplates({
+  transport: transporter,
+  send: true,
+  preview: false,
+  views: {
+      options: {
+        extension: 'ejs',
+      },
+      root: path.resolve('email'),
+    }
+});
 
 router.get("/", function (req, res, next) {
     res.send(generateApiKey())
@@ -28,7 +48,11 @@ router.post("/", function (req, res, next) {
 });
 
 router.get("/confirm/:apiKey", function (req, res, next) {
-  activateAPIKey(req.params.apiKey).then(res.send("confirmed " + req.params.apiKey));
+  let sql = `SELECT * FROM api_keys WHERE apiKey = ${escape(req.params.apiKey)};`
+
+  executeQueryWithCallback(sql, function(results) {
+    activateAPIKey(req.params.apiKey).then(sendAPIKeyEmail(results[0])).then(res.send("confirmed " + req.params.apiKey));
+  })
 });
 
 async function insertApiKeyToDatabase(data) {
@@ -53,38 +77,32 @@ async function activateAPIKey(key) {
   executeQuery(sql)
 }
 
-function sendVerificationEmail(data) {
-  let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'peterportal.dev@gmail.com',
-      pass: '$P3terTh3Ant3at3r$'
-        }
-  });
-
-  const email = new emailTemplates({
-    transport: transporter,
-    send: true,
-    preview: false,
-    views: {
-        options: {
-          extension: 'ejs',
-        },
-        root: path.resolve('email'),
-      }
-  });
-
-    
+function sendVerificationEmail(data) {    
   email.send({
     template: 'apiConfirmation',
     message: {
       from: 'PeterPortal API <peterportal.dev@gmail.com>',
-      to: 'marawin.chheang@gmail.com',
+      to: 'peterportal.dev@gmail.com',
     },
     locals: {
       firstName: data['firstName'],
       appName: data['appName'],
-      confirmationURL: 'http://localhost:5000/api/generateKey/confirm/' + data['apiKey'],
+      confirmationURL: 'http://localhost:5000/generateKey/confirm/' + data['apiKey'],
+      unsubscribeURL: 'http://localhost:5000/unsubscribe/' + data['email']
+    },
+  }).then(() => console.log('email has been send!'));
+}
+
+function sendAPIKeyEmail(data) {    
+  email.send({
+    template: 'apiKeyDelivery',
+    message: {
+      from: 'PeterPortal API <peterportal.dev@gmail.com>',
+      to: 'peterportal.dev@gmail.com',
+    },
+    locals: {
+      apiKey: data['apiKey'],
+      appName: data['appName'],
       unsubscribeURL: 'http://localhost:5000/unsubscribe/' + data['email']
     },
   }).then(() => console.log('email has been send!'));

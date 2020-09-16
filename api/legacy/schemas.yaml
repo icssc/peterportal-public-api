@@ -1,0 +1,206 @@
+components:
+  schemas:
+    CourseID:
+      type: string
+      description: Course Department + Course Number with no spaces
+      example: I&CSCI46
+    CourseDetails:
+      type: object
+      properties:
+        concurrent:
+          type: string
+          example: ""
+        corequisite:
+          type: string
+          example: ""
+        course_level:
+          type: string
+          example: "Lower Division (1-99)"
+        department:
+          type: string
+          example: "Information and Computer Science"
+        dependencies:
+          type: array
+          items:
+            type: string
+            example: "COMPSCI 111"
+        dept_alias:
+          type: array
+          items:
+            type: string
+            example: "ICS"
+        description:
+          type: string
+          example: "Focuses on implementation and mathematical analysis of fundamental data structures and algorithms. Covers storage allocation and memory management techniques."
+        ge_string:
+          type: string
+          example: "(Vb)"
+        ge_types:
+          type: array
+          items:
+            type: string
+            example: "GE Vb: Formal Reasoning"
+        grading option:
+          type: string
+          example: ""
+        id:
+          type: string
+          example: "I&C SCI 46"
+        id_department:
+          type: string
+          example: "I&C SCI"
+        id_number:
+          type: string
+          example: "46"
+        id_school:
+          type: string
+          example: "Donald Bren School of Information and Computer Sciences"
+        name:
+          type: string
+          example: "Data Structure Implementation and Analysis"
+        overlaps:
+          type: string
+          example: ""
+        prerequisite:
+          type: string
+          example: " CSE 45C or I&C SCI 45C. CSE 45C with a grade of C or better. I&C SCI 45C with a grade of C or better"
+        prerequisiteJSON:
+          type: string
+          example: "{'OR':['CSE 45C','I&C SCI 45C']}"
+        prerequisiteList:
+          type: array
+          items:
+            type: string
+            example: "CSE 45C"
+        professorHistory:
+          type: array
+          items:
+            $ref: "#/components/schemas/Ucinetid"
+        repeatability:
+          type: string
+          example: ""
+        restriction:
+          type: string
+          example: " school of info & computer sci students have first consideration for enrollment. computer science engineering majors have first consideration for enrollment."
+        same as:
+          type: string
+          example: ""
+        units:
+          type: array
+          items:
+            type: integer
+            example: 4
+    Ucinetid:
+      type: string
+      description: Professor ucinetid
+      example: thornton
+    ProfessorDetails:
+      type: object
+      properties:
+        courseHistory:
+          type: array
+          items:
+            type: string
+            example: "I&C SCI 45C"
+        department:
+          type: string
+          example: "Computer Science"
+        name:
+          type: string
+          example: "Alexander W Thornton"
+        phone:
+          type: string
+          example: ""
+        relatedDepartments:
+          type: array
+          items:
+            type: string
+            example: "COMPSCI"
+        schools:
+          type: array
+          items:
+            type: string
+            example: "Donald Bren School of Information and Computer Sciences"
+        title:
+          type: string
+          example: "Continuing Lecturer"
+        ucinetid:
+          type: string
+          example: "thornton"
+    Rating:
+      type: number
+      nullable: true
+      minimum: 0
+      maximum: 5
+      example: 4.2
+    Difficulty:
+      type: number
+      nullable: true
+      minimum: 0
+      maximum: 5
+      example: 2.2
+    GradeDetails:
+      type: object
+      properties:
+        AcadTerm: 
+          type: string
+          example: "Spring 2016"
+        courseCode:
+          type: number
+          example: 36640
+        sectionNum:
+          type: string
+          example: "A"
+        instructor:
+          type: string
+          example: "THORNTON A."
+        classType:
+          type: string
+          example: "LEC"
+        GradeACount:
+          type: number
+          nullable: true
+          minimum: 0
+          example: 67
+        GradeBCount:
+          type: number
+          nullable: true
+          minimum: 0
+          example: 86
+        GradeCCount:
+          type: number
+          nullable: true
+          minimum: 0
+          example: 50
+        GradeDCount:
+          type: number
+          nullable: true
+          minimum: 0
+          example: 29
+        GradeFCount:
+          type: number
+          nullable: true
+          minimum: 0
+          example: 16
+        GradePCount:
+          type: number
+          nullable: true
+          minimum: 0
+          example: 1
+        GradeNPCount:
+          type: number
+          nullable: true
+          minimum: 0
+          example: 2
+        GradeWCount:
+          type: number
+          nullable: true
+          minimum: 0
+          example: 4
+        GradeGPACount:
+          type: number
+          nullable: true
+          minimum: 0
+          example: 3
+        
+          
