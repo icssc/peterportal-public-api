@@ -10,13 +10,10 @@ var session = require('express-session')
 var MySQLStore = require('express-mysql-session')(session);
 var {pool} = require("./config/database")
 
-// var indexRouter = require('./routes/index');
-var apiRouter = require('./api/versionController');
-// var usersRouter = require('./routes/users');
-// var reviewsRouter = require('./routes/reviews');
-// var coursesRouter = require('./routes/courses');
-// var professorsRouter = require('./routes/professors');
-// var adminRouter = require('./routes/admin');
+var restRouter = require('./rest/versionController');
+var graphQLRouter = require('./graphql/router');
+var generateKey = require('./keys/generateKey');
+
 
 var app = express();
 
@@ -41,7 +38,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs')
 
-app.use("/", apiRouter);
+app.use("/rest", restRouter);
+app.use("/graphql", graphQLRouter);
+app.use("/generateKey", generateKey);
+
+app.get('/', function(req, res) {
+
+  res.render('pages/index');
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
