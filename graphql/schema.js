@@ -91,7 +91,10 @@ const queryType = new GraphQLObjectType({
       // define function to get a course
       resolve: (_, {id}) => {
         return courses_cache[id];
-      }
+      },
+
+      // documentation
+      description: "Search courses by their course id. Ex: ICS46."
     },
 
     // get professor by ucinetid
@@ -106,36 +109,46 @@ const queryType = new GraphQLObjectType({
       // define function to get a professor
       resolve: (_, {ucinetid}) => {
         return professors_cache["hits"]["hits"].find(prof => prof["_id"] === ucinetid)["_source"];
-      }
+      },
+
+      // documentation for professor
+      description: "Search professors by their ucinetid"
     },
 
     // return all courses
     allCourses: {
       type: GraphQLList(courseType),
 
+      // get all courses from courses cache
       resolve: () => {
         var coursesArr = []
         for (var courseId in courses_cache){
           coursesArr.push(courses_cache[courseId]);
         }
         return coursesArr;
-      }
+      },
+
+      // documentation for all courses
+      description: "Return all courses. Takes no arguments"
     },
 
     // return all professors
     allProfessors: {
       type: GraphQLList(professorType),
 
+      // get all professors from cache
       resolve: () => {
         var profArr = []
         for (prof of professors_cache["hits"]["hits"]){
           profArr.push(prof["_source"])
         }
         return profArr
-      }
+      },
+
+      // documentation for all professors
+      description: "Return all professors. Takes no arguments"
     }
-  })
-});
+})});
 
 
 const schema = new GraphQLSchema({query: queryType});
