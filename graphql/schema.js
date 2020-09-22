@@ -14,7 +14,14 @@ const professors_cache = require('../cache/professors_cache.json');
 const professorType = new GraphQLObjectType({
   name: 'Professor',
   fields: {
-    name: { type: GraphQLString }
+    name: { type: GraphQLString },
+    ucinetid: { type: GraphQLString },
+    phone: { type: GraphQLString },
+    title: { type: GraphQLString },
+    department: { type: GraphQLString },
+    schools: { type: GraphQLList(GraphQLString) },
+    relatedDepartments: { type: GraphQLList(GraphQLString) },
+    courseHistory: { type: GraphQLList(GraphQLString) }
   }
 });
 
@@ -46,8 +53,24 @@ const courseType = new GraphQLObjectType({
     corequisite: { type: GraphQLString },
     ge_types: { type: GraphQLList(GraphQLString) },
     ge_string: { type: GraphQLString },
-    terms: { type: GraphQLList(GraphQLString) }
+    terms: { type: GraphQLList(GraphQLString) },
     // can't add "same as" or "grading option" due to whitespace :((
+
+    // Using the professor History list, create a list of
+    // professor types for more detailed professor history list
+    // This helps reduce queries for clients looking for past professor info
+    // O(N)
+    professorHistoryInfo: {
+      type: GraphQLList(professorType),
+      resolve: (course) => {
+        matches = [];
+        for (prevProf of course.professorHistory){
+          matches.push(professors_cache["hits"]["hits"].find(prof => prof["_id"] === prevProf)["_source"]);
+        }
+        return matches;
+      }
+    }
+
   }
 });
 
@@ -82,13 +105,10 @@ const queryType = new GraphQLObjectType({
 
       // define function to get a professor
       resolve: (_, {ucinetid}) => {
-        for (prof of professors_cache["hits"]["hits"]){
-          if (prof["_id"] == ucinetid){
-            return prof["_source"];
-          }
-        }
+        return professors_cache["hits"]["hits"].find(prof => prof["_id"] === ucinetid)["_source"];
       }
     },
+
 
 
 
@@ -141,4 +161,18 @@ Example:
 
 "hits":[{"_index":"professors","_type":"_doc","_id":"kakagi","_score":1,"_source":{"name":"Kei Akagi","ucinetid":"kakagi",
   "phone":"(949) 824-2171","title":"Chancellor's Professor","department":"Arts-Music","schools":["Claire Trevor School of the Arts"]
+
+  {
+    professor(ucinetid: "kakagi"){
+      name
+      ucinetid
+      phone
+      title
+      department
+      schools
+      relatedDepartments
+      courseHistory
+    }
+  }
+
 */
