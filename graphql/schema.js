@@ -109,9 +109,7 @@ const queryType = new GraphQLObjectType({
       }
     },
 
-
-
-
+    // return all courses
     allCourses: {
       type: GraphQLList(courseType),
 
@@ -121,8 +119,19 @@ const queryType = new GraphQLObjectType({
           coursesArr.push(courses_cache[courseId]);
         }
         return coursesArr;
+      }
+    },
 
+    // return all professors
+    allProfessors: {
+      type: GraphQLList(professorType),
 
+      resolve: () => {
+        var profArr = []
+        for (prof of professors_cache["hits"]["hits"]){
+          profArr.push(prof["_source"])
+        }
+        return profArr
       }
     }
   })
