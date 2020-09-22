@@ -7,11 +7,22 @@ const {
   GraphQLList
 } = require('graphql');
 
-const cache = require('../cache/parsed_courses_cache.json')
+const courses_cache = require('../cache/parsed_courses_cache.json');
+const professors_cache = require('../cache/professors_cache.json');
 
+
+const professorType = new GraphQLObjectType({
+  name: 'Professor',
+  fields: {
+    name: { type: GraphQLString }
+  }
+});
 
 const courseType = new GraphQLObjectType({
   name: 'Course',
+
+  // fields must match schema from database
+  // In this case, we're using a .json cache
   fields: {
     id: { type: GraphQLString },
     id_department: { type: GraphQLString },
@@ -44,16 +55,41 @@ const courseType = new GraphQLObjectType({
 const queryType = new GraphQLObjectType({
   name: 'Query',
   fields: () =>  ({
+
+    // query course by ID
     course: {
       type: courseType,
 
+      // specify args to query by
       args: {
         id: { type: GraphQLString }
       },
+
+      // define function to get a course
       resolve: (_, {id}) => {
-        return cache[id];
+        return courses_cache[id];
       }
     },
+
+    // get professor by ucinetid
+    professor: {
+      type: professorType,
+
+      // specify args to query by (ucinetid)
+      args: {
+        ucinetid: { type: GraphQLString }
+      },
+
+      // define function to get a professor
+      resolve: (_, {ucinetid}) => {
+        for (prof of professors_cache["hits"]["hits"]){
+          if (prof["_id"] == ucinetid){
+            return prof["_source"];
+          }
+        }
+      }
+    },
+
 
 
     allCourses: {
@@ -61,12 +97,10 @@ const queryType = new GraphQLObjectType({
 
       resolve: () => {
         var coursesArr = []
-        console.log('getting courses list')
-        for (var courseId in cache){
-          coursesArr.push(cache[courseId]);
-          console.log(courseId);
+        for (var courseId in courses_cache){
+          coursesArr.push(courses_cache[courseId]);
         }
-        return coursesArr
+        return coursesArr;
 
 
       }
@@ -75,7 +109,7 @@ const queryType = new GraphQLObjectType({
 });
 
 
-const schema = new GraphQLSchema({query: queryType})
+const schema = new GraphQLSchema({query: queryType});
 
 module.exports = {schema};
 
@@ -104,4 +138,7 @@ Example:
       terms
     }
   }
+
+"hits":[{"_index":"professors","_type":"_doc","_id":"kakagi","_score":1,"_source":{"name":"Kei Akagi","ucinetid":"kakagi",
+  "phone":"(949) 824-2171","title":"Chancellor's Professor","department":"Arts-Music","schools":["Claire Trevor School of the Arts"]
 */
