@@ -51,7 +51,7 @@ const queryType = new GraphQLObjectType({
         id: { type: GraphQLString }
       },
       resolve: (_, {id}) => {
-        return cache[id]
+        return cache[id];
       }
     },
 
