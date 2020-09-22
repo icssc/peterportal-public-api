@@ -22,7 +22,21 @@ const courseType = new GraphQLObjectType({
     dept_alias: { type: GraphQLList(GraphQLString) },
     units: { type: GraphQLList(GraphQLFloat) },
     description: { type: GraphQLString },
-    department: { type: GraphQLString }
+    department: { type: GraphQLString },
+    professorHistory: { type: GraphQLList(GraphQLString) },
+    prerequisiteJSON: { type: GraphQLString },
+    prerequisiteList: { type: GraphQLList(GraphQLString) },
+    prerequisite: { type: GraphQLString },
+    dependencies: { type: GraphQLList(GraphQLString) },
+    repeatability: { type: GraphQLString },
+    concurrent: { type: GraphQLString },
+    restriction: { type: GraphQLString },
+    overlaps: { type: GraphQLString },
+    corequisite: { type: GraphQLString },
+    ge_types: { type: GraphQLList(GraphQLString) },
+    ge_string: { type: GraphQLString },
+    terms: { type: GraphQLList(GraphQLString) }
+    // can't add "same as" or "grading option" due to whitespace :((
   }
 });
 
@@ -40,6 +54,7 @@ const queryType = new GraphQLObjectType({
         return cache[id]
       }
     },
+
 
     allCourses: {
       type: GraphQLList(courseType),
@@ -63,3 +78,30 @@ const queryType = new GraphQLObjectType({
 const schema = new GraphQLSchema({query: queryType})
 
 module.exports = {schema};
+
+/*
+Example:
+  query {
+    allCourses{
+      id
+      name
+      department
+      units
+      description
+      department
+      professorHistory
+      prerequisiteJSON
+      prerequisiteList
+      prerequisite
+      dependencies
+      repeatability
+      concurrent
+      restriction
+      overlaps
+      corequisite
+      ge_types
+      ge_string
+      terms
+    }
+  }
+*/
