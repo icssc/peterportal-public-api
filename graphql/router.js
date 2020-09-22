@@ -1,12 +1,18 @@
-var express = require("express");
-var router = express.Router();
-// const { graphqlHTTP } = require('express-graphql');
-// https://github.com/graphql/express-graphql
+const express = require("express");
+const { graphqlHTTP } = require('express-graphql');
+
+const { schema, root } = require('./schema');
+
+const router = express.Router();
 
 
-router.get('/', function(req, res) {
-    res.send("this is the graphql endpoint");
-});
+
+router.use('/', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true,
+}));
+
 
 
 module.exports = router;
