@@ -42,8 +42,8 @@ app.set('view engine', 'ejs')
 app.use("/rest", restRouter);
 app.use("/graphql", graphQLRouter);
 app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
+app.use('/graphql-docs', express.static('graphql/docs'));
 app.use("/generateKey", generateKey);
-
 app.get('/', function(req, res) {
 
   res.render('pages/index');
