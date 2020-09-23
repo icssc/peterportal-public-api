@@ -8,6 +8,7 @@ var logger = require('morgan');
 var passport = require('passport');
 var session = require('express-session')
 var MySQLStore = require('express-mysql-session')(session);
+const expressPlayground = require('graphql-playground-middleware-express').default;
 var {pool} = require("./config/database")
 
 var restRouter = require('./rest/versionController');
@@ -40,6 +41,7 @@ app.set('view engine', 'ejs')
 
 app.use("/rest", restRouter);
 app.use("/graphql", graphQLRouter);
+app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
 app.use("/generateKey", generateKey);
 
 app.get('/', function(req, res) {

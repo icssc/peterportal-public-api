@@ -19,6 +19,7 @@
     "express-session": "^1.17.0",
     "flat-cache": "^2.0.1",
     "graphql": "^15.3.0",
+    "graphql-playground-middleware-express": "^1.7.21",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
