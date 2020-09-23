@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@2fd/graphdoc": "^2.4.0",
     "cheerio": "^1.0.0-rc.3",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
@@ -37,4 +38,5 @@
   "devDependencies": {
     "serverless-domain-manager": "^4.2.0"
   }
+  
 }
