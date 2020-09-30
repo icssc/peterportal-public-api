@@ -1,6 +1,9 @@
 var {executeQueryWithCallback, escape} = require('../config/database.js')
 
 let apiKeyAuth = (req, res, next) => {
+    if (req.app.get('env') === 'development') {
+        next()
+    }
     if (req.header('apiKey') === null) {
         res.json({
             error: "Missing API Key."
