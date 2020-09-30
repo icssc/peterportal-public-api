@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "test": "jest"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
@@ -33,6 +34,8 @@
     "websoc-api": "^0.0.5"
   },
   "devDependencies": {
-    "serverless-domain-manager": "^4.2.0"
+    "jest": "^26.4.2",
+    "serverless-domain-manager": "^4.2.0",
+    "supertest": "^5.0.0"
   }
 }
