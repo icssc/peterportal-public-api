@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 var { apiKeyAuth } = require("../../keys/apiKeyAuth");
-var {getAllInstructors, getSpecificInstructor} = require('./Instructor.helper')
+var {getAllInstructors, getSpecificInstructor} = require('./instructor.helper')
 
 
 /**
