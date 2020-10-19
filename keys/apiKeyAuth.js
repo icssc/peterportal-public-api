@@ -1,4 +1,4 @@
-var {executeQueryWithCallback, escape} = require('../config/database.js')
+
 
 let apiKeyAuth = (req, res, next) => {
     if (req.app.get('env') === 'development') {

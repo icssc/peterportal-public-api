@@ -4,13 +4,12 @@ const crypto = require('crypto')
 const nodemailer = require('nodemailer')
 const emailTemplates = require('email-templates')
 var path = require('path')
-var {executeQuery, escape, executeQueryWithCallback} = require('../config/database.js')
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'peterportal.dev@gmail.com',
-    pass: '$P3terTh3Ant3at3r$'
+    user: process.env.MAILER_USER,
+    pass: process.env.MAILER_PASS
       }
 });
 
@@ -56,25 +55,25 @@ router.get("/confirm/:apiKey", function (req, res, next) {
 });
 
 async function insertApiKeyToDatabase(data) {
-  let sql = `INSERT INTO api_keys
-  (apiKey, firstName, lastName, email, appName, appDescription, websiteURL, keyStatus, createdOn)
-  VALUES( ${escape(data.apiKey)},
-          ${escape(data.firstName)}, 
-          ${escape(data.lastName)}, 
-          ${escape(data.email)}, 
-          ${escape(data.appName)}, 
-          ${escape(data.appDescription)}, 
-          ${escape(data.websiteURL)}, 
-          ${escape(data.keyStatus)},
-          ${escape(data.createdOn)});`
+  // let sql = `INSERT INTO api_keys
+  // (apiKey, firstName, lastName, email, appName, appDescription, websiteURL, keyStatus, createdOn)
+  // VALUES( ${escape(data.apiKey)},
+  //         ${escape(data.firstName)}, 
+  //         ${escape(data.lastName)}, 
+  //         ${escape(data.email)}, 
+  //         ${escape(data.appName)}, 
+  //         ${escape(data.appDescription)}, 
+  //         ${escape(data.websiteURL)}, 
+  //         ${escape(data.keyStatus)},
+  //         ${escape(data.createdOn)});`
 
-  executeQuery(sql)
+  // executeQuery(sql)
 }
 
 async function activateAPIKey(key) {
-  let sql = `UPDATE api_keys SET keyStatus = 'Active' WHERE apiKey = ${escape(key)};`
+  // let sql = `UPDATE api_keys SET keyStatus = 'Active' WHERE apiKey = ${escape(key)};`
 
-  executeQuery(sql)
+  // executeQuery(sql)
 }
 
 function sendVerificationEmail(data) {    

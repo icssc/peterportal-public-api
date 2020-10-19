@@ -15,22 +15,21 @@ fetch(process.env.ELASTIC_ENDPOINT_URL + 'courses/_search/', {
 })
 .then((res) => res.json())
 .then((data) => {
-    storeData(data, path.resolve('cache', 'es_courses_cache.json'))
+    // storeData(data, path.resolve('cache', 'es_courses_cache.json'))
+    var result = {};
+    data['hits']['hits'].forEach((e) => {
+
+    result[e['_id']] = e['_source']['department'] + " " + e['_source']['number'];
+    })
+
+    storeData(result, path.resolve('cache', 'course_lookup.json'))
+    
     var result = {};
     data['hits']['hits'].forEach((e) => {
         result[e['_id']] = e["_source"]
     })
     storeData(result, path.resolve('cache', 'parsed_courses_cache.json'))
-
-    // var result = {};
-    // data['hits']['hits'].forEach((e) => {
-
-    // result[e['_id']] = e['_source']['id_department'] + " " + e['_source']['id_number'];
-    // })
-
-    // storeData(result, path.resolve('cache', 'course_lookup.json'))
-}
-)
+})
 
 fetch(process.env.ELASTIC_ENDPOINT_URL + 'professors/_search/', {
     method: 'POST',
@@ -42,7 +41,14 @@ fetch(process.env.ELASTIC_ENDPOINT_URL + 'professors/_search/', {
     })
 })
 .then((res) => res.json())
-.then((data) => storeData(data, path.resolve('cache', 'professors_cache.json')))
+.then((data) => {
+    // storeData(data, path.resolve('cache', 'professors_cache.json'))
+    var result = {};
+    data['hits']['hits'].forEach((e) => {
+        result[e['_id']] = e["_source"]
+    })
+    storeData(result, path.resolve('cache', 'parsed_professor_cache.json'))
+})
 
 function storeData(data, path) {
     try {
