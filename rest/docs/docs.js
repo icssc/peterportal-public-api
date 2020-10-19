@@ -41,16 +41,16 @@ const options = {
         },
         servers: [
             {
-                url: "http://localhost:5000/api/v1",
+                url: "http://localhost:5000/api/v0",
                 description: "Local Development"
             },
             {
-                url: "https://peter-portal.com/api/v1",
+                url: "https://peter-portal.com/api/v0",
                 description: "Production Environment"
             }
         ],
     },
-    apis: [path.join(__dirname, "../v1/courses.js")]
+    apis: [path.join(__dirname, "../v0/courses.js")]
 };
 
 const swaggerSpec = swaggerJSDoc(options);
@@ -61,7 +61,8 @@ router.get('/swagger.json', (req, res) => {
   });
 
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'redoc.html'));
+    res.send("Please refer to the doc in our Discord.")
+    // res.sendFile(path.join(__dirname, 'redoc.html'));
 });
 
 

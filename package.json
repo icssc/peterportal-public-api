@@ -7,9 +7,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "aws-sdk": "^2.770.0",
     "cheerio": "^1.0.0-rc.3",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
+    "data-api-client": "^1.1.0",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
@@ -18,6 +20,7 @@
     "express-graphql": "^0.11.0",
     "express-mysql-session": "^2.1.4",
     "express-session": "^1.17.0",
+    "faunadb": "^3.0.1",
     "flat-cache": "^2.0.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
