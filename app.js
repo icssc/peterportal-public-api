@@ -1,26 +1,21 @@
+// Dotenv is a zero-dependency module that loads environment 
+// variables from a .env file into process.env
 require('dotenv').config();
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
 var logger = require('morgan');
-var passport = require('passport');
+const PORT = 4000;
 
 var restRouter = require('./rest/versionController');
 var generateKey = require('./keys/generateKey');
 
 var app = express();
 
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs')
 
@@ -46,6 +41,10 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500).send(err.message);
+});
+
+app.listen(PORT, function() {
+  console.log("Server is running on Port: " + PORT);
 });
 
 module.exports = app;
