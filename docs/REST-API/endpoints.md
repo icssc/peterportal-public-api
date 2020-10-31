@@ -12,7 +12,7 @@
 |------|-------------|
 | `200` | A list of all courses available on the UCI Catalogue. Each element is a JSON object containing information on each course (department, number, title, and description) |
 
-??? example
+??? example "Example Response"
 
     ``` JSON
     [
@@ -45,7 +45,7 @@
 | `404` | Invaild ID/Course not found |
 
 
-??? example
+??? example "Example Response"
 
     `/courses/I&CSCI53` returns
 
@@ -121,7 +121,7 @@ None. 💃
 |------|-------------|
 | `200` | A list of all instructors available on the UCI Catalogue. Each element is a JSON object containing information on each instructor (name, ucinetid, title, department). |
 
-??? example
+??? example "Example Response"
 
     ``` JSON
     [
@@ -140,7 +140,7 @@ None. 💃
 
 **GET detailed information on a specific instructor**
 
-#### Params:
+#### Parameters
 
 | Parameter | Description | Example |
 | `ucinetid` | Can be obtained using the /all endpoint above |  |
@@ -152,7 +152,7 @@ None. 💃
 | `200` | A JSON object containing every information available on a specific instructor |
 | `404` | Invaild UCInetID/Instructor not found |
 
-??? example
+??? example "Example Response"
 
     `/instructors/mikes` returns
 
@@ -227,7 +227,7 @@ All params are optional and can be multi-values by using ; as a separator.
 | `200` | A list of JSON object results containing the course info, count of each grades, and average GPA |
 | `404` | Result not found|
 
-??? example
+??? example "Example Response"
     To lookup grade distribution for I&C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:
 
     `/grades?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33` returns
