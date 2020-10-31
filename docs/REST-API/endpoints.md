@@ -8,9 +8,9 @@
 
 **GET all courses**
 
-Response (200)  A list of all courses available on the UCI Catalogue. Each element is a JSON object containing information on each course (department, number, title, and description).
-
-Response Schema/Example
+| Code | Description |
+|------|-------------|
+| `200` | A list of all courses available on the UCI Catalogue. Each element is a JSON object containing information on each course (department, number, title, and description) |
 
 ??? example
 
@@ -193,17 +193,17 @@ None. 💃
 
 #### Parameters
 
-(this endpoint using query parameters, more info below)
-Endpoint that utilize query params must follow by this format:
-?key1=value1&key2=value2
-? is use to start the query params string with &  to separate each param
+!!! info
+    Endpoint that utilize query params must follow by this format:
+    ?key1=value1&key2=value2`
 
-i.e. to lookup grade distribution for I&C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:
-/grades?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&number=33
+    `?` is use to start the query params string with &  to separate each param
 
-One problem with department such as I&C SCI and CRM/LAW, since the & and  / are reserved for URLs, you must use their URL encode representation.
-I&C SCI -> I%26C SCI
-CRM/LAW -> CRM%2FLAW
+
+!!! warning
+    One problem with department such as I&C SCI and CRM/LAW, since the `&` and  `/` are reserved for URLs, you must use their URL encode representation.
+    `I&C SCI` -> `I%26C SCI`
+    `CRM/LAW` -> `CRM%2FLAW`
 
 
 | Parameter | Description | Example |
@@ -217,7 +217,8 @@ CRM/LAW -> CRM%2FLAW
 
 All params are optional and can be multi-values by using ; as a separator.
 
-Hint: The more you narrow down your query, the faster the response! :)
+!!! hint
+    The more you narrow down your query, the faster the response! 🏃‍♀️💨 😎
 
 #### Response
 
@@ -227,6 +228,7 @@ Hint: The more you narrow down your query, the faster the response! :)
 | `404` | Result not found|
 
 ??? example
+    To lookup grade distribution for I&C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:
 
     `/grades?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33` returns
 
