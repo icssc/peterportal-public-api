@@ -143,6 +143,7 @@ None. 💃
 #### Parameters
 
 | Parameter | Description | Example |
+|-----------|-------------|---------|
 | `ucinetid` | Can be obtained using the /all endpoint above |  |
 
 #### Responses
