@@ -1,4 +1,4 @@
-// Dotenv is a zero-dependency module that loads environment 
+// Dotenv is a zero-dependency module that loads environment
 // variables from a .env file into process.env
 require('dotenv').config();
 
@@ -27,6 +27,7 @@ app.use("/rest", restRouter);
 app.use("/graphql", graphQLRouter);
 app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
 app.use('/graphql-docs', express.static('graphql/docs'));
+app.use('/docs', express.static('docs-site'));
 app.use("/generateKey", generateKey);
 
 app.get('/', function(req, res) {

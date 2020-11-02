@@ -1,0 +1,29 @@
+# Builds docs using mkdocs-material
+# commits the built docs site @ /docs-site using stefanzweifel/git-auto-commit-action@v4
+# More info on the cool autocommit action: https://github.com/marketplace/actions/git-auto-commit
+
+
+
+name: build docs
+on:
+  push:
+    branches:
+      - master
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - name: Build MkDocs site
+        run: |
+          pip install mkdocs-material
+          mkdocs build -d docs-site
+
+      - name: commit docs-site
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          file_pattern: docs-site/* 

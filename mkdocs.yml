@@ -1,0 +1,24 @@
+site_name: PeterPortal API Docs
+
+repo_url: https://github.com/icssc-projects/peterportal-public-api
+repo_name: icssc-projects/peterportal-public-api
+
+theme:
+  name: material
+
+markdown_extensions:
+  - admonition
+  - pymdownx.tabbed
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.snippets:
+      base_path: docs/
+#  - markdown_include.include:
+#      base_path: docs
+
+#extra_css:
+#  - css/termynal.css
+
+#extra_javascript:
+#  - js/termynal.js
+#  - js/custom.js
