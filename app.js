@@ -21,6 +21,7 @@ app.use(logger('dev'));
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.set('view engine', 'ejs')
 
 app.use("/rest", restRouter);
@@ -31,8 +32,7 @@ app.use('/docs', express.static('docs-site'));
 app.use("/generateKey", generateKey);
 
 app.get('/', function(req, res) {
-  res.redirect('/rest/v0/docs')
-  // res.render('pages/index');
+  res.redirect('/docs')
 });
 
 // catch 404 and forward to error handler
