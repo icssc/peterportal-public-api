@@ -8,8 +8,7 @@ const {
 } = require('graphql');
 
 const courses_cache = require('../cache/parsed_courses_cache.json');
-const professors_cache = require('../cache/professors_cache.json');
-
+const professors_cache = require('../cache/parsed_professor_cache.json')
 
 const professorType = new GraphQLObjectType({
   name: 'Professor',
