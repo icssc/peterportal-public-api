@@ -9,7 +9,7 @@ var logger = require('morgan');
 
 const expressPlayground = require('graphql-playground-middleware-express').default;
 
-const PORT = 4000;
+var port = process.env.PORT || 8080;
 
 var restRouter = require('./rest/versionController');
 var graphQLRouter = require('./graphql/router');
@@ -21,6 +21,7 @@ app.use(logger('dev'));
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.set('view engine', 'ejs')
 
 app.use("/rest", restRouter);
@@ -31,8 +32,7 @@ app.use('/docs', express.static('docs-site'));
 app.use("/generateKey", generateKey);
 
 app.get('/', function(req, res) {
-  res.redirect('/rest/v0/docs')
-  // res.render('pages/index');
+  res.redirect('/docs')
 });
 
 // catch 404 and forward to error handler
@@ -50,8 +50,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500).send(err.message);
 });
 
-app.listen(PORT, function() {
-  console.log("Server is running on Port: " + PORT);
+app.listen(port, function() {
+  console.log("Server is running on Port: " + port);
 });
 
 module.exports = app;
