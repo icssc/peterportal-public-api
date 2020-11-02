@@ -9,7 +9,7 @@ var logger = require('morgan');
 
 const expressPlayground = require('graphql-playground-middleware-express').default;
 
-const PORT = 4000;
+var port = process.env.PORT || 8080;
 
 var restRouter = require('./rest/versionController');
 var graphQLRouter = require('./graphql/router');
@@ -50,8 +50,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500).send(err.message);
 });
 
-app.listen(PORT, function() {
-  console.log("Server is running on Port: " + PORT);
+app.listen(port, function() {
+  console.log("Server is running on Port: " + port);
 });
 
 module.exports = app;
