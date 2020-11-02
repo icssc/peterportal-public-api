@@ -15,6 +15,10 @@ PeterPortal Public API provides software developers with easy-access to UC Irvin
 ## Our Mission
 🎇 Our mission is to improve the UCI student experience with course planning and encourage student software developers to create open-source applications that are beneficial to the Anteater community.
 
+## Documentation
+
+📃 Our documentation can be found at [api.peterportal.org](https://api.peterportal.org/docs/)
+
 ## Where does the data come from?
 
 We consolidate our data directly from official UCI sources such as: UCI Catalogue, UCI Directory, UCI Public Records Office, and UCI Webreg. We routinely monitor for updates to ensure you get the most accurate information to serve on your application.
