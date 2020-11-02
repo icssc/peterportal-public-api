@@ -3,3 +3,4 @@ node_modules
 .faunarc
 .DS_Store
 
+env
