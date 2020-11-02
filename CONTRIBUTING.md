@@ -10,3 +10,6 @@
 | /test | Self-explainatory |
 | /views | Text |
 | /utils | Utilities for server maintenance |
+
+## Initial Setup
+
