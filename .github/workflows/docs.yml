@@ -1,17 +1,19 @@
-name: ci
+name: build docs
 on:
   push:
     branches:
-      - master
-      - main
       - docs
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.x
-      - run: pip install mkdocs-material
-      - run: mkdocs gh-deploy --force
+      - name: Build MkDocs site
+        uses: actions/checkout@v2
+        uses: actions/setup-python@v2
+          with:
+            python-version: 3.x
+        run: |
+          pip install mkdocs-material
+          mkdocs build -d docs-site
+
+#      - name: push build
