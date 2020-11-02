@@ -16,4 +16,8 @@ jobs:
           pip install mkdocs-material
           mkdocs build -d docs-site
 
+      - name: commit docs-site
+        uses: stefanzweifel/git-auto-commit-action@v4
+        
+
 #      - name: push build
