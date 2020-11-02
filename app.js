@@ -6,10 +6,13 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
-const PORT = 4000;
+
 const expressPlayground = require('graphql-playground-middleware-express').default;
 
+const PORT = 4000;
+
 var restRouter = require('./rest/versionController');
+var graphQLRouter = require('./graphql/router');
 var generateKey = require('./keys/generateKey');
 
 var app = express();
@@ -25,7 +28,6 @@ app.use("/graphql", graphQLRouter);
 app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
 app.use('/graphql-docs', express.static('graphql/docs'));
 app.use("/generateKey", generateKey);
-app.get('/', function(req, res) {
 
 app.get('/', function(req, res) {
   res.redirect('/rest/v0/docs')
