@@ -50,8 +50,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500).send(err.message);
 });
 
-// app.listen(PORT, function() {
-//   console.log("Server is running on Port: " + PORT);
-// });
+app.listen(PORT, function() {
+  console.log("Server is running on Port: " + PORT);
+});
 
 module.exports = app;
