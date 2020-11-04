@@ -71,7 +71,7 @@ router.get("/", async function (req, res, next) {
             year.match(/\d{4}-\d{2}/) ? year_index.push(Match(Index("grade_distribution_query_by_year"), year)) : 
             res.status(400).send("The server could not understand the request due to invalid syntax. Expection occured at `" + year + "` in the [year] query value");
         }
-        query.push(Union(...year_index));
+        if(year_index.length > 0) { query.push(Union(...year_index)); }
     }
 
     if (req.query.quarter) {
@@ -80,7 +80,7 @@ router.get("/", async function (req, res, next) {
             quarter.match(/[a-zA-Z]{4,6}/) ? quarter_index.push(Match(Index("grade_distribution_query_by_quarter"), quarter[0].toUpperCase() + quarter.slice(1).toLowerCase())) : 
             res.status(400).send("The server could not understand the request due to invalid syntax. Expection occured at `" + quarter + "` in the [quarter] query value");
         }
-        query.push(Union(...quarter_index));
+        if (quarter_index.length > 0) { query.push(Union(...quarter_index)); }
     }
     
     if (req.query.instructor) {
@@ -89,15 +89,15 @@ router.get("/", async function (req, res, next) {
             instructor.match(/[a-zA-Z]+, [a-zA-Z]\./) ? instructor_index.push(Match(Index("grade_distribution_query_by_instructor"), instructor.toUpperCase())) : 
             res.status(400).send("The server could not understand the request due to invalid syntax. Expection occured at `" + instructor + "` in the [instructor] query value");
         }
-        query.push(Union(...instructor_index));
+        if (instructor_index.length > 0) { query.push(Union(...instructor_index)); }
     }
 
     if (req.query.department) {
         let department_index = []
         for (department of req.query.department.split(";")) {
             department_index.push(Match(Index("grade_distribution_query_by_department"), department.toUpperCase()));
-        };
-        query.push(Union(...department_index));
+        }
+        if (department_index.length > 0) { query.push(Union(...department_index)); }
     }
 
     if (req.query.number) {
@@ -105,7 +105,7 @@ router.get("/", async function (req, res, next) {
         for (number of req.query.number.split(";")) {
             number_index.push(Match(Index("grade_distribution_query_by_number"), number.toUpperCase()));
         };
-        query.push(Union(...number_index));
+        if (number_index.length > 0) { query.push(Union(...number_index)); }
     }
 
     if (req.query.code) {
@@ -114,10 +114,9 @@ router.get("/", async function (req, res, next) {
             code.match(/\d{5}/) ? code_index.push(Match(Index("grade_distribution_query_by_code"), code)) : 
             res.status(400).send("The server could not understand the request due to invalid syntax. Expection occured at `" + code + "` in the [code] query value");
         }
-        query.push(Union(...code_index))
+        if (code_index.length > 0) { query.push(Union(...code_index)); }
     }
-
-
+    
     client.query(
         Map(
             Paginate(
