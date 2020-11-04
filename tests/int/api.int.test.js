@@ -58,23 +58,23 @@ describe('GET /instructors/mikes', () => {
     }));
 });
 
-describe('GET /grades', () => {
-    it('returns a json of all the grades distribution', async () => await request(app)
-    .get('/rest/v0/grades')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200)
-    .then((response) => {
-        expect(Array.isArray(response.body)).toBeTruthy();
-        expect(response.body).toContainEqual(
-            expect.objectContaining({
-                "year": "2019-20",
-                "instructor": "PATTIS, R.",
-                "average_gpa": expect.number
-            })
-        );
-    }));
-});
+// describe('GET /grades', () => {
+//     it('returns a json of all the grades distribution', async () => await request(app)
+//     .get('/rest/v0/grades')
+//     .set('Accept', 'application/json')
+//     .expect('Content-Type', /json/)
+//     .expect(200)
+//     .then((response) => {
+//         expect(Array.isArray(response.body)).toBeTruthy();
+//         expect(response.body).toContainEqual(
+//             expect.objectContaining({
+//                 "year": "2019-20",
+//                 "instructor": "PATTIS, R.",
+//                 "average_gpa": expect.number
+//             })
+//         );
+//     }));
+// });
 
 describe('GET /grades', () => {
     it('returns a json of filtered grades distribution', async () => await request(app)
