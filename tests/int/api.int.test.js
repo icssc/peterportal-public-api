@@ -4,7 +4,7 @@ const app = require('../../app');
 jest.setTimeout(10000)
 
 describe('GET /courses/all', () => {
-    it('returns a json of all the courses on the catalogue', async () => request(app)
+    it('returns a json of all the courses on the catalogue', async () => await request(app)
     .get('/rest/v0/courses/all')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
@@ -19,7 +19,7 @@ describe('GET /courses/all', () => {
 
 
 describe('GET /courses/I&CSCI33', () => {
-    it('returns a json of the specific course on the catalogue', async () => request(app)
+    it('returns a json of the specific course on the catalogue', async () => await request(app)
     .get('/rest/v0/courses/I&CSCI33')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
@@ -31,21 +31,8 @@ describe('GET /courses/I&CSCI33', () => {
     }));
 });
 
-describe('GET /courses/nonexistient', () => {
-    it('returns an error for a course that does not exist. ', async () => request(app)
-    .get('/rest/v0/courses/nonexistient')
-    // .set('Accept', 'application/json')
-    // .expect('Content-Type', /json/)
-    .expect(404)
-    .then((response) => {
-        // expect(response.body['id']).toEqual('I&C SCI 33');
-        // expect(response.body['title']).toEqual('Intermediate Programming');
-        // expect(Array.isArray(response.body['dependencies'])).toBeTruthy();
-    }));
-});
-
 describe('GET /instructors/all', () => {
-    it('returns a json of all instructors', async () => request(app)
+    it('returns a json of all instructors', async () => await request(app)
     .get('/rest/v0/instructors/all')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
@@ -59,7 +46,7 @@ describe('GET /instructors/all', () => {
 });
 
 describe('GET /instructors/mikes', () => {
-    it('returns a json of a specific instructor', async () => request(app)
+    it('returns a json of a specific instructor', async () => await request(app)
     .get('/rest/v0/instructors/mikes')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
