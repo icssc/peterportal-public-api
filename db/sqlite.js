@@ -1,4 +1,4 @@
-const sqlite3 = require('sqlite3').verbose();
+const db = require('better-sqlite3'); 
 const fs = require('fs');
 const csv = require('csv-parser');
 var path = require('path');
@@ -23,7 +23,7 @@ const gradeDistributionTableSchema = `
         gradeWCount int NOT NULL,
         averageGPA decimal
     );
-`
+`;
 
 const gradeDistributionInsertQuery = `
     INSERT INTO gradeDistribution (
@@ -44,34 +44,60 @@ const gradeDistributionInsertQuery = `
         gradeNPCount,
         gradeWCount,
         averageGPA) 
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-`
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+    );
+`;
 
-var db; 
+var connection; 
 
 async function initSQLite() {
-    console.log("Creating in-memory SQLite instance...")
+    console.log("🧠 Creating in-memory SQLite instance...")
 
-    fs.open(path.join(__dirname, 'db.sqlite'), 'w', function (err, file) {
+    await fs.open(path.join(__dirname, 'db.sqlite'), 'w', function (err, file) {
         if (err) throw err;
-        console.log('SQLite File Created!');
+        console.log("✅ SQLite file created!");
       });
 
-    db = new sqlite3.Database(path.join(__dirname, 'db.sqlite'));
-    await db.run(gradeDistributionTableSchema, insertData);
+    console.log("🗄️ Creating gradeDistribution table...");
+
+    connection = new db(path.join(__dirname, 'db.sqlite'));
+
+    console.log("✅ gradeDistribution table created!");
+
+    connection.prepare(gradeDistributionTableSchema).run();
+    
+    insertData();
     
 }
 
-async function insertData() {
-    await fs.createReadStream(path.join(__dirname, 'complete.csv'))
-        .pipe(csv())
-        .on('data', (row) => {
-            db.run(gradeDistributionInsertQuery, [row.year, row.quarter.toUpperCase(), row.deptCode, row.number, row.code, row.section, row.prof, row.type, row.A, row.B, row.C, row.D, row.F, row.P, row.NP, row.W, row.avg], function(err) {
-                if (err) {
-                return console.log(err.message);
-                }
-            });
-        });
+function insertData() {
+    console.log("🗄️ Inserting gradeDistribution data from CSV...")
+    let stream = fs.createReadStream(path.join(__dirname, 'complete.csv')).pipe(csv());
+
+    stream.on('data', (row) => {
+            connection.prepare(gradeDistributionInsertQuery).run(
+                row.year, 
+                row.quarter.toUpperCase(), 
+                row.deptCode, 
+                row.number, 
+                row.code, 
+                row.section, 
+                row.prof, 
+                row.type, 
+                row.A, 
+                row.B, 
+                row.C, 
+                row.D, 
+                row.F, 
+                row.P, 
+                row.NP, 
+                row.W, 
+                row.avg);
+    });
+
+    stream.on('error', (err) => console.log(err));
+
+    stream.on('close', () => console.log("✅ All gradeDistribution data inserted!"));
 }
 
 initSQLite();

@@ -4,8 +4,12 @@ var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('./grades.helpe
 
 // var { apiKeyAuth } = require("../../keys/apiKeyAuth");
 
-router.get("/", async function (req, res, next) {
-    queryDatabaseAndResponse(parseGradesParamsToSQL(req), res)
+router.get("/raw", async function (req, res, next) {
+    queryDatabaseAndResponse(parseGradesParamsToSQL(req), false, res)
+})
+
+router.get("/calculated", async function (req, res, next) {
+    queryDatabaseAndResponse(parseGradesParamsToSQL(req), true, res)
 })
 
 module.exports = router;

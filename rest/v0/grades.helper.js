@@ -1,9 +1,8 @@
-const sqlite3 = require('sqlite3').verbose();
+const db = require('better-sqlite3'); 
 var path = require('path');
 
 
 function parseGradesParamsToSQL(req) {
-    let sql = "SELECT * FROM gradeDistribution";
     var whereClause = "";
 
     const params = {
@@ -83,24 +82,56 @@ function parseGradesParamsToSQL(req) {
 
     // console.log(params);
     
-    return whereClause === "" ? sql : sql + " WHERE " + whereClause;
+    return whereClause === "" ? null : " WHERE " + whereClause;
 }
 
-function queryDatabaseAndResponse(sql, res) {
-    const db = new sqlite3.Database(path.join(__dirname, '../../db/db.sqlite'));
-    var result = [];
+function queryDatabaseAndResponse(where, calculate, res) {
+    const connection = new db(path.join(__dirname, '../../db/db.sqlite'));
 
-    db.all(sql, (err, rows) => {
-        console.log(sql);
-        if (err) {
-            throw err;
-        } 
-        rows.forEach((row) => {
-            result.push(row);
-        });
+    switch (calculate) {
+        case true:
+            let result = {
+                gradeDistribution: null,
+                courseList: []
+            };
 
-        res.send(result);
-    })
+            let sqlFunction = `SELECT 
+                                SUM(gradeACount), 
+                                SUM(gradeBCount), 
+                                SUM(gradeCCount),
+                                SUM(gradeDCount),
+                                SUM(gradeFCount),
+                                SUM(gradePCount),
+                                SUM(gradeNPCount),
+                                SUM(gradeWCount),
+                                AVG(averageGPA),
+                                COUNT() FROM gradeDistribution`;
+            
+            let sqlCourseList = `SELECT 
+                                year, 
+                                quarter, 
+                                department,
+                                number,
+                                code,
+                                section,
+                                instructor,
+                                type FROM gradeDistribution`;
+
+            result.gradeDistribution = connection.prepare(sqlFunction).get();
+
+            result.courseList = connection.prepare(sqlCourseList).all();
+
+            res.send(result);
+
+            break;
+        case false:
+            let sql = "SELECT * FROM gradeDistribution";
+
+            res.send(connection.prepare(sql).all());
+
+            break;
+    }
+
 }
 
 module.exports = {parseGradesParamsToSQL, queryDatabaseAndResponse}
