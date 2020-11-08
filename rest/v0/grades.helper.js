@@ -117,17 +117,17 @@ function queryDatabaseAndResponse(where, calculate, res) {
                                 instructor,
                                 type FROM gradeDistribution`;
 
-            result.gradeDistribution = connection.prepare(sqlFunction).get();
+            result.gradeDistribution = connection.prepare(where !== null ? sqlFunction + where : sqlFunction).get();
 
-            result.courseList = connection.prepare(sqlCourseList).all();
+            result.courseList = connection.prepare(where !== null ? sqlCourseList + where : sqlCourseList).all();
 
             res.send(result);
 
             break;
         case false:
-            let sql = "SELECT * FROM gradeDistribution";
+            let sqlQueryAll = "SELECT * FROM gradeDistribution";
 
-            res.send(connection.prepare(sql).all());
+            res.send(connection.prepare(where !== null ? sqlQueryAll + where : sqlQueryAll).all());
 
             break;
     }
