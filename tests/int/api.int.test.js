@@ -38,9 +38,10 @@ describe('GET /courses/I&CSCI0000000', () => {
     .expect('Content-Type', /json/)
     .expect(404)
     .then((response) => {
-        // expect(response.body['id']).toEqual('I&C SCI 33');
-        // expect(response.body['title']).toEqual('Intermediate Programming');
-        // expect(Array.isArray(response.body['dependencies'])).toBeTruthy();
+        expect(response.body).toHaveProperty('timestamp');
+        expect(response.body['status']).toEqual(404);
+        expect(response.body['error']).toEqual("Bad Request: Invalid parameter");
+        expect(response.body['message']).toEqual("Course not found");
     }));
 });
 
@@ -78,10 +79,10 @@ describe('GET /instructors/randomguy', () => {
     .expect('Content-Type', /json/)
     .expect(404)
     .then((response) => {
-        // console.log(response);
-        // expect(response.body['name']).toEqual('Michael Shindler');
-        // expect(response.body['department']).toEqual('Computer Science');
-        // expect(Array.isArray(response.body['course_history'])).toBeTruthy();
+        expect(response.body).toHaveProperty('timestamp');
+        expect(response.body['status']).toEqual(404);
+        expect(response.body['error']).toEqual("Bad Request: Invalid parameter");
+        expect(response.body['message']).toEqual("Instructor not found");
     }));
 });
 
