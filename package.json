@@ -3,11 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-<<<<<<< HEAD
     "start": "nodemon app",
-=======
-    "start": "nodemon ./bin/www",
->>>>>>> 82e1292f75cd550774c760622da120c6ebcb8473
     "test": "jest"
   },
   "dependencies": {
