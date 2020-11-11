@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "start": "nodemon app",
-    "test": "jest"
+    "test": "jest",
+    "init_db": "node ./db/sqlite.js"
   },
   "dependencies": {
     "@2fd/graphdoc": "^2.4.0",
+    "better-sqlite3": "^7.1.1",
     "cors": "^2.8.5",
+    "csv-parser": "^2.3.3",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
