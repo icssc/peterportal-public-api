@@ -71,7 +71,7 @@ router.get("/all", function (req, res, next) {
  */
 
 router.get("/:ucinetid", function (req, res, next) {
-    getSpecificInstructor(req.params.ucinetid) ? res.json(getSpecificInstructor(req.params.ucinetid)) : res.status(404).send("Instructor not found");
+    getSpecificInstructor(req.params.ucinetid) ? res.json(getSpecificInstructor(req.params.ucinetid)) : res.status(404).json({"status": 404, "error": "Bad Request: Invalid parameter", "message": "Instructor not found"});
 })
 
 
