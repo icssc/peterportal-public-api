@@ -1,4 +1,3 @@
-const { all } = require('../../app');
 var {getAllInstructors, getSpecificInstructor} = require('./instructor.helper')
 
 describe('Get all Instructors', () => {

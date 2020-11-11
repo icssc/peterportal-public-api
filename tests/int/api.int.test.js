@@ -4,7 +4,7 @@ const app = require('../../app');
 jest.setTimeout(10000)
 
 describe('GET /courses/all', () => {
-    it('returns a json of all the courses on the catalogue', async () => await request(app)
+    it('returns a json of all the courses on the catalogue',  () => request(app)
     .get('/rest/v0/courses/all')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
@@ -19,7 +19,7 @@ describe('GET /courses/all', () => {
 
 
 describe('GET /courses/I&CSCI33', () => {
-    it('returns a json of the specific course on the catalogue', async () => await request(app)
+    it('returns a json of the specific course on the catalogue',  () => request(app)
     .get('/rest/v0/courses/I&CSCI33')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
@@ -32,7 +32,7 @@ describe('GET /courses/I&CSCI33', () => {
 });
 
 describe('GET /instructors/all', () => {
-    it('returns a json of all instructors', async () => await request(app)
+    it('returns a json of all instructors',  () => request(app)
     .get('/rest/v0/instructors/all')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
@@ -46,7 +46,7 @@ describe('GET /instructors/all', () => {
 });
 
 describe('GET /instructors/mikes', () => {
-    it('returns a json of a specific instructor', async () => await request(app)
+    it('returns a json of a specific instructor',  () => request(app)
     .get('/rest/v0/instructors/mikes')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
@@ -77,7 +77,7 @@ describe('GET /instructors/mikes', () => {
 // });
 
 describe('GET /grades', () => {
-    it('returns a json of filtered grades distribution', async () => request(app)
+    it('returns a json of filtered grades distribution',  () => request(app)
     .get('/rest/v0/grades?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
@@ -94,7 +94,7 @@ describe('GET /grades', () => {
 });
 
 describe('GET /grades', () => {
-    it('returns a json of filtered grades distribution', async () => request(app)
+    it('returns a json of filtered grades distribution', () => request(app)
     .get('/rest/v0/grades?year=2017&instructor=PATTIS, R.')
     // .set('Accept', 'application/json')
     // .expect('Content-Type', /json/)
