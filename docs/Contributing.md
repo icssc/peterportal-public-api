@@ -47,14 +47,14 @@ For Graph static documentation, we use [graphdoc](https://github.com/2fd/graphdo
 
     === "Windows"
 
-        ``` 
+        ```
         graphdoc -e http://localhost:8080/graphql -o .\graphql\docs --force
         ```
 
     === "macOS/Linux"
 
         ```
-        graphdoc -e http://localhost:8080/graphql -o ./graphql/docs --force
+        graphdoc -e http://localhost:8080/graphql -o graphql/docs --force
         ```
 
     This specifies the endpoint for GraphQL to use and forces an update on existing documentation files.
