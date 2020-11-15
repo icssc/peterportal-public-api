@@ -28,6 +28,36 @@
 
 The documentation you see right now is created via [MkDocs](https://www.mkdocs.org/). We use a specific extension called [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) which is what makes this site look pretty.
 
+For Graph static documentation, we use [graphdoc](https://github.com/2fd/graphdoc). While it is a little buggy, it's the best tool I'm aware of that automatically generates static documentation. To update it, you will need two shells open.
+
+
+!!! example "Shell 1"
+    In the first shell, install dependencies and start the server.
+
+    ``` bash
+    npm install
+    npm start
+    ```
+
+    That's it, leave it alone. We need the server to be on because graphdoc will be using the live GraphQL endpoint
+
+!!! example "Shell 2"
+
+    In the next shell, run this command:
+
+    === "Windows"
+
+        ``` 
+        graphdoc -e http://localhost:8080/graphql -o .\graphql\docs --force
+        ```
+
+    === "macOS/Linux"
+
+        ```
+        graphdoc -e http://localhost:8080/graphql -o ./graphql/docs --force
+        ```
+
+    This specifies the endpoint for GraphQL to use and forces an update on existing documentation files.
 
 ### Writing Documentation
 
