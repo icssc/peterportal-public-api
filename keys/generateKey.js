@@ -3,6 +3,22 @@ const router = express.Router()
 const crypto = require('crypto')
 const nodemailer = require('nodemailer')
 const emailTemplates = require('email-templates')
+
+const faunadb = require('faunadb')
+const client = new faunadb.Client({ secret: process.env.FAUNADB_KEY});
+const {
+  Get,
+  Select,
+  Collection,
+  Match,
+  Index,
+  Map,
+  Paginate,
+  Lambda,
+  Var,
+  Update
+} = faunadb.query;
+
 var path = require('path')
 
 const transporter = nodemailer.createTransport({
@@ -30,6 +46,7 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/", function (req, res, next) {
+
     const data = {
         apiKey: req.body.appName.replace(/ /g, "_") + "-" + generateApiKey(),
         firstName: req.body.firstName,
@@ -41,17 +58,18 @@ router.post("/", function (req, res, next) {
         keyStatus: "Awaiting Verification",
         createdOn: new Date()
       }
-
-    insertApiKeyToDatabase(data).then(sendVerificationEmail(data))
+    console.log(data);
+    insertApiKeyToDatabase(data).then((ret) => {sendVerificationEmail(ret.data)})
     res.json(data)
 });
 
 router.get("/confirm/:apiKey", function (req, res, next) {
-  let sql = `SELECT * FROM api_keys WHERE apiKey = ${escape(req.params.apiKey)};`
 
-  executeQueryWithCallback(sql, function(results) {
-    activateAPIKey(req.params.apiKey).then(sendAPIKeyEmail(results[0])).then(res.send("confirmed " + req.params.apiKey));
-  })
+  activateAPIKey(req.params.apiKey).then((ret) => {
+    console.log("returned", ret);
+    sendAPIKeyEmail(ret.data);
+    res.send("confirmed " + req.params.apiKey);
+  }).catch((err) => {console.log(err)});
 });
 
 async function insertApiKeyToDatabase(data) {
@@ -66,14 +84,43 @@ async function insertApiKeyToDatabase(data) {
   //         ${escape(data.websiteURL)}, 
   //         ${escape(data.keyStatus)},
   //         ${escape(data.createdOn)});`
-
-  // executeQuery(sql)
+  const ret = await client.query( 
+    Create(
+      Collection("api_keys"), {
+        data: {
+          "key": data.apiKey,
+          "first_name": data.firstName,
+          "last_name": data.lastName,
+          "email": data.email,
+          "app": {
+            "name": data.appName,
+            "description": data.appDescription,
+            "url": data.websiteURL,
+          },
+          "status": data.keyStatus,
+          "created_on": data.createdOn
+        }
+      })
+  ).catch((err) => console.log(err));
+  return ret;
 }
 
 async function activateAPIKey(key) {
-  // let sql = `UPDATE api_keys SET keyStatus = 'Active' WHERE apiKey = ${escape(key)};`
-
-  // executeQuery(sql)
+  const ret = await client.query(
+    Update(
+      Select("ref",
+        Get(
+          Match(Index("keys_by_key"), key)
+        )
+      ),
+      {
+        data: {
+          status: "active",
+        },
+      },
+    )
+  ).catch((err) => console.log(err));
+  return ret;
 }
 
 function sendVerificationEmail(data) {    
@@ -84,12 +131,12 @@ function sendVerificationEmail(data) {
       to: 'peterportal.dev@gmail.com',
     },
     locals: {
-      firstName: data['firstName'],
-      appName: data['appName'],
-      confirmationURL: 'http://localhost:5000/generateKey/confirm/' + data['apiKey'],
-      unsubscribeURL: 'http://localhost:5000/unsubscribe/' + data['email']
+      firstName: data['first_name'],
+      appName: data['app']['name'],
+      confirmationURL: 'http://localhost:8080/generateKey/confirm/' + data['key'],
+      unsubscribeURL: 'http://localhost:8080/unsubscribe/' + data['email']
     },
-  }).then(() => console.log('email has been send!'));
+  }).then(() => console.log('email has been sent!'));
 }
 
 function sendAPIKeyEmail(data) {    
@@ -100,11 +147,11 @@ function sendAPIKeyEmail(data) {
       to: 'peterportal.dev@gmail.com',
     },
     locals: {
-      apiKey: data['apiKey'],
-      appName: data['appName'],
-      unsubscribeURL: 'http://localhost:5000/unsubscribe/' + data['email']
+      apiKey: data['key'],
+      appName: data['app_name'],
+      unsubscribeURL: 'http://localhost:8080/unsubscribe/' + data['email']
     },
-  }).then(() => console.log('email has been send!'));
+  }).then(() => console.log('email has been sent!'));
 }
 
 function generateApiKey() {

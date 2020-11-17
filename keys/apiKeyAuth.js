@@ -1,36 +1,32 @@
-
+const faunadb = require('faunadb')
+const client = new faunadb.Client({ secret: process.env.FAUNADB_KEY});
+const {
+    Get,
+    Ref,
+    Collection,
+    Match,
+    Index,
+    Map,
+    Paginate,
+    Lambda,
+    Var
+} = faunadb.query;
 
 let apiKeyAuth = (req, res, next) => {
-    if (req.app.get('env') === 'development') {
-        next()
-    }
-    if (req.header('apiKey') === null) {
+    if (!req.headers["x-api-key"]) {
         res.json({
-            error: "Missing API Key."
+            error: "No credentials sent!"
         })
     } else {
-        let sql = `SELECT * FROM api_keys WHERE apiKey = ${escape(req.header('apiKey'))};`
-
-        executeQueryWithCallback(sql, function(results) {
-            if (results.length > 0) {
-                if (results[0]["keyStatus"] === "Active") {
-                    next()
-                } else if (results[0]["keyStatus"] === "Awaiting Verification") {
-                    res.json({
-                        error: "You must verify your email before using the API. Follow the instruction sent to your email to complete your verification."
-                    })
-                } else if (results[0]["keyStatus"] === "Inactive") {
-                    res.json({
-                        error: "Your API Key has been deactivated."
-                    })
-                }
-                
-            } else {
-                res.json({
-                    error: "Invalid API Key."
-                })
-            }
-        });
+        client.query(
+            Get(
+                Match(Index("keys_by_key"), req.headers["x-api-key"])
+            )
+        ).then((ret) => {
+            console.log(ret.data);
+            next();
+        })
+        .catch((err) => res.status(400).send(err));
     }
 }
 
