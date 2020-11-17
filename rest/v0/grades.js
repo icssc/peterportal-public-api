@@ -5,11 +5,15 @@ var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('./grades.helpe
 // var { apiKeyAuth } = require("../../keys/apiKeyAuth");
 
 router.get("/raw", async function (req, res, next) {
-    queryDatabaseAndResponse(parseGradesParamsToSQL(req), false, res)
+    const where = parseGradesParamsToSQL(req, res);
+    if (!res.headersSent) //check if error msg already sent
+        queryDatabaseAndResponse(where, false, res)
 })
 
 router.get("/calculated", async function (req, res, next) {
-    queryDatabaseAndResponse(parseGradesParamsToSQL(req), true, res)
+    const where = parseGradesParamsToSQL(req, res);
+    if (!res.headersSent) //check if error msg already sent
+        queryDatabaseAndResponse(where, true, res)
 })
 
 module.exports = router;

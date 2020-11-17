@@ -3,7 +3,7 @@ var path = require('path');
 
 var {createErrorJSON} = require("./errors.helper")
 
-function parseGradesParamsToSQL(req) {
+function parseGradesParamsToSQL(req, res) {
     var whereClause = "";
 
     const params = {
@@ -17,7 +17,7 @@ function parseGradesParamsToSQL(req) {
 
     Object.keys(params).forEach(function(key) {
         let condition = "";
-        let errorMsg = "Invalid syntax found in parameters. Exception occured at `%s` in the [%s] query value";
+        let errorMsg = (param, paramName) => `Invalid syntax found in parameters. Exception occured at '${param}' in the [${paramName}] query value`;
 
         switch(true) {
             case key === 'year' && params[key] !== null:
@@ -27,7 +27,7 @@ function parseGradesParamsToSQL(req) {
                             condition += "year = '" + year + "'" : 
                             condition += " OR year = '" + year + "'") 
                     : 
-                    res.status(400).send(createErrorJSON(400, "Bad Request: Invalid syntax in parameters", String.format(errorMsg, year, "year")));
+                    res.status(400).send(createErrorJSON(400, "Bad Request: Invalid syntax in parameters", errorMsg(year, "year")));
                 }
                 break;
             case key === 'quarter' && params[key] !== null:
@@ -37,7 +37,7 @@ function parseGradesParamsToSQL(req) {
                         condition += "quarter = '" + quarter.toUpperCase() + "'" : 
                         condition += " OR quarter = '" + quarter.toUpperCase() + "'") 
                     : 
-                    res.status(400).send(createErrorJSON(400, "Bad Request: Invalid syntax in parameters", String.format(errorMsg, quarter, "quarter")));
+                    res.status(400).send(createErrorJSON(400, "Bad Request: Invalid syntax in parameters", errorMsg(quarter, "quarter")));
                 }
                 break;
             case key === 'instructor' && params[key] !== null:
@@ -47,7 +47,7 @@ function parseGradesParamsToSQL(req) {
                         condition += "instructor = '" + instructor.toUpperCase() + "'" : 
                         condition += " OR instructor = '" + instructor.toUpperCase() + "'") 
                     : 
-                    res.status(400).send(createErrorJSON(400, "Bad Request: Invalid syntax in parameters", String.format(errorMsg, instructor, "instructor")));
+                    res.status(400).send(createErrorJSON(400, "Bad Request: Invalid syntax in parameters", errorMsg(instructor, "instructor")));
                 }
                 break;
             case key === 'department' && params[key] !== null:
@@ -72,7 +72,7 @@ function parseGradesParamsToSQL(req) {
                         condition += "code = '" + code.toUpperCase() + "'" : 
                         condition += " OR code = '" + code.toUpperCase() + "'") 
                     : 
-                    res.status(400).send(createErrorJSON(400, "Bad Request: Invalid syntax in parameters", String.format(errorMsg, code, "code")));
+                    res.status(400).send(createErrorJSON(400, "Bad Request: Invalid syntax in parameters", errorMsg(code, "code")));
                 }
                 break;
         }
