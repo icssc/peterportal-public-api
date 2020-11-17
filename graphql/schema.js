@@ -19,8 +19,8 @@ const professorType = new GraphQLObjectType({
     title: { type: GraphQLString },
     department: { type: GraphQLString },
     schools: { type: GraphQLList(GraphQLString) },
-    relatedDepartments: { type: GraphQLList(GraphQLString) },
-    courseHistory: { type: GraphQLList(GraphQLString) }
+    related_departments: { type: GraphQLList(GraphQLString) },
+    course_history: { type: GraphQLList(GraphQLString) }
   }
 });
 
@@ -31,27 +31,28 @@ const courseType = new GraphQLObjectType({
   // In this case, we're using a .json cache
   fields: {
     id: { type: GraphQLString },
-    id_department: { type: GraphQLString },
-    id_number: { type: GraphQLString },
-    id_school: { type: GraphQLString },
-    name: { type: GraphQLString },
+    department: { type: GraphQLString },
+    number: { type: GraphQLString },
+    school: { type: GraphQLString },
+    title: { type: GraphQLString },
     course_level: { type: GraphQLString },
-    dept_alias: { type: GraphQLList(GraphQLString) },
+    department_alias: { type: GraphQLList(GraphQLString) },
     units: { type: GraphQLList(GraphQLFloat) },
     description: { type: GraphQLString },
-    department: { type: GraphQLString },
-    professorHistory: { type: GraphQLList(GraphQLString) },
-    prerequisiteJSON: { type: GraphQLString },
-    prerequisiteList: { type: GraphQLList(GraphQLString) },
-    prerequisite: { type: GraphQLString },
+    department_name: { type: GraphQLString },
+    professor_history: { type: GraphQLList(GraphQLString) },
+    prerequisite_tree: { type: GraphQLString },
+    prerequisite_list: { type: GraphQLList(GraphQLString) },
+    prerequisite_text: { type: GraphQLString },
     dependencies: { type: GraphQLList(GraphQLString) },
     repeatability: { type: GraphQLString },
     concurrent: { type: GraphQLString },
+    same_as: { type: GraphQLString },
     restriction: { type: GraphQLString },
-    overlaps: { type: GraphQLString },
+    overlap: { type: GraphQLString },
     corequisite: { type: GraphQLString },
-    ge_types: { type: GraphQLList(GraphQLString) },
-    ge_string: { type: GraphQLString },
+    ge_list: { type: GraphQLList(GraphQLString) },
+    ge_text: { type: GraphQLString },
     terms: { type: GraphQLList(GraphQLString) },
     // can't add "same as" or "grading option" due to whitespace :((
 
@@ -107,7 +108,7 @@ const queryType = new GraphQLObjectType({
 
       // define function to get a professor
       resolve: (_, {ucinetid}) => {
-        return professors_cache["hits"]["hits"].find(prof => prof["_id"] === ucinetid)["_source"];
+        return professors_cache[ucinetid];
       },
 
       // documentation for professor
