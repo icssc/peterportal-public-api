@@ -103,6 +103,7 @@
         ]
     }
     ```
+    
 ??? example "404 Not Found"
 
     `/courses/I&CSCI5555` returns
@@ -198,6 +199,7 @@ None. 💃
         ]
     }
     ```
+
 ??? example "404 Not Found"
 
     `/instructors/nonexistent` returns
