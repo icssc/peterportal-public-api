@@ -4,6 +4,8 @@ require('dotenv').config();
 
 var createError = require('http-errors');
 var express = require('express');
+var app = express();
+
 var path = require('path');
 var logger = require('morgan');
 
@@ -14,8 +16,6 @@ var port = process.env.PORT || 8080;
 var restRouter = require('./rest/versionController');
 var graphQLRouter = require('./graphql/router');
 var generateKey = require('./keys/generateKey');
-
-var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -53,5 +53,6 @@ app.use(function(err, req, res, next) {
 app.listen(port, function() {
   console.log("Server is running on Port: " + port);
 });
+
 
 module.exports = app;

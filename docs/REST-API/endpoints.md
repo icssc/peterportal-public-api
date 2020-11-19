@@ -12,7 +12,7 @@
 |------|-------------|
 | `200` | A list of all courses available on the UCI Catalogue. Each element is a JSON object containing information on each course (department, number, title, and description) |
 
-??? example "Example Response"
+??? example "200 Successful Response"
 
     ``` JSON
     [
@@ -45,9 +45,9 @@
 | `404` | Invaild ID/Course not found |
 
 
-??? example "Example Response"
+??? example "200 Successful Response"
 
-    `/courses/I&CSCI53` returns
+    <!-- `/courses/I&CSCI53` returns -->
 
     ``` JSON
     {
@@ -64,7 +64,7 @@
             4,
             4
         ],
-        "description": "Introduces basic principles of system software...",
+        "description": "Introduces basic principles of system software: operating systems, compilers, and networking. Exposure to the following topics through theoretical and practical programming experiences: linking and loading, process and memory management, concurrency and synchronization, network communication, programming for performance, etc.",
         "department_name": "Information and Computer Science",
         "professor_history": [
             "iharris",
@@ -103,6 +103,19 @@
         ]
     }
     ```
+    
+??? example "404 Not Found"
+
+    `/courses/I&CSCI5555` returns
+
+    ``` JSON
+    {
+        "timestamp": "Thu, 31 Dec 2020 00:00:00 GMT",
+        "status": 404,
+        "error": "Bad Request: Invalid parameter", 
+        "message": "Course not found",
+    }
+    ```
 
 ## Instructors
 
@@ -121,7 +134,7 @@ None. 💃
 |------|-------------|
 | `200` | A list of all instructors available on the UCI Catalogue. Each element is a JSON object containing information on each instructor (name, ucinetid, title, department). |
 
-??? example "Example Response"
+??? example "200 Successful Response"
 
     ``` JSON
     [
@@ -153,7 +166,7 @@ None. 💃
 | `200` | A JSON object containing every information available on a specific instructor |
 | `404` | Invaild UCInetID/Instructor not found |
 
-??? example "Example Response"
+??? example "200 Succesful Response"
 
     `/instructors/mikes` returns
 
@@ -187,9 +200,22 @@ None. 💃
     }
     ```
 
+??? example "404 Not Found"
+
+    `/instructors/nonexistent` returns
+
+    ``` JSON
+    {
+        "timestamp": "Thu, 31 Dec 2020 00:00:00 GMT",
+        "status": 404,
+        "error": "Bad Request: Invalid parameter", 
+        "message": "Instructor not found",
+    }
+    ```
+
 ## Grade Distribution
 
-### /grades
+### /grades/raw
 **GET a list of grade distribution results via a query/**
 
 #### Parameters
@@ -226,58 +252,145 @@ All params are optional and can be multi-values by using ; as a separator.
 | Code | Description |
 |------|-------------|
 | `200` | A list of JSON object results containing the course info, count of each grades, and average GPA |
-| `404` | Result not found|
+| `400` | Invalid parameter syntax. |
+<!-- | `404` | Result not found | -->
 
-??? example "Example Response"
+??? example "200 Successful Response"
     To lookup grade distribution for I&C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:
 
-    `/grades?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33` returns
+    `/grades/raw?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33` returns
 
     ``` JSON
     [
         {
             "year": "2018-19",
-            "quarter": "Fall",
+            "quarter": "FALL",
             "department": "I&C SCI",
             "number": "33",
-            "code": "36620",
+            "code": 36620,
             "section": "A",
             "instructor": "PATTIS, R.",
             "type": "LEC",
-            "a_count": 125,
-            "b_count": 72,
-            "c_count": 31,
-            "d_count": 16,
-            "f_count": 33,
-            "p_count": 1,
-            "np_count": 0,
-            "w_count": 1,
-            "average_gpa": 2.84
+            "gradeACount": 125,
+            "gradeBCount": 72,
+            "gradeCCount": 31,
+            "gradeDCount": 16,
+            "gradeFCount": 33,
+            "gradePCount": 1,
+            "gradeNPCount": 0,
+            "gradeWCount": 1,
+            "averageGPA": 2.84
         },
         {
             "year": "2019-20",
-            "quarter": "Fall",
+            "quarter": "FALL",
             "department": "I&C SCI",
             "number": "33",
-            "code": "35500",
+            "code": 35500,
             "section": "A",
             "instructor": "PATTIS, R.",
             "type": "LEC",
-            "a_count": 132,
-            "b_count": 83,
-            "c_count": 41,
-            "d_count": 18,
-            "f_count": 36,
-            "p_count": 0,
-            "np_count": 3,
-            "w_count": 1,
-            "average_gpa": 2.8
+            "gradeACount": 132,
+            "gradeBCount": 83,
+            "gradeCCount": 41,
+            "gradeDCount": 18,
+            "gradeFCount": 36,
+            "gradePCount": 0,
+            "gradeNPCount": 3,
+            "gradeWCount": 1,
+            "averageGPA": 2.8
         }
     ]
     ```
 
+??? example "400 Bad Request"
+    
+    `/grades/raw?year=2018&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33` returns
+
+    ``` JSON
+    {
+        "timestamp": "Thu, 31 Dec 2020 00:00:00 GMT",
+        "status": 400,
+        "error": "Bad Request: Invalid syntax in parameters", 
+        "message": "Invalid syntax found in parameters. Exception occured at '2018' in the [year] query value",
+    }
+    
+    ```
+
+### /grades/calculated
+**GET a list of grade distribution results via a query/**
+
+#### Parameters
+Please follow the above documentation on the `/grades/raw` endpoint, for information about the parameters.
+
+#### Response
+
+| Code | Description |
+|------|-------------|
+| `200` | A JSON object containing statistics of the grade distribution on all the courses found, and a list of the courses found. |
+| `400` | Invalid parameter syntax. |
+<!-- | `404` | Result not found | -->
+
+??? example "200 Successful Response"
+    To lookup grade distribution for I&C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:
+
+    `/grades/calculated?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33` returns
+
+    ``` JSON
+    {
+        "gradeDistribution": {
+            "SUM(gradeACount)": 257,
+            "SUM(gradeBCount)": 155,
+            "SUM(gradeCCount)": 72,
+            "SUM(gradeDCount)": 34,
+            "SUM(gradeFCount)": 69,
+            "SUM(gradePCount)": 1,
+            "SUM(gradeNPCount)": 3,
+            "SUM(gradeWCount)": 2,
+            "AVG(averageGPA)": 2.82,
+            "COUNT()": 2
+        },
+        "courseList": [
+            {
+                "year": "2018-19",
+                "quarter": "FALL",
+                "department": "I&C SCI",
+                "number": "33",
+                "code": 36620,
+                "section": "A",
+                "instructor": "PATTIS, R.",
+                "type": "LEC"
+            },
+            {
+                "year": "2019-20",
+                "quarter": "FALL",
+                "department": "I&C SCI",
+                "number": "33",
+                "code": 35500,
+                "section": "A",
+                "instructor": "PATTIS, R.",
+                "type": "LEC"
+            }
+        ]
+    }
+    ```
+
+??? example "400 Bad Request"
+    
+    `/grades/calculated?year=2018&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33` returns
+
+    ``` JSON
+    {
+        "timestamp": "Thu, 31 Dec 2020 00:00:00 GMT",
+        "status": 400,
+        "error": "Bad Request: Invalid syntax in parameters", 
+        "message": "Invalid syntax found in parameters. Exception occured at '2018' in the [year] query value",
+    }
+    
+    ```
+
 ## Schedule
 
-To get schedule of classes data, please use this npm package https://github.com/icssc-projects/websoc-api made by one of our team member. This API allows access to school, department, course, and section data in a hierarchical JSON format. This module cannot be used on a browser as it uses a library called Camaro that uses features only available in NodeJS.
+To get schedule of classes data, please use this npm package https://github.com/icssc-projects/websoc-api made by one of our team members. This API allows access to school, department, course, and section data in a hierarchical JSON format. This module cannot be used on a browser as it uses a library called Camaro that uses features only available in NodeJS.
 
 We are planning to integrate this package onto the API, but it's scheduled for future release!

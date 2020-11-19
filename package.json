@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "start": "nodemon app",
-    "test": "jest"
+    "test": "jest",
+    "init_db": "node ./db/sqlite.js"
   },
   "dependencies": {
     "@2fd/graphdoc": "^2.4.0",
+    "better-sqlite3": "^7.1.1",
     "cors": "^2.8.5",
+    "csv-parser": "^2.3.3",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
@@ -21,7 +24,7 @@
     "graphql-playground-middleware-express": "^1.7.21",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.11",
     "nodemon": "^2.0.2",
     "swagger-jsdoc": "^4.0.0",
