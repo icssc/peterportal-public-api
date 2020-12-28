@@ -12,7 +12,7 @@
 |------|-------------|
 | `200` | A list of all courses available on the UCI Catalogue. Each element is a JSON object containing information on each course (department, number, title, and description) |
 
-??? example "200 Successful Response"
+??? success "200 Successful Response"
 
     ``` JSON
     [
@@ -45,9 +45,9 @@
 | `404` | Invaild ID/Course not found |
 
 
-??? example "200 Successful Response"
+??? success "200 Successful Response"
 
-    <!-- `/courses/I&CSCI53` returns -->
+    `/courses/I&CSCI53` returns
 
     ``` JSON
     {
@@ -104,7 +104,7 @@
     }
     ```
     
-??? example "404 Not Found"
+??? fail "404 Not Found"
 
     `/courses/I&CSCI5555` returns
 
@@ -134,7 +134,7 @@ None. 💃
 |------|-------------|
 | `200` | A list of all instructors available on the UCI Catalogue. Each element is a JSON object containing information on each instructor (name, ucinetid, title, department). |
 
-??? example "200 Successful Response"
+??? success "200 Successful Response"
 
     ``` JSON
     [
@@ -166,7 +166,7 @@ None. 💃
 | `200` | A JSON object containing every information available on a specific instructor |
 | `404` | Invaild UCInetID/Instructor not found |
 
-??? example "200 Succesful Response"
+??? success "200 Succesful Response"
 
     `/instructors/mikes` returns
 
@@ -200,7 +200,7 @@ None. 💃
     }
     ```
 
-??? example "404 Not Found"
+??? fail "404 Not Found"
 
     `/instructors/nonexistent` returns
 
@@ -259,7 +259,7 @@ None. 💃
 | `400` | Invalid parameter syntax. |
 <!-- | `404` | Result not found | -->
 
-??? example "200 Successful Response"
+??? success "200 Successful Response"
     To lookup grade distribution for I&C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:
 
     `/grades/raw?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33` returns
@@ -307,7 +307,7 @@ None. 💃
     ]
     ```
 
-??? example "400 Bad Request"
+??? fail "400 Bad Request"
     
     `/grades/raw?year=2018&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33` returns
 
@@ -335,7 +335,7 @@ Please follow the above documentation on the `/grades/raw` endpoint, for informa
 | `400` | Invalid parameter syntax. |
 <!-- | `404` | Result not found | -->
 
-??? example "200 Successful Response"
+??? success "200 Successful Response"
     To lookup grade distribution for I&C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:
 
     `/grades/calculated?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33` returns
@@ -379,7 +379,7 @@ Please follow the above documentation on the `/grades/raw` endpoint, for informa
     }
     ```
 
-??? example "400 Bad Request"
+??? fail "400 Bad Request"
     
     `/grades/calculated?year=2018&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33` returns
 
