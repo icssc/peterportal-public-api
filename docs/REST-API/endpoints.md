@@ -222,7 +222,7 @@ None. 💃
 
 !!! info
     Endpoint that utilize query params must follow by this format:
-    ?key1=value1&key2=value2`
+    `?key1=value1&key2=value2`
 
     `?` is use to start the query params string with &  to separate each param
 
@@ -242,9 +242,13 @@ None. 💃
 | `number` | Course number | 32A |
 |  `code` | 5-digit course code on WebSoC | 35540 |
 
-All params are optional and can be multi-values by using ; as a separator.
 
-!!! hint
+!!! tip 
+    **All params are optional and multiple can be included by using ; as a separator.**
+
+    i.e. `key1=value1;value2&key2=value2`
+
+!!! tip
     The more you narrow down your query, the faster the response! 🏃‍♀️💨 😎
 
 #### Response
