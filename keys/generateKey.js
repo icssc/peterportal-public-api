@@ -12,8 +12,7 @@ const {
   Collection,
   Match,
   Index,
-  Map,
-  Paginate,
+  Create,
   Lambda,
   Var,
   Update
@@ -46,7 +45,7 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/", function (req, res, next) {
-
+    console.log(req.body);
     const data = {
         apiKey: req.body.appName.replace(/ /g, "_") + "-" + generateApiKey(),
         firstName: req.body.firstName,
@@ -59,7 +58,7 @@ router.post("/", function (req, res, next) {
         createdOn: new Date()
       }
     console.log(data);
-    insertApiKeyToDatabase(data).then((ret) => {sendVerificationEmail(ret.data)})
+    insertApiKeyToDatabase(data).then((ret) => {console.log(ret.data); sendVerificationEmail(ret.data)})
     res.json(data)
 });
 
@@ -73,17 +72,6 @@ router.get("/confirm/:apiKey", function (req, res, next) {
 });
 
 async function insertApiKeyToDatabase(data) {
-  // let sql = `INSERT INTO api_keys
-  // (apiKey, firstName, lastName, email, appName, appDescription, websiteURL, keyStatus, createdOn)
-  // VALUES( ${escape(data.apiKey)},
-  //         ${escape(data.firstName)}, 
-  //         ${escape(data.lastName)}, 
-  //         ${escape(data.email)}, 
-  //         ${escape(data.appName)}, 
-  //         ${escape(data.appDescription)}, 
-  //         ${escape(data.websiteURL)}, 
-  //         ${escape(data.keyStatus)},
-  //         ${escape(data.createdOn)});`
   const ret = await client.query( 
     Create(
       Collection("api_keys"), {
@@ -136,7 +124,8 @@ function sendVerificationEmail(data) {
       confirmationURL: 'http://localhost:8080/generateKey/confirm/' + data['key'],
       unsubscribeURL: 'http://localhost:8080/unsubscribe/' + data['email']
     },
-  }).then(() => console.log('email has been sent!'));
+  }).then(() => console.log('email has been sent!'))
+  .catch((err) => console.log(err));
 }
 
 function sendAPIKeyEmail(data) {    

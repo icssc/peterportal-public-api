@@ -41,7 +41,7 @@ var {getAllCourses, getSpecificCourse} = require('./courses.helper')
  *                        example: Data Structure Implementation and Analysis
  */
 
-router.get("/all",  function (req, res, next) {
+router.get("/all", apiKeyAuth, function (req, res, next) {
     res.json(getAllCourses());
 })
 

@@ -5,6 +5,7 @@ repo_name: icssc-projects/peterportal-public-api
 
 theme:
   name: material
+  custom_dir: overrides
 
 markdown_extensions:
   - admonition
@@ -19,6 +20,6 @@ markdown_extensions:
 #extra_css:
 #  - css/termynal.css
 
-#extra_javascript:
-#  - js/termynal.js
+extra_javascript:
+ - js/forms.js
 #  - js/custom.js

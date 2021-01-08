@@ -4,6 +4,7 @@ require('dotenv').config();
 
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var logger = require('morgan');
 
@@ -16,6 +17,12 @@ var graphQLRouter = require('./graphql/router');
 var generateKey = require('./keys/generateKey');
 
 var app = express();
+
+var corsOptions = {
+  origin: ['http://127.0.0.1:' + port, 'http://api.peterportal.org', 'https://api.peterportal.org'],
+  optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions));
 
 app.use(logger('dev'));
 app.use(express.json());
