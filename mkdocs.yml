@@ -6,6 +6,12 @@ repo_name: icssc-projects/peterportal-public-api
 theme:
   name: material
   custom_dir: overrides
+  favicon: images/peter_favicon.png
+  logo: images/peter_favicon.png
+
+  palette:
+    scheme: default
+    primary: indigo
 
 markdown_extensions:
   - admonition

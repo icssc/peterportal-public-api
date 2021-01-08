@@ -5,6 +5,7 @@ require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var cors = require('cors');
+
 var path = require('path');
 var logger = require('morgan');
 
@@ -60,5 +61,6 @@ app.use(function(err, req, res, next) {
 app.listen(port, function() {
   console.log("Server is running on Port: " + port);
 });
+
 
 module.exports = app;

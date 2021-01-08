@@ -9,7 +9,7 @@
       
       
       
-      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <link rel="shortcut icon" href="../../images/peter_favicon.png">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.3">
     
     
@@ -22,6 +22,10 @@
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.39b8e14a.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4051b5">
         
       
     
@@ -52,7 +56,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="">
       
   
     
@@ -77,8 +81,7 @@
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href="../.." title="PeterPortal API Docs" class="md-header-nav__button md-logo" aria-label="PeterPortal API Docs">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <img src="../../images/peter_favicon.png" alt="logo">
 
     </a>
     <label class="md-header-nav__button md-icon" for="__drawer">
@@ -170,8 +173,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="PeterPortal API Docs" class="md-nav__button md-logo" aria-label="PeterPortal API Docs">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <img src="../../images/peter_favicon.png" alt="logo">
 
     </a>
     PeterPortal API Docs
@@ -200,7 +202,7 @@
 
   <li class="md-nav__item">
     <a href="../.." class="md-nav__link">
-      PeterPortal API
+      Home
     </a>
   </li>
 
@@ -272,9 +274,45 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Start here
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
     <a href="./" class="md-nav__link md-nav__link--active">
       Start here
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-out" class="md-nav__link">
+    Try it out
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -357,6 +395,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-out" class="md-nav__link">
+    Try it out
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -373,6 +433,26 @@
                 
                 
                 <h1 id="start-here">Start here</h1>
+<p><a href="https://graphql.org/">GraphQL</a> is not an application; rather, it is a Query Language for Web APIs.</p>
+<h2 id="try-it-out">Try it out</h2>
+<p>You can try out our documentation live at our <a href="https://api.peterportal.org/graphql-playground">GraphQL Playground</a>.</p>
+<p><img alt="playground demo" src="https://gifs.tisuela.com/web-dev/graphql_playground_demo.gif" /></p>
+<p>Not only can you try it out, but our Playground also has the most up-to-date docs -- we highly recommend you check it out if you're interested in learning GraphQL or using our endpoint.</p>
+<div class="admonition example">
+<p class="admonition-title">Example Query</p>
+<p>Here is an example which returns the ID, name, and department of every course in our database.
+You can paste this into our <a href="https://api.peterportal.org/graphql-playground">GraphQL Playground</a>, or write this in the <code>body</code> of a <code>POST</code> request.</p>
+<div class="highlight"><pre><span></span><code>query {
+  allCourses {
+    id
+    name
+    department
+  }
+}
+</code></pre></div>
+</div>
+<h2 id="documentation">Documentation</h2>
+<p>📃 Checkout our documentation at <a href="https://api.peterportal.org/graphql-docs/">api.peterportal.org/graphql-docs/</a>.</p>
                 
               
               

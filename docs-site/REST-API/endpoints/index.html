@@ -9,7 +9,7 @@
       
       
       
-      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <link rel="shortcut icon" href="../../images/peter_favicon.png">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.3">
     
     
@@ -22,6 +22,10 @@
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.39b8e14a.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4051b5">
         
       
     
@@ -52,7 +56,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="">
       
   
     
@@ -77,8 +81,7 @@
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href="../.." title="PeterPortal API Docs" class="md-header-nav__button md-logo" aria-label="PeterPortal API Docs">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <img src="../../images/peter_favicon.png" alt="logo">
 
     </a>
     <label class="md-header-nav__button md-icon" for="__drawer">
@@ -170,8 +173,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="PeterPortal API Docs" class="md-nav__button md-logo" aria-label="PeterPortal API Docs">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <img src="../../images/peter_favicon.png" alt="logo">
 
     </a>
     PeterPortal API Docs
@@ -200,7 +202,7 @@
 
   <li class="md-nav__item">
     <a href="../.." class="md-nav__link">
-      PeterPortal API
+      Home
     </a>
   </li>
 
@@ -459,11 +461,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#grades" class="md-nav__link">
-    /grades
+  <a href="#gradesraw" class="md-nav__link">
+    /grades/raw
   </a>
   
-    <nav class="md-nav" aria-label="/grades">
+    <nav class="md-nav" aria-label="/grades/raw">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -475,6 +477,33 @@
         
           <li class="md-nav__item">
   <a href="#response" class="md-nav__link">
+    Response
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradescalculated" class="md-nav__link">
+    /grades/calculated
+  </a>
+  
+    <nav class="md-nav" aria-label="/grades/calculated">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters_4" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_1" class="md-nav__link">
     Response
   </a>
   
@@ -669,11 +698,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#grades" class="md-nav__link">
-    /grades
+  <a href="#gradesraw" class="md-nav__link">
+    /grades/raw
   </a>
   
-    <nav class="md-nav" aria-label="/grades">
+    <nav class="md-nav" aria-label="/grades/raw">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -685,6 +714,33 @@
         
           <li class="md-nav__item">
   <a href="#response" class="md-nav__link">
+    Response
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradescalculated" class="md-nav__link">
+    /grades/calculated
+  </a>
+  
+    <nav class="md-nav" aria-label="/grades/calculated">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters_4" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_1" class="md-nav__link">
     Response
   </a>
   
@@ -743,7 +799,7 @@
 </tr>
 </tbody>
 </table>
-<details class="example"><summary>Example Response</summary><div class="highlight"><pre><span></span><code><span class="p">[</span>
+<details class="example"><summary>200 Successful Response</summary><div class="highlight"><pre><span></span><code><span class="p">[</span>
   <span class="err">...</span>
   <span class="p">{</span>
     <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI&quot;</span><span class="p">,</span>
@@ -793,7 +849,7 @@
 </tr>
 </tbody>
 </table>
-<details class="example"><summary>Example Response</summary><p><code>/courses/I&amp;CSCI53</code> returns</p>
+<details class="example"><summary>200 Successful Response</summary><!-- <code>/courses/I&amp;CSCI53</code> returns -->
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI 53&quot;</span><span class="p">,</span>
     <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI&quot;</span><span class="p">,</span>
@@ -808,7 +864,7 @@
         <span class="mi">4</span><span class="p">,</span>
         <span class="mi">4</span>
     <span class="p">],</span>
-    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Introduces basic principles of system software...&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Introduces basic principles of system software: operating systems, compilers, and networking. Exposure to the following topics through theoretical and practical programming experiences: linking and loading, process and memory management, concurrency and synchronization, network communication, programming for performance, etc.&quot;</span><span class="p">,</span>
     <span class="nt">&quot;department_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Information and Computer Science&quot;</span><span class="p">,</span>
     <span class="nt">&quot;professor_history&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="s2">&quot;iharris&quot;</span><span class="p">,</span>
@@ -848,6 +904,15 @@
 <span class="p">}</span>
 </code></pre></div>
 </details>
+<details class="example"><summary>404 Not Found</summary><p><code>/courses/I&amp;CSCI5555</code> returns</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;Thu, 31 Dec 2020 00:00:00 GMT&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span><span class="p">,</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Bad Request: Invalid parameter&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Course not found&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
 <h2 id="instructors">Instructors</h2>
 <p><strong>👩‍🏫 Find information on UCI instructors here.</strong></p>
 <h3 id="instructorsall"><code>/instructors/all</code></h3>
@@ -869,7 +934,7 @@
 </tr>
 </tbody>
 </table>
-<details class="example"><summary>Example Response</summary><div class="highlight"><pre><span></span><code><span class="p">[</span>
+<details class="example"><summary>200 Successful Response</summary><div class="highlight"><pre><span></span><code><span class="p">[</span>
   <span class="err">...</span>
   <span class="p">{</span>
       <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Michael Shindler&quot;</span><span class="p">,</span>
@@ -919,7 +984,7 @@
 </tr>
 </tbody>
 </table>
-<details class="example"><summary>Example Response</summary><p><code>/instructors/mikes</code> returns</p>
+<details class="example"><summary>200 Succesful Response</summary><p><code>/instructors/mikes</code> returns</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Michael Shindler&quot;</span><span class="p">,</span>
     <span class="nt">&quot;ucinetid&quot;</span><span class="p">:</span> <span class="s2">&quot;mikes&quot;</span><span class="p">,</span>
@@ -949,8 +1014,17 @@
 <span class="p">}</span>
 </code></pre></div>
 </details>
+<details class="example"><summary>404 Not Found</summary><p><code>/instructors/nonexistent</code> returns</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;Thu, 31 Dec 2020 00:00:00 GMT&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span><span class="p">,</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Bad Request: Invalid parameter&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Instructor not found&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
 <h2 id="grade-distribution">Grade Distribution</h2>
-<h3 id="grades">/grades</h3>
+<h3 id="gradesraw">/grades/raw</h3>
 <p><strong>GET a list of grade distribution results via a query/</strong></p>
 <h4 id="parameters_3">Parameters</h4>
 <div class="admonition info">
@@ -1025,57 +1099,142 @@
 <td>A list of JSON object results containing the course info, count of each grades, and average GPA</td>
 </tr>
 <tr>
-<td><code>404</code></td>
-<td>Result not found</td>
+<td><code>400</code></td>
+<td>Invalid parameter syntax.</td>
 </tr>
 </tbody>
 </table>
-<details class="example"><summary>Example Response</summary><p>To lookup grade distribution for I&amp;C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:</p>
-<p><code>/grades?year=2018-19;2019-20&amp;instructor=PATTIS, R.&amp;department=I%26C SCI&amp;quarter=Fall&amp;number=33</code> returns</p>
+<!-- | `404` | Result not found | -->
+
+<details class="example"><summary>200 Successful Response</summary><p>To lookup grade distribution for I&amp;C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:</p>
+<p><code>/grades/raw?year=2018-19;2019-20&amp;instructor=PATTIS, R.&amp;department=I%26C SCI&amp;quarter=Fall&amp;number=33</code> returns</p>
 <div class="highlight"><pre><span></span><code><span class="p">[</span>
     <span class="p">{</span>
         <span class="nt">&quot;year&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-19&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;quarter&quot;</span><span class="p">:</span> <span class="s2">&quot;Fall&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;quarter&quot;</span><span class="p">:</span> <span class="s2">&quot;FALL&quot;</span><span class="p">,</span>
         <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI&quot;</span><span class="p">,</span>
         <span class="nt">&quot;number&quot;</span><span class="p">:</span> <span class="s2">&quot;33&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;36620&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="mi">36620</span><span class="p">,</span>
         <span class="nt">&quot;section&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span>
         <span class="nt">&quot;instructor&quot;</span><span class="p">:</span> <span class="s2">&quot;PATTIS, R.&quot;</span><span class="p">,</span>
         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;LEC&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;a_count&quot;</span><span class="p">:</span> <span class="mi">125</span><span class="p">,</span>
-        <span class="nt">&quot;b_count&quot;</span><span class="p">:</span> <span class="mi">72</span><span class="p">,</span>
-        <span class="nt">&quot;c_count&quot;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span>
-        <span class="nt">&quot;d_count&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
-        <span class="nt">&quot;f_count&quot;</span><span class="p">:</span> <span class="mi">33</span><span class="p">,</span>
-        <span class="nt">&quot;p_count&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="nt">&quot;np_count&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="nt">&quot;w_count&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="nt">&quot;average_gpa&quot;</span><span class="p">:</span> <span class="mf">2.84</span>
+        <span class="nt">&quot;gradeACount&quot;</span><span class="p">:</span> <span class="mi">125</span><span class="p">,</span>
+        <span class="nt">&quot;gradeBCount&quot;</span><span class="p">:</span> <span class="mi">72</span><span class="p">,</span>
+        <span class="nt">&quot;gradeCCount&quot;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span>
+        <span class="nt">&quot;gradeDCount&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+        <span class="nt">&quot;gradeFCount&quot;</span><span class="p">:</span> <span class="mi">33</span><span class="p">,</span>
+        <span class="nt">&quot;gradePCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;gradeNPCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;gradeWCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;averageGPA&quot;</span><span class="p">:</span> <span class="mf">2.84</span>
     <span class="p">},</span>
     <span class="p">{</span>
         <span class="nt">&quot;year&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-20&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;quarter&quot;</span><span class="p">:</span> <span class="s2">&quot;Fall&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;quarter&quot;</span><span class="p">:</span> <span class="s2">&quot;FALL&quot;</span><span class="p">,</span>
         <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI&quot;</span><span class="p">,</span>
         <span class="nt">&quot;number&quot;</span><span class="p">:</span> <span class="s2">&quot;33&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;35500&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="mi">35500</span><span class="p">,</span>
         <span class="nt">&quot;section&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span>
         <span class="nt">&quot;instructor&quot;</span><span class="p">:</span> <span class="s2">&quot;PATTIS, R.&quot;</span><span class="p">,</span>
         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;LEC&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;a_count&quot;</span><span class="p">:</span> <span class="mi">132</span><span class="p">,</span>
-        <span class="nt">&quot;b_count&quot;</span><span class="p">:</span> <span class="mi">83</span><span class="p">,</span>
-        <span class="nt">&quot;c_count&quot;</span><span class="p">:</span> <span class="mi">41</span><span class="p">,</span>
-        <span class="nt">&quot;d_count&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
-        <span class="nt">&quot;f_count&quot;</span><span class="p">:</span> <span class="mi">36</span><span class="p">,</span>
-        <span class="nt">&quot;p_count&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="nt">&quot;np_count&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-        <span class="nt">&quot;w_count&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="nt">&quot;average_gpa&quot;</span><span class="p">:</span> <span class="mf">2.8</span>
+        <span class="nt">&quot;gradeACount&quot;</span><span class="p">:</span> <span class="mi">132</span><span class="p">,</span>
+        <span class="nt">&quot;gradeBCount&quot;</span><span class="p">:</span> <span class="mi">83</span><span class="p">,</span>
+        <span class="nt">&quot;gradeCCount&quot;</span><span class="p">:</span> <span class="mi">41</span><span class="p">,</span>
+        <span class="nt">&quot;gradeDCount&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
+        <span class="nt">&quot;gradeFCount&quot;</span><span class="p">:</span> <span class="mi">36</span><span class="p">,</span>
+        <span class="nt">&quot;gradePCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;gradeNPCount&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;gradeWCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;averageGPA&quot;</span><span class="p">:</span> <span class="mf">2.8</span>
     <span class="p">}</span>
 <span class="p">]</span>
 </code></pre></div>
 </details>
+<details class="example"><summary>400 Bad Request</summary><p><code>/grades/raw?year=2018&amp;instructor=PATTIS, R.&amp;department=I%26C SCI&amp;quarter=Fall&amp;number=33</code> returns</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;Thu, 31 Dec 2020 00:00:00 GMT&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Bad Request: Invalid syntax in parameters&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid syntax found in parameters. Exception occured at &#39;2018&#39; in the [year] query value&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<h3 id="gradescalculated">/grades/calculated</h3>
+<p><strong>GET a list of grade distribution results via a query/</strong></p>
+<h4 id="parameters_4">Parameters</h4>
+<p>Please follow the above documentation on the <code>/grades/raw</code> endpoint, for information about the parameters.</p>
+<h4 id="response_1">Response</h4>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>200</code></td>
+<td>A JSON object containing statistics of the grade distribution on all the courses found, and a list of the courses found.</td>
+</tr>
+<tr>
+<td><code>400</code></td>
+<td>Invalid parameter syntax.</td>
+</tr>
+</tbody>
+</table>
+<!-- | `404` | Result not found | -->
+
+<details class="example"><summary>200 Successful Response</summary><p>To lookup grade distribution for I&amp;C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:</p>
+<p><code>/grades/calculated?year=2018-19;2019-20&amp;instructor=PATTIS, R.&amp;department=I%26C SCI&amp;quarter=Fall&amp;number=33</code> returns</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;gradeDistribution&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;SUM(gradeACount)&quot;</span><span class="p">:</span> <span class="mi">257</span><span class="p">,</span>
+        <span class="nt">&quot;SUM(gradeBCount)&quot;</span><span class="p">:</span> <span class="mi">155</span><span class="p">,</span>
+        <span class="nt">&quot;SUM(gradeCCount)&quot;</span><span class="p">:</span> <span class="mi">72</span><span class="p">,</span>
+        <span class="nt">&quot;SUM(gradeDCount)&quot;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
+        <span class="nt">&quot;SUM(gradeFCount)&quot;</span><span class="p">:</span> <span class="mi">69</span><span class="p">,</span>
+        <span class="nt">&quot;SUM(gradePCount)&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;SUM(gradeNPCount)&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;SUM(gradeWCount)&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="nt">&quot;AVG(averageGPA)&quot;</span><span class="p">:</span> <span class="mf">2.82</span><span class="p">,</span>
+        <span class="nt">&quot;COUNT()&quot;</span><span class="p">:</span> <span class="mi">2</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;courseList&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;year&quot;</span><span class="p">:</span> <span class="s2">&quot;2018-19&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;quarter&quot;</span><span class="p">:</span> <span class="s2">&quot;FALL&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;number&quot;</span><span class="p">:</span> <span class="s2">&quot;33&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="mi">36620</span><span class="p">,</span>
+            <span class="nt">&quot;section&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;instructor&quot;</span><span class="p">:</span> <span class="s2">&quot;PATTIS, R.&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;LEC&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;year&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-20&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;quarter&quot;</span><span class="p">:</span> <span class="s2">&quot;FALL&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;number&quot;</span><span class="p">:</span> <span class="s2">&quot;33&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="mi">35500</span><span class="p">,</span>
+            <span class="nt">&quot;section&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;instructor&quot;</span><span class="p">:</span> <span class="s2">&quot;PATTIS, R.&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;LEC&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<details class="example"><summary>400 Bad Request</summary><p><code>/grades/calculated?year=2018&amp;instructor=PATTIS, R.&amp;department=I%26C SCI&amp;quarter=Fall&amp;number=33</code> returns</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;Thu, 31 Dec 2020 00:00:00 GMT&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Bad Request: Invalid syntax in parameters&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid syntax found in parameters. Exception occured at &#39;2018&#39; in the [year] query value&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
 <h2 id="schedule">Schedule</h2>
-<p>To get schedule of classes data, please use this npm package https://github.com/icssc-projects/websoc-api made by one of our team member. This API allows access to school, department, course, and section data in a hierarchical JSON format. This module cannot be used on a browser as it uses a library called Camaro that uses features only available in NodeJS.</p>
+<p>To get schedule of classes data, please use this npm package https://github.com/icssc-projects/websoc-api made by one of our team members. This API allows access to school, department, course, and section data in a hierarchical JSON format. This module cannot be used on a browser as it uses a library called Camaro that uses features only available in NodeJS.</p>
 <p>We are planning to integrate this package onto the API, but it's scheduled for future release!</p>
                 
               
