@@ -89,7 +89,7 @@ const queryType = new GraphQLObjectType({
 
       // specify args to query by
       args: {
-        id: { type: GraphQLString }
+        id: { type: GraphQLString, description: "Course Department concatenated with Course Number. Ex: COMPSCI161" }
       },
 
       // define function to get a course
@@ -98,7 +98,7 @@ const queryType = new GraphQLObjectType({
       },
 
       // documentation
-      description: "Search courses by their course id. Ex: ICS46."
+      description: "Search courses by their course id. Ex: COMPSCI161"
     },
 
     // get professor by ucinetid
@@ -125,11 +125,7 @@ const queryType = new GraphQLObjectType({
 
       // get all courses from courses cache
       resolve: () => {
-        var coursesArr = []
-        for (var courseId in courses_cache){
-          coursesArr.push(courses_cache[courseId]);
-        }
-        return coursesArr;
+        return Object.values(courses_cache)
       },
 
       // documentation for all courses
@@ -142,11 +138,7 @@ const queryType = new GraphQLObjectType({
 
       // get all professors from cache
       resolve: () => {
-        var profArr = []
-        for (prof of professors_cache["hits"]["hits"]){
-          profArr.push(prof["_source"])
-        }
-        return profArr
+        return Object.values(professors_cache);
       },
 
       // documentation for all professors
