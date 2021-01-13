@@ -18,7 +18,7 @@
             First Name
         </label>
         <div class="col-sm-5">
-            <input class="form-control" id="user_first_name" name="user[first_name]" size="50" type="text" required="">
+            <input class="form-control" id="user_first_name" name="user[first_name]" size="50" type="text" placeholder="Peter" required>
         </div>
     </div>
     <div class="form-group">
@@ -29,7 +29,7 @@
             Last Name
         </label>
         <div class="col-sm-5">
-            <input class="form-control" id="user_last_name" name="user[last_name]" size="50" type="text" required>
+            <input class="form-control" id="user_last_name" name="user[last_name]" size="50" type="text" placeholder="Anteater" required>
         </div>
     </div>
     <div class="form-group">
@@ -40,7 +40,7 @@
              Email
         </label>
         <div class="col-sm-5">
-            <input class="form-control" id="user_email" name="user[email]" size="50" type="email" required>
+            <input class="form-control" id="user_email" name="user[email]" size="50" type="email" placeholder="panteater@example.com" required>
         </div>
     </div>
     <div class="form-group">
@@ -57,8 +57,7 @@
     <div class="form-group">
         <label class="col-sm-4 control-label" for="user_app_description">How will you use the API?<br></label>
         <div class="col-sm-5">
-            <textarea class="form-control" cols="40" id="user_app_description" name="user[app_description]" rows="5">
-            </textarea>
+            <textarea class="form-control" cols="40" id="user_app_description" name="user[app_description]" rows="5"></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -66,7 +65,7 @@
              Website URL
         </label>
         <div class="col-sm-5">
-            <input class="form-control" id="user_web_url" name="user[web_url]" size="75" type="text">
+            <input class="form-control" id="user_web_url" name="user[web_url]" size="75" type="url" placeholder="https://example.com">
         </div>
     </div>
     <input type="hidden" name="user[terms_and_conditions]" value="1">

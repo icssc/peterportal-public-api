@@ -15,7 +15,8 @@ const {
   Create,
   Lambda,
   Var,
-  Update
+  Update,
+  Date : qDate,
 } = faunadb.query;
 
 var path = require('path')
@@ -40,34 +41,36 @@ const email = new emailTemplates({
     }
 });
 
+const url = process.env.NODE_ENV == 'development' ? "http:/localhost:" + process.env.PORT : "http://api.peterportal.org"
+
 router.get("/", function (req, res, next) {
     res.send(generateApiKey())
 });
 
 router.post("/", function (req, res, next) {
-    console.log(req.body);
     const data = {
-        apiKey: req.body.appName.replace(/ /g, "_") + "-" + generateApiKey(),
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        api_key: req.body.app_name.replace(/ /g, "_") + "-" + generateApiKey(),
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
         email: req.body.email,
-        appName: req.body.appName,
-        appDescription: req.body.appDescription,
-        websiteURL: req.body.websiteURL ? req.body.websiteURL : null,
-        keyStatus: "Awaiting Verification",
-        createdOn: new Date()
+        app_name: req.body.app_name,
+        app_description: req.body.app_description,
+        website_url: req.body.website_url,
+        key_status: "Awaiting Verification",
+        created_on: new Date(),
+        num_requests: 0
       }
-    console.log(data);
+    console.log("Data:", data);
     insertApiKeyToDatabase(data).then((ret) => {console.log(ret.data); sendVerificationEmail(ret.data)})
-    res.json(data)
+    res.send("Finished!")
 });
 
-router.get("/confirm/:apiKey", function (req, res, next) {
+router.get("/confirm/:key", function (req, res, next) {
 
-  activateAPIKey(req.params.apiKey).then((ret) => {
+  activateAPIKey(req.params.key).then((ret) => {
     console.log("returned", ret);
     sendAPIKeyEmail(ret.data);
-    res.send("confirmed " + req.params.apiKey);
+    res.send("confirmed " + req.params.key);
   }).catch((err) => {console.log(err)});
 });
 
@@ -76,17 +79,18 @@ async function insertApiKeyToDatabase(data) {
     Create(
       Collection("api_keys"), {
         data: {
-          "key": data.apiKey,
-          "first_name": data.firstName,
-          "last_name": data.lastName,
+          "key": data.api_key,
+          "first_name": data.first_name,
+          "last_name": data.last_name,
           "email": data.email,
           "app": {
-            "name": data.appName,
-            "description": data.appDescription,
-            "url": data.websiteURL,
+            "name": data.app_name,
+            "description": data.app_description,
+            "url": data.website_url,
           },
-          "status": data.keyStatus,
-          "created_on": data.createdOn
+          "status": data.key_status,
+          "created_on": data.created_on,
+          "num_requests": 0
         }
       })
   ).catch((err) => console.log(err));
@@ -116,13 +120,13 @@ function sendVerificationEmail(data) {
     template: 'apiConfirmation',
     message: {
       from: 'PeterPortal API <peterportal.dev@gmail.com>',
-      to: 'peterportal.dev@gmail.com',
+      to: data['email'],
     },
     locals: {
       firstName: data['first_name'],
       appName: data['app']['name'],
-      confirmationURL: 'http://localhost:8080/generateKey/confirm/' + data['key'],
-      unsubscribeURL: 'http://localhost:8080/unsubscribe/' + data['email']
+      confirmationURL: url + '/generateKey/confirm/' + data['key'],
+      unsubscribeURL: url + '/unsubscribe/' + data['email']
     },
   }).then(() => console.log('email has been sent!'))
   .catch((err) => console.log(err));
@@ -133,12 +137,12 @@ function sendAPIKeyEmail(data) {
     template: 'apiKeyDelivery',
     message: {
       from: 'PeterPortal API <peterportal.dev@gmail.com>',
-      to: 'peterportal.dev@gmail.com',
+      to: data['email'],
     },
     locals: {
       apiKey: data['key'],
       appName: data['app_name'],
-      unsubscribeURL: 'http://localhost:8080/unsubscribe/' + data['email']
+      unsubscribeURL: url + '/unsubscribe/' + data['email']
     },
   }).then(() => console.log('email has been sent!'));
 }
