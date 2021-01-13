@@ -10,7 +10,7 @@
       
       
       <link rel="shortcut icon" href="../../images/peter_favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.5">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.4">
     
     
       
@@ -18,10 +18,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.21aed14c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.15aa0b43.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.75751829.min.css">
         
           
           
@@ -33,7 +33,7 @@
     
       
         
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
       
@@ -55,6 +55,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="">
       
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -83,18 +84,20 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
     <div class="md-header-nav__title" data-md-component="header-title">
-      
-        <div class="md-header-nav__ellipsis">
-          <span class="md-header-nav__topic md-ellipsis">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             PeterPortal API Docs
           </span>
-          <span class="md-header-nav__topic md-ellipsis">
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             
               Endpoints
             
           </span>
         </div>
-      
+      </div>
     </div>
     
       <label class="md-header-nav__button md-icon" for="__search">
@@ -153,10 +156,14 @@
         <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
+
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
@@ -188,6 +195,7 @@
       
 
 
+
   <li class="md-nav__item">
     <a href="../.." class="md-nav__link">
       Home
@@ -198,6 +206,7 @@
       
       
       
+
 
 
   <li class="md-nav__item">
@@ -212,9 +221,13 @@
       
 
 
+
+  
   <li class="md-nav__item md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    
     <label class="md-nav__link" for="nav-3">
       GraphQL API
       <span class="md-nav__icon md-icon"></span>
@@ -230,6 +243,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -248,12 +262,16 @@
       
       
 
+
   
 
 
+  
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
     <label class="md-nav__link" for="nav-4">
       REST API
       <span class="md-nav__icon md-icon"></span>
@@ -269,6 +287,7 @@
           
           
           
+
 
   
 
@@ -502,6 +521,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="../start_here/" class="md-nav__link">
       Start here
@@ -521,7 +541,8 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -761,7 +782,7 @@
 </tr>
 </tbody>
 </table>
-<details class="example"><summary>200 Successful Response</summary><div class="highlight"><pre><span></span><code><span class="p">[</span>
+<details class="success"><summary>200 Successful Response</summary><div class="highlight"><pre><span></span><code><span class="p">[</span>
   <span class="err">...</span>
   <span class="p">{</span>
     <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI&quot;</span><span class="p">,</span>
@@ -811,7 +832,7 @@
 </tr>
 </tbody>
 </table>
-<details class="example"><summary>200 Successful Response</summary><!-- <code>/courses/I&amp;CSCI53</code> returns -->
+<details class="success"><summary>200 Successful Response</summary><p><code>/courses/I&amp;CSCI53</code> returns</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI 53&quot;</span><span class="p">,</span>
     <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI&quot;</span><span class="p">,</span>
@@ -866,7 +887,7 @@
 <span class="p">}</span>
 </code></pre></div>
 </details>
-<details class="example"><summary>404 Not Found</summary><p><code>/courses/I&amp;CSCI5555</code> returns</p>
+<details class="fail"><summary>404 Not Found</summary><p><code>/courses/I&amp;CSCI5555</code> returns</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;Thu, 31 Dec 2020 00:00:00 GMT&quot;</span><span class="p">,</span>
     <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span><span class="p">,</span>
@@ -896,7 +917,7 @@
 </tr>
 </tbody>
 </table>
-<details class="example"><summary>200 Successful Response</summary><div class="highlight"><pre><span></span><code><span class="p">[</span>
+<details class="success"><summary>200 Successful Response</summary><div class="highlight"><pre><span></span><code><span class="p">[</span>
   <span class="err">...</span>
   <span class="p">{</span>
       <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Michael Shindler&quot;</span><span class="p">,</span>
@@ -946,7 +967,7 @@
 </tr>
 </tbody>
 </table>
-<details class="example"><summary>200 Succesful Response</summary><p><code>/instructors/mikes</code> returns</p>
+<details class="success"><summary>200 Succesful Response</summary><p><code>/instructors/mikes</code> returns</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Michael Shindler&quot;</span><span class="p">,</span>
     <span class="nt">&quot;ucinetid&quot;</span><span class="p">:</span> <span class="s2">&quot;mikes&quot;</span><span class="p">,</span>
@@ -976,7 +997,7 @@
 <span class="p">}</span>
 </code></pre></div>
 </details>
-<details class="example"><summary>404 Not Found</summary><p><code>/instructors/nonexistent</code> returns</p>
+<details class="fail"><summary>404 Not Found</summary><p><code>/instructors/nonexistent</code> returns</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;Thu, 31 Dec 2020 00:00:00 GMT&quot;</span><span class="p">,</span>
     <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span><span class="p">,</span>
@@ -992,7 +1013,7 @@
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>Endpoint that utilize query params must follow by this format:
-?key1=value1&amp;key2=value2`</p>
+<code>?key1=value1&amp;key2=value2</code></p>
 <p><code>?</code> is use to start the query params string with &amp;  to separate each param</p>
 </div>
 <div class="admonition warning">
@@ -1042,9 +1063,13 @@
 </tr>
 </tbody>
 </table>
-<p>All params are optional and can be multi-values by using ; as a separator.</p>
-<div class="admonition hint">
-<p class="admonition-title">Hint</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>All params are optional and multiple can be included by using ; as a separator.</strong></p>
+<p>i.e. <code>key1=value1;value2&amp;key2=value2</code></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
 <p>The more you narrow down your query, the faster the response! 🏃‍♀️💨 😎</p>
 </div>
 <h4 id="response">Response</h4>
@@ -1068,7 +1093,7 @@
 </table>
 <!-- | `404` | Result not found | -->
 
-<details class="example"><summary>200 Successful Response</summary><p>To lookup grade distribution for I&amp;C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:</p>
+<details class="success"><summary>200 Successful Response</summary><p>To lookup grade distribution for I&amp;C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:</p>
 <p><code>/grades/raw?year=2018-19;2019-20&amp;instructor=PATTIS, R.&amp;department=I%26C SCI&amp;quarter=Fall&amp;number=33</code> returns</p>
 <div class="highlight"><pre><span></span><code><span class="p">[</span>
     <span class="p">{</span>
@@ -1112,7 +1137,7 @@
 <span class="p">]</span>
 </code></pre></div>
 </details>
-<details class="example"><summary>400 Bad Request</summary><p><code>/grades/raw?year=2018&amp;instructor=PATTIS, R.&amp;department=I%26C SCI&amp;quarter=Fall&amp;number=33</code> returns</p>
+<details class="fail"><summary>400 Bad Request</summary><p><code>/grades/raw?year=2018&amp;instructor=PATTIS, R.&amp;department=I%26C SCI&amp;quarter=Fall&amp;number=33</code> returns</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;Thu, 31 Dec 2020 00:00:00 GMT&quot;</span><span class="p">,</span>
     <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
@@ -1146,7 +1171,7 @@
 </table>
 <!-- | `404` | Result not found | -->
 
-<details class="example"><summary>200 Successful Response</summary><p>To lookup grade distribution for I&amp;C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:</p>
+<details class="success"><summary>200 Successful Response</summary><p>To lookup grade distribution for I&amp;C SCI 33 during the school year 2018-19 and 2019-20 taught by professor Pattis:</p>
 <p><code>/grades/calculated?year=2018-19;2019-20&amp;instructor=PATTIS, R.&amp;department=I%26C SCI&amp;quarter=Fall&amp;number=33</code> returns</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;gradeDistribution&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -1186,7 +1211,7 @@
 <span class="p">}</span>
 </code></pre></div>
 </details>
-<details class="example"><summary>400 Bad Request</summary><p><code>/grades/calculated?year=2018&amp;instructor=PATTIS, R.&amp;department=I%26C SCI&amp;quarter=Fall&amp;number=33</code> returns</p>
+<details class="fail"><summary>400 Bad Request</summary><p><code>/grades/calculated?year=2018&amp;instructor=PATTIS, R.&amp;department=I%26C SCI&amp;quarter=Fall&amp;number=33</code> returns</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;Thu, 31 Dec 2020 00:00:00 GMT&quot;</span><span class="p">,</span>
     <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
@@ -1264,15 +1289,15 @@
       
     </div>
     
-      <script src="../../assets/javascripts/vendor.7e0ee788.min.js"></script>
-      <script src="../../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../../assets/javascripts/vendor.93c04032.min.js"></script>
+      <script src="../../assets/javascripts/bundle.83e5331e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+            worker: "../../assets/javascripts/worker/search.8c7e0a7e.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
