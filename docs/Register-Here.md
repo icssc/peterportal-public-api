@@ -51,13 +51,13 @@
             App Name
         </label>
         <div class="col-sm-5">
-            <input class="form-control" id="user_app_name" name="user[app_name]" size="50" type="text" required>
+            <input class="form-control" id="user_app_name" name="user[app_name]" size="50" type="text" placeholder="PeterPortal" required>
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label" for="user_app_description">How will you use the API?<br></label>
         <div class="col-sm-5">
-            <textarea class="form-control" cols="40" id="user_app_description" name="user[app_description]" rows="5"></textarea>
+            <textarea class="form-control" cols="40" id="user_app_description" name="user[app_description]" placeholder="With care..." rows="5"></textarea>
         </div>
     </div>
     <div class="form-group">
