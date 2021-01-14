@@ -4,8 +4,6 @@ $(document).ready(function() {
         submitHandler: function(form, event) {
 
             event.preventDefault();
-            console.log($('#user_app_description').val())
-            console.log($('input[id=user_web_url]').val())
             // get the form data
             // there are many ways to get this data using jQuery (you can use the class or id also)
             var formData = {
@@ -22,25 +20,27 @@ $(document).ready(function() {
                 url         : '/generateKey', // the url to submit form to 
                 data        : JSON.stringify(formData), // our data object
                 contentType : "application/json; charset=utf-8",
-                dataType    : 'json', // what type of data do we expect back from the server
+                dataType    : 'text', // what type of data do we expect back from the server
                 encode      : true
-            })
-                // using the done promise callback
-                .done(function(data) {
+            }).done(function(data) {
 
-                    // log data to the console so we can see
-                    $('input[id=user_first_name]').val(''),
-                    $('input[id=user_last_name]').val(''),
-                    $('input[id=user_email]').val(''),
-                    $('input[id=user_app_name]').val(''),
-                    $('textarea[id=user_app_description]').val(''),
-                    $('input[id=user_web_url]').val(''),
-                    alert("An email containing the next steps has been sent to the address. Please check your inbox to proceed.")
-                    
-                    // here we will handle errors and validation messages
-                });
+                // log data to the console so we can see
+                $('input[id=user_first_name]').val('');
+                $('input[id=user_last_name]').val('');
+                $('input[id=user_email]').val('');
+                $('input[id=user_app_name]').val('');
+                $('textarea[id=user_app_description]').val('');
+                $('input[id=user_web_url]').val('');
+                console.log("slkdfjlsd;kj")
+                alert("hi");
+                alert(`An email containing the next steps has been sent to the address. Please check your inbox to activate your key. Your key will not work until it has been activated.`);
+                
+                // here we will handle errors and validation messages
+            }).fail(function(error)  {
+                console.log("error")
+                alert("Sorry. Server unavailable. ");
+            }); 
 
-            // stop the form from submitting the normal way and refreshing the page
         }
     });
     // $('form').submit(function(event) {

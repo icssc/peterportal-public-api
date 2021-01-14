@@ -1,4 +1,6 @@
-const faunadb = require('faunadb')
+const faunadb = require('faunadb');
+const { keys } = require('underscore');
+const crypto = require('crypto')
 var {createErrorJSON} = require("../rest/v0/errors.helper")
 const client = new faunadb.Client({ secret: process.env.FAUNADB_KEY});
 const {
@@ -18,14 +20,15 @@ let apiKeyAuth = (req, res, next) => {
     if (!req.headers["x-api-key"]) {
         res.status(401).json(createErrorJSON(401, "No credentials sent.", "No credentials were found in the header of the request. See documentation for more info."));
     } else {
-        console.log(req.headers["x-api-key"])
         // add check to make sure key is active
+        var key = req.headers['x-api-key'];
+        const hash = crypto.createHash('sha256');
+        var hashed_key = hash.update(key).digest('hex');
         client.query(
             Get(
-                Match(Index("keys_by_key"), req.headers["x-api-key"])
+                Match(Index("keys_by_key"), hashed_key)
             )
         ).then((ret) => {
-            console.log(ret.ref);
             if (ret.data.status != 'active' ) {
                 res.status(401).json(createErrorJSON(401, "Invalid Credentials.", "The credentials found has not been activated. Please check your email to activate the key."));
             } else if (ret.data.num_requests > parseInt(process.env.RATE_LIMIT)) {
