@@ -1,4 +1,5 @@
 const db = require('better-sqlite3'); 
+// const sqlite3 = require('sqlite3').verbose();
 var path = require('path');
 
 var {createErrorJSON} = require("./errors.helper")

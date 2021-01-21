@@ -1,6 +1,7 @@
 // Dotenv is a zero-dependency module that loads environment
 // variables from a .env file into process.env
 require('dotenv').config();
+const serverless = require('serverless-http');
 
 var createError = require('http-errors');
 var express = require('express');
@@ -29,18 +30,19 @@ app.use(logger('dev'));
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(express.static("./docs-site"));
+app.use(express.static("./graphql/docs"));
 app.set('view engine', 'ejs')
 
 app.use("/rest", restRouter);
 app.use("/graphql", graphQLRouter);
 app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
-app.use('/graphql-docs', express.static('graphql/docs'));
-app.use('/docs', express.static('docs-site'));
+app.use('/graphql-docs', express.static('./graphql/docs'));
+app.use('/docs', express.static('./docs-site'));
 app.use("/generateKey", generateKey);
 
 app.get('/', function(req, res) {
-  res.redirect('/docs')
+  res.redirect('/dev/docs')
 });
 
 // catch 404 and forward to error handler
@@ -63,4 +65,4 @@ app.listen(port, function() {
 });
 
 
-module.exports = app;
+module.exports.handler = serverless(app);
