@@ -1,12 +1,13 @@
 # Register Here
-Please enter your information below to receive an API key and get started. You will need an 
-API key to access PeterPortal web services. 
+Please enter your information below to receive an API key and get started. You will need a key to access PeterPortal web services. 
 
 <style>
-    input {
+    input, textarea{
         border: 1px solid black;
         padding: 5px;
         margin: 3px;
+        border-radius: 5px;
+        font-family: "Roboto";
     }
 
     .required, .required-fields{
@@ -14,7 +15,7 @@ API key to access PeterPortal web services.
         font-size: 12px;
     }
     
-    .error {
+    label.error {
         font-size: 11px;
         color: red;
     }
@@ -23,6 +24,7 @@ API key to access PeterPortal web services.
         border: 1px solid black;
         padding: 5px;
         border-radius: 5px;
+        margin: 3px;
     }
 </style>
 <div class="form">
@@ -74,20 +76,19 @@ API key to access PeterPortal web services.
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-4 control-label" for="user_app_description">How will you use the API?<br></label>
-            <div class="col-sm-5">
-                <textarea class="form-control" cols="40" id="user_app_description" name="user[app_description]" placeholder="With care..." rows="5"></textarea>
-            </div>
-        </div>
-        <div class="form-group">
             <label class="col-sm-4 control-label" for="user_web_url">
                 Website URL
             </label>
             <div class="col-sm-5">
-                <input class="form-control" id="user_web_url" name="user[web_url]" size="75" type="url" placeholder="https://example.com">
+                <input class="form-control" id="user_web_url" name="user[web_url]" size="50" type="url" placeholder="https://example.com">
             </div>
         </div>
-        <br>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="user_app_description">How will you use the API?<br></label>
+            <div class="col-sm-5">
+                <textarea class="form-control" cols="60" id="user_app_description" name="user[app_description]" placeholder="With care..." rows="5"></textarea>
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-sm-offset-4 col-sm-8">
                 <input type="hidden" name="user[registration_source]" value="web">
