@@ -3,11 +3,13 @@
 require('dotenv').config();
 
 var createError = require('http-errors');
+const {createErrorJSON} = require("./rest/v0/errors.helper");
 var express = require('express');
 var cors = require('cors');
 
 var path = require('path');
 var logger = require('morgan');
+const rateLimit = require("express-rate-limit");
 
 const expressPlayground = require('graphql-playground-middleware-express').default;
 
@@ -19,6 +21,12 @@ var generateKey = require('./keys/generateKey');
 
 var app = express();
 
+const limiter = rateLimit({
+    windowMs: 60 * 1000, // 60 seconds * 1000ms
+    max: 100, // limit each IP to 100 requests per windowMs(minute)
+    message: createErrorJSON(429, "Too Many Requests", "You have exceeded the rate limit. Please try again later.")
+});
+
 var corsOptions = {
   origin: ['http://127.0.0.1:' + port, 'http://api.peterportal.org', 'https://api.peterportal.org'],
   optionsSuccessStatus: 200
@@ -27,6 +35,7 @@ app.use(cors(corsOptions));
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(limiter);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -43,9 +43,11 @@ const email = new emailTemplates({
 });
 
 var port = process.env.PORT || 8080;
-const url = process.env.NODE_ENV == 'development' ? "http://localhost:" + port : "http://api.peterportal.org"
+const url = process.env.NODE_ENV == 'development' ? "http://localhost:" + port : "https://api.peterportal.org"
 
 router.get("/", function (req, res, next) {
+
+  console.log(url, process.env.NODE_ENV);
     res.send(generateApiKey())
 });
 
