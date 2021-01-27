@@ -44,7 +44,7 @@ app.set('view engine', 'ejs')
 
 app.use("/rest", apiKeyAuth, restRouter);
 app.use("/graphql", apiKeyAuth, graphQLRouter);
-app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/', headers: {"x-api-key": process.env.GRAPHQL_API_KEY}}));
+app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/', headers: {"x-api-key": "YOUR_API_KEY_HERE"}}));
 app.use('/graphql-docs', express.static('graphql/docs'));
 app.use('/docs', express.static('docs-site'));
 app.use("/generateKey", generateKey);
