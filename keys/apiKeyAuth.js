@@ -1,35 +1,57 @@
-
+const faunadb = require('faunadb');
+const { keys } = require('underscore');
+const crypto = require('crypto')
+var {createErrorJSON} = require("../rest/v0/errors.helper")
+const client = new faunadb.Client({ secret: process.env.FAUNADB_KEY});
+const {
+    Get,
+    Ref,
+    Collection,
+    Match,
+    Index,
+    Update,
+    Select,
+    Paginate,
+    Lambda,
+    Var
+} = faunadb.query;
 
 let apiKeyAuth = (req, res, next) => {
-    if (req.app.get('env') === 'development') {
-        next()
+    if (process.env.NODE_ENV == "development") {
+        next();
     }
-    if (req.header('apiKey') === null) {
-        res.json({
-            error: "Missing API Key."
-        })
+    if (!req.headers["x-api-key"]) {
+        res.status(401).json(createErrorJSON(401, "No credentials sent.", "No credentials were found in the header of the request. See documentation for more info."));
     } else {
-        let sql = `SELECT * FROM api_keys WHERE apiKey = ${escape(req.header('apiKey'))};`
-
-        executeQueryWithCallback(sql, function(results) {
-            if (results.length > 0) {
-                if (results[0]["keyStatus"] === "Active") {
-                    next()
-                } else if (results[0]["keyStatus"] === "Awaiting Verification") {
-                    res.json({
-                        error: "You must verify your email before using the API. Follow the instruction sent to your email to complete your verification."
-                    })
-                } else if (results[0]["keyStatus"] === "Inactive") {
-                    res.json({
-                        error: "Your API Key has been deactivated."
-                    })
-                }
-                
+        // add check to make sure key is active
+        var key = req.headers['x-api-key'];
+        const hash = crypto.createHash('sha256');
+        var hashed_key = hash.update(key).digest('hex');
+        client.query(
+            Get(
+                Match(Index("keys_by_key"), hashed_key)
+            )
+        ).then((ret) => {
+            if (ret.data.status != 'active' ) {
+                res.status(401).json(createErrorJSON(401, "Invalid Credentials.", "The credentials found has not been activated. Please check your email to activate the key."));
             } else {
-                res.json({
-                    error: "Invalid API Key."
-                })
+                client.query(
+                    Update(
+                        Select("ref", ret),
+                        {
+                          data: { num_requests: ret.data.num_requests + 1 }
+                        }
+                      )
+                ).then(ret => {
+                    console.log(ret);
+                }).catch((err) => {
+                    console.log("error", err);
+                }) 
+                next(); 
             }
+        }).catch((err) => {
+            console.log(err)
+            res.status(401).json(createErrorJSON(401, "Invalid Credentials.", "The credentials found were invalid. Please ensure a valid api key is in the request. See documentation for more info."));
         });
     }
 }
