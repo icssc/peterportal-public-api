@@ -4,6 +4,7 @@ require('dotenv').config();
 
 var createError = require('http-errors');
 const {createErrorJSON} = require("./rest/v0/errors.helper");
+var { apiKeyAuth } = require("./keys/apiKeyAuth");
 var express = require('express');
 var cors = require('cors');
 
@@ -41,9 +42,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('view engine', 'ejs')
 
-app.use("/rest", restRouter);
-app.use("/graphql", graphQLRouter);
-app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
+app.use("/rest", apiKeyAuth, restRouter);
+app.use("/graphql", apiKeyAuth, graphQLRouter);
+app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/', headers: {"x-api-key": process.env.GRAPHQL_API_KEY}}));
 app.use('/graphql-docs', express.static('graphql/docs'));
 app.use('/docs', express.static('docs-site'));
 app.use("/generateKey", generateKey);

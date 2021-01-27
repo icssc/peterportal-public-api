@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nodemon app",
     "test": "jest",
-    "init_db": "node ./db/sqlite.js"
+    "init_db": "node ./db/sqlite.js",
+    "refresh": "node ./utils/refreshESCache.js"
   },
   "dependencies": {
     "@2fd/graphdoc": "^2.4.0",

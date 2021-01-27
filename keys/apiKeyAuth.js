@@ -34,8 +34,6 @@ let apiKeyAuth = (req, res, next) => {
         ).then((ret) => {
             if (ret.data.status != 'active' ) {
                 res.status(401).json(createErrorJSON(401, "Invalid Credentials.", "The credentials found has not been activated. Please check your email to activate the key."));
-            } else if (ret.data.num_requests > parseInt(process.env.RATE_LIMIT)) {
-                res.status(401).json(createErrorJSON(401, "Invalid Credentials.", "The API key found has surpassed the request limit. Email 'peterportal.dev@gmail.com' for support."));
             } else {
                 client.query(
                     Update(

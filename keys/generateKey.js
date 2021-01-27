@@ -45,11 +45,9 @@ const email = new emailTemplates({
 var port = process.env.PORT || 8080;
 const url = process.env.NODE_ENV == 'development' ? "http://localhost:" + port : "https://api.peterportal.org"
 
-router.get("/", function (req, res, next) {
-
-  console.log(url, process.env.NODE_ENV);
-    res.send(generateApiKey())
-});
+// router.get("/", function (req, res, next) {
+//     res.send(generateApiKey())
+// });
 
 router.post("/", function (req, res, next) {
     var key = generateApiKey();
@@ -77,8 +75,9 @@ router.get("/confirm/:key", function (req, res, next) {
   activateAPIKey(req.params.key).then((ret) => {
     console.log("returned", ret);
     sendAPIKeyEmail(ret.data, req.params.key);
-    res.send("confirmed " + req.params.key);
+    res.send("Your API key has been confirmed. See your email for the api key. \n Visit our documentation here: https://api.peterportal.org");
   }).catch((err) => {console.log(err)});
+  
 });
 
 async function insertApiKeyToDatabase(data) {
