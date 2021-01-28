@@ -20,12 +20,13 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.snippets:
       base_path: docs/
-#  - markdown_include.include:
-#      base_path: docs
 
-#extra_css:
-#  - css/termynal.css
+
+
+extra_css:
+  - css/termynal.css
 
 extra_javascript:
- - js/forms.js
-#  - js/custom.js
+  - js/termynal.js
+  - js/forms.js
+  - js/custom.js
