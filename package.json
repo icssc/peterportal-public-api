@@ -5,19 +5,23 @@
   "scripts": {
     "start": "nodemon app",
     "test": "jest",
-    "init_db": "node ./db/sqlite.js"
+    "init_db": "node ./db/sqlite.js",
+    "refresh": "node ./utils/refreshESCache.js"
   },
   "dependencies": {
     "@2fd/graphdoc": "^2.4.0",
     "better-sqlite3": "^7.1.1",
+    "bottleneck": "^2.19.5",
     "cors": "^2.8.5",
     "csv-parser": "^2.3.3",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
-    "email-templates": "^7.1.0",
+    "email-templates": "^7.2.0",
     "express": "~4.16.1",
     "express-graphql": "^0.11.0",
+    "express-rate-limit": "^5.2.3",
+    "fauna-shell": "^0.11.5",
     "faunadb": "^3.0.1",
     "flat-cache": "^2.0.1",
     "graphql": "^15.3.0",

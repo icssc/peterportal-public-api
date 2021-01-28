@@ -2,10 +2,9 @@ var express = require("express");
 var router = express.Router();
 
 var {createErrorJSON} = require("./errors.helper")
-var { apiKeyAuth } = require("../../keys/apiKeyAuth");
 var {getAllCourses, getSpecificCourse} = require('./courses.helper')
 
-router.get("/all",  function (req, res, next) {
+router.get("/all", function (req, res, next) {
     res.json(getAllCourses());
 })
 

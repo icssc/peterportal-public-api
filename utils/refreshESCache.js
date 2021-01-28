@@ -72,7 +72,7 @@ fetch(process.env.ELASTIC_ENDPOINT_URL + 'professors/_search/', {
     // storeData(data, path.resolve('cache', 'professors_cache.json'))
     console.log("Received response from ES/professors, saving data... ")
 
-    parsedData(data, path.resolve('../cache', 'parsed_professor_cache.json'))
+    parsedData(data, path.resolve('./cache', 'parsed_professor_cache.json'))
 })
 
 

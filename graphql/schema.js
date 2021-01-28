@@ -12,7 +12,7 @@ const professors_cache = require('../cache/parsed_professor_cache.json')
 
 const professorType = new GraphQLObjectType({
   name: 'Professor',
-  fields: {
+  fields: () => ({
     name: { type: GraphQLString },
     ucinetid: { type: GraphQLString },
     phone: { type: GraphQLString },
@@ -20,8 +20,13 @@ const professorType = new GraphQLObjectType({
     department: { type: GraphQLString },
     schools: { type: GraphQLList(GraphQLString) },
     related_departments: { type: GraphQLList(GraphQLString) },
-    course_history: { type: GraphQLList(GraphQLString) }
-  }
+    course_history: { 
+      type: GraphQLList(courseType),
+      resolve: (professor) => {
+        return professors_cache[professor.ucinetid]["course_history"].map(course_id => courses_cache[course_id.replace(/ /g, "")]);
+      }
+    }
+  })
 });
 
 const courseType = new GraphQLObjectType({
@@ -29,7 +34,7 @@ const courseType = new GraphQLObjectType({
 
   // fields must match schema from database
   // In this case, we're using a .json cache
-  fields: {
+  fields: () => ({
     id: { type: GraphQLString },
     department: { type: GraphQLString },
     number: { type: GraphQLString },
@@ -40,11 +45,26 @@ const courseType = new GraphQLObjectType({
     units: { type: GraphQLList(GraphQLFloat) },
     description: { type: GraphQLString },
     department_name: { type: GraphQLString },
-    professor_history: { type: GraphQLList(GraphQLString) },
+    professor_history: { 
+      type: GraphQLList(professorType),
+      resolve: (course) => {
+        return courses_cache[course.id.replace(/ /g, "")]["professor_history"].map(professor_netid => professors_cache[professor_netid]);
+      } 
+    },
     prerequisite_tree: { type: GraphQLString },
-    prerequisite_list: { type: GraphQLList(GraphQLString) },
+    prerequisite_list: { 
+      type: GraphQLList(courseType),
+      resolve: (course) => {
+        return courses_cache[course.id.replace(/ /g, "")]["prerequisite_list"].map(prereq_id => courses_cache[prereq_id.replace(/ /g, "", "")]);
+      }
+    },
     prerequisite_text: { type: GraphQLString },
-    dependencies: { type: GraphQLList(GraphQLString) },
+    dependencies: { 
+      type: GraphQLList(courseType),
+      resolve: (course) => {
+        return courses_cache[course.id.replace(/ /g, "")]["dependencies"].map(prereq_id => courses_cache[prereq_id.replace(/ /g, "", "")]);
+      }
+    },
     repeatability: { type: GraphQLString },
     concurrent: { type: GraphQLString },
     same_as: { type: GraphQLString },
@@ -55,23 +75,7 @@ const courseType = new GraphQLObjectType({
     ge_text: { type: GraphQLString },
     terms: { type: GraphQLList(GraphQLString) },
     // can't add "same as" or "grading option" due to whitespace :((
-
-    // Using the professor History list, create a list of
-    // professor types for more detailed professor history list
-    // This helps reduce queries for clients looking for past professor info
-    // O(N)
-    professorHistoryInfo: {
-      type: GraphQLList(professorType),
-      resolve: (course) => {
-        matches = [];
-        for (prevProf of course.professorHistory){
-          matches.push(professors_cache["hits"]["hits"].find(prof => prof["_id"] === prevProf)["_source"]);
-        }
-        return matches;
-      }
-    }
-
-  }
+  })
 });
 
 
@@ -85,7 +89,7 @@ const queryType = new GraphQLObjectType({
 
       // specify args to query by
       args: {
-        id: { type: GraphQLString }
+        id: { type: GraphQLString, description: "Course Department concatenated with Course Number. Ex: COMPSCI161" }
       },
 
       // define function to get a course
@@ -94,7 +98,7 @@ const queryType = new GraphQLObjectType({
       },
 
       // documentation
-      description: "Search courses by their course id. Ex: ICS46."
+      description: "Search courses by their course id. Ex: COMPSCI161"
     },
 
     // get professor by ucinetid
@@ -121,11 +125,7 @@ const queryType = new GraphQLObjectType({
 
       // get all courses from courses cache
       resolve: () => {
-        var coursesArr = []
-        for (var courseId in courses_cache){
-          coursesArr.push(courses_cache[courseId]);
-        }
-        return coursesArr;
+        return Object.values(courses_cache)
       },
 
       // documentation for all courses
@@ -138,11 +138,7 @@ const queryType = new GraphQLObjectType({
 
       // get all professors from cache
       resolve: () => {
-        var profArr = []
-        for (prof of professors_cache["hits"]["hits"]){
-          profArr.push(prof["_source"])
-        }
-        return profArr
+        return Object.values(professors_cache);
       },
 
       // documentation for all professors
