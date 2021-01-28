@@ -5,7 +5,7 @@ PeterPortal Public API provides software developers with easy-access to UC Irvin
 🔨 Built with:
 
 * ExpressJS
-* GraphQL
+* Graphene
 
 👯‍♂️ Works with:
 
@@ -14,6 +14,13 @@ PeterPortal Public API provides software developers with easy-access to UC Irvin
 
 !!! abstract "Our Misson"
     🎇 Our mission is to improve the UCI student experience with course planning and encourage student software developers to create open-source applications that are beneficial to the Anteater community.
+
+## Features
+
+Peterportal Public API offers two Web APIs to help you build your app!  
+
+* [RESTful API](/REST-API/start_here)  
+* [GraphQL API](/GraphQL-API/start_here)
 
 ## Where does the data come from?
 
