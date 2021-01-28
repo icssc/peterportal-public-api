@@ -8,7 +8,8 @@ theme:
   custom_dir: overrides
   favicon: images/peter_favicon.png
   logo: images/peter_favicon.png
-
+  icon:
+    repo: fontawesome/brands/github
   palette:
     scheme: default
     primary: indigo
