@@ -42,6 +42,9 @@ extra:
   social:
     - icon: fontawesome/brands/medium
       link: https://icsscprojects.medium.com/
+    - icon: fontawesome/brands/github
+      link: https://github.com/icssc-projects
+
 
 copyright: Copyright &copy; 2020 - 2021 ICSSC Projects
 extra_css:
