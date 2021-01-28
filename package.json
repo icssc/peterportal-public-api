@@ -24,6 +24,7 @@
     "fauna-shell": "^0.11.5",
     "faunadb": "^3.0.1",
     "flat-cache": "^2.0.1",
+    "googleapis": "^67.0.0",
     "graphql": "^15.3.0",
     "graphql-playground-middleware-express": "^1.7.21",
     "http-errors": "~1.6.3",
