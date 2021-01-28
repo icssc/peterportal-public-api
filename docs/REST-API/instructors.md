@@ -1,5 +1,61 @@
 **👩‍🏫 Find information on UCI instructors here.**
 
+
+Try out one of these quick ways to play with our instructors endpoints:
+
+=== "curl"
+
+    <div class="termy">
+
+    ```console
+    $ curl https://api.peterportal.org/rest/v0/instructors/all --header "x-api-key: YOUR_API_KEY_HERE"
+
+    [
+      ...
+      {
+          "name": "Michael Shindler",
+          "ucinetid": "mikes",
+          "title": "Assistant Professor of Teaching",
+          "department": "Computer Science"
+      },
+      ...
+    ]
+    ```
+    
+    </div>
+
+=== "python"
+
+    <div class="termy">
+
+    ```console
+    $ python -m pip install requests
+    ---> 100%
+    $ python 
+    Python 3.8.5 
+    # >>>$ import requests
+    # >>>$ headers = { "x-api-key": "YOUR_API_KEY_HERE"}
+    # >>>$ response = requests.get("https://api.peterportal.org/rest/v0/instructors/all", headers=headers)
+    # >>>$ response.json()
+
+    [
+    ...
+    [
+      ...
+      {
+          "name": "Michael Shindler",
+          "ucinetid": "mikes",
+          "title": "Assistant Professor of Teaching",
+          "department": "Computer Science"
+      },
+      ...
+    ]
+    ```
+
+    </div>
+
+
+
 ### `/instructors/all`
 
 **GET all instructors**

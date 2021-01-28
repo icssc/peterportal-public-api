@@ -1,5 +1,86 @@
 **🅰 Find information on UCI grades here.**
 
+
+Try out one of these quick ways to play with our grades endpoints:
+
+=== "curl"
+
+    <div class="termy">
+
+    ```console
+    $ curl https://api.peterportal.org/rest/v0/grades/raw --header "x-api-key: YOUR_API_KEY_HERE"
+
+    [
+      ...
+      {
+            "year": "2018-19",
+            "quarter": "FALL",
+            "department": "I&C SCI",
+            "number": "33",
+            "code": 36620,
+            "section": "A",
+            "instructor": "PATTIS, R.",
+            "type": "LEC",
+            "gradeACount": 125,
+            "gradeBCount": 72,
+            "gradeCCount": 31,
+            "gradeDCount": 16,
+            "gradeFCount": 33,
+            "gradePCount": 1,
+            "gradeNPCount": 0,
+            "gradeWCount": 1,
+            "averageGPA": 2.84
+      },
+      ...
+    ]
+    ```
+    
+    </div>
+
+=== "python"
+
+    <div class="termy">
+
+    ```console
+    $ python -m pip install requests
+    ---> 100%
+    $ python 
+    Python 3.8.5 
+    # >>>$ import requests
+    # >>>$ headers = { "x-api-key": "YOUR_API_KEY_HERE"}
+    # >>>$ response = requests.get("https://api.peterportal.org/rest/v0/grades/raw", headers=headers)
+    # >>>$ response.json()
+
+    [
+    ...
+    [
+      ...
+      {
+            "year": "2018-19",
+            "quarter": "FALL",
+            "department": "I&C SCI",
+            "number": "33",
+            "code": 36620,
+            "section": "A",
+            "instructor": "PATTIS, R.",
+            "type": "LEC",
+            "gradeACount": 125,
+            "gradeBCount": 72,
+            "gradeCCount": 31,
+            "gradeDCount": 16,
+            "gradeFCount": 33,
+            "gradePCount": 1,
+            "gradeNPCount": 0,
+            "gradeWCount": 1,
+            "averageGPA": 2.84
+      },
+      ...
+    ]
+    ```
+
+    </div>
+
+
 ### /grades/raw
 **GET a list of grade distribution results via a query/**
 

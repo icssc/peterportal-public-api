@@ -1,5 +1,57 @@
 **📚 Find information on UC Irvine courses here**
 
+Try out one of these quick ways to play with our courses endpoints:
+
+=== "curl"
+
+    <div class="termy">
+
+    ```console
+    $ curl https://api.peterportal.org/rest/v0/courses/all --header "x-api-key: YOUR_API_KEY_HERE"
+
+    [
+    ...
+    {
+        "department": "I&C SCI",
+        "number": "51",
+        "title": "Introductory Computer Organization",
+        "description": "Multilevel view of system hardware and software..."
+    },
+    ...
+    ]
+    ```
+    
+    </div>
+
+=== "python"
+
+    <div class="termy">
+
+    ```console
+    $ python -m pip install requests
+    ---> 100%
+    $ python 
+    Python 3.8.5 
+    # >>>$ import requests
+    # >>>$ headers = { "x-api-key": "YOUR_API_KEY_HERE"}
+    # >>>$ response = requests.get("https://api.peterportal.org/rest/v0/courses/all", headers=headers)
+    # >>>$ response.json()
+
+    [
+    ...
+    {
+        "department": "I&C SCI",
+        "number": "51",
+        "title": "Introductory Computer Organization",
+        "description": "Multilevel view of system hardware and software..."
+    },
+    ...
+    ]
+    ```
+
+    </div>
+
+
 ### `/courses/all`
 
 **GET all courses**
@@ -9,25 +61,6 @@
 | `200` | A list of all courses available on the UCI Catalogue. Each element is a JSON object containing information on each course (department, number, title, and description) |
 
 
-
-<div class="termy">
-
-```console
-$ curl https://api.peterportal.org/rest/v0/courses/all
-
-[
-...
-{
-    "department": "I&C SCI",
-    "number": "51",
-    "title": "Introductory Computer Organization",
-    "description": "Multilevel view of system hardware and software..."
-},
-...
-]
-```
-
-</div>
 
 
 
