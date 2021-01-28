@@ -17,14 +17,15 @@ There's a lot that REST APIs are used for, but I'll explain it more in the scope
 
 ## Quickstart
 
-Try out our API using any of the following methods:
+Try out our REST API using any of the following methods:
+
 
 === "curl"
 
     <div class="termy">
 
     ```console
-    $ curl https://api.peterportal.org/rest/v0/courses/all
+    $ curl https://api.peterportal.org/rest/v0/courses/all --header "x-api-key: YOUR_API_KEY_HERE"
 
     [
     ...
@@ -50,7 +51,8 @@ Try out our API using any of the following methods:
     $ python 
     Python 3.8.5 
     # >>>$ import requests
-    # >>>$ response = requests.get("https://api.peterportal.org/rest/v0/courses/all")
+    # >>>$ headers = { "x-api-key": "YOUR_API_KEY_HERE"}
+    # >>>$ response = requests.get("https://api.peterportal.org/rest/v0/courses/all", headers=headers)
     # >>>$ response.json()
 
     [
@@ -66,6 +68,7 @@ Try out our API using any of the following methods:
     ```
 
     </div>
+
 
 
 Full documentation can be found [here](https://api.peterportal.org/docs/REST-API/endpoints/)
