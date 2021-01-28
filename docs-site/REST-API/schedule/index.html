@@ -14,7 +14,7 @@
     
     
       
-        <title>Start Here - PeterPortal API Docs</title>
+        <title>Schedule - PeterPortal API Docs</title>
       
     
     
@@ -67,11 +67,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#start-here" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -99,7 +94,7 @@
         <div class="md-header-nav__topic">
           <span class="md-ellipsis">
             
-              Start Here
+              Schedule
             
           </span>
         </div>
@@ -296,56 +291,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Start Here
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../start_here/" class="md-nav__link">
         Start Here
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-a-restful-api" class="md-nav__link">
-    What is a RESTful API?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quickstart" class="md-nav__link">
-    Quickstart
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -389,11 +339,18 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../schedule/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Schedule
       </a>
+      
     </li>
   
 
@@ -469,109 +426,20 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-a-restful-api" class="md-nav__link">
-    What is a RESTful API?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quickstart" class="md-nav__link">
-    Quickstart
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/icssc-projects/peterportal-public-api/edit/master/docs/REST-API/start_here.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/icssc-projects/peterportal-public-api/edit/master/docs/REST-API/schedule.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="start-here">Start here</h1>
-<h2 id="what-is-a-restful-api">What is a RESTful API?</h2>
-<p>An API is an Application Programming Interface. It's how programs talk to each other. PeterPortal Public API is a Web API, meaning anyone and any app can talk to it over the web! You can use Peterportal Public API to get data for apps that help students.</p>
-<p>To call a Web API RESTful, or REST, means that it meets a set of communication standards.</p>
-<p>First of all, REST is an an acronym: <strong>RE</strong>presentational <strong>S</strong>tate <strong>T</strong>ransfer. But that doesn't really help understanding it :'( </p>
-<p>There's a lot that REST APIs are used for, but I'll explain it more in the scope of what you can do with PeterPortal API.  </p>
-<ul>
-<li>A REST API is Stateless. This means that it does not rely on nor take into account previous messages that you sent to it. That means for each request you send to it, you need to send all the information that the REST API needs to understand your request.  </li>
-<li>Our REST API returns and accepts <a href="https://www.w3schools.com/whatis/whatis_json.asp">JSON</a>. REST APIs are not restricted to JSON; however, that is the standard you will see for almost every public Web API. <a href="https://www.w3schools.com/whatis/whatis_json.asp">JSON syntax is kinda like a Python dictionary</a>. </li>
-</ul>
-<h2 id="quickstart">Quickstart</h2>
-<p>Try out our REST API using any of the following methods:</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">curl</label><div class="tabbed-content">
-<div class="termy">
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>curl https://api.peterportal.org/rest/v0/courses/all --header <span class="s2">&quot;x-api-key: YOUR_API_KEY_HERE&quot;</span>
-
-<span class="go">[</span>
-<span class="go">...</span>
-<span class="go">{</span>
-<span class="go">    &quot;department&quot;: &quot;I&amp;C SCI&quot;,</span>
-<span class="go">    &quot;number&quot;: &quot;51&quot;,</span>
-<span class="go">    &quot;title&quot;: &quot;Introductory Computer Organization&quot;,</span>
-<span class="go">    &quot;description&quot;: &quot;Multilevel view of system hardware and software...&quot;</span>
-<span class="go">},</span>
-<span class="go">...</span>
-<span class="go">]</span>
-</code></pre></div>
-</div>
-</div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">python</label><div class="tabbed-content">
-<div class="termy">
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python -m pip install requests
-<span class="go">---&gt; 100%</span>
-<span class="gp">$ </span>python 
-<span class="go">Python 3.8.5 </span>
-<span class="gp"># </span>&gt;&gt;&gt;$ import requests
-<span class="gp"># </span>&gt;&gt;&gt;$ <span class="nv">headers</span> <span class="o">=</span> <span class="o">{</span> <span class="s2">&quot;x-api-key&quot;</span>: <span class="s2">&quot;YOUR_API_KEY_HERE&quot;</span><span class="o">}</span>
-<span class="gp"># </span>&gt;&gt;&gt;$ <span class="nv">response</span> <span class="o">=</span> requests.get<span class="o">(</span><span class="s2">&quot;https://api.peterportal.org/rest/v0/courses/all&quot;</span>, <span class="nv">headers</span><span class="o">=</span>headers<span class="o">)</span>
-<span class="gp"># </span>&gt;&gt;&gt;$ response.json<span class="o">()</span>
-
-<span class="go">[</span>
-<span class="go">...</span>
-<span class="go">{</span>
-<span class="go">    &quot;department&quot;: &quot;I&amp;C SCI&quot;,</span>
-<span class="go">    &quot;number&quot;: &quot;51&quot;,</span>
-<span class="go">    &quot;title&quot;: &quot;Introductory Computer Organization&quot;,</span>
-<span class="go">    &quot;description&quot;: &quot;Multilevel view of system hardware and software...&quot;</span>
-<span class="go">},</span>
-<span class="go">...</span>
-<span class="go">]</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<p>Full documentation can be found <a href="https://api.peterportal.org/docs/REST-API/endpoints/">here</a></p>
+                  <h1>Schedule</h1>
+                
+                <p>To get schedule of classes data, please use <a href="https://github.com/icssc-projects/websoc-api">this npm package</a> made by one of our team members. This API allows access to school, department, course, and section data in a hierarchical JSON format. This module cannot be used on a browser as it uses a library called Camaro that uses features only available in NodeJS.</p>
+<p>We are planning to integrate this package onto the API, but it's scheduled for future release!</p>
                 
               
               
@@ -590,7 +458,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../../Getting-Started/Using-Your-API-Key/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../grades/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -599,19 +467,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Using Your API Key
+                Grades
               </div>
             </div>
           </a>
         
         
-          <a href="../courses/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../GraphQL-API/start_here/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Courses
+                Start Here
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

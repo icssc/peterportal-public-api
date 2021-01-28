@@ -14,7 +14,7 @@
     
     
       
-        <title>Start Here - PeterPortal API Docs</title>
+        <title>Courses - PeterPortal API Docs</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#start-here" class="md-skip">
+        <a href="#coursesall" class="md-skip">
           Skip to content
         </a>
       
@@ -99,7 +99,7 @@
         <div class="md-header-nav__topic">
           <span class="md-ellipsis">
             
-              Start Here
+              Courses
             
           </span>
         </div>
@@ -296,6 +296,18 @@
             
   
   
+  
+    <li class="md-nav__item">
+      <a href="../start_here/" class="md-nav__link">
+        Start Here
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
     
   
   
@@ -303,23 +315,19 @@
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Start Here
+          Courses
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Start Here
+        Courses
       </a>
       
         
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
-  
-    
   
   
     <label class="md-nav__title" for="__toc">
@@ -329,16 +337,36 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-is-a-restful-api" class="md-nav__link">
-    What is a RESTful API?
+  <a href="#coursesall" class="md-nav__link">
+    /courses/all
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#quickstart" class="md-nav__link">
-    Quickstart
+  <a href="#coursescourseid" class="md-nav__link">
+    /courses/{courseID}
   </a>
+  
+    <nav class="md-nav" aria-label="/courses/{courseID}">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#responses" class="md-nav__link">
+    Responses
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -346,18 +374,6 @@
   
 </nav>
       
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../courses/" class="md-nav__link">
-        Courses
-      </a>
     </li>
   
 
@@ -477,8 +493,6 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -487,16 +501,36 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-is-a-restful-api" class="md-nav__link">
-    What is a RESTful API?
+  <a href="#coursesall" class="md-nav__link">
+    /courses/all
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#quickstart" class="md-nav__link">
-    Quickstart
+  <a href="#coursescourseid" class="md-nav__link">
+    /courses/{courseID}
   </a>
+  
+    <nav class="md-nav" aria-label="/courses/{courseID}">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#responses" class="md-nav__link">
+    Responses
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -512,23 +546,15 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/icssc-projects/peterportal-public-api/edit/master/docs/REST-API/start_here.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/icssc-projects/peterportal-public-api/edit/master/docs/REST-API/courses.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="start-here">Start here</h1>
-<h2 id="what-is-a-restful-api">What is a RESTful API?</h2>
-<p>An API is an Application Programming Interface. It's how programs talk to each other. PeterPortal Public API is a Web API, meaning anyone and any app can talk to it over the web! You can use Peterportal Public API to get data for apps that help students.</p>
-<p>To call a Web API RESTful, or REST, means that it meets a set of communication standards.</p>
-<p>First of all, REST is an an acronym: <strong>RE</strong>presentational <strong>S</strong>tate <strong>T</strong>ransfer. But that doesn't really help understanding it :'( </p>
-<p>There's a lot that REST APIs are used for, but I'll explain it more in the scope of what you can do with PeterPortal API.  </p>
-<ul>
-<li>A REST API is Stateless. This means that it does not rely on nor take into account previous messages that you sent to it. That means for each request you send to it, you need to send all the information that the REST API needs to understand your request.  </li>
-<li>Our REST API returns and accepts <a href="https://www.w3schools.com/whatis/whatis_json.asp">JSON</a>. REST APIs are not restricted to JSON; however, that is the standard you will see for almost every public Web API. <a href="https://www.w3schools.com/whatis/whatis_json.asp">JSON syntax is kinda like a Python dictionary</a>. </li>
-</ul>
-<h2 id="quickstart">Quickstart</h2>
-<p>Try out our REST API using any of the following methods:</p>
+                  <h1>Courses</h1>
+                
+                <p><strong>📚 Find information on UC Irvine courses here</strong></p>
+<p>Try out one of these quick ways to play with our courses endpoints:</p>
 <div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">curl</label><div class="tabbed-content">
 <div class="termy">
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>curl https://api.peterportal.org/rest/v0/courses/all --header <span class="s2">&quot;x-api-key: YOUR_API_KEY_HERE&quot;</span>
@@ -571,7 +597,136 @@
 </div>
 </div>
 </div>
-<p>Full documentation can be found <a href="https://api.peterportal.org/docs/REST-API/endpoints/">here</a></p>
+<h3 id="coursesall"><code>/courses/all</code></h3>
+<p><strong>GET all courses</strong></p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>200</code></td>
+<td>A list of all courses available on the UCI Catalogue. Each element is a JSON object containing information on each course (department, number, title, and description)</td>
+</tr>
+</tbody>
+</table>
+<details class="success"><summary>200 Successful Response</summary><div class="highlight"><pre><span></span><code><span class="p">[</span>
+  <span class="err">...</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;number&quot;</span><span class="p">:</span> <span class="s2">&quot;51&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Introductory Computer Organization&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Multilevel view of system hardware and software...&quot;</span>
+  <span class="p">},</span>
+  <span class="err">...</span>
+<span class="p">]</span>
+</code></pre></div>
+</details>
+<h3 id="coursescourseid"><code>/courses/{courseID}</code></h3>
+<p><strong>GET detailed information on a specific course</strong></p>
+<h4 id="parameters">Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>courseID</code></td>
+<td>Course department + course number (without spaces)</td>
+<td>I&amp;CSCI53, COMPSCI122B, BIOSCI43</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses">Responses</h4>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>200</code></td>
+<td>A JSON object containing every information available on a specific course.</td>
+</tr>
+<tr>
+<td><code>404</code></td>
+<td>Invaild ID/Course not found</td>
+</tr>
+</tbody>
+</table>
+<details class="success"><summary>200 Successful Response</summary><p><code>/courses/I&amp;CSCI53</code> returns</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI 53&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;number&quot;</span><span class="p">:</span> <span class="s2">&quot;53&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;school&quot;</span><span class="p">:</span> <span class="s2">&quot;Donald Bren School of Information and Computer Sciences&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Principles in System Design&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;course_level&quot;</span><span class="p">:</span> <span class="s2">&quot;Lower Division (1-99)&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;department_alias&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;ICS&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;units&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="mi">4</span><span class="p">,</span>
+        <span class="mi">4</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Introduces basic principles of system software: operating systems, compilers, and networking. Exposure to the following topics through theoretical and practical programming experiences: linking and loading, process and memory management, concurrency and synchronization, network communication, programming for performance, etc.&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;department_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Information and Computer Science&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;professor_history&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;iharris&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;klefstad&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;jwongma&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;prerequisite_tree&quot;</span><span class="p">:</span> <span class="s2">&quot;{\&quot;AND\&quot;:[\&quot;I&amp;C SCI 51\&quot;]}&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;prerequisite_list&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;I&amp;C SCI 51&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;prerequisite_text&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI 51&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;COMPSCI 122C&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;COMPSCI 131&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;COMPSCI 222&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;I&amp;C SCI 53L&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;repeatability&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;grading_option&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;concurrent&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;same_as&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;restriction&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;overlap&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;corequisite&quot;</span><span class="p">:</span> <span class="s2">&quot; I&amp;C SCI 53L&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;ge_list&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="nt">&quot;ge_text&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;terms&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;2019 Spring&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;2020 Fall&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;2019 Fall&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;2019 Winter&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;2018 Winter&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;2018 Spring&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;2017 Winter&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;2017 Spring&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<details class="fail"><summary>404 Not Found</summary><p><code>/courses/I&amp;CSCI5555</code> returns</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;Thu, 31 Dec 2020 00:00:00 GMT&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span><span class="p">,</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Bad Request: Invalid parameter&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Course not found&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
                 
               
               
@@ -590,7 +745,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../../Getting-Started/Using-Your-API-Key/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../start_here/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -599,19 +754,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Using Your API Key
+                Start Here
               </div>
             </div>
           </a>
         
         
-          <a href="../courses/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../instructors/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Courses
+                Instructors
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

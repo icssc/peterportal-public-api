@@ -14,7 +14,7 @@
     
     
       
-        <title>Endpoints - PeterPortal API Docs</title>
+        <title>Grades - PeterPortal API Docs</title>
       
     
     
@@ -44,6 +44,8 @@
     
     
     
+      <link rel="stylesheet" href="../../css/termynal.css">
+    
     
       
     
@@ -66,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#endpoints" class="md-skip">
+        <a href="#gradesraw" class="md-skip">
           Skip to content
         </a>
       
@@ -97,7 +99,7 @@
         <div class="md-header-nav__topic">
           <span class="md-ellipsis">
             
-              Endpoints
+              Grades
             
           </span>
         </div>
@@ -140,7 +142,7 @@
 <a href="https://github.com/icssc-projects/peterportal-public-api/" title="Go to repository" class="md-source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
   </div>
   <div class="md-source__repository">
     icssc-projects/peterportal-public-api
@@ -184,7 +186,7 @@
 <a href="https://github.com/icssc-projects/peterportal-public-api/" title="Go to repository" class="md-source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
   </div>
   <div class="md-source__repository">
     icssc-projects/peterportal-public-api
@@ -216,33 +218,18 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../Contributing/" class="md-nav__link">
-        Contributing
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
       
-      <label class="md-nav__link" for="nav-3">
+      <label class="md-nav__link" for="nav-2">
         Getting Started
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
-        <label class="md-nav__title" for="nav-3">
+        <label class="md-nav__title" for="nav-2">
           <span class="md-nav__icon md-icon"></span>
           Getting Started
         </label>
@@ -255,7 +242,7 @@
   
     <li class="md-nav__item">
       <a href="../../Getting-Started/Register-Here/" class="md-nav__link">
-        Register Here
+        Register
       </a>
     </li>
   
@@ -268,6 +255,180 @@
     <li class="md-nav__item">
       <a href="../../Getting-Started/Using-Your-API-Key/" class="md-nav__link">
         Using Your API Key
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      
+      <label class="md-nav__link" for="nav-3">
+        REST API
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="REST API" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          REST API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../start_here/" class="md-nav__link">
+        Start Here
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../courses/" class="md-nav__link">
+        Courses
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../instructors/" class="md-nav__link">
+        Instructors
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Grades
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Grades
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#gradesraw" class="md-nav__link">
+    /grades/raw
+  </a>
+  
+    <nav class="md-nav" aria-label="/grades/raw">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response" class="md-nav__link">
+    Response
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gradescalculated" class="md-nav__link">
+    /grades/calculated
+  </a>
+  
+    <nav class="md-nav" aria-label="/grades/calculated">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters_1" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_1" class="md-nav__link">
+    Response
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../schedule/" class="md-nav__link">
+        Schedule
       </a>
     </li>
   
@@ -310,7 +471,7 @@
   
     <li class="md-nav__item">
       <a href="../../GraphQL-API/start_here/" class="md-nav__link">
-        Start here
+        Start Here
       </a>
     </li>
   
@@ -326,274 +487,13 @@
       
       
 
-  
-  
-    
-  
-  
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
-      
-      <label class="md-nav__link" for="nav-5">
-        REST API
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="REST API" data-md-level="1">
-        <label class="md-nav__title" for="nav-5">
-          <span class="md-nav__icon md-icon"></span>
-          REST API
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-          
-            
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Endpoints
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        Endpoints
-      </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#courses" class="md-nav__link">
-    Courses
-  </a>
-  
-    <nav class="md-nav" aria-label="Courses">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#coursesall" class="md-nav__link">
-    /courses/all
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#coursescourseid" class="md-nav__link">
-    /courses/{courseID}
-  </a>
-  
-    <nav class="md-nav" aria-label="/courses/{courseID}">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
-    Parameters
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#responses" class="md-nav__link">
-    Responses
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#instructors" class="md-nav__link">
-    Instructors
-  </a>
-  
-    <nav class="md-nav" aria-label="Instructors">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#instructorsall" class="md-nav__link">
-    /instructors/all
-  </a>
-  
-    <nav class="md-nav" aria-label="/instructors/all">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters_1" class="md-nav__link">
-    Parameters
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#responses_1" class="md-nav__link">
-    Responses
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#instructorsucinetid" class="md-nav__link">
-    /instructors/{ucinetid}
-  </a>
-  
-    <nav class="md-nav" aria-label="/instructors/{ucinetid}">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters_2" class="md-nav__link">
-    Parameters
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#responses_2" class="md-nav__link">
-    Responses
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#grade-distribution" class="md-nav__link">
-    Grade Distribution
-  </a>
-  
-    <nav class="md-nav" aria-label="Grade Distribution">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#gradesraw" class="md-nav__link">
-    /grades/raw
-  </a>
-  
-    <nav class="md-nav" aria-label="/grades/raw">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters_3" class="md-nav__link">
-    Parameters
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#response" class="md-nav__link">
-    Response
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gradescalculated" class="md-nav__link">
-    /grades/calculated
-  </a>
-  
-    <nav class="md-nav" aria-label="/grades/calculated">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters_4" class="md-nav__link">
-    Parameters
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#response_1" class="md-nav__link">
-    Response
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#schedule" class="md-nav__link">
-    Schedule
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-          
-            
   
   
   
     <li class="md-nav__item">
-      <a href="../start_here/" class="md-nav__link">
-        Start here
+      <a href="../../Contributing/" class="md-nav__link">
+        Contributing
       </a>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
     </li>
   
 
@@ -613,8 +513,6 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -623,128 +521,6 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#courses" class="md-nav__link">
-    Courses
-  </a>
-  
-    <nav class="md-nav" aria-label="Courses">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#coursesall" class="md-nav__link">
-    /courses/all
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#coursescourseid" class="md-nav__link">
-    /courses/{courseID}
-  </a>
-  
-    <nav class="md-nav" aria-label="/courses/{courseID}">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
-    Parameters
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#responses" class="md-nav__link">
-    Responses
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#instructors" class="md-nav__link">
-    Instructors
-  </a>
-  
-    <nav class="md-nav" aria-label="Instructors">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#instructorsall" class="md-nav__link">
-    /instructors/all
-  </a>
-  
-    <nav class="md-nav" aria-label="/instructors/all">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters_1" class="md-nav__link">
-    Parameters
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#responses_1" class="md-nav__link">
-    Responses
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#instructorsucinetid" class="md-nav__link">
-    /instructors/{ucinetid}
-  </a>
-  
-    <nav class="md-nav" aria-label="/instructors/{ucinetid}">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters_2" class="md-nav__link">
-    Parameters
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#responses_2" class="md-nav__link">
-    Responses
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#grade-distribution" class="md-nav__link">
-    Grade Distribution
-  </a>
-  
-    <nav class="md-nav" aria-label="Grade Distribution">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#gradesraw" class="md-nav__link">
     /grades/raw
   </a>
@@ -753,7 +529,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#parameters_3" class="md-nav__link">
+  <a href="#parameters" class="md-nav__link">
     Parameters
   </a>
   
@@ -770,8 +546,8 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#gradescalculated" class="md-nav__link">
     /grades/calculated
   </a>
@@ -780,7 +556,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#parameters_4" class="md-nav__link">
+  <a href="#parameters_1" class="md-nav__link">
     Parameters
   </a>
   
@@ -797,18 +573,6 @@
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#schedule" class="md-nav__link">
-    Schedule
-  </a>
-  
-</li>
       
     </ul>
   
@@ -822,258 +586,88 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/icssc-projects/peterportal-public-api/edit/master/docs/REST-API/endpoints.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/icssc-projects/peterportal-public-api/edit/master/docs/REST-API/grades.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="endpoints">Endpoints</h1>
-<h2 id="courses">Courses</h2>
-<p><strong>📚 Find information on UC Irvine courses here</strong></p>
-<h3 id="coursesall"><code>/courses/all</code></h3>
-<p><strong>GET all courses</strong></p>
-<table>
-<thead>
-<tr>
-<th>Code</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>200</code></td>
-<td>A list of all courses available on the UCI Catalogue. Each element is a JSON object containing information on each course (department, number, title, and description)</td>
-</tr>
-</tbody>
-</table>
-<details class="success"><summary>200 Successful Response</summary><div class="highlight"><pre><span></span><code><span class="p">[</span>
-  <span class="err">...</span>
-  <span class="p">{</span>
-    <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;number&quot;</span><span class="p">:</span> <span class="s2">&quot;51&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Introductory Computer Organization&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Multilevel view of system hardware and software...&quot;</span>
-  <span class="p">},</span>
-  <span class="err">...</span>
-<span class="p">]</span>
+                  <h1>Grades</h1>
+                
+                <p><strong>🅰 Find information on UCI grades here.</strong></p>
+<p>Try out one of these quick ways to play with our grades endpoints:</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">curl</label><div class="tabbed-content">
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>curl https://api.peterportal.org/rest/v0/grades/raw --header <span class="s2">&quot;x-api-key: YOUR_API_KEY_HERE&quot;</span>
+
+<span class="go">[</span>
+<span class="go">  ...</span>
+<span class="go">  {</span>
+<span class="go">        &quot;year&quot;: &quot;2018-19&quot;,</span>
+<span class="go">        &quot;quarter&quot;: &quot;FALL&quot;,</span>
+<span class="go">        &quot;department&quot;: &quot;I&amp;C SCI&quot;,</span>
+<span class="go">        &quot;number&quot;: &quot;33&quot;,</span>
+<span class="go">        &quot;code&quot;: 36620,</span>
+<span class="go">        &quot;section&quot;: &quot;A&quot;,</span>
+<span class="go">        &quot;instructor&quot;: &quot;PATTIS, R.&quot;,</span>
+<span class="go">        &quot;type&quot;: &quot;LEC&quot;,</span>
+<span class="go">        &quot;gradeACount&quot;: 125,</span>
+<span class="go">        &quot;gradeBCount&quot;: 72,</span>
+<span class="go">        &quot;gradeCCount&quot;: 31,</span>
+<span class="go">        &quot;gradeDCount&quot;: 16,</span>
+<span class="go">        &quot;gradeFCount&quot;: 33,</span>
+<span class="go">        &quot;gradePCount&quot;: 1,</span>
+<span class="go">        &quot;gradeNPCount&quot;: 0,</span>
+<span class="go">        &quot;gradeWCount&quot;: 1,</span>
+<span class="go">        &quot;averageGPA&quot;: 2.84</span>
+<span class="go">  },</span>
+<span class="go">  ...</span>
+<span class="go">]</span>
 </code></pre></div>
-</details>
-<h3 id="coursescourseid"><code>/courses/{courseID}</code></h3>
-<p><strong>GET detailed information on a specific course</strong></p>
-<h4 id="parameters">Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>courseID</code></td>
-<td>Course department + course number (without spaces)</td>
-<td>I&amp;CSCI53, COMPSCI122B, BIOSCI43</td>
-</tr>
-</tbody>
-</table>
-<h4 id="responses">Responses</h4>
-<table>
-<thead>
-<tr>
-<th>Code</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>200</code></td>
-<td>A JSON object containing every information available on a specific course.</td>
-</tr>
-<tr>
-<td><code>404</code></td>
-<td>Invaild ID/Course not found</td>
-</tr>
-</tbody>
-</table>
-<details class="success"><summary>200 Successful Response</summary><p><code>/courses/I&amp;CSCI53</code> returns</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI 53&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;number&quot;</span><span class="p">:</span> <span class="s2">&quot;53&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;school&quot;</span><span class="p">:</span> <span class="s2">&quot;Donald Bren School of Information and Computer Sciences&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Principles in System Design&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;course_level&quot;</span><span class="p">:</span> <span class="s2">&quot;Lower Division (1-99)&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;department_alias&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;ICS&quot;</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;units&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="mi">4</span><span class="p">,</span>
-        <span class="mi">4</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Introduces basic principles of system software: operating systems, compilers, and networking. Exposure to the following topics through theoretical and practical programming experiences: linking and loading, process and memory management, concurrency and synchronization, network communication, programming for performance, etc.&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;department_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Information and Computer Science&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;professor_history&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;iharris&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;klefstad&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;jwongma&quot;</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;prerequisite_tree&quot;</span><span class="p">:</span> <span class="s2">&quot;{\&quot;AND\&quot;:[\&quot;I&amp;C SCI 51\&quot;]}&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;prerequisite_list&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;I&amp;C SCI 51&quot;</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;prerequisite_text&quot;</span><span class="p">:</span> <span class="s2">&quot;I&amp;C SCI 51&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;COMPSCI 122C&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;COMPSCI 131&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;COMPSCI 222&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;I&amp;C SCI 53L&quot;</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;repeatability&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;grading_option&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;concurrent&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;same_as&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;restriction&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;overlap&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;corequisite&quot;</span><span class="p">:</span> <span class="s2">&quot; I&amp;C SCI 53L&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;ge_list&quot;</span><span class="p">:</span> <span class="p">[],</span>
-    <span class="nt">&quot;ge_text&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;terms&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;2019 Spring&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;2020 Fall&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;2019 Fall&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;2019 Winter&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;2018 Winter&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;2018 Spring&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;2017 Winter&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;2017 Spring&quot;</span>
-    <span class="p">]</span>
-<span class="p">}</span>
+</div>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">python</label><div class="tabbed-content">
+<div class="termy">
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python -m pip install requests
+<span class="go">---&gt; 100%</span>
+<span class="gp">$ </span>python 
+<span class="go">Python 3.8.5 </span>
+<span class="gp"># </span>&gt;&gt;&gt;$ import requests
+<span class="gp"># </span>&gt;&gt;&gt;$ <span class="nv">headers</span> <span class="o">=</span> <span class="o">{</span> <span class="s2">&quot;x-api-key&quot;</span>: <span class="s2">&quot;YOUR_API_KEY_HERE&quot;</span><span class="o">}</span>
+<span class="gp"># </span>&gt;&gt;&gt;$ <span class="nv">response</span> <span class="o">=</span> requests.get<span class="o">(</span><span class="s2">&quot;https://api.peterportal.org/rest/v0/grades/raw&quot;</span>, <span class="nv">headers</span><span class="o">=</span>headers<span class="o">)</span>
+<span class="gp"># </span>&gt;&gt;&gt;$ response.json<span class="o">()</span>
+
+<span class="go">[</span>
+<span class="go">...</span>
+<span class="go">[</span>
+<span class="go">  ...</span>
+<span class="go">  {</span>
+<span class="go">        &quot;year&quot;: &quot;2018-19&quot;,</span>
+<span class="go">        &quot;quarter&quot;: &quot;FALL&quot;,</span>
+<span class="go">        &quot;department&quot;: &quot;I&amp;C SCI&quot;,</span>
+<span class="go">        &quot;number&quot;: &quot;33&quot;,</span>
+<span class="go">        &quot;code&quot;: 36620,</span>
+<span class="go">        &quot;section&quot;: &quot;A&quot;,</span>
+<span class="go">        &quot;instructor&quot;: &quot;PATTIS, R.&quot;,</span>
+<span class="go">        &quot;type&quot;: &quot;LEC&quot;,</span>
+<span class="go">        &quot;gradeACount&quot;: 125,</span>
+<span class="go">        &quot;gradeBCount&quot;: 72,</span>
+<span class="go">        &quot;gradeCCount&quot;: 31,</span>
+<span class="go">        &quot;gradeDCount&quot;: 16,</span>
+<span class="go">        &quot;gradeFCount&quot;: 33,</span>
+<span class="go">        &quot;gradePCount&quot;: 1,</span>
+<span class="go">        &quot;gradeNPCount&quot;: 0,</span>
+<span class="go">        &quot;gradeWCount&quot;: 1,</span>
+<span class="go">        &quot;averageGPA&quot;: 2.84</span>
+<span class="go">  },</span>
+<span class="go">  ...</span>
+<span class="go">]</span>
 </code></pre></div>
-</details>
-<details class="fail"><summary>404 Not Found</summary><p><code>/courses/I&amp;CSCI5555</code> returns</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;Thu, 31 Dec 2020 00:00:00 GMT&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span><span class="p">,</span>
-    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Bad Request: Invalid parameter&quot;</span><span class="p">,</span> 
-    <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Course not found&quot;</span><span class="p">,</span>
-<span class="p">}</span>
-</code></pre></div>
-</details>
-<h2 id="instructors">Instructors</h2>
-<p><strong>👩‍🏫 Find information on UCI instructors here.</strong></p>
-<h3 id="instructorsall"><code>/instructors/all</code></h3>
-<p><strong>GET all instructors</strong></p>
-<h4 id="parameters_1">Parameters</h4>
-<p>None. 💃</p>
-<h4 id="responses_1">Responses</h4>
-<table>
-<thead>
-<tr>
-<th>Code</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>200</code></td>
-<td>A list of all instructors available on the UCI Catalogue. Each element is a JSON object containing information on each instructor (name, ucinetid, title, department).</td>
-</tr>
-</tbody>
-</table>
-<details class="success"><summary>200 Successful Response</summary><div class="highlight"><pre><span></span><code><span class="p">[</span>
-  <span class="err">...</span>
-  <span class="p">{</span>
-      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Michael Shindler&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;ucinetid&quot;</span><span class="p">:</span> <span class="s2">&quot;mikes&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Assistant Professor of Teaching&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;Computer Science&quot;</span>
-  <span class="p">},</span>
-  <span class="err">...</span>
-<span class="p">]</span>
-</code></pre></div>
-</details>
-<h3 id="instructorsucinetid">/instructors/{ucinetid}</h3>
-<p><strong>GET detailed information on a specific instructor</strong></p>
-<h4 id="parameters_2">Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ucinetid</code></td>
-<td>Can be obtained using the /all endpoint above</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h4 id="responses_2">Responses</h4>
-<table>
-<thead>
-<tr>
-<th>Code</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>200</code></td>
-<td>A JSON object containing every information available on a specific instructor</td>
-</tr>
-<tr>
-<td><code>404</code></td>
-<td>Invaild UCInetID/Instructor not found</td>
-</tr>
-</tbody>
-</table>
-<details class="success"><summary>200 Succesful Response</summary><p><code>/instructors/mikes</code> returns</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Michael Shindler&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;ucinetid&quot;</span><span class="p">:</span> <span class="s2">&quot;mikes&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;phone&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Assistant Professor of Teaching&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;department&quot;</span><span class="p">:</span> <span class="s2">&quot;Computer Science&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;schools&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;Donald Bren School of Information and Computer Sciences&quot;</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;related_departments&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;COMPSCI&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;IN4MATX&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;I&amp;C SCI&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;SWE&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;STATS&quot;</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;course_history&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;COMPSCI 199&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;COMPSCI H198&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;I&amp;C SCI 46&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;COMPSCI 167&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;COMPSCI 161&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;COMPSCI 269S&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;COMPSCI 260P&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;COMPSCI 162&quot;</span>
-    <span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-</details>
-<details class="fail"><summary>404 Not Found</summary><p><code>/instructors/nonexistent</code> returns</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;Thu, 31 Dec 2020 00:00:00 GMT&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">404</span><span class="p">,</span>
-    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Bad Request: Invalid parameter&quot;</span><span class="p">,</span> 
-    <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Instructor not found&quot;</span><span class="p">,</span>
-<span class="p">}</span>
-</code></pre></div>
-</details>
-<h2 id="grade-distribution">Grade Distribution</h2>
+</div>
+</div>
+</div>
 <h3 id="gradesraw">/grades/raw</h3>
 <p><strong>GET a list of grade distribution results via a query/</strong></p>
-<h4 id="parameters_3">Parameters</h4>
+<h4 id="parameters">Parameters</h4>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>Endpoint that utilize query params must follow by this format:
@@ -1212,7 +806,7 @@
 </details>
 <h3 id="gradescalculated">/grades/calculated</h3>
 <p><strong>GET a list of grade distribution results via a query/</strong></p>
-<h4 id="parameters_4">Parameters</h4>
+<h4 id="parameters_1">Parameters</h4>
 <p>Please follow the above documentation on the <code>/grades/raw</code> endpoint, for information about the parameters.</p>
 <h4 id="response_1">Response</h4>
 <table>
@@ -1284,9 +878,6 @@
 <span class="p">}</span>
 </code></pre></div>
 </details>
-<h2 id="schedule">Schedule</h2>
-<p>To get schedule of classes data, please use this npm package https://github.com/icssc-projects/websoc-api made by one of our team members. This API allows access to school, department, course, and section data in a hierarchical JSON format. This module cannot be used on a browser as it uses a library called Camaro that uses features only available in NodeJS.</p>
-<p>We are planning to integrate this package onto the API, but it's scheduled for future release!</p>
                 
               
               
@@ -1305,7 +896,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../../GraphQL-API/start_here/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../instructors/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -1314,19 +905,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Start here
+                Instructors
               </div>
             </div>
           </a>
         
         
-          <a href="../start_here/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../schedule/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Start here
+                Schedule
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
@@ -1341,12 +932,38 @@
     <div class="md-footer-meta__inner md-grid">
       <div class="md-footer-copyright">
         
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2020 - 2021 ICSSC Projects
+          </div>
+        
         Made with
         <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
           Material for MkDocs
         </a>
       </div>
       
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://icsscprojects.medium.com/" target="_blank" rel="noopener" title="icsscprojects.medium.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 32v448h448V32H0zm372.2 106.1l-24 23c-2.1 1.6-3.1 4.2-2.7 6.7v169.3c-.4 2.6.6 5.2 2.7 6.7l23.5 23v5.1h-118V367l24.3-23.6c2.4-2.4 2.4-3.1 2.4-6.7V199.8l-67.6 171.6h-9.1L125 199.8v115c-.7 4.8 1 9.7 4.4 13.2l31.6 38.3v5.1H71.2v-5.1l31.6-38.3c3.4-3.5 4.9-8.4 4.1-13.2v-133c.4-3.7-1-7.3-3.8-9.8L75 138.1V133h87.3l67.4 148L289 133.1h83.2v5z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/icssc-projects" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+  </div>
+
     </div>
   </div>
 </footer>
@@ -1366,7 +983,11 @@
         })
       </script>
       
+        <script src="../../js/termynal.js"></script>
+      
         <script src="../../js/forms.js"></script>
+      
+        <script src="../../js/custom.js"></script>
       
     
   </body>
