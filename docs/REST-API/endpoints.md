@@ -12,6 +12,29 @@
 |------|-------------|
 | `200` | A list of all courses available on the UCI Catalogue. Each element is a JSON object containing information on each course (department, number, title, and description) |
 
+
+
+<div class="termy">
+
+```console
+$ curl https://api.peterportal.org/rest/v0/courses/all
+
+[
+...
+{
+    "department": "I&C SCI",
+    "number": "51",
+    "title": "Introductory Computer Organization",
+    "description": "Multilevel view of system hardware and software..."
+},
+...
+]
+```
+
+</div>
+
+
+
 ??? success "200 Successful Response"
 
     ``` JSON
