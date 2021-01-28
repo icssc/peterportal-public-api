@@ -37,6 +37,13 @@ nav:
     - Start Here: GraphQL-API/start_here.md
   - Contributing: Contributing.md
 
+
+extra:
+  social:
+    - icon: fontawesome/brands/medium
+      link: https://icsscprojects.medium.com/
+
+copyright: Copyright &copy; 2020 - 2021 ICSSC Projects
 extra_css:
   - css/termynal.css
 
