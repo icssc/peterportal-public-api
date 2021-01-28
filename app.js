@@ -21,6 +21,7 @@ var graphQLRouter = require('./graphql/router');
 var generateKey = require('./keys/generateKey');
 
 var app = express();
+app.set('trust proxy', 1);
 
 const limiter = rateLimit({
     windowMs: 60 * 1000, // 60 seconds * 1000ms
