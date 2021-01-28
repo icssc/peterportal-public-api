@@ -128,12 +128,11 @@ router.post("/", function (req, res, next) {
 router.get("/confirm/:key", function (req, res, next) {
 
   activateAPIKey(req.params.key).then((ret) => {
-    console.log("returned", ret);
-    var success = sendAPIKeyEmail(ret.data, req.params.key);
-    if (success)
-      res.send("Your API key has been confirmed. See your email for the api key. \n Visit our documentation here: https://api.peterportal.org");
-    else
-      res.status(500).send(createErrorJSON(500, "Internal Server Error", ""))
+    sendAPIKeyEmail(ret.data, req.params.key);
+    // console.log(success);
+    // if (success)
+    res.send("Your API key has been confirmed. See your email for the api key. \n Visit our documentation here: https://api.peterportal.org");
+    
     }).catch((err) => {
     console.log(err);
     res.status(500).send(createErrorJSON(500, "Internal Server Error", ""))
