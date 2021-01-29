@@ -6,11 +6,61 @@ To use your api key, add it to the headers of your request, with `x-api-key` as 
 x-api-key: YOUR_API_KEY_HERE
 ```
 
-Here is an example cURL request: 
-```
-curl --location --request GET 'http://api.peterportal.org/rest/v0/courses/all' \
---header 'x-api-key: YOUR_API_KEY_HERE'
-```
+
+
+
+=== "curl"
+
+    <div class="termy">
+
+    ```console
+    $ curl https://api.peterportal.org/rest/v0/courses/all --header "x-api-key: YOUR_API_KEY_HERE"
+
+    [
+    ...
+    {
+        "department": "I&C SCI",
+        "number": "51",
+        "title": "Introductory Computer Organization",
+        "description": "Multilevel view of system hardware and software..."
+    },
+    ...
+    ]
+    ```
+    
+    </div>
+
+=== "python"
+
+    <div class="termy">
+
+    ```console
+    $ python -m pip install requests
+    ---> 100%
+    $ python 
+    Python 3.8.5 
+    # >>>$ import requests
+    # >>>$ headers = { "x-api-key": "YOUR_API_KEY_HERE"}
+    # >>>$ response = requests.get("https://api.peterportal.org/rest/v0/courses/all", headers=headers)
+    # >>>$ response.json()
+
+    [
+    ...
+    {
+        "department": "I&C SCI",
+        "number": "51",
+        "title": "Introductory Computer Organization",
+        "description": "Multilevel view of system hardware and software..."
+    },
+    ...
+    ]
+    ```
+
+    </div>
+
+    
+
+
 
 Failing to provide valid credentials will respond with a JSON error object.
 

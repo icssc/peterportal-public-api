@@ -19,8 +19,7 @@ const {
 let apiKeyAuth = (req, res, next) => {
     if (process.env.NODE_ENV == "development") {
         next();
-    }
-    if (!req.headers["x-api-key"]) {
+    } else if (!req.headers["x-api-key"]) {
         res.status(401).json(createErrorJSON(401, "No credentials sent.", "No credentials were found in the header of the request. See documentation for more info."));
     } else {
         // add check to make sure key is active

@@ -3,6 +3,8 @@ const router = express.Router()
 const crypto = require('crypto')
 const uuid = require('uuid')
 const nodemailer = require('nodemailer')
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
 const emailTemplates = require('email-templates')
 
 const faunadb = require('faunadb')
@@ -21,26 +23,76 @@ const {
 } = faunadb.query;
 
 var path = require('path')
+const { createErrorJSON } = require('../rest/v0/errors.helper')
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.MAILER_USER,
-    pass: process.env.MAILER_PASS
+const oauth2Client = new OAuth2(
+  process.env.OAUTH_CLIENT_ID, // ClientID
+  process.env.OAUTH_CLIENT_SECRET, // Client Secret
+  "https://developers.google.com/oauthplayground" // Redirect URL
+);
+
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: process.env.MAILER_USER,
+//     pass: process.env.MAILER_PASS
+//       }
+// });
+
+function createEmail() {
+  oauth2Client.setCredentials({
+      refresh_token: process.env.OAUTH_REFRESH
+  });
+  const accessToken = oauth2Client.getAccessToken().catch(err => {console.log(err); return null;});
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      type: "OAuth2",
+      user: "peterportal.dev@gmail.com", 
+      clientId: process.env.OAUTH_CLIENT_ID,
+      clientSecret: process.env.OAUTH_CLIENT_SECRET,
+      refreshToken: process.env.OAUTH_REFRESH,
+      accessToken: accessToken
+  }
+  });
+  
+  const email = new emailTemplates({
+    transport: transporter,
+    send: true,
+    preview: false,
+    views: {
+        options: {
+          extension: 'ejs',
+        },
+        root: path.resolve('email'),
       }
-});
+  });
+  return email;
+}
 
-const email = new emailTemplates({
-  transport: transporter,
-  send: true,
-  preview: false,
-  views: {
-      options: {
-        extension: 'ejs',
-      },
-      root: path.resolve('email'),
-    }
-});
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     type: "OAuth2",
+//     user: "peterportal.dev@gmail.com", 
+//     clientId: process.env.OAUTH_CLIENT_ID,
+//     clientSecret: process.env.OAUTH_CLIENT_SECRET,
+//     refreshToken: process.env.OAUTH_REFRESH,
+//     accessToken: accessToken
+// }
+// });
+
+// const email = new emailTemplates({
+//   transport: transporter,
+//   send: true,
+//   preview: false,
+//   views: {
+//       options: {
+//         extension: 'ejs',
+//       },
+//       root: path.resolve('email'),
+//     }
+// });
 
 var port = process.env.PORT || 8080;
 const url = process.env.NODE_ENV == 'development' ? "http://localhost:" + port : "https://api.peterportal.org"
@@ -66,17 +118,25 @@ router.post("/", function (req, res, next) {
         created_on: new Date(),
         num_requests: 0
       }
-    insertApiKeyToDatabase(data).then((ret) => {console.log(ret.data); sendVerificationEmail(data, key)})
+    insertApiKeyToDatabase(data).then((ret) => {
+      console.log(ret.data); 
+      sendVerificationEmail(data, key)
+    });
     res.send("Finished!")
 });
 
 router.get("/confirm/:key", function (req, res, next) {
 
   activateAPIKey(req.params.key).then((ret) => {
-    console.log("returned", ret);
     sendAPIKeyEmail(ret.data, req.params.key);
+    // console.log(success);
+    // if (success)
     res.send("Your API key has been confirmed. See your email for the api key. \n Visit our documentation here: https://api.peterportal.org");
-  }).catch((err) => {console.log(err)});
+    
+    }).catch((err) => {
+    console.log(err);
+    res.status(500).send(createErrorJSON(500, "Internal Server Error", ""))
+  });
   
 });
 
@@ -123,7 +183,11 @@ async function activateAPIKey(key) {
   return ret;
 }
 
-function sendVerificationEmail(data, key) {    
+function sendVerificationEmail(data, key) {   
+  const email = createEmail(); 
+  if (email == null) {
+    return false;
+  }
   email.send({
     template: 'apiConfirmation',
     message: {
@@ -136,11 +200,15 @@ function sendVerificationEmail(data, key) {
       confirmationURL: url + '/generateKey/confirm/' + key,
       unsubscribeURL: url + '/unsubscribe/' + data['email']
     },
-  }).then(() => console.log('email has been sent!'))
-  .catch((err) => console.log(err));
+  }).then(() => {console.log('email has been sent!'); return true})
+  .catch((err) => {console.log(err); return false;});
 }
 
-function sendAPIKeyEmail(data, key) {    
+function sendAPIKeyEmail(data, key) {     
+  const email = createEmail();  
+  if (email == null) {
+    return false;
+  }
   email.send({
     template: 'apiKeyDelivery',
     message: {
@@ -149,10 +217,11 @@ function sendAPIKeyEmail(data, key) {
     },
     locals: {
       apiKey: key,
-      appName: data['app_name'],
+      appName: data['app']['name'],
       unsubscribeURL: url + '/unsubscribe/' + data['email']
     },
-  }).then(() => console.log('email has been sent!'));
+  }).then(() => {console.log('email has been sent!'); return true})
+.catch((err) => {console.log(err); return false;});
 }
 
 function generateApiKey() {
