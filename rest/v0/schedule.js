@@ -8,7 +8,7 @@ router.get("/soc", function (req, res, next) {
     callWebSocAPI(req.query).then((val) => {
         res.json(val)
     }).catch((err) => {
-        res.status(404).json(createErrorJSON(404, "Bad Request: Invalid parameter", "Unable to complete websoc-api query"));
+        res.status(400).json(createErrorJSON(400, "Bad Request: Invalid parameter", "Unable to complete websoc-api query"));
     })
 })
 
