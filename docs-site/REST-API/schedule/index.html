@@ -67,6 +67,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#schedule" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -347,9 +352,69 @@
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Schedule
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Schedule
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#schedule" class="md-nav__link">
+    Schedule
+  </a>
+  
+    <nav class="md-nav" aria-label="Schedule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schedulesoc" class="md-nav__link">
+    /schedule/soc
+  </a>
+  
+    <nav class="md-nav" aria-label="/schedule/soc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response" class="md-nav__link">
+    Response
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -426,6 +491,68 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#schedule" class="md-nav__link">
+    Schedule
+  </a>
+  
+    <nav class="md-nav" aria-label="Schedule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schedulesoc" class="md-nav__link">
+    /schedule/soc
+  </a>
+  
+    <nav class="md-nav" aria-label="/schedule/soc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response" class="md-nav__link">
+    Response
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -438,8 +565,154 @@
                 
                   <h1>Schedule</h1>
                 
-                <p>To get schedule of classes data, please use <a href="https://github.com/icssc-projects/websoc-api">this npm package</a> made by one of our team members. This API allows access to school, department, course, and section data in a hierarchical JSON format. This module cannot be used on a browser as it uses a library called Camaro that uses features only available in NodeJS.</p>
-<p>We are planning to integrate this package onto the API, but it's scheduled for future release!</p>
+                <h2 id="schedule">Schedule</h2>
+<h3 id="schedulesoc">/schedule/soc</h3>
+<p><strong>GET schedule of classes data</strong></p>
+<p>This API allows access to school, department, course, and section data in a hierarchical JSON format. It pulls information from the schedule of classes (WebSoc).</p>
+<h4 id="parameters">Parameters</h4>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Endpoint that utilize query params must follow by this format:
+<code>?key1=value1&amp;key2=value2</code></p>
+<p><code>?</code> is use to start the query params string with &amp;  to separate each param</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>One problem with department such as I&amp;C SCI and CRM/LAW, since the <code>&amp;</code> and  <code>/</code> are reserved for URLs, you must use their URL encode representation.
+<code>I&amp;C SCI</code> -&gt; <code>I%26C SCI</code>
+<code>CRM/LAW</code> -&gt; <code>CRM%2FLAW</code></p>
+</div>
+<p>Descriptions found <a href="https://www.reg.uci.edu/help/WebSoc-Glossary.shtml">here</a></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Formatting</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>term</td>
+<td>[Year] ['Fall'&#124;'Winter'&#124;'Spring'&#124;'Summer1'&#124;'Summer2'&#124;'Summer10wk']<br />Example: '2017 Fall' <br/> Default: ' '</td>
+<td>Required. Schedule for your selected term must be available on WebSoc.</td>
+</tr>
+<tr>
+<td>ge</td>
+<td>['ANY'&#124;'GE-1A'&#124;'GE-1B'&#124;'GE-2'&#124;'GE-3'&#124;'GE-4'&#124;'GE-5A'&#124;'GE-5B'&#124;'GE-6'&#124;'GE-7'&#124;'GE-8']<br />Example: 'GE-1B' <br/> Default: ' '</td>
+<td>Must specify at least one of department, GE, courseCodes, or instructorName</td>
+</tr>
+<tr>
+<td>department</td>
+<td>List of available departments to search available in file depts.txt<br />Example: 'I&amp;C SCI' <br/> Default: ' '</td>
+<td>Must specify at least one of department, GE, courseCodes, or instructorName</td>
+</tr>
+<tr>
+<td>courseNumber</td>
+<td>Any valid course number or range<br />Example: '32A' OR '31-33'  <br/> Default: ' '</td>
+<td></td>
+</tr>
+<tr>
+<td>division</td>
+<td>['ALL'&#124;'LowerDiv'&#124;'UpperDiv'&#124;'Graduate']<br />Example: 'LowerDiv' <br/> Default: 'ALL'</td>
+<td></td>
+</tr>
+<tr>
+<td>sectionCodes</td>
+<td>Any valid 5-digit course code or range<br />Example: "36531" OR "36520-36536" <br/> Default: ' '</td>
+<td>Must specify at least one of department, GE, courseCodes, or instructorName</td>
+</tr>
+<tr>
+<td>instructorName</td>
+<td>Any valid instructor last name or part of last name<br />Example: 'Thornton' <br/> Default: ' '</td>
+<td>Enter last name only</td>
+</tr>
+<tr>
+<td>courseTitle</td>
+<td>Any text<br />Example: 'Intro' <br/> Default: ' '</td>
+<td></td>
+</tr>
+<tr>
+<td>sectionType</td>
+<td>['ALL'&#124;'ACT'&#124;'COL'&#124;'DIS'&#124;'FLD'&#124;'LAB'&#124;'LEC'&#124;'QIZ'&#124;'RES'&#124;'SEM'&#124;'STU'&#124;'TAP'&#124;'TUT']<br />Example: 'LAB'  <br/> Default: 'ALL'</td>
+<td></td>
+</tr>
+<tr>
+<td>units</td>
+<td>Any integer or decimal with only tenths place precision, or 'VAR' to look for variable unit classes only.<br />Example: '5' OR '1.3' <br/> Default: ' '</td>
+<td></td>
+</tr>
+<tr>
+<td>days</td>
+<td>['M'&#124;'T'&#124;'W'&#124;'Th'&#124;'F'] or a combination of these days<br />Example: 'T' OR 'MWF' <br/> Default: ' '</td>
+<td></td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>Any time in 12 hour format<br />Example: '10:00AM' OR '5:00PM' <br/> Default: ' '</td>
+<td>Only enter sharp hours</td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>Any time in 12 hour format<br />Example: '12:00AM' OR '6:00PM' <br/> Default: ' '</td>
+<td>Only enter sharp hours</td>
+</tr>
+<tr>
+<td>maxCapacity</td>
+<td>Exact number like '300' or modified with '&lt;' or '&gt;' to indicate less than specified or greater than specified.<br />Example: '&gt;256' OR '19' OR '&lt;19' <br/> Default: ' '</td>
+<td></td>
+</tr>
+<tr>
+<td>fullCourses</td>
+<td>['ANY'&#124;'SkipFullWaitlist'&#124;'FullOnly'&#124;'OverEnrolled'] <br />'SkipFullWaitlist' means that full courses will be included if there's space on the wait-list <br />'FullOnly' means only full courses will be retrieved <br />'OverEnrolled' means only over-enrolled courses will be retrieved<br />Example:'SkipFullWaitlist' <br/> Default: 'ANY'</td>
+<td></td>
+</tr>
+<tr>
+<td>cancelledCourses</td>
+<td>['Exclude'&#124;'Include'&#124;'Only']<br />Example: 'Include' <br/> Default: 'EXCLUDE'</td>
+<td></td>
+</tr>
+<tr>
+<td>building</td>
+<td>Any valid building code<br />Example: 'DBH' <br/> Default: ' '</td>
+<td>The value is a building code. Building codes found here: https://www.reg.uci.edu/addl/campus/</td>
+</tr>
+<tr>
+<td>room</td>
+<td>Any valid room number<br />Example: '223' <br/> Default: ' '</td>
+<td>You must specify a building code if you specify a room number</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>All params are optional and multiple can be included by using ; as a separator.</strong></p>
+<p>i.e. <code>key1=value1;value2&amp;key2=value2</code></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The more you narrow down your query, the faster the response! 🏃‍♀️💨 😎</p>
+</div>
+<h4 id="response">Response</h4>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>200</code></td>
+<td>A list of JSON object results containing the course info, count of each grades, and average GPA</td>
+</tr>
+<tr>
+<td><code>400</code></td>
+<td>Invalid parameter syntax.</td>
+</tr>
+</tbody>
+</table>
+<p>This endpoint is based off of this <a href="https://github.com/icssc-projects/websoc-api">npm package</a>.</p>
                 
               
               
