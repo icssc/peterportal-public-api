@@ -125,13 +125,17 @@ function queryDatabaseAndResponse(where, calculate, res) {
 
             res.send(result);
 
+            // Return for when this is called by GraphQL
+            return result;
+
             break;
         case false:
             let sqlQueryAll = "SELECT * FROM gradeDistribution";
-
-            res.send(connection.prepare(where !== null ? sqlQueryAll + where : sqlQueryAll).all());
-
-            break;
+            const queryResult = connection.prepare(where !== null ? sqlQueryAll + where : sqlQueryAll).all()
+            res.send(queryResult);
+            
+            // Return for when this is called by GraphQL
+            return queryResult;
     }
 
 }
