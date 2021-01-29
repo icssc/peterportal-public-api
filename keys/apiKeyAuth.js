@@ -17,10 +17,17 @@ const {
 } = faunadb.query;
 
 let apiKeyAuth = (req, res, next) => {
-    console.log(req.headers)
+   
+    
     if (process.env.NODE_ENV == "development") {
         next();
     }
+
+    if (req.headers['referer'].includes('graphql-playground')) {
+        next();
+    }
+
+
     
     if (!req.headers["x-api-key"]) {
         res.status(401).json(createErrorJSON(401, "No credentials sent.", "No credentials were found in the header of the request. See documentation for more info."));
