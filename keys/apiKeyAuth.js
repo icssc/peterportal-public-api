@@ -18,6 +18,7 @@ const {
 
 let apiKeyAuth = (req, res, next) => {
    
+
     if (process.env.NODE_ENV == "development") {
         next();
     } else if (req.headers['referer'] && req.headers['referer'].includes('graphql-playground')) {
