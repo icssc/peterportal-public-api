@@ -39,5 +39,10 @@
   "devDependencies": {
     "jest": "^26.4.2",
     "supertest": "^5.0.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/jest/setEnvVars.js"
+    ]
   }
 }
