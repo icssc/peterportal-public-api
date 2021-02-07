@@ -1,4 +1,4 @@
-var {getAllCourses, getSpecificCourse} = require('./courses.helper')
+var {getAllCourses, getSpecificCourse} = require('../../helpers/courses.helper')
 
 describe('Get all Courses', () => {
     describe('Fetching all courses', () => {

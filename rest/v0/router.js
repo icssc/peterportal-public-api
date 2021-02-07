@@ -5,7 +5,7 @@ var coursesRouter = require("./courses");
 var gradesRouter = require("./grades");
 var instructorRouter = require("./instructor");
 var scheduleRouter = require("./schedule");
-var {createErrorJSON} = require("./errors.helper")
+var {createErrorJSON} = require("../../helpers/errors.helper")
 
 router.get("/", (req,res) => {
     res.redirect('/docs')

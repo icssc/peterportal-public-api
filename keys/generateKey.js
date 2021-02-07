@@ -23,7 +23,7 @@ const {
 } = faunadb.query;
 
 var path = require('path')
-const { createErrorJSON } = require('../rest/v0/errors.helper')
+const { createErrorJSON } = require('../helpers/errors.helper')
 
 const oauth2Client = new OAuth2(
   process.env.OAUTH_CLIENT_ID, // ClientID

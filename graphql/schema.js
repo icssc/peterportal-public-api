@@ -7,7 +7,7 @@ const {
   GraphQLList
 } = require('graphql');
 
-var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../rest/v0/grades.helper')
+var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../helpers/grades.helper')
 
 const courses_cache = require('../cache/parsed_courses_cache.json');
 const professors_cache = require('../cache/parsed_professor_cache.json');

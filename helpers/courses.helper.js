@@ -1,4 +1,4 @@
-const cache = require('../../cache/parsed_courses_cache.json')
+const cache = require('../cache/parsed_courses_cache.json')
 
 function getAllCourses() {
    let result = [];

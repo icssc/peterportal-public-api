@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var {createErrorJSON} = require("./errors.helper")
+var {createErrorJSON} = require("../../helpers/errors.helper")
 
 var {callWebSocAPI} = require('websoc-api');
 

@@ -3,7 +3,7 @@
 require('dotenv').config();
 
 var createError = require('http-errors');
-const {createErrorJSON} = require("./rest/v0/errors.helper");
+const {createErrorJSON} = require("./helpers/errors.helper");
 var { apiKeyAuth } = require("./keys/apiKeyAuth");
 var express = require('express');
 var cors = require('cors');

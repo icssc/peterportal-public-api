@@ -1,4 +1,4 @@
-var {getAllInstructors, getSpecificInstructor} = require('./instructor.helper')
+var {getAllInstructors, getSpecificInstructor} = require('../../helpers/instructor.helper')
 
 describe('Get all Instructors', () => {
     describe('Fetching all instructors', () => {

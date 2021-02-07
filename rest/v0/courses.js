@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
 
-var {createErrorJSON} = require("./errors.helper")
-var {getAllCourses, getSpecificCourse} = require('./courses.helper')
+var {createErrorJSON} = require("../../helpers/errors.helper")
+var {getAllCourses, getSpecificCourse} = require('../../helpers/courses.helper')
 
 router.get("/all", function (req, res, next) {
     res.json(getAllCourses());

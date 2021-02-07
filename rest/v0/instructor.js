@@ -1,9 +1,9 @@
 var express = require("express");
 var router = express.Router();
 
-var {createErrorJSON} = require("./errors.helper")
+var {createErrorJSON} = require("../../helpers/errors.helper")
 var { apiKeyAuth } = require("../../keys/apiKeyAuth");
-var {getAllInstructors, getSpecificInstructor} = require('./instructor.helper')
+var {getAllInstructors, getSpecificInstructor} = require('../../helpers/instructor.helper')
 
 
 /**
