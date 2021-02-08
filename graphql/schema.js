@@ -222,14 +222,12 @@ const queryType = new GraphQLObjectType({
 
       resolve: (_, args) => {
         // Send request to rest
-        var request = {
-          query: {
+        var query = {
             ... args
-          }
         }
-        const where = parseGradesParamsToSQL(request, null);
-        const gradeResults = queryDatabaseAndResponse(where, false, {send:()=>{}})
-        const aggregateResult = queryDatabaseAndResponse(where, true, {send:()=>{}}).gradeDistribution
+        const where = parseGradesParamsToSQL(query);
+        const gradeResults = queryDatabaseAndResponse(where, false)
+        const aggregateResult = queryDatabaseAndResponse(where, true).gradeDistribution
     
         // Format to GraphQL
         let aggregate = {
@@ -271,7 +269,7 @@ const queryType = new GraphQLObjectType({
           aggregate: aggregate,
           grade_distributions: gradeDistributions
         }
-        console.log(result)
+        
         return result;
       },
 
