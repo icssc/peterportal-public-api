@@ -1,16 +1,12 @@
 const cache = require('../cache/parsed_professor_cache.json')
 
 function getAllInstructors() {
-   let result = [];
-   for (prof of Object.values(cache)) {
-       result.push({name: prof.name, ucinetid: prof.ucinetid, title: prof.title, department: prof.department})
-   }
-   return result;
+   return Object.values(cache);
 }
 
-function getSpecificInstructor(ucinetid) {
+function getInstructor(ucinetid) {
     return cache[ucinetid] ? cache[ucinetid] : null;
 }
 
 
-module.exports = {getAllInstructors, getSpecificInstructor}
+module.exports = {getAllInstructors, getInstructor}

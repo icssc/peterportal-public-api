@@ -3,7 +3,7 @@ var router = express.Router();
 
 var {createErrorJSON} = require("../../helpers/errors.helper")
 var { apiKeyAuth } = require("../../keys/apiKeyAuth");
-var {getAllInstructors, getSpecificInstructor} = require('../../helpers/instructor.helper')
+var {getAllInstructors, getInstructor} = require('../../helpers/instructor.helper')
 
 
 /**
@@ -72,7 +72,7 @@ router.get("/all", function (req, res, next) {
  */
 
 router.get("/:ucinetid", function (req, res, next) {
-    getSpecificInstructor(req.params.ucinetid) ? res.json(getSpecificInstructor(req.params.ucinetid)) : res.status(404).json(createErrorJSON(404, "Bad Request: Invalid parameter", "Instructor not found"));
+    getInstructor(req.params.ucinetid) ? res.json(getInstructor(req.params.ucinetid)) : res.status(404).json(createErrorJSON(404, "Bad Request: Invalid parameter", "Instructor not found"));
 })
 
 
