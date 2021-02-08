@@ -17,9 +17,9 @@ describe('Get all Instructors', () => {
     });
 });
 
-describe('Get specific instructors', () => {
-    describe('Fetching specific instructors', () => {
-        it ('getSpecificInstructor should return a json of the course requested', () => {
+describe('Get instructors', () => {
+    describe('Fetching instructor', () => {
+        it ('getInstructor should return a json of the course requested', () => {
             const instructor = getInstructor("pattis");
             expect(instructor).not.toBeNull()
             expect(typeof instructor).toBe("object");

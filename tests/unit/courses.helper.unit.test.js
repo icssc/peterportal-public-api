@@ -17,9 +17,9 @@ describe('Get all Courses', () => {
     });
 });
 
-describe('Get specific Courses', () => {
-    describe('Fetching specific courses', () => {
-        it ('getSpecificCourse should return a json of the course requested', () => {
+describe('Get Courses', () => {
+    describe('Fetching course', () => {
+        it ('getCourse should return a json of the course requested', () => {
             const course = getCourse("I&CSCI46");
             expect(course).not.toBeNull()
             expect(typeof course).toBe("object");
