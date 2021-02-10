@@ -1,7 +1,7 @@
 const db = require('better-sqlite3'); 
 var path = require('path');
 
-var {createErrorJSON} = require("./errors.helper")
+var {ValidationError} = require("./errors.helper")
 
 function parseGradesParamsToSQL(query) {
     var whereClause = "";
@@ -27,7 +27,7 @@ function parseGradesParamsToSQL(query) {
                             condition += "year = '" + year + "'" : 
                             condition += " OR year = '" + year + "'" 
                     } else {
-                        throw createErrorJSON(400, "Bad Request: Invalid syntax in parameters", errorMsg(year, "year"))
+                        throw new ValidationError(errorMsg(year, "year"))
                     }
                 }
                 break;
@@ -38,7 +38,7 @@ function parseGradesParamsToSQL(query) {
                             condition += "quarter = '" + quarter.toUpperCase() + "'" : 
                             condition += " OR quarter = '" + quarter.toUpperCase() + "'"
                     } else {
-                        throw createErrorJSON(400, "Bad Request: Invalid syntax in parameters", errorMsg(quarter, "quarter"));
+                        throw new ValidationError(errorMsg(quarter, "quarter"));
                     }
                 }
                 break;
@@ -49,7 +49,7 @@ function parseGradesParamsToSQL(query) {
                             condition += "instructor = '" + instructor.toUpperCase() + "'" : 
                             condition += " OR instructor = '" + instructor.toUpperCase() + "'" 
                     } else {
-                        throw createErrorJSON(400, "Bad Request: Invalid syntax in parameters", errorMsg(instructor, "instructor"));
+                        throw new ValidationError(errorMsg(instructor, "instructor"));
                     }
                 }
                 break;
@@ -75,7 +75,7 @@ function parseGradesParamsToSQL(query) {
                             condition += "code = '" + code.toUpperCase() + "'" : 
                             condition += " OR code = '" + code.toUpperCase() + "'" 
                     } else {
-                        throw createErrorJSON(400, "Bad Request: Invalid syntax in parameters", errorMsg(code, "code"));
+                        throw new ValidationError(errorMsg(code, "code"));
                     }
                 }
                 break;
