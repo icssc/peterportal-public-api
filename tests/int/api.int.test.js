@@ -101,7 +101,7 @@ describe('GET /grades/calculated', () => {
 
 describe('GET /grades/calculated', () => {
     it('returns a json of filtered grades distribution',  () => request(app)
-    .get('/rest/v0/grades/calculated?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33')
+    .get('/rest/v0/grades/calculated?year=2018-19;2019-20&instructor=PATTIS R.&department=I%26C SCI&quarter=Fall&number=33')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)
@@ -111,7 +111,7 @@ describe('GET /grades/calculated', () => {
         expect(response.body['courseList'].length).toBeGreaterThan(0);
         expect(response.body['courseList'][0]).toEqual(expect.objectContaining({
             "year": expect.any(String),
-            "instructor": "PATTIS, R.",
+            "instructor": "PATTIS R.",
             "code": expect.any(Number)
         }));
     }));
@@ -119,7 +119,7 @@ describe('GET /grades/calculated', () => {
 
 describe('GET /grades/calculated', () => {
     it('invalid parameters to /grades/calculated', () => request(app)
-    .get('/rest/v0/grades/calculated?year=2017&instructor=PATTIS, R.')
+    .get('/rest/v0/grades/calculated?year=2017&instructor=PATTIS R.')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(400)
@@ -145,7 +145,7 @@ describe('GET /grades/raw', () => {
 
 describe('GET /grades/raw', () => {
     it('returns a json of filtered grades distribution',  () => request(app)
-    .get('/rest/v0/grades/raw?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33')
+    .get('/rest/v0/grades/raw?year=2018-19;2019-20&instructor=PATTIS R.&department=I%26C SCI&quarter=Fall&number=33')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)
@@ -154,7 +154,7 @@ describe('GET /grades/raw', () => {
         expect(response.body.length).toBeGreaterThan(0);
         expect(response.body[0]).toEqual(expect.objectContaining({
             "year": expect.any(String),
-            "instructor": "PATTIS, R.",
+            "instructor": "PATTIS R.",
             "code": expect.any(Number)
         }));
     }));
@@ -162,7 +162,7 @@ describe('GET /grades/raw', () => {
 
 describe('GET /grades/raw', () => {
     it('invalid parameters to /grades/raw', () => request(app)
-    .get('/rest/v0/grades/raw?year=2017-18&instructor=PATTIS, R.&code=33')
+    .get('/rest/v0/grades/raw?year=2017-18&instructor=PATTIS R.&code=33')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(400)

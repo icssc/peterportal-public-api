@@ -82,7 +82,7 @@ function insertData() {
                 row.number, 
                 row.code, 
                 row.section, 
-                row.prof, 
+                row.professor, 
                 row.type, 
                 row.A, 
                 row.B, 

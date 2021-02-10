@@ -19,7 +19,7 @@ Try out one of these quick ways to play with our grades endpoints:
             "number": "33",
             "code": 36620,
             "section": "A",
-            "instructor": "PATTIS, R.",
+            "instructor": "PATTIS R.",
             "type": "LEC",
             "gradeACount": 125,
             "gradeBCount": 72,
@@ -62,7 +62,7 @@ Try out one of these quick ways to play with our grades endpoints:
             "number": "33",
             "code": 36620,
             "section": "A",
-            "instructor": "PATTIS, R.",
+            "instructor": "PATTIS R.",
             "type": "LEC",
             "gradeACount": 125,
             "gradeBCount": 72,
@@ -101,9 +101,9 @@ Try out one of these quick ways to play with our grades endpoints:
 
 | Parameter | Description | Example |
 |-----------|-------------|---------|
-| `year` | School year, must be <START_YEAR>-<END_YEAR> | 2019-20 |
+| `year` | School year, must be <START_YEAR\>-<END_YEAR\> | 2019-20 |
 | `quarter` | Quarter, options are Fall, Winter, Spring |  |
-| `instructor` | Instructor, must following the format (last name, first initial.) |  PATTIS, R. |
+| `instructor` | Instructor, must following the format (last_name first_initial.) |  PATTIS R. |
 | `department` | Department short-hand | I&C SCI |
 | `number` | Course number | 32A |
 |  `code` | 5-digit course code on WebSoC | 35540 |
@@ -139,7 +139,7 @@ Try out one of these quick ways to play with our grades endpoints:
             "number": "33",
             "code": 36620,
             "section": "A",
-            "instructor": "PATTIS, R.",
+            "instructor": "PATTIS R.",
             "type": "LEC",
             "gradeACount": 125,
             "gradeBCount": 72,
@@ -158,7 +158,7 @@ Try out one of these quick ways to play with our grades endpoints:
             "number": "33",
             "code": 35500,
             "section": "A",
-            "instructor": "PATTIS, R.",
+            "instructor": "PATTIS R.",
             "type": "LEC",
             "gradeACount": 132,
             "gradeBCount": 83,
@@ -228,7 +228,7 @@ Please follow the above documentation on the `/grades/raw` endpoint, for informa
                 "number": "33",
                 "code": 36620,
                 "section": "A",
-                "instructor": "PATTIS, R.",
+                "instructor": "PATTIS R.",
                 "type": "LEC"
             },
             {
@@ -238,7 +238,7 @@ Please follow the above documentation on the `/grades/raw` endpoint, for informa
                 "number": "33",
                 "code": 35500,
                 "section": "A",
-                "instructor": "PATTIS, R.",
+                "instructor": "PATTIS R.",
                 "type": "LEC"
             }
         ]
