@@ -1,4 +1,4 @@
-var {getAllInstructors, getSpecificInstructor} = require('./instructor.helper')
+var {getAllInstructors, getInstructor} = require('../../helpers/instructor.helper')
 
 describe('Get all Instructors', () => {
     describe('Fetching all instructors', () => {
@@ -17,10 +17,10 @@ describe('Get all Instructors', () => {
     });
 });
 
-describe('Get specific instructors', () => {
-    describe('Fetching specific instructors', () => {
-        it ('getSpecificInstructor should return a json of the course requested', () => {
-            const instructor = getSpecificInstructor("pattis");
+describe('Get instructors', () => {
+    describe('Fetching instructor', () => {
+        it ('getInstructor should return a json of the course requested', () => {
+            const instructor = getInstructor("pattis");
             expect(instructor).not.toBeNull()
             expect(typeof instructor).toBe("object");
             expect(instructor).toMatchObject({

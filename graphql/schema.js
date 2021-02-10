@@ -1,4 +1,3 @@
-const { graphqlHTTP } = require('express-graphql');
 const {
   GraphQLObjectType,
   GraphQLString,
@@ -7,11 +6,9 @@ const {
   GraphQLList
 } = require('graphql');
 
-var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../rest/v0/grades.helper')
-
-const courses_cache = require('../cache/parsed_courses_cache.json');
-const professors_cache = require('../cache/parsed_professor_cache.json');
-const e = require('express');
+var {getAllCourses, getCourse} = require('../helpers/courses.helper')
+var {getAllInstructors, getInstructor} = require('../helpers/instructor.helper')
+var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../helpers/grades.helper')
 
 const professorType = new GraphQLObjectType({
   name: 'Professor',
@@ -26,7 +23,7 @@ const professorType = new GraphQLObjectType({
     course_history: { 
       type: GraphQLList(courseType),
       resolve: (professor) => {
-        return professors_cache[professor.ucinetid]["course_history"].map(course_id => courses_cache[course_id.replace(/ /g, "")]);
+        return getInstructor(professor.ucinetid)["course_history"].map(course_id => getCourse(course_id.replace(/ /g, "")));
       }
     }
   })
@@ -51,21 +48,21 @@ const courseType = new GraphQLObjectType({
     professor_history: { 
       type: GraphQLList(professorType),
       resolve: (course) => {
-        return courses_cache[course.id.replace(/ /g, "")]["professor_history"].map(professor_netid => professors_cache[professor_netid]);
+        return getCourse(course.id.replace(/ /g, ""))["professor_history"].map(professor_netid => getInstructor(professor_netid));
       } 
     },
     prerequisite_tree: { type: GraphQLString },
     prerequisite_list: { 
       type: GraphQLList(courseType),
       resolve: (course) => {
-        return courses_cache[course.id.replace(/ /g, "")]["prerequisite_list"].map(prereq_id => courses_cache[prereq_id.replace(/ /g, "", "")]);
+        return getCourse(course.id.replace(/ /g, ""))["prerequisite_list"].map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
       }
     },
     prerequisite_text: { type: GraphQLString },
     dependencies: { 
       type: GraphQLList(courseType),
       resolve: (course) => {
-        return courses_cache[course.id.replace(/ /g, "")]["dependencies"].map(prereq_id => courses_cache[prereq_id.replace(/ /g, "", "")]);
+        return getCourse(course.id.replace(/ /g, ""))["dependencies"].map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
       }
     },
     repeatability: { type: GraphQLString },
@@ -94,7 +91,7 @@ const courseOfferingType = new GraphQLObjectType({
     course: { 
       type: courseType,
       resolve: (temp) => {
-        return courses_cache[temp.course]
+        return getCourse(temp.course)
       }
     }
   })
@@ -157,7 +154,7 @@ const queryType = new GraphQLObjectType({
 
       // define function to get a course
       resolve: (_, {id}) => {
-        return courses_cache[id];
+        return getCourse(id);
       },
 
       // documentation
@@ -175,7 +172,7 @@ const queryType = new GraphQLObjectType({
 
       // define function to get a professor
       resolve: (_, {ucinetid}) => {
-        return professors_cache[ucinetid];
+        return getInstructor(ucinetid);
       },
 
       // documentation for professor
@@ -188,7 +185,7 @@ const queryType = new GraphQLObjectType({
 
       // get all courses from courses cache
       resolve: () => {
-        return Object.values(courses_cache)
+        return getAllCourses()
       },
 
       // documentation for all courses
@@ -201,7 +198,7 @@ const queryType = new GraphQLObjectType({
 
       // get all professors from cache
       resolve: () => {
-        return Object.values(professors_cache);
+        return getAllInstructors();
       },
 
       // documentation for all professors
@@ -222,14 +219,12 @@ const queryType = new GraphQLObjectType({
 
       resolve: (_, args) => {
         // Send request to rest
-        var request = {
-          query: {
+        var query = {
             ... args
-          }
         }
-        const where = parseGradesParamsToSQL(request, null);
-        const gradeResults = queryDatabaseAndResponse(where, false, {send:()=>{}})
-        const aggregateResult = queryDatabaseAndResponse(where, true, {send:()=>{}}).gradeDistribution
+        const where = parseGradesParamsToSQL(query);
+        const gradeResults = queryDatabaseAndResponse(where, false)
+        const aggregateResult = queryDatabaseAndResponse(where, true).gradeDistribution
     
         // Format to GraphQL
         let aggregate = {
@@ -271,7 +266,7 @@ const queryType = new GraphQLObjectType({
           aggregate: aggregate,
           grade_distributions: gradeDistributions
         }
-        console.log(result)
+        
         return result;
       },
 

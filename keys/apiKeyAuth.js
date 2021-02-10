@@ -1,7 +1,7 @@
 const faunadb = require('faunadb');
 const { keys } = require('underscore');
 const crypto = require('crypto')
-var {createErrorJSON} = require("../rest/v0/errors.helper")
+var {createErrorJSON} = require("../helpers/errors.helper")
 const client = new faunadb.Client({ secret: process.env.FAUNADB_KEY});
 const {
     Get,
@@ -17,8 +17,6 @@ const {
 } = faunadb.query;
 
 let apiKeyAuth = (req, res, next) => {
-   
-
     if (process.env.NODE_ENV == "development") {
         next();
     } else if (req.headers['referer'] && req.headers['referer'].includes('graphql-playground')) {

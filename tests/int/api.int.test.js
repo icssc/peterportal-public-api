@@ -25,7 +25,7 @@ describe('GET /courses/I&CSCI33', () => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-        expect(response.body['id']).toEqual('I&C SCI 33');
+        expect(response.body['id']).toEqual('I&CSCI33');
         expect(response.body['title']).toEqual('Intermediate Programming');
         expect(Array.isArray(response.body['dependencies'])).toBeTruthy();
     }));

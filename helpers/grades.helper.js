@@ -1,18 +1,18 @@
 const db = require('better-sqlite3'); 
 var path = require('path');
 
-var {createErrorJSON} = require("./errors.helper")
+var {ValidationError} = require("./errors.helper")
 
-function parseGradesParamsToSQL(req, res) {
+function parseGradesParamsToSQL(query) {
     var whereClause = "";
 
     const params = {
-        'year': req.query.year ? req.query.year.split(";") : null,
-        'quarter': req.query.quarter ? req.query.quarter.split(";") : null,
-        'instructor': req.query.instructor ? req.query.instructor.split(";") : null,
-        'department': req.query.department ? req.query.department.split(";") : null,
-        'number': req.query.number ? req.query.number.split(";") : null,
-        'code': req.query.code ? req.query.code.split(";") : null
+        'year': query.year ? query.year.split(";") : null,
+        'quarter': query.quarter ? query.quarter.split(";") : null,
+        'instructor': query.instructor ? query.instructor.split(";") : null,
+        'department': query.department ? query.department.split(";") : null,
+        'number': query.number ? query.number.split(";") : null,
+        'code': query.code ? query.code.split(";") : null
     }
 
     Object.keys(params).forEach(function(key) {
@@ -22,32 +22,35 @@ function parseGradesParamsToSQL(req, res) {
         switch(true) {
             case key === 'year' && params[key] !== null:
                 for (year of params[key]) {
-                    year.match(/\d{4}-\d{2}/) ? 
-                        (condition == "" ? 
+                    if (year.match(/\d{4}-\d{2}/)) {
+                        condition == "" ? 
                             condition += "year = '" + year + "'" : 
-                            condition += " OR year = '" + year + "'") 
-                    : 
-                    res.status(400).send(createErrorJSON(400, "Bad Request: Invalid syntax in parameters", errorMsg(year, "year")));
+                            condition += " OR year = '" + year + "'" 
+                    } else {
+                        throw new ValidationError(errorMsg(year, "year"))
+                    }
                 }
                 break;
             case key === 'quarter' && params[key] !== null:
                 for (quarter of params[key]) {
-                    quarter.match(/[a-zA-Z]{4,6}/) ? 
-                    (condition == "" ? 
-                        condition += "quarter = '" + quarter.toUpperCase() + "'" : 
-                        condition += " OR quarter = '" + quarter.toUpperCase() + "'") 
-                    : 
-                    res.status(400).send(createErrorJSON(400, "Bad Request: Invalid syntax in parameters", errorMsg(quarter, "quarter")));
+                    if (quarter.match(/[a-zA-Z]{4,6}/)) {
+                        condition == "" ? 
+                            condition += "quarter = '" + quarter.toUpperCase() + "'" : 
+                            condition += " OR quarter = '" + quarter.toUpperCase() + "'"
+                    } else {
+                        throw new ValidationError(errorMsg(quarter, "quarter"));
+                    }
                 }
                 break;
             case key === 'instructor' && params[key] !== null:
                 for (instructor of params[key]) {
-                    instructor.match(/[a-zA-Z]+, [a-zA-Z]\./) ? 
-                    (condition == "" ? 
-                        condition += "instructor = '" + instructor.toUpperCase() + "'" : 
-                        condition += " OR instructor = '" + instructor.toUpperCase() + "'") 
-                    : 
-                    res.status(400).send(createErrorJSON(400, "Bad Request: Invalid syntax in parameters", errorMsg(instructor, "instructor")));
+                    if (instructor.match(/[a-zA-Z]+, [a-zA-Z]\./)) {
+                        condition == "" ? 
+                            condition += "instructor = '" + instructor.toUpperCase() + "'" : 
+                            condition += " OR instructor = '" + instructor.toUpperCase() + "'" 
+                    } else {
+                        throw new ValidationError(errorMsg(instructor, "instructor"));
+                    }
                 }
                 break;
             case key === 'department' && params[key] !== null:
@@ -67,12 +70,13 @@ function parseGradesParamsToSQL(req, res) {
                 break;
             case key === 'code' && params[key] !== null:
                 for (code of params[key]) {
-                    code.match(/\d{5}/) ? 
-                    (condition == "" ? 
-                        condition += "code = '" + code.toUpperCase() + "'" : 
-                        condition += " OR code = '" + code.toUpperCase() + "'") 
-                    : 
-                    res.status(400).send(createErrorJSON(400, "Bad Request: Invalid syntax in parameters", errorMsg(code, "code")));
+                    if (code.match(/\d{5}/)) {
+                        condition == "" ? 
+                            condition += "code = '" + code.toUpperCase() + "'" : 
+                            condition += " OR code = '" + code.toUpperCase() + "'" 
+                    } else {
+                        throw new ValidationError(errorMsg(code, "code"));
+                    }
                 }
                 break;
         }
@@ -81,14 +85,12 @@ function parseGradesParamsToSQL(req, res) {
             (condition.length > 0 ? whereClause += "(" + condition + ")" : null) : 
             (condition.length > 0 ? whereClause += " AND (" + condition + ")" : null)
     })
-
-    // console.log(params);
     
     return whereClause === "" ? null : " WHERE " + whereClause;
 }
 
-function queryDatabaseAndResponse(where, calculate, res) {
-    const connection = new db(path.join(__dirname, '../../db/db.sqlite'));
+function queryDatabaseAndResponse(where, calculate) {
+    const connection = new db(path.join(__dirname, '../db/db.sqlite'));
 
     switch (calculate) {
         case true:
@@ -123,18 +125,11 @@ function queryDatabaseAndResponse(where, calculate, res) {
 
             result.courseList = connection.prepare(where !== null ? sqlCourseList + where : sqlCourseList).all();
 
-            res.send(result);
-
-            // Return for when this is called by GraphQL
             return result;
-
-            break;
         case false:
             let sqlQueryAll = "SELECT * FROM gradeDistribution";
             const queryResult = connection.prepare(where !== null ? sqlQueryAll + where : sqlQueryAll).all()
-            res.send(queryResult);
             
-            // Return for when this is called by GraphQL
             return queryResult;
     }
 
