@@ -44,7 +44,7 @@ function parseGradesParamsToSQL(query) {
                 break;
             case key === 'instructor' && params[key] !== null:
                 for (instructor of params[key]) {
-                    if (instructor.match(/[a-zA-Z]+ [a-zA-Z]\./)) {
+                    if (instructor.match(/[a-zA-Z]+, [a-zA-Z]\./)) {
                         condition == "" ? 
                             condition += "instructor = '" + instructor.toUpperCase() + "'" : 
                             condition += " OR instructor = '" + instructor.toUpperCase() + "'" 

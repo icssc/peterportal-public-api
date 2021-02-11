@@ -72,17 +72,17 @@ async function initSQLite() {
 
 function insertData() {
     console.log("🗄️ Inserting gradeDistribution data from CSV...")
-    let stream = fs.createReadStream(path.join(__dirname, 'complete.csv')).pipe(csv());
+    let stream = fs.createReadStream(path.join(__dirname, 'grades.csv')).pipe(csv());
 
     stream.on('data', (row) => {
             connection.prepare(gradeDistributionInsertQuery).run(
                 row.year, 
                 row.quarter.toUpperCase(), 
                 row.deptCode, 
-                row.number, 
+                row.realNum, 
                 row.code, 
                 row.section, 
-                row.professor, 
+                row.instructor, 
                 row.type, 
                 row.A, 
                 row.B, 
