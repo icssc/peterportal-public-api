@@ -154,7 +154,7 @@ describe('GET /grades/raw', () => {
         expect(response.body.length).toBeGreaterThan(0);
         expect(response.body[0]).toEqual(expect.objectContaining({
             "year": expect.any(String),
-            "instructor": "PATTIS R.",
+            "instructor": "PATTIS, R.",
             "code": expect.any(Number)
         }));
     }));
