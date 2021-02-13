@@ -59,10 +59,10 @@ const courseType = new GraphQLObjectType({
       }
     },
     prerequisite_text: { type: GraphQLString },
-    dependencies: { 
+    prerequisite_for: { 
       type: GraphQLList(courseType),
       resolve: (course) => {
-        return getCourse(course.id.replace(/ /g, ""))["dependencies"].map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
+        return getCourse(course.id.replace(/ /g, ""))["prerequisite_for"].map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
       }
     },
     repeatability: { type: GraphQLString },
@@ -293,7 +293,7 @@ Example:
       prerequisiteJSON
       prerequisiteList
       prerequisite
-      dependencies
+      prerequisite_for
       repeatability
       concurrent
       restriction
