@@ -8,6 +8,7 @@ const {
 
 var {getAllCourses, getCourse} = require('../helpers/courses.helper')
 var {getAllInstructors, getInstructor} = require('../helpers/instructor.helper')
+var {getCourseSchedules} = require("../helpers/schedule.helper")
 var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../helpers/grades.helper')
 
 const professorType = new GraphQLObjectType({
@@ -48,21 +49,21 @@ const courseType = new GraphQLObjectType({
     professor_history: { 
       type: GraphQLList(professorType),
       resolve: (course) => {
-        return getCourse(course.id.replace(/ /g, ""))["professor_history"].map(professor_netid => getInstructor(professor_netid));
+        return course.professor_history.map(professor_netid => getInstructor(professor_netid));
       } 
     },
     prerequisite_tree: { type: GraphQLString },
     prerequisite_list: { 
       type: GraphQLList(courseType),
       resolve: (course) => {
-        return getCourse(course.id.replace(/ /g, ""))["prerequisite_list"].map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
+        return course.prerequisite_list.map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
       }
     },
     prerequisite_text: { type: GraphQLString },
     dependencies: { 
       type: GraphQLList(courseType),
       resolve: (course) => {
-        return getCourse(course.id.replace(/ /g, ""))["dependencies"].map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
+        return course.dependencies.map(depend_id => getCourse(depend_id.replace(/ /g, "", "")));
       }
     },
     repeatability: { type: GraphQLString },
@@ -75,8 +76,78 @@ const courseType = new GraphQLObjectType({
     ge_text: { type: GraphQLString },
     terms: { type: GraphQLList(GraphQLString) },
     // can't add "same as" or "grading option" due to whitespace :((
+
+    offerings: {
+      type: GraphQLList(courseOfferingType),
+      args: {
+        year: { type: GraphQLFloat},
+        quarter: { type: GraphQLString},
+        ge: { type: GraphQLString},
+        division: { type: GraphQLString},
+        section_codes: { type: GraphQLString },
+        instructor: { type: GraphQLString },
+        section_type: { type: GraphQLString },
+        units: { type: GraphQLString },
+        days: { type: GraphQLString },
+        start_time: { type: GraphQLString },
+        end_time: { type: GraphQLString },
+        max_capacity: { type: GraphQLString },
+        full_courses: { type: GraphQLString },
+        cancelled_courses: { type: GraphQLString },
+        building: { type: GraphQLString },
+        room: { type: GraphQLString }
+      },
+      resolve: async (course, args, _, info) => {
+        if ('offerings' in course) {
+          return course.offerings;
+        }
+
+        // Only fetch course schedule if it's a root course query.
+        // This is because we don't want to spam webreg with successive calls from
+        // queries like allCourses/allProfessors.
+        const prev_path_type = info.path.prev.typename;
+
+        if (prev_path_type == 'Query'){
+          const query = scheduleArgsToQuery({
+            department: course.department,
+            course_number: course.number, 
+            ...args
+          })
+          const results = (await getCourseSchedules(query))[0];
+          return results.offerings;
+        }
+
+        // TODO: only return one error for a query, instead of one per item in the list
+        throw new Error(`Accessing a course's offerings from a nested list is not allowed. Please use the schedules query`)
+      }
+    }
   })
 });
+
+const meetingType = new GraphQLObjectType({
+  name: "Meeting",
+
+  fields: () => ({
+    building: { 
+      type: GraphQLString,
+      resolve: (meeting) => {
+        return meeting["bldg"];
+      }
+    },
+    days: { type: GraphQLString },
+    time: { type: GraphQLString }
+  })
+})
+
+const sectionInfoType = new GraphQLObjectType({
+  name: "SectionInfo",
+  fields: () => ({
+    code: { type: GraphQLString },
+    comment: { type: GraphQLString },
+    number: { type: GraphQLString },
+    type: { type: GraphQLString }
+  })
+})
 
 const courseOfferingType = new GraphQLObjectType({
   name: "CourseOffering",
@@ -84,18 +155,54 @@ const courseOfferingType = new GraphQLObjectType({
   fields: () => ({
     year: { type: GraphQLString },
     quarter: { type: GraphQLString },
-    code: { type: GraphQLFloat },
-    section: { type: GraphQLString },
-    type: { type: GraphQLString },
-    instructor: { type: GraphQLString },  // TODO: map name to professorType
+    
+    final_exam: { type: GraphQLString },
+    instructors: { type: GraphQLList(GraphQLString) },  // TODO: map name to professorType
+    max_capacity: { type: GraphQLFloat },
+    meetings: { type: GraphQLList(meetingType) },
+    num_section_enrolled: { type: GraphQLFloat },
+    num_total_enrolled: { type: GraphQLFloat },
+    num_new_only_reserved: { type: GraphQLFloat },
+    num_on_waitlist: { type: GraphQLFloat },
+    num_requested: { type: GraphQLFloat },
+    restrictions: { type: GraphQLString },
+    section: { type: sectionInfoType },  
+    status: { type: GraphQLString },
+    units: { type: GraphQLFloat },
+    
     course: { 
       type: courseType,
-      resolve: (temp) => {
-        return getCourse(temp.course)
+      resolve: (offering) => {
+        return getCourse(offering.course)
       }
     }
   })
 })
+
+// Format Schedule query arguments for WebSoc
+function scheduleArgsToQuery(args) {
+  const { year, quarter, ge, department, course_number, division, section_codes, instructor, course_title, section_type, units, days, start_time, end_time, max_capacity, full_courses, cancelled_courses, building, room} = args
+  return {
+    term: year + " " + quarter,
+    ge: ge,
+    department: department,
+    courseNumber: course_number,
+    division: division,
+    sectionCodes: section_codes,
+    instructorName: instructor,
+    courseTitle: course_title,
+    sectionType: section_type,
+    units: units,
+    days: days,
+    startTime: start_time,
+    endTime: end_time,
+    maxCapacity: max_capacity,
+    fullCourses: full_courses,
+    cancelledCourses: cancelled_courses,
+    building: building,
+    room: room,
+  }
+}
 
 const gradeDistributionType = new GraphQLObjectType({
   name: "GradeDistribution",
@@ -205,6 +312,43 @@ const queryType = new GraphQLObjectType({
       description: "Return all professors. Takes no arguments"
     },
 
+    schedule: {
+      type: GraphQLList(courseType),
+
+      // TODO: Add descriptions and note required fields.
+      args: {
+        year: { type: GraphQLFloat },
+        quarter: { type: GraphQLString },
+        ge: { type: GraphQLString },
+        department: { type: GraphQLString },
+        course_number: { type: GraphQLString} ,
+        division: { type: GraphQLString },
+        section_codes: { type: GraphQLString },
+        instructor: { type: GraphQLString },
+        course_title: { type: GraphQLString },
+        section_type: { type: GraphQLString },
+        units: { type: GraphQLString },
+        days: { type: GraphQLString },
+        start_time: { type: GraphQLString },
+        end_time: { type: GraphQLString },
+        max_capacity: { type: GraphQLString },
+        full_courses: { type: GraphQLString },
+        cancelled_courses: { type: GraphQLString },
+        building: { type: GraphQLString },
+        room: { type: GraphQLString }
+      },
+
+      resolve: async (_, args) => {
+        // TODO: validate args input
+
+        const query = scheduleArgsToQuery(args);
+        const results = await getCourseSchedules(query);
+        return results
+      },
+
+      description: "Return schedule from websoc."
+    },
+
     grades: {
       type: gradeDistributionCollectionType,
 
@@ -256,7 +400,7 @@ const queryType = new GraphQLObjectType({
               code: result.code,
               section: result.section,
               type: result.type,
-              instructor: result.instructor,
+              instructors: [result.instructor],
               course: result.department.replace(/\s/g, '')+result.number,
             }
           }
