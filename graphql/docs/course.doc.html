@@ -75,9 +75,29 @@
                 Course
             </a>
         </li>
-        <li  title="Professor">
-            <a href="professor.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                Professor
+        <li  title="CourseOffering">
+            <a href="courseoffering.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                CourseOffering
+            </a>
+        </li>
+        <li  title="GradeDistribution">
+            <a href="gradedistribution.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                GradeDistribution
+            </a>
+        </li>
+        <li  title="GradeDistributionCollection">
+            <a href="gradedistributioncollection.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                GradeDistributionCollection
+            </a>
+        </li>
+        <li  title="GradeDistributionCollectionAggregate">
+            <a href="gradedistributioncollectionaggregate.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                GradeDistributionCollectionAggregate
+            </a>
+        </li>
+        <li  title="Instructor">
+            <a href="instructor.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                Instructor
             </a>
         </li>
         <li  title="__Directive">
@@ -163,7 +183,7 @@
             </a>
             GraphQL Schema definition
         </h2>
-        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Course</span> {</li><li></li><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">department</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">number</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">school</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">title</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">course_level</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">department_alias</span>: [<a class="support type" href="string.doc.html">String</a>] </span></li><li></li><li><span class="tab"><span class="meta">units</span>: [<a class="support type" href="float.doc.html">Float</a>] </span></li><li></li><li><span class="tab"><span class="meta">description</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">department_name</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">professor_history</span>: [<a class="support type" href="professor.doc.html">Professor</a>] </span></li><li></li><li><span class="tab"><span class="meta">prerequisite_tree</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">prerequisite_list</span>: [<a class="support type" href="course.doc.html">Course</a>] </span></li><li></li><li><span class="tab"><span class="meta">prerequisite_text</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">dependencies</span>: [<a class="support type" href="course.doc.html">Course</a>] </span></li><li></li><li><span class="tab"><span class="meta">repeatability</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">concurrent</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">same_as</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">restriction</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">overlap</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">corequisite</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">ge_list</span>: [<a class="support type" href="string.doc.html">String</a>] </span></li><li></li><li><span class="tab"><span class="meta">ge_text</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">terms</span>: [<a class="support type" href="string.doc.html">String</a>] </span></li><li>}</li></ul></code>
+        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Course</span> {</li><li></li><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">department</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">number</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">school</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">title</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">course_level</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">department_alias</span>: [<a class="support type" href="string.doc.html">String</a>] </span></li><li></li><li><span class="tab"><span class="meta">units</span>: [<a class="support type" href="float.doc.html">Float</a>] </span></li><li></li><li><span class="tab"><span class="meta">description</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">department_name</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">instructor_history</span>: [<a class="support type" href="instructor.doc.html">Instructor</a>] </span></li><li></li><li><span class="tab"><span class="meta">prerequisite_tree</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">prerequisite_list</span>: [<a class="support type" href="course.doc.html">Course</a>] </span></li><li></li><li><span class="tab"><span class="meta">prerequisite_text</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">dependencies</span>: [<a class="support type" href="course.doc.html">Course</a>] </span></li><li></li><li><span class="tab"><span class="meta">repeatability</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">concurrent</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">same_as</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">restriction</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">overlap</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">corequisite</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">ge_list</span>: [<a class="support type" href="string.doc.html">String</a>] </span></li><li></li><li><span class="tab"><span class="meta">ge_text</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">terms</span>: [<a class="support type" href="string.doc.html">String</a>] </span></li><li>}</li></ul></code>
     </div>
 </section>
 <section>
@@ -174,7 +194,7 @@
             </a>
             Require by
         </h2>
-        <ul class="require-by"><li><a href="course.doc.html" title="Course - ">Course<em>null</em></a><li><li><a href="professor.doc.html" title="Professor - ">Professor<em>null</em></a><li><li><a href="query.doc.html" title="Query - ">Query<em>null</em></a><li></ul>
+        <ul class="require-by"><li><a href="course.doc.html" title="Course - ">Course<em>null</em></a><li><li><a href="courseoffering.doc.html" title="CourseOffering - ">CourseOffering<em>null</em></a><li><li><a href="instructor.doc.html" title="Instructor - ">Instructor<em>null</em></a><li><li><a href="query.doc.html" title="Query - ">Query<em>null</em></a><li></ul>
     </div>
 </section>
 <footer>
