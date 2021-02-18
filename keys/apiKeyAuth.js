@@ -17,7 +17,7 @@ const {
 } = faunadb.query;
 
 let apiKeyAuth = (req, res, next) => {
-    if (process.env.NODE_ENV == "development") {
+    if (process.env.NODE_ENV != "production") {
         next();
     } else if (req.headers['referer'] && req.headers['referer'].includes('graphql-playground')) {
         next();
