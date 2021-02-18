@@ -27,7 +27,7 @@ describe('GET /courses/I&CSCI33', () => {
     .then((response) => {
         expect(response.body['id']).toEqual('I&CSCI33');
         expect(response.body['title']).toEqual('Intermediate Programming');
-        expect(Array.isArray(response.body['dependencies'])).toBeTruthy();
+        expect(Array.isArray(response.body['prerequisite_for'])).toBeTruthy();
     }));
 });
 
