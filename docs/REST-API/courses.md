@@ -128,7 +128,7 @@ Try out one of these quick ways to play with our courses endpoints:
             "I&C SCI 51"
         ],
         "prerequisite_text": "I&C SCI 51",
-        "dependencies": [
+        "prerequisite_for": [
             "COMPSCI 122C",
             "COMPSCI 131",
             "COMPSCI 222",

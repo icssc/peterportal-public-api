@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
-    <title>Professor</title>
+    <title>GradeDistributionCollectionAggregate</title>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" /><link type="text/css" rel="stylesheet" href="./assets/require-by.css" />
 </head>
 <body class="slds-scrollable--y">
@@ -75,9 +75,29 @@
                 Course
             </a>
         </li>
-        <li class="slds-is-active" title="Professor">
-            <a href="professor.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                Professor
+        <li  title="CourseOffering">
+            <a href="courseoffering.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                CourseOffering
+            </a>
+        </li>
+        <li  title="GradeDistribution">
+            <a href="gradedistribution.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                GradeDistribution
+            </a>
+        </li>
+        <li  title="GradeDistributionCollection">
+            <a href="gradedistributioncollection.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                GradeDistributionCollection
+            </a>
+        </li>
+        <li class="slds-is-active" title="GradeDistributionCollectionAggregate">
+            <a href="gradedistributioncollectionaggregate.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                GradeDistributionCollectionAggregate
+            </a>
+        </li>
+        <li  title="Instructor">
+            <a href="instructor.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                Instructor
             </a>
         </li>
         <li  title="__Directive">
@@ -151,7 +171,7 @@
     </div>
     <div class="container">
         <p class="slds-text-title--caps slds-text-color--weak">OBJECT</p>
-        <h1 class="slds-text-heading--large">Professor</h1>
+        <h1 class="slds-text-heading--large">GradeDistributionCollectionAggregate</h1>
         <div class="slds-text-body--regular"></div>
     </div>
 </section>
@@ -163,7 +183,7 @@
             </a>
             GraphQL Schema definition
         </h2>
-        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Professor</span> {</li><li></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">ucinetid</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">phone</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">title</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">department</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">schools</span>: [<a class="support type" href="string.doc.html">String</a>] </span></li><li></li><li><span class="tab"><span class="meta">related_departments</span>: [<a class="support type" href="string.doc.html">String</a>] </span></li><li></li><li><span class="tab"><span class="meta">course_history</span>: [<a class="support type" href="course.doc.html">Course</a>] </span></li><li>}</li></ul></code>
+        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">GradeDistributionCollectionAggregate</span> {</li><li></li><li><span class="tab"><span class="meta">sum_grade_a_count</span>: <a class="support type" href="float.doc.html">Float</a> </span></li><li></li><li><span class="tab"><span class="meta">sum_grade_b_count</span>: <a class="support type" href="float.doc.html">Float</a> </span></li><li></li><li><span class="tab"><span class="meta">sum_grade_c_count</span>: <a class="support type" href="float.doc.html">Float</a> </span></li><li></li><li><span class="tab"><span class="meta">sum_grade_d_count</span>: <a class="support type" href="float.doc.html">Float</a> </span></li><li></li><li><span class="tab"><span class="meta">sum_grade_f_count</span>: <a class="support type" href="float.doc.html">Float</a> </span></li><li></li><li><span class="tab"><span class="meta">sum_grade_p_count</span>: <a class="support type" href="float.doc.html">Float</a> </span></li><li></li><li><span class="tab"><span class="meta">sum_grade_np_count</span>: <a class="support type" href="float.doc.html">Float</a> </span></li><li></li><li><span class="tab"><span class="meta">sum_grade_w_count</span>: <a class="support type" href="float.doc.html">Float</a> </span></li><li></li><li><span class="tab"><span class="meta">average_gpa</span>: <a class="support type" href="float.doc.html">Float</a> </span></li><li>}</li></ul></code>
     </div>
 </section>
 <section>
@@ -174,7 +194,7 @@
             </a>
             Require by
         </h2>
-        <ul class="require-by"><li><a href="course.doc.html" title="Course - ">Course<em>null</em></a><li><li><a href="query.doc.html" title="Query - ">Query<em>null</em></a><li></ul>
+        <ul class="require-by"><li><a href="gradedistributioncollection.doc.html" title="GradeDistributionCollection - ">GradeDistributionCollection<em>null</em></a><li></ul>
     </div>
 </section>
 <footer>
