@@ -3,10 +3,10 @@ name: node tests
 on:
   push:
     branches:
-      - gitlab-ci
+      - github-ci
   pull_request:
     branches: 
-      - gitlab-ci
+      - github-ci
 
 jobs:
   build:
