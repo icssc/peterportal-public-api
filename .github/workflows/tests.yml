@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - github-ci
+      - master
+      - main
   pull_request:
     branches: 
       - github-ci
+      - master
+      - main
 
 jobs:
   build:
