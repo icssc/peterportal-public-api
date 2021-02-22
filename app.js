@@ -11,7 +11,7 @@ var cors = require('cors');
 var path = require('path');
 var logger = require('morgan');
 const rateLimit = require("express-rate-limit");
-
+const moesif = require('moesif-nodejs');
 const expressPlayground = require('graphql-playground-middleware-express').default;
 
 var port = process.env.PORT || 8080;
@@ -29,6 +29,15 @@ const limiter = rateLimit({
     message: createErrorJSON(429, "Too Many Requests", "You have exceeded the rate limit. Please try again later.")
 });
 
+const moesifMiddleware = moesif({
+  applicationId: process.env.MOESIF_KEY,
+
+  // Link API Calls to Api Key
+  getSessionToken: function (req, res) {
+    return req.headers["x-api-key"] ? req.headers["x-api-key"] : undefined;
+  },
+});
+
 var corsOptions = {
   origin: ['http://127.0.0.1:' + port, 'http://api.peterportal.org', 'https://api.peterportal.org'],
   optionsSuccessStatus: 200
@@ -38,6 +47,7 @@ app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(limiter);
+app.use(moesifMiddleware);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
