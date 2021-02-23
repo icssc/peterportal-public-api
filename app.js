@@ -13,6 +13,9 @@ var logger = require('morgan');
 const rateLimit = require("express-rate-limit");
 const moesif = require('moesif-nodejs');
 const expressPlayground = require('graphql-playground-middleware-express').default;
+const Sentry = require("@sentry/node");
+const Tracing = require("@sentry/tracing");
+
 
 var port = process.env.PORT || 8080;
 
@@ -38,6 +41,19 @@ const moesifMiddleware = moesif({
   },
 });
 
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  integrations: [
+    // enable HTTP calls tracing
+    new Sentry.Integrations.Http({ tracing: true }),
+    // enable Express.js middleware tracing
+    new Tracing.Integrations.Express({ app }),
+  ],
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 1.0,
+});
+
 var corsOptions = {
   origin: ['http://127.0.0.1:' + port, 'http://api.peterportal.org', 'https://api.peterportal.org'],
   optionsSuccessStatus: 200
@@ -48,6 +64,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(limiter);
 app.use(moesifMiddleware);
+// RequestHandler creates a separate execution context using domains, so that every
+// transaction/span/breadcrumb is attached to its own Hub instance
+app.use(Sentry.Handlers.requestHandler());
+// TracingHandler creates a trace for every incoming request
+app.use(Sentry.Handlers.tracingHandler());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -63,6 +84,8 @@ app.use("/generateKey", generateKey);
 app.get('/', function(req, res) {
   res.redirect('/docs')
 });
+
+app.use(Sentry.Handlers.errorHandler());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
