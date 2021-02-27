@@ -133,6 +133,9 @@ function queryDatabaseAndResponse(where, calculate) {
             return queryResult;
     }
 
+    // Close connection when done
+    connection.close()
+
 }
 
 module.exports = {parseGradesParamsToSQL, queryDatabaseAndResponse}
