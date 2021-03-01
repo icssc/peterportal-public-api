@@ -9,7 +9,8 @@ const {
 var {getAllCourses, getCourse} = require('../helpers/courses.helper')
 var {getAllInstructors, getInstructor} = require('../helpers/instructor.helper')
 var {getCourseSchedules} = require("../helpers/schedule.helper")
-var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../helpers/grades.helper')
+var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../helpers/grades.helper');
+const { ValidationError } = require('../helpers/errors.helper');
 
 const professorType = new GraphQLObjectType({
   name: 'Professor',
@@ -179,6 +180,18 @@ const courseOfferingType = new GraphQLObjectType({
   })
 })
 
+// Validate Schedule Query Arguments
+function validateScheduleArgs(args) {
+  // Assert that a term is provided (year and quarter)
+  if (!(args.year && args.quarter)) {
+    throw new ValidationError("Must provdide both a year and a quarter.");
+  }
+  // Assert that GE, Department, Section Codes, or Instructor is provided
+  if (!(args.ge || args.department || args.section_codes || args.instructor)){
+    throw new ValidationError("Must specify at least one of the following: ge, department, section_codes, or instructor.")
+  }
+}
+
 // Format Schedule query arguments for WebSoc
 function scheduleArgsToQuery(args) {
   const { year, quarter, ge, department, course_number, division, section_codes, instructor, course_title, section_type, units, days, start_time, end_time, max_capacity, full_courses, cancelled_courses, building, room} = args
@@ -338,8 +351,7 @@ const queryType = new GraphQLObjectType({
       },
 
       resolve: async (_, args) => {
-        // TODO: validate args input
-
+        validateScheduleArgs(args)
         const query = scheduleArgsToQuery(args);
         const results = await getCourseSchedules(query);
         return results
