@@ -44,14 +44,6 @@ async function getCourseSchedules(query) {
         }
     }
     return courses
-    /*
-    TODO: Handle potential errors
-
-    }).catch((err) => {
-        throw err
-        //res.status(400).json(createErrorJSON(400, "Bad Request: Invalid parameter", "Unable to complete websoc-api query"));
-    })
-    */
 }
   
 module.exports = {getCourseSchedules}
