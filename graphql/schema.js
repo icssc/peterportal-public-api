@@ -408,9 +408,11 @@ const queryType = new GraphQLObjectType({
             course_offering: {
               year: result.year,
               quarter: result.quarter,
-              code: result.code,
-              section: result.section,
-              type: result.type,
+              section: {
+                code: result.code,
+                number: result.section,
+                type: result.type,
+              },
               instructors: [result.instructor],
               course: result.department.replace(/\s/g, '')+result.number,
             }
