@@ -101,9 +101,9 @@ Try out one of these quick ways to play with our grades endpoints:
 
 | Parameter | Description | Example |
 |-----------|-------------|---------|
-| `year` | School year, must be <START_YEAR>-<END_YEAR> | 2019-20 |
-| `quarter` | Quarter, options are Fall, Winter, Spring |  |
-| `instructor` | Instructor, must following the format (last name, first initial.) |  PATTIS, R. |
+| `year` | School year, must be <START_YEAR\>-<END_YEAR\> | 2019-20 |
+| `quarter` | Quarter, options are Fall, Winter, Spring | Fall |
+| `instructor` | Instructor, must following the format (<last_name\>, <first_initial\>.) |  PATTIS, R. |
 | `department` | Department short-hand | I&C SCI |
 | `number` | Course number | 32A |
 |  `code` | 5-digit course code on WebSoC | 35540 |

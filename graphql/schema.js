@@ -12,8 +12,8 @@ var {getCourseSchedules} = require("../helpers/schedule.helper")
 var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../helpers/grades.helper');
 const { ValidationError } = require('../helpers/errors.helper');
 
-const professorType = new GraphQLObjectType({
-  name: 'Professor',
+const instructorType = new GraphQLObjectType({
+  name: 'Instructor',
   fields: () => ({
     name: { type: GraphQLString },
     ucinetid: { type: GraphQLString },
@@ -24,8 +24,8 @@ const professorType = new GraphQLObjectType({
     related_departments: { type: GraphQLList(GraphQLString) },
     course_history: { 
       type: GraphQLList(courseType),
-      resolve: (professor) => {
-        return getInstructor(professor.ucinetid)["course_history"].map(course_id => getCourse(course_id.replace(/ /g, "")));
+      resolve: (instructor) => {
+        return getInstructor(instructor.ucinetid)["course_history"].map(course_id => getCourse(course_id.replace(/ /g, "")));
       }
     }
   })
@@ -47,10 +47,10 @@ const courseType = new GraphQLObjectType({
     units: { type: GraphQLList(GraphQLFloat) },
     description: { type: GraphQLString },
     department_name: { type: GraphQLString },
-    professor_history: { 
-      type: GraphQLList(professorType),
+    instructor_history: { 
+      type: GraphQLList(instructorType),
       resolve: (course) => {
-        return course.professor_history.map(professor_netid => getInstructor(professor_netid));
+        return course.professor_history.map(instructor_netid => getInstructor(instructor_netid));
       } 
     },
     prerequisite_tree: { type: GraphQLString },
@@ -61,10 +61,10 @@ const courseType = new GraphQLObjectType({
       }
     },
     prerequisite_text: { type: GraphQLString },
-    dependencies: { 
+    prerequisite_for: { 
       type: GraphQLList(courseType),
       resolve: (course) => {
-        return course.dependencies.map(depend_id => getCourse(depend_id.replace(/ /g, "", "")));
+        return course.prerequisite_for.map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
       }
     },
     repeatability: { type: GraphQLString },
@@ -156,7 +156,6 @@ const courseOfferingType = new GraphQLObjectType({
   fields: () => ({
     year: { type: GraphQLString },
     quarter: { type: GraphQLString },
-    
     final_exam: { type: GraphQLString },
     instructors: { type: GraphQLList(GraphQLString) },  // TODO: map name to professorType
     max_capacity: { type: GraphQLFloat },
@@ -175,7 +174,6 @@ const courseOfferingType = new GraphQLObjectType({
     section: { type: sectionInfoType },  
     status: { type: GraphQLString },
     units: { type: GraphQLFloat },
-    
     course: { 
       type: courseType,
       resolve: (offering) => {
@@ -286,22 +284,22 @@ const queryType = new GraphQLObjectType({
       description: "Search courses by their course id. Ex: COMPSCI161"
     },
 
-    // get professor by ucinetid
-    professor: {
-      type: professorType,
+    // get instructor by ucinetid
+    instructor: {
+      type: instructorType,
 
       // specify args to query by (ucinetid)
       args: {
         ucinetid: { type: GraphQLString }
       },
 
-      // define function to get a professor
+      // define function to get a instructor
       resolve: (_, {ucinetid}) => {
         return getInstructor(ucinetid);
       },
 
-      // documentation for professor
-      description: "Search professors by their ucinetid"
+      // documentation for instructor
+      description: "Search instructors by their ucinetid"
     },
 
     // return all courses
@@ -317,17 +315,17 @@ const queryType = new GraphQLObjectType({
       description: "Return all courses. Takes no arguments"
     },
 
-    // return all professors
-    allProfessors: {
-      type: GraphQLList(professorType),
+    // return all instructor
+    allInstructors: {
+      type: GraphQLList(instructorType),
 
-      // get all professors from cache
+      // get all instructors from cache
       resolve: () => {
         return getAllInstructors();
       },
 
-      // documentation for all professors
-      description: "Return all professors. Takes no arguments"
+      // documentation for all instructors
+      description: "Return all instructors. Takes no arguments"
     },
 
     schedule: {
@@ -455,7 +453,7 @@ Example:
       prerequisiteJSON
       prerequisiteList
       prerequisite
-      dependencies
+      prerequisite_for
       repeatability
       concurrent
       restriction
