@@ -164,7 +164,12 @@ const courseOfferingType = new GraphQLObjectType({
     num_section_enrolled: { type: GraphQLFloat },
     num_total_enrolled: { type: GraphQLFloat },
     num_new_only_reserved: { type: GraphQLFloat },
-    num_on_waitlist: { type: GraphQLFloat },
+    num_on_waitlist: { 
+      type: GraphQLFloat, 
+      resolve: (offering) => {
+         return offering.num_on_waitlist === 'n/a' ? null : offering.num_on_waitlist;
+        } 
+    },
     num_requested: { type: GraphQLFloat },
     restrictions: { type: GraphQLString },
     section: { type: sectionInfoType },  
