@@ -3,7 +3,8 @@ const {
   GraphQLString,
   GraphQLSchema,
   GraphQLFloat,
-  GraphQLList
+  GraphQLList,
+  GraphQLNonNull
 } = require('graphql');
 
 var {getAllCourses, getCourse} = require('../helpers/courses.helper')
@@ -186,6 +187,7 @@ const courseOfferingType = new GraphQLObjectType({
 // Validate Schedule Query Arguments
 function validateScheduleArgs(args) {
   // Assert that a term is provided (year and quarter)
+  // year and quarter are non-nullable, so they should never be false
   if (!(args.year && args.quarter)) {
     throw new ValidationError("Must provdide both a year and a quarter.");
   }
@@ -272,7 +274,7 @@ const queryType = new GraphQLObjectType({
 
       // specify args to query by
       args: {
-        id: { type: GraphQLString, description: "Course Department concatenated with Course Number. Ex: COMPSCI161" }
+        id: { type: GraphQLNonNull(GraphQLString), description: "Course Department concatenated with Course Number. Ex: COMPSCI161" }
       },
 
       // define function to get a course
@@ -290,7 +292,7 @@ const queryType = new GraphQLObjectType({
 
       // specify args to query by (ucinetid)
       args: {
-        ucinetid: { type: GraphQLString }
+        ucinetid: { type: GraphQLNonNull(GraphQLString) }
       },
 
       // define function to get a instructor
@@ -332,8 +334,8 @@ const queryType = new GraphQLObjectType({
       type: GraphQLList(courseType),
 
       args: {
-        year: { type: GraphQLFloat, description: "Year of the term. Required." },
-        quarter: { type: GraphQLString, description: "Quarter of the term. ['Fall'|'Winter'|'Spring'|'Summer1'|'Summer2'|'Summer10wk']. Required." },
+        year: { type: GraphQLNonNull(GraphQLFloat), description: "Year of the term. Required." },
+        quarter: { type: GraphQLNonNull(GraphQLString), description: "Quarter of the term. ['Fall'|'Winter'|'Spring'|'Summer1'|'Summer2'|'Summer10wk']. Required." },
         ge: { type: GraphQLString, description: "GE type. ['ANY'|'GE-1A'|'GE-1B'|'GE-2'|'GE-3'|'GE-4'|'GE-5A'|'GE-5B'|'GE-6'|'GE-7'|'GE-8']." },
         department: { type: GraphQLString, description: "Department Code." },
         course_number: { type: GraphQLString, description: "Course number or range. Ex: '32A' or '31-33'." },
