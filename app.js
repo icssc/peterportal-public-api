@@ -103,9 +103,6 @@ app.use(function(err, req, res, next) {
   res.status(status).send(createErrorJSON(status, err.message, ""));
 });
 
-app.listen(port, function() {
-  console.log("Server is running on Port: " + port);
-});
 
 
 module.exports = app;
