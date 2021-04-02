@@ -3,11 +3,12 @@ const {
   GraphQLString,
   GraphQLSchema,
   GraphQLFloat,
-  GraphQLList
+  GraphQLList,
+  GraphQLScalarType
 } = require('graphql');
 
 var {getAllCourses, getCourse} = require('../helpers/courses.helper')
-var {getAllInstructors, getInstructor} = require('../helpers/instructor.helper')
+var {getAllInstructors, getInstructor, getInstructorFromName} = require('../helpers/instructor.helper')
 var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../helpers/grades.helper')
 
 const instructorType = new GraphQLObjectType({
@@ -87,7 +88,13 @@ const courseOfferingType = new GraphQLObjectType({
     code: { type: GraphQLFloat },
     section: { type: GraphQLString },
     type: { type: GraphQLString },
-    instructor: { type: GraphQLString },  // TODO: map name to instructorType
+    instructor_name: { type: GraphQLString },
+    instructor: { 
+      type: instructorType,
+      resolve: (temp) => {
+        return getInstructor(temp.instructor);
+      }
+    },  // TODO: map name to instructorType
     course: { 
       type: courseType,
       resolve: (temp) => {
@@ -240,6 +247,25 @@ const queryType = new GraphQLObjectType({
         }
 
         let gradeDistributions = gradeResults.map(result => {
+          console.log(result.instructor);
+          let ucinetids = getInstructorFromName(result.instructor);
+          
+          let ucinetid = "";
+          if (ucinetids.length == 1) {
+            ucinetid = ucinetids[0];
+          } else { // multiple instructor objects need to check
+            instructors = ucinetids.map( id => getInstructor(id));
+            console.log(instructors)
+            instructors = instructors.filter( temp => temp.related_departments.includes(result.department));
+            if (instructors.length == 1) {
+              ucinetid = instructors[0].ucinetid
+            } else {
+              console.log("ERROR")
+              console.log(instructors);
+              
+            }
+          }
+
           return {
             grade_a_count: result.gradeACount,
             grade_b_count: result.gradeBCount,
@@ -256,7 +282,8 @@ const queryType = new GraphQLObjectType({
               code: result.code,
               section: result.section,
               type: result.type,
-              instructor: result.instructor,
+              instructor_name: result.instructor,
+              instructor: ucinetid,
               course: result.department.replace(/\s/g, '')+result.number,
             }
           }
