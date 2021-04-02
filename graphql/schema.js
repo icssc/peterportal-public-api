@@ -251,9 +251,16 @@ const queryType = new GraphQLObjectType({
           let ucinetids = getInstructorFromName(result.instructor);
           
           let ucinetid = "";
-          if (ucinetids.length == 1) {
+          
+          if (!ucinetids){
+            //no instructor found
+            console.log(ucinetid)
+            console.log("error")
+          }
+          else if (ucinetids.length == 1) {
             ucinetid = ucinetids[0];
-          } else { // multiple instructor objects need to check
+          } 
+          else { // multiple instructor objects need to check
             instructors = ucinetids.map( id => getInstructor(id));
             console.log(instructors)
             instructors = instructors.filter( temp => temp.related_departments.includes(result.department));
