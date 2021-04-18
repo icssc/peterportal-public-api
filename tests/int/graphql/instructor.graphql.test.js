@@ -71,6 +71,27 @@ describe('POST /graphql/', () => {
 });
 
 describe('POST /graphql/', () => {
+  it('GraphQL: Instructor query for nested offerings', () => request
+  .post('/graphql/')
+  .send({query:`{
+      professor(ucinetid:"pattis") {
+        course_history {
+          offerings {
+            final_exam
+          }
+        }
+      }
+    }`})
+  .set('Accept', 'application/json')
+  .expect('Content-Type', /json/)
+  .expect(200)
+  .then((response) => {
+    expect(response.body).toHaveProperty('errors');
+    expect(response.body["errors"][0]["path"]).toEqual(expect.arrayContaining(["offerings"]));
+  }));
+});
+
+describe('POST /graphql/', () => {
   it('GraphQL: Incorrect argument',  () => request
   .post('/graphql/')
   .send({query:`query {
