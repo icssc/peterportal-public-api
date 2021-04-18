@@ -30,3 +30,6 @@ jobs:
     - run: npm ci
     - run: npm install
     - run: npm test
+      env:
+        MOESIF_KEY: ${{ secrets.MOESIF_KEY }}
+        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}

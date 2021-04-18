@@ -3,13 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon app",
+    "start": "nodemon server",
     "test": "jest",
     "init_db": "node ./db/sqlite.js",
     "refresh": "node ./utils/refreshESCache.js"
   },
   "dependencies": {
     "@2fd/graphdoc": "^2.4.0",
+    "@sentry/node": "^6.2.0",
+    "@sentry/tracing": "^6.2.0",
     "better-sqlite3": "^7.1.1",
     "bottleneck": "^2.19.5",
     "cors": "^2.8.5",
@@ -28,6 +30,7 @@
     "graphql": "^15.3.0",
     "graphql-playground-middleware-express": "^1.7.21",
     "http-errors": "~1.6.3",
+    "moesif-nodejs": "^3.1.5",
     "morgan": "~1.9.1",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.11",
