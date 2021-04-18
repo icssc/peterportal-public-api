@@ -30,18 +30,28 @@ describe('POST /graphql/', () => {
                 grade_np_count
                 average_gpa
                 course_offering {
-                    year
-                    quarter
+                  year
+                  quarter
+                  final_exam
+                  instructors
+                  max_capacity
+                  meetings {
+                    building
+                    days
+                    time
+                  }
+                  section {
                     code
-                    section
+                    comment
+                    number
                     type
-                    instructor
-                    course {
-                        id
-                        department
-                        number
-                    }
-                }
+                  }
+                  course {
+                      id
+                      department
+                      number
+                  }
+              }
             }
         }
     }`})
@@ -63,7 +73,7 @@ describe('POST /graphql/', () => {
         expect.objectContaining({
             "grade_a_count": expect.any(Number),
             "grade_b_count": expect.any(Number),
-            "average_gpa": expect.any(Number)
+            "average_gpa": expect.any(Number),
         })
       );
       expect(response.body["data"]["grades"]["grade_distributions"][0]["average_gpa"]).toBeLessThanOrEqual(4.0);
@@ -71,7 +81,7 @@ describe('POST /graphql/', () => {
           expect.objectContaining({
               "year": "2019-20",
               "quarter": expect.any(String),
-              "code": expect.any(Number)
+              "section": expect.any(Object)
           })
       );
       expect(response.body["data"]["grades"]["grade_distributions"][0]["course_offering"]["course"]).toEqual(
@@ -93,7 +103,10 @@ describe('POST /graphql/', () => {
         grade_distributions {
           	course_offering {
               year
-              code
+              quarter
+              section {
+                code
+              }
               course {
                 id
               }
@@ -126,7 +139,9 @@ describe('POST /graphql/', () => {
         grade_distributions {
           	course_offering {
               year
-              code
+              section {
+                code
+              }
               course {
                 id
               }
@@ -157,7 +172,9 @@ describe('POST /graphql/', () => {
         grade_distributions {
           	course_offering {
               year
-              code
+              section {
+                code
+              }
               course {
                 id
               }

@@ -145,7 +145,14 @@ describe('POST /graphql/', () => {
 describe('POST /graphql/', () => {
     it('GraphQL: allCourses',  () => request
     .post('/graphql/')
-    .send({query:"{\n  allCourses {\n    id,\n    description,\n    number,\n  }\n}"})
+    .send({query:`query {
+        allCourses {
+              id,
+              description,
+              number,
+            }
+        }`
+      })
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)
@@ -164,4 +171,25 @@ describe('POST /graphql/', () => {
         expect(response.body["data"]["allCourses"][0]).toHaveProperty('description');
         expect(response.body["data"]["allCourses"][0]).toHaveProperty('number');
     }));
+});
+
+
+describe('POST /graphql/', () => {
+  it('GraphQL: allCourses Error: Nested course offerings in allCourses',  () => request
+  .post('/graphql/')
+  .send({query:`query {
+      allCourses {
+        id
+        offerings {
+          status
+        }
+      }
+    }`})
+  .set('Accept', 'application/json')
+  .expect('Content-Type', /json/)
+  .expect(200)
+  .then((response) => {
+      expect(response.body).toHaveProperty('errors');
+      expect(response.body["errors"][0]["path"]).toEqual(expect.arrayContaining(["offerings"]));
+  }));
 });
