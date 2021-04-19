@@ -2,7 +2,7 @@ const supertest = require('../api.int.test');
 const request = supertest.request;
 jest.setTimeout(10000)
 
-// Instructors
+// Grades
 describe('POST /graphql/', () => {
   it('GraphQL: Grades Query on I&C SCI 33',  () => request
   .post('/graphql/')
@@ -73,7 +73,7 @@ describe('POST /graphql/', () => {
         expect.objectContaining({
             "grade_a_count": expect.any(Number),
             "grade_b_count": expect.any(Number),
-            "average_gpa": expect.any(Number),
+            "average_gpa": expect.any(Number)
         })
       );
       expect(response.body["data"]["grades"]["grade_distributions"][0]["average_gpa"]).toBeLessThanOrEqual(4.0);

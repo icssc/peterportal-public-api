@@ -179,7 +179,6 @@ describe('POST /graphql/', () => {
   .post('/graphql/')
   .send({query:`query {
       allCourses {
-        id
         offerings {
           status
         }
@@ -191,5 +190,73 @@ describe('POST /graphql/', () => {
   .then((response) => {
       expect(response.body).toHaveProperty('errors');
       expect(response.body["errors"][0]["path"]).toEqual(expect.arrayContaining(["offerings"]));
+  }));
+});
+
+
+describe('POST /graphql/', () => {
+  it('GraphQL: Course query with offerings',  () => request
+  .post('/graphql/')
+  .send({query:`{
+    course(id: "I&CSCI32A") {
+      id
+      title
+      offerings(year: 2019, quarter: "Fall") {
+        year,
+        quarter,
+        final_exam,
+        instructors,
+        max_capacity,
+        meetings {
+          building,
+          days,
+          time
+        },
+        num_section_enrolled,
+        num_total_enrolled,
+        num_new_only_reserved,
+        num_on_waitlist,
+        num_requested,
+        restrictions,
+        section {
+          code, comment, number, type
+        }
+        status,
+        units,
+        course {
+          id
+          department_name
+        }
+      }
+    }
+  }`})
+  .set('Accept', 'application/json')
+  .expect('Content-Type', /json/)
+  .expect(200)
+  .then((response) => {
+        expect(response.body).toHaveProperty('data');
+        expect(response.body["data"]).toHaveProperty('course');
+        expect(response.body["data"]["course"]["title"]).toEqual("Python Programming and Libraries (Accelerated)");
+        expect(response.body["data"]["course"]["id"]).toEqual("I&CSCI32A");
+        expect(Array.isArray(response.body["data"]["course"]["offerings"])).toBeTruthy();
+        expect(response.body["data"]["course"]["offerings"][0]).toEqual(
+          expect.objectContaining({
+            "year": "2019",
+            "quarter": "Fall",
+            "instructors": expect.any(Array),
+            "final_exam": expect.any(String),
+            "max_capacity": expect.any(Number),
+            "meetings": expect.any(Array),
+            "num_section_enrolled": expect.any(Number),
+            "num_total_enrolled": expect.any(Number),
+            "num_on_waitlist": expect.any(Number),
+            "num_requested": expect.any(Number),
+            "num_new_only_reserved": expect.any(Number),
+            "units": expect.any(Number),
+            "restrictions": expect.any(String),
+            "status": expect.any(String),
+            "course": expect.any(Object)
+          })
+        );
   }));
 });

@@ -74,7 +74,7 @@ describe('POST /graphql/', () => {
   it('GraphQL: Instructor query for nested offerings', () => request
   .post('/graphql/')
   .send({query:`{
-      professor(ucinetid:"pattis") {
+    instructor(ucinetid:"pattis") {
         course_history {
           offerings {
             final_exam
