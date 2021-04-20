@@ -36,9 +36,9 @@ const moesifMiddleware = moesif({
   applicationId: process.env.MOESIF_KEY,
 
   // Link API Calls to Api Key
-  getSessionToken: function (req, res) {
-    return req.headers["x-api-key"] ? req.headers["x-api-key"] : undefined;
-  },
+  // getSessionToken: function (req, res) {
+  //   return req.headers["x-api-key"] ? req.headers["x-api-key"] : undefined;
+  // },
 });
 
 Sentry.init({
@@ -74,12 +74,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('view engine', 'ejs')
 
-app.use("/rest", apiKeyAuth, restRouter);
-app.use("/graphql", apiKeyAuth, graphQLRouter);
-app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/', headers: {"x-api-key": "YOUR_API_KEY_HERE"}}));
+app.use("/rest", restRouter);
+app.use("/graphql", graphQLRouter);
+app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
 app.use('/graphql-docs', express.static('graphql/docs'));
 app.use('/docs', express.static('docs-site'));
-app.use("/generateKey", generateKey);
+// app.use("/generateKey", generateKey);
 
 app.get('/', function(req, res) {
   res.redirect('/docs')
