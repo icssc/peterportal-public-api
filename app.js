@@ -32,14 +32,14 @@ const limiter = rateLimit({
     message: createErrorJSON(429, "Too Many Requests", "You have exceeded the rate limit. Please try again later.")
 });
 
-// const moesifMiddleware = moesif({
-//   applicationId: process.env.MOESIF_KEY,
+const moesifMiddleware = moesif({
+  applicationId: process.env.MOESIF_KEY,
 
-//   // Link API Calls to Api Key
-//   getSessionToken: function (req, res) {
-//     return req.headers["x-api-key"] ? req.headers["x-api-key"] : undefined;
-//   },
-// });
+  // Link API Calls to Api Key
+  getSessionToken: function (req, res) {
+    return req.headers["x-api-key"] ? req.headers["x-api-key"] : undefined;
+  },
+});
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
@@ -63,7 +63,7 @@ app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(limiter);
-// app.use(moesifMiddleware); // Commented out for development
+app.use(moesifMiddleware);
 // RequestHandler creates a separate execution context using domains, so that every
 // transaction/span/breadcrumb is attached to its own Hub instance
 app.use(Sentry.Handlers.requestHandler());

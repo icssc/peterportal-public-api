@@ -94,8 +94,6 @@ function parseGradesParamsToSQL(query) {
 function queryDatabaseAndResponse(where, calculate) {
     const connection = new db(path.join(__dirname, '../db/db.sqlite'));
 
-    console.log("Querying database");
-
     switch (calculate) {
         case true:
             let result = {
