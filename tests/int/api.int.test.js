@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../../app');
 
+
 jest.setTimeout(30000)
 
 describe('GET /courses/all', () => {
@@ -173,3 +174,4 @@ describe('GET /grades/raw', () => {
         expect(response.body['message']).toMatch(/code/i);
     }));
 });
+
