@@ -10,7 +10,7 @@ const {
 
 
 var {getAllCourses, getCourse} = require('../helpers/courses.helper')
-var {getAllInstructors, getInstructor} = require('../helpers/instructor.helper')
+var {getAllInstructors, getInstructor, getInstructorFromName} = require('../helpers/instructor.helper')
 var {getCourseSchedules} = require("../helpers/schedule.helper")
 var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../helpers/grades.helper');
 const { ValidationError } = require('../helpers/errors.helper');

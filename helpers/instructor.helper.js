@@ -14,4 +14,4 @@ function getInstructorFromName(name) {
 }
 
 
-module.exports = {getAllInstructors, getInstructor}
+module.exports = {getAllInstructors, getInstructor, getInstructorFromName}
