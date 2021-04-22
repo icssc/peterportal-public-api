@@ -10,7 +10,7 @@ const {
 
 
 var {getAllCourses, getCourse} = require('../helpers/courses.helper')
-var {getAllInstructors, getInstructor, findInstructor} = require('../helpers/instructor.helper')
+var {getAllInstructors, getInstructor} = require('../helpers/instructor.helper')
 var {getCourseSchedules} = require("../helpers/schedule.helper")
 var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../helpers/grades.helper');
 const { ValidationError } = require('../helpers/errors.helper');
@@ -172,7 +172,39 @@ const courseOfferingType = new GraphQLObjectType({
       type: GraphQLList(instructorType),
       resolve: (temp) => {
         // temp.instructors.map((name) => findInstructor(name, temp.course))
-        return temp.instructors.map((name) => getInstructor(findInstructor(name, temp.course)));
+        return temp.instructors.map((name) => getInstructor(() => {
+                  // console.log(result);
+          let ucinetids = getInstructorFromName(name);
+          
+          let ucinetid = "";
+          
+          if (!ucinetids){
+              throw new Error(`Nothing was found for the instructor "${name}".`);
+          }
+          else if (ucinetids.length == 1) {
+              return ucinetids[0]
+          } 
+          else { // multiple instructor objects need to check
+              let instructors = ucinetids.map( id => getInstructor(id));
+              // console.log(instructors);
+              // instructors = instructors.filter( temp => temp.related_departments.includes(result.department));
+              // if (instructors.length == 1) {
+              //     //only one instructor was found 
+              //     ucinetid = instructors[0].ucinetid
+              // } else {
+                  //filter by course_history
+                  instructors = instructors.filter( inst => {
+                      const temp = inst.course_history.map((course) => getCourse(course.replace(/ /g, "")));
+                      return temp.includes(course);
+                  });
+                  if (instructors.length == 1) {
+                      return instructors[0].ucinetid;
+                  }
+                  throw new Error(`Nothing was found for the instructor "${name}".`);
+              // }
+            }
+            return ucinetid;
+        }));
       }
     },  // TODO: map name to instructorType
     final_exam: { type: GraphQLString },
@@ -417,29 +449,6 @@ const queryType = new GraphQLObjectType({
         }
 
         let gradeDistributions = gradeResults.map(result => {
-          // console.log(result);
-          // let ucinetids = getInstructorFromName(result.instructor);
-          
-          // let ucinetid = "";
-          
-          // if (!ucinetids){
-          //   throw new Error("No instructors were found for the instructor of this course.");
-          // }
-          // else if (ucinetids.length == 1) {
-          //   ucinetid = ucinetids[0];
-          // } 
-          // else { // multiple instructor objects need to check
-          //   instructors = ucinetids.map( id => getInstructor(id));
-          //   console.log(instructors)
-          //   instructors = instructors.filter( temp => temp.related_departments.includes(result.department));
-          //   if (instructors.length == 1) {
-          //     ucinetid = instructors[0].ucinetid
-          //   } else {
-
-          //     throw new Error("No instructors were found for the instructor of this course.")
-          //   }
-          // }
-
           return {
             grade_a_count: result.gradeACount,
             grade_b_count: result.gradeBCount,
@@ -453,8 +462,7 @@ const queryType = new GraphQLObjectType({
             course_offering: {
               year: result.year,
               quarter: result.quarter,
-              instructor_name: [result.instructor],
-              instructor: result.instructor,
+              instructors: [result.instructor],
               section: {
                 code: result.code,
                 number: result.section,
