@@ -1,7 +1,7 @@
 const supertest = require('./api.int.test');
 const request = supertest.request;
 
-jest.setTimeout(10000)
+jest.setTimeout(50000)
 
 
 describe('GET /grades/calculated', () => {
