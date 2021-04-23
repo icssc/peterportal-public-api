@@ -86,7 +86,9 @@ function parseGradesParamsToSQL(query) {
             (condition.length > 0 ? whereClause += " AND (" + condition + ")" : null)
     })
     
-    return whereClause === "" ? null : " WHERE " + whereClause;
+    const retVal = whereClause === "" ? null : " WHERE " + whereClause;
+
+    return retVal;
 }
 
 function queryDatabaseAndResponse(where, calculate) {
