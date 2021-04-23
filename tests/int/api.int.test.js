@@ -128,6 +128,7 @@ module.exports.request = request.agent(app);
 //     }));
 // });
 
+
 // describe('GET /grades/calculated', () => {
 //     it('invalid parameters to /grades/calculated', () => request(app)
 //     .get('/rest/v0/grades/calculated?year=2017-18&instructor=PATTIS,R')
@@ -155,5 +156,4 @@ module.exports.request = request.agent(app);
 //         expect(response.body['message']).toMatch(/code/i);
 //     }));
 // });
-
 
