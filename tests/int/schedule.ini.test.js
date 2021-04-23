@@ -1,7 +1,7 @@
 const supertest = require('./api.int.test');
 const request = supertest.request;
 
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 
 describe('GET /schedule/soc', () => {
     it('sends valid query string to /schedule/soc', () => request
