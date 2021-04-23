@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../../app');
 
+
 jest.setTimeout(30000)
 
 describe('GET /courses/all', () => {
@@ -127,6 +128,7 @@ module.exports.request = request.agent(app);
 //     }));
 // });
 
+
 // describe('GET /grades/calculated', () => {
 //     it('invalid parameters to /grades/calculated', () => request(app)
 //     .get('/rest/v0/grades/calculated?year=2017-18&instructor=PATTIS,R')
@@ -138,35 +140,6 @@ module.exports.request = request.agent(app);
 //         expect(response.body['status']).toEqual(400);
 //         expect(response.body['error']).toEqual("Bad Request: Invalid syntax in parameters");
 //         expect(response.body['message']).toMatch(/instructor/i);
-//     }));
-// });
-
-// describe('GET /grades/raw', () => {
-//     it('returns a json of all the grades distribution', async () => await request(app)
-//     .get('/rest/v0/grades/raw')
-//     .set('Accept', 'application/json')
-//     .expect('Content-Type', /json/)
-//     .expect(200)
-//     .then((response) => {
-//         expect(Array.isArray(response.body)).toBeTruthy();
-//         expect(response.body.length).toBeGreaterThan(0);
-//     }));
-// });
-
-// describe('GET /grades/raw', () => {
-//     it('returns a json of filtered grades distribution',  () => request(app)
-//     .get('/rest/v0/grades/raw?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33')
-//     .set('Accept', 'application/json')
-//     .expect('Content-Type', /json/)
-//     .expect(200)
-//     .then((response) => {
-//         expect(Array.isArray(response.body)).toBeTruthy();
-//         expect(response.body.length).toBeGreaterThan(0);
-//         expect(response.body[0]).toEqual(expect.objectContaining({
-//             "year": expect.any(String),
-//             "instructor": "PATTIS, R.",
-//             "code": expect.any(Number)
-//         }));
 //     }));
 // });
 
@@ -183,3 +156,5 @@ module.exports.request = request.agent(app);
 //         expect(response.body['message']).toMatch(/code/i);
 //     }));
 // });
+
+

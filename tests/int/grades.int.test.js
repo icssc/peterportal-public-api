@@ -3,7 +3,6 @@ const request = supertest.request;
 
 jest.setTimeout(30000)
 
-
 describe('GET /grades/calculated', () => {
     it('returns a json of all the grades distribution', async () => await request
     .get('/rest/v0/grades/calculated')
