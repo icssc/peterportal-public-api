@@ -101,16 +101,16 @@ describe('POST /graphql/', () => {
   .send({query:`{
     grades(year:"2019-20;2018-19", department: "I&C SCI") {
         grade_distributions {
-          	course_offering {
-              year
-              quarter
-              section {
-                code
-              }
-              course {
-                id
-              }
+          course_offering {
+            year
+            quarter
+            section {
+              code
             }
+            course {
+              id
+            }
+          }
         }
     }
 }`})
@@ -137,15 +137,15 @@ describe('POST /graphql/', () => {
         average_gpa
       }
         grade_distributions {
-          	course_offering {
-              year
-              section {
-                code
-              }
-              course {
-                id
-              }
+          course_offering {
+            year
+            section {
+              code
             }
+            course {
+              id
+            }
+          }
         }
     }
 }`})
@@ -170,15 +170,15 @@ describe('POST /graphql/', () => {
         average_gpa
       }
         grade_distributions {
-          	course_offering {
-              year
-              section {
-                code
-              }
-              course {
-                id
-              }
+          course_offering {
+            year
+            section {
+              code
             }
+            course {
+              id
+            }
+          }
         }
     }
 }`})
