@@ -31,7 +31,13 @@ describe('POST /graphql/', () => {
       expect(response.body["data"]["instructor"]).toEqual(
           expect.objectContaining({
               "department": "Computer Science",
-              "name": "Richard Eric Pattis"})
+              "name": "Richard Eric Pattis",
+              "ucinetid": "pattis",
+              "title": expect.any(String),
+              "schools": expect.any(Array),
+              "related_departments": expect.any(Array),
+              "course_history": expect.any(Array),
+            })
       );
       expect(response.body["data"]["instructor"]).not.toHaveProperty('description');
       expect(Array.isArray(response.body["data"]["instructor"]["course_history"])).toBeTruthy();

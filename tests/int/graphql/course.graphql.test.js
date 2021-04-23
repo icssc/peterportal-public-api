@@ -55,10 +55,33 @@ describe('POST /graphql/', () => {
         expect(response.body).toHaveProperty('data');
         expect(response.body["data"]).toHaveProperty('course');
         expect(response.body["data"]["course"]).toEqual(
-            expect.objectContaining({"number": "161", "department": "COMPSCI", "id": "COMPSCI161"})
+            expect.objectContaining({
+              "id": "COMPSCI161",
+              "number": "161",
+              "department": "COMPSCI", 
+              "school": expect.any(String),
+              "title": expect.any(String),
+              "course_level": expect.any(String),
+              "department_alias": expect.any(Array),
+              "units": expect.any(Array),
+              "description": expect.any(String),
+              "department_name": expect.any(String),
+              "instructor_history": expect.any(Array),
+              "prerequisite_tree": expect.any(String),
+              "prerequisite_list": expect.any(Array),
+              "prerequisite_text": expect.any(String),
+              "prerequisite_for": expect.any(Array),
+              "repeatability": expect.any(String),
+              "concurrent": expect.any(String),
+              "same_as": expect.any(String),
+              "restriction": expect.any(String),
+              "overlap": expect.any(String),
+              "corequisite": expect.any(String),
+              "ge_list": expect.any(Array),
+              "ge_text": expect.any(String),
+              "terms": expect.any(Array)
+            })
         );
-        expect(Array.isArray(response.body["data"]["course"]["prerequisite_for"])).toBeTruthy();
-        expect(Array.isArray(response.body["data"]["course"]["prerequisite_list"])).toBeTruthy();
         expect(response.body["data"]["course"]["prerequisite_list"].length > 0).toBeTruthy();
         expect(response.body["data"]["course"]["prerequisite_for"]).toEqual(
             expect.arrayContaining([  
@@ -163,13 +186,23 @@ describe('POST /graphql/', () => {
         expect(response.body["data"]["allCourses"]).toEqual(
             expect.arrayContaining([  
                 expect.objectContaining({
-                "id": "CHINESE2A",
-                "number": "2A"
-            })])
+                  "id": "CHINESE2A",
+                  "number": "2A"
+                })
+            ])
         );
-        expect(response.body["data"]["allCourses"][0]).toHaveProperty('id');
-        expect(response.body["data"]["allCourses"][0]).toHaveProperty('description');
-        expect(response.body["data"]["allCourses"][0]).toHaveProperty('number');
+        expect(response.body["data"]["allCourses"][0]['id']).not.toBeNull();
+        expect(response.body["data"]["allCourses"][0]['description']).not.toBeNull();
+        expect(response.body["data"]["allCourses"][0]['number']).not.toBeNull();
+        expect(response.body["data"]["allCourses"]).toEqual(
+          expect.arrayContaining([  
+              expect.objectContaining({
+                  "id": expect.any(String),
+                  "description": expect.any(String),
+                  "number": expect.any(String)
+              })
+          ])
+        );
     }));
 });
 
