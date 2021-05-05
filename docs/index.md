@@ -24,7 +24,7 @@ Peterportal Public API offers two Web APIs to help you build your app!
 
 ## Where does the data come from?
 
-We consolidate our data directly from official UCI sources such as: UCI Catalogue, UCI Directory, UCI Public Records Office, and UCI Webreg. We routinely monitor for updates to ensure you get the most accurate information to serve on your application.
+We consolidate our data directly from official UCI sources such as: UCI Catalogue, UCI Public Records Office, and UCI Webreg. We routinely monitor for updates to ensure you get the most accurate information to serve on your application.
 
 ## Disclaimer
 👩‍💻 We are currently in the early stages for this project. Every participants are welcomed to integrate this API into your project as a tool. However, if you choose to do so, please be aware that this project is currently in its early release phase. Every user will be considered as testers and are highly encouraged to do their part and submit a bug report if you encounter any issues. Our team will respond as quickly as possible to resolve the issue. 
