@@ -19,8 +19,8 @@ PeterPortal Public API provides software developers with easy-access to UC Irvin
 
 Peterportal Public API offers two Web APIs to help you build your app!  
 
-* [RESTful API](/REST-API/start_here)  
-* [GraphQL API](/GraphQL-API/start_here)
+* [RESTful API](/docs/REST-API/start_here)  
+* [GraphQL API](/docs/GraphQL-API/start_here)
 
 ## Where does the data come from?
 
