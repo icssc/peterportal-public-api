@@ -9,9 +9,9 @@ function getInstructor(ucinetid) {
     return cache[ucinetid] ? cache[ucinetid] : null;
 }
 
-function getInstructorFromName(name) {
+function getUCINetIDFromName(name) {
     return name_map[name] ? name_map[name] : null;
 }
 
 
-module.exports = {getAllInstructors, getInstructor, getInstructorFromName}
+module.exports = {getAllInstructors, getInstructor, getUCINetIDFromName}

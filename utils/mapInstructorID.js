@@ -19,7 +19,6 @@ function mapInstructorName() {
         }
     });
     
-    console.log("Result for Kei Akagi(AKAGI, K.): ", name_to_ucinetid["AKAGI, K."]);
     console.log("Storing data...")
     file_path = path.resolve('cache', 'instructor_name_map.json');
     storeData(name_to_ucinetid, file_path);
