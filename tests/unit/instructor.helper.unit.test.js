@@ -30,7 +30,7 @@ describe('Get instructors', () => {
                 "department":"Computer Science",
                 "schools":["Donald Bren School of Information and Computer Sciences"],
                 "related_departments":["COMPSCI","IN4MATX","I&C SCI","SWE","STATS"],
-                "course_history": expect.arrayContaining(["COMPSCI 290", "COMPSCI 299", "I&C SCI 90", "I&C SCI 193", "I&C SCI 33", "COMPSCI 199", "I&C SCI 7", "COMPSCI H198", "I&C SCI 46", "COMPSCI 298"])
+                "course_history": expect.arrayContaining(["I&C SCI 90", "I&C SCI 193", "I&C SCI 33", "I&C SCI 46"])
             });
         });
     });
