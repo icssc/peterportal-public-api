@@ -3,18 +3,18 @@ const request = supertest.request;
 
 jest.setTimeout(30000)
 
-describe('GET /grades/calculated', () => {
-    it('returns a json of all the grades distribution', async () => await request
-    .get('/rest/v0/grades/calculated')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200)
-    .then((response) => {
-        expect(response.body).toHaveProperty('gradeDistribution')
-        expect(Array.isArray(response.body['courseList'])).toBeTruthy();
-        expect(response.body['courseList'].length).toBeGreaterThan(0);
-    }));
-});
+// describe('GET /grades/calculated', () => {
+//     it('returns a json of all the grades distribution', async () => await request
+//     .get('/rest/v0/grades/calculated')
+//     .set('Accept', 'application/json')
+//     .expect('Content-Type', /json/)
+//     .expect(200)
+//     .then((response) => {
+//         expect(response.body).toHaveProperty('gradeDistribution')
+//         expect(Array.isArray(response.body['courseList'])).toBeTruthy();
+//         expect(response.body['courseList'].length).toBeGreaterThan(0);
+//     }));
+// });
 
 describe('GET /grades/calculated', () => {
     it('returns a json of filtered grades distribution',  () => request
@@ -62,17 +62,17 @@ describe('GET /grades/calculated', () => {
     }));
 });
 
-describe('GET /grades/raw', () => {
-    it('returns a json of all the grades distribution', async () => await request
-    .get('/rest/v0/grades/raw')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200)
-    .then((response) => {
-        expect(Array.isArray(response.body)).toBeTruthy();
-        expect(response.body.length).toBeGreaterThan(0);
-    }));
-});
+// describe('GET /grades/raw', () => {
+//     it('returns a json of all the grades distribution', async () => await request
+//     .get('/rest/v0/grades/raw')
+//     .set('Accept', 'application/json')
+//     .expect('Content-Type', /json/)
+//     .expect(200)
+//     .then((response) => {
+//         expect(Array.isArray(response.body)).toBeTruthy();
+//         expect(response.body.length).toBeGreaterThan(0);
+//     }));
+// });
 
 describe('GET /grades/raw', () => {
     it('returns a json of filtered grades distribution',  () => request
