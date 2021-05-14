@@ -20,7 +20,6 @@ const instructorType = new GraphQLObjectType({
   fields: () => ({
     name: { type: GraphQLString },
     ucinetid: { type: GraphQLString },
-    phone: { type: GraphQLString },
     title: { type: GraphQLString },
     department: { type: GraphQLString },
     schools: { type: GraphQLList(GraphQLString) },
@@ -497,13 +496,12 @@ Example:
   }
 
 "hits":[{"_index":"professors","_type":"_doc","_id":"kakagi","_score":1,"_source":{"name":"Kei Akagi","ucinetid":"kakagi",
-  "phone":"(949) 824-2171","title":"Chancellor's Professor","department":"Arts-Music","schools":["Claire Trevor School of the Arts"]
+  "title":"Chancellor's Professor","department":"Arts-Music","schools":["Claire Trevor School of the Arts"]
 
   {
     professor(ucinetid: "kakagi"){
       name
       ucinetid
-      phone
       title
       department
       schools
