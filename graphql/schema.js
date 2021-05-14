@@ -163,29 +163,36 @@ const courseOfferingType = new GraphQLObjectType({
       resolve: (temp) => {
         return temp.instructors.map((name) => {
 
+          //Fetch all possible ucinetids from the instructor.
           let ucinetids = getUCINetIDFromName(name);
           
+          //If only one exists, then we can return the instructor for it.
           if (ucinetids && ucinetids.length == 1) { return getInstructor(ucinetids[0]); }
+          
+          //If there is more than one, figure it out.
           else if (ucinetids && ucinetids.length > 1) {
-              //filter by instructor department
-              let course_dept = getCourse(temp.course).department
+              
+              //Filter our instructors by those with related departments.
+              let course_dept = getCourse(temp.course).department;
               let instructors = ucinetids.map(id => getInstructor(id)).filter( temp => temp.related_departments.includes(course_dept));
+              
+              //If only one is left, we can return it.
+              if (instructors.length == 1) {  return getInstructor(instructors[0].ucinetid); } 
 
-              if (instructors.length == 1) {  //only one instructor was found 
-                  return getInstructor(instructors[0].ucinetid);
-              } 
-              //filter by instructor's course_history
+              //Filter instructors by those that taught the course before.
               instructors = instructors.filter( inst => {
                   return inst.course_history.map((course) => getCourse(course.replace(/ /g, ""))).includes(temp.course);
               });
-              if (instructors.length == 1) {
-                  return getInstructor(instructors[0].ucinetid);
-              }
+              
+              //If only one is left, we can return it.
+              if (instructors.length == 1) { return getInstructor(instructors[0].ucinetid); }
           }
+          
+          //If we haven't found any instructors, then just return the name.
           return {name};
         })
       }
-    },  // TODO: map name to instructorType
+    }, 
     final_exam: { type: GraphQLString },
     max_capacity: { type: GraphQLFloat },
     meetings: { type: GraphQLList(meetingType) },
