@@ -259,7 +259,11 @@ const gradeDistributionCollectionType = new GraphQLObjectType({
 
   fields: () => ({
     aggregate: { type: gradeDistributionCollectionAggregateType },
-    grade_distributions: {type: GraphQLList(gradeDistributionType)}
+    grade_distributions: {type: GraphQLList(gradeDistributionType)},
+    instructors: { 
+      type: GraphQLList(GraphQLString),
+      description: "List of instructors present in the Grade Distribution Collection" 
+    }
   })
 });
 
@@ -425,7 +429,8 @@ const queryType = new GraphQLObjectType({
         
         let result = {
           aggregate: aggregate,
-          grade_distributions: gradeDistributions
+          grade_distributions: gradeDistributions,
+          instructors: [...new Set(gradeResults.map(result => result.instructor))]
         }
         
         return result;
