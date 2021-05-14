@@ -28,6 +28,7 @@
     "flat-cache": "^2.0.1",
     "googleapis": "^67.0.0",
     "graphql": "^15.3.0",
+    "graphql-parse-resolve-info": "^4.11.0",
     "graphql-playground-middleware-express": "^1.7.21",
     "http-errors": "~1.6.3",
     "moesif-nodejs": "^3.1.5",
