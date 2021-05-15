@@ -53,6 +53,7 @@ describe('POST /graphql/', () => {
                   }
               }
             }
+            instructors
         }
     }`})
   .set('Accept', 'application/json')
@@ -89,8 +90,8 @@ describe('POST /graphql/', () => {
             "department": "I&C SCI",
             "number": "33",
         })
-    );
-    
+      );
+      expect(Array.isArray(response.body["data"]["grades"]["instructors"])).toBeTruthy();
   }));
 });
 

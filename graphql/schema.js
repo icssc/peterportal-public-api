@@ -6,11 +6,14 @@ const {
   GraphQLList,
   GraphQLNonNull
 } = require('graphql');
+const {
+	parseResolveInfo,
+} = require('graphql-parse-resolve-info');
 
 var {getAllCourses, getCourse} = require('../helpers/courses.helper')
 var {getAllInstructors, getInstructor} = require('../helpers/instructor.helper')
 var {getCourseSchedules} = require("../helpers/schedule.helper")
-var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../helpers/grades.helper');
+var {parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades} = require('../helpers/grades.helper');
 const { ValidationError } = require('../helpers/errors.helper');
 
 const instructorType = new GraphQLObjectType({
@@ -259,7 +262,11 @@ const gradeDistributionCollectionType = new GraphQLObjectType({
 
   fields: () => ({
     aggregate: { type: gradeDistributionCollectionAggregateType },
-    grade_distributions: {type: GraphQLList(gradeDistributionType)}
+    grade_distributions: {type: GraphQLList(gradeDistributionType)},
+    instructors: { 
+      type: GraphQLList(GraphQLString),
+      description: "List of instructors present in the Grade Distribution Collection" 
+    }
   })
 });
 
@@ -376,59 +383,83 @@ const queryType = new GraphQLObjectType({
         code: { type: GraphQLFloat }
       },
 
-      resolve: (_, args) => {
-        // Send request to rest
-        var query = {
-            ... args
+      resolve: (_, args, __, info) => {
+        // Get the fields requested in the query
+        // This allows us to only fetch what the client wants from sql
+        const requestedFields = Object.keys(parseResolveInfo(info).fieldsByTypeName.GradeDistributionCollection)
+      
+        // Construct a WHERE clause from the arguments
+        const where = parseGradesParamsToSQL(args);
+        
+        // If requested, retrieve the grade distributions
+        let grade_distributions, gradeResults;
+        if (requestedFields.includes('grade_distributions')) {
+          gradeResults = fetchGrades(where)
+
+          // Format the results to GraphQL
+          grade_distributions = gradeResults.map(result => {
+            return {
+              grade_a_count: result.gradeACount,
+              grade_b_count: result.gradeBCount,
+              grade_c_count: result.gradeCCount,
+              grade_d_count: result.gradeDCount,
+              grade_f_count: result.gradeFCount,
+              grade_p_count: result.gradePCount,
+              grade_np_count: result.gradeNPCount,
+              grade_w_count: result.gradeWCount,
+              average_gpa: result.averageGPA != "nan"? result.averageGPA : null,
+              course_offering: {
+                year: result.year,
+                quarter: result.quarter,
+                section: {
+                  code: result.code,
+                  number: result.section,
+                  type: result.type,
+                },
+                instructors: [result.instructor],
+                course: result.department.replace(/\s/g, '')+result.number,
+              }
+            }
+          })
         }
-        const where = parseGradesParamsToSQL(query);
-        const gradeResults = queryDatabaseAndResponse(where, false)
-        const aggregateResult = queryDatabaseAndResponse(where, true).gradeDistribution
-    
-        // Format to GraphQL
-        let aggregate = {
-          sum_grade_a_count: aggregateResult['SUM(gradeACount)'],
-          sum_grade_b_count: aggregateResult['SUM(gradeBCount)'],
-          sum_grade_c_count: aggregateResult['SUM(gradeCCount)'],
-          sum_grade_d_count: aggregateResult['SUM(gradeDCount)'],
-          sum_grade_f_count: aggregateResult['SUM(gradeFCount)'],
-          sum_grade_p_count: aggregateResult['SUM(gradePCount)'],
-          sum_grade_np_count: aggregateResult['SUM(gradeNPCount)'],
-          sum_grade_w_count: aggregateResult['SUM(gradeWCount)'],
-          average_gpa: aggregateResult['AVG(averageGPA)']
+        
+        // If requested, retrieve the aggregate
+        let aggregate;
+        if (requestedFields.includes('aggregate')) {
+          const aggregateResult = fetchAggregatedGrades(where)
+      
+          // Format results to GraphQL
+          aggregate = {
+            sum_grade_a_count: aggregateResult['SUM(gradeACount)'],
+            sum_grade_b_count: aggregateResult['SUM(gradeBCount)'],
+            sum_grade_c_count: aggregateResult['SUM(gradeCCount)'],
+            sum_grade_d_count: aggregateResult['SUM(gradeDCount)'],
+            sum_grade_f_count: aggregateResult['SUM(gradeFCount)'],
+            sum_grade_p_count: aggregateResult['SUM(gradePCount)'],
+            sum_grade_np_count: aggregateResult['SUM(gradeNPCount)'],
+            sum_grade_w_count: aggregateResult['SUM(gradeWCount)'],
+            average_gpa: aggregateResult['AVG(averageGPA)']
+          }
         }
 
-        let gradeDistributions = gradeResults.map(result => {
-          return {
-            grade_a_count: result.gradeACount,
-            grade_b_count: result.gradeBCount,
-            grade_c_count: result.gradeCCount,
-            grade_d_count: result.gradeDCount,
-            grade_f_count: result.gradeFCount,
-            grade_p_count: result.gradePCount,
-            grade_np_count: result.gradeNPCount,
-            grade_w_count: result.gradeWCount,
-            average_gpa: result.averageGPA != "nan"? result.averageGPA : null,
-            course_offering: {
-              year: result.year,
-              quarter: result.quarter,
-              section: {
-                code: result.code,
-                number: result.section,
-                type: result.type,
-              },
-              instructors: [result.instructor],
-              course: result.department.replace(/\s/g, '')+result.number,
-            }
+        // If requested, retrieve the instructors
+        let instructors
+        if (requestedFields.includes('instructors')) {
+          if (gradeResults) {
+            // If the grade results exist, we can get the instructors from there
+            instructors = [...new Set(gradeResults.map(result => result.instructor))]
+          } else {
+            // Else query sql for the instructors
+            instructors = fetchInstructors(where)
           }
-        })
-        
-        let result = {
-          aggregate: aggregate,
-          grade_distributions: gradeDistributions
         }
         
-        return result;
+        // Return results
+        return {
+          aggregate,
+          grade_distributions,
+          instructors
+        }
       },
 
       description: "Search for grades."
