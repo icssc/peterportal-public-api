@@ -91,6 +91,37 @@ function parseGradesParamsToSQL(query) {
     return retVal;
 }
 
+function fetchGrades(where) {
+    let sqlStatement = "SELECT * FROM gradeDistribution";
+    return queryDatabase(where !== null ? sqlStatement + where : sqlStatement).all();
+}
+
+function fetchInstructors(where) {
+    let sqlStatement = "SELECT DISTINCT instructor FROM gradeDistribution";
+    return queryDatabase(where !== null ? sqlStatement + where : sqlStatement).all().map(result => result.instructor);
+}
+
+function fetchAggregatedGrades(where) {
+    let sqlStatement = `SELECT 
+                        SUM(gradeACount), 
+                        SUM(gradeBCount), 
+                        SUM(gradeCCount),
+                        SUM(gradeDCount),
+                        SUM(gradeFCount),
+                        SUM(gradePCount),
+                        SUM(gradeNPCount),
+                        SUM(gradeWCount),
+                        AVG(averageGPA),
+                        COUNT() FROM gradeDistribution`;
+
+    return queryDatabase(where !== null ? sqlStatement + where : sqlStatement).get();
+}
+
+function queryDatabase(statement) {
+    const connection = new db(path.join(__dirname, '../db/db.sqlite'));
+    return connection.prepare(statement)
+}
+
 function queryDatabaseAndResponse(where, calculate) {
     const connection = new db(path.join(__dirname, '../db/db.sqlite'));
 
@@ -140,4 +171,4 @@ function queryDatabaseAndResponse(where, calculate) {
 
 }
 
-module.exports = {parseGradesParamsToSQL, queryDatabaseAndResponse}
+module.exports = {parseGradesParamsToSQL, queryDatabaseAndResponse, fetchGrades, fetchAggregatedGrades, fetchInstructors}
