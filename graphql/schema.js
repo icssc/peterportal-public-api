@@ -4,14 +4,16 @@ const {
   GraphQLSchema,
   GraphQLFloat,
   GraphQLList,
+  GraphQLScalarType,
   GraphQLNonNull
 } = require('graphql');
 const {
 	parseResolveInfo,
 } = require('graphql-parse-resolve-info');
 
+
 var {getAllCourses, getCourse} = require('../helpers/courses.helper')
-var {getAllInstructors, getInstructor} = require('../helpers/instructor.helper')
+var {getAllInstructors, getInstructor, getUCINetIDFromName} = require('../helpers/instructor.helper')
 var {getCourseSchedules} = require("../helpers/schedule.helper")
 var {parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades} = require('../helpers/grades.helper');
 const { ValidationError } = require('../helpers/errors.helper');
@@ -159,8 +161,42 @@ const courseOfferingType = new GraphQLObjectType({
   fields: () => ({
     year: { type: GraphQLString },
     quarter: { type: GraphQLString },
+    instructors: { 
+      type: GraphQLList(instructorType),
+      resolve: (temp) => {
+        return temp.instructors.map((name) => {
+
+          //Fetch all possible ucinetids from the instructor.
+          let ucinetids = getUCINetIDFromName(name);
+          
+          //If only one exists, then we can return the instructor for it.
+          if (ucinetids && ucinetids.length == 1) { return getInstructor(ucinetids[0]); }
+          
+          //If there is more than one, figure it out.
+          else if (ucinetids && ucinetids.length > 1) {
+              
+              //Filter our instructors by those with related departments.
+              let course_dept = getCourse(temp.course).department;
+              let instructors = ucinetids.map(id => getInstructor(id)).filter( temp => temp.related_departments.includes(course_dept));
+              
+              //If only one is left, we can return it.
+              if (instructors.length == 1) {  return getInstructor(instructors[0].ucinetid); } 
+
+              //Filter instructors by those that taught the course before.
+              instructors = instructors.filter( inst => {
+                  return inst.course_history.map((course) => getCourse(course.replace(/ /g, ""))).includes(temp.course);
+              });
+              
+              //If only one is left, we can return it.
+              if (instructors.length == 1) { return getInstructor(instructors[0].ucinetid); }
+          }
+          
+          //If we haven't found any instructors, then just return the name.
+          return {name};
+        })
+      }
+    }, 
     final_exam: { type: GraphQLString },
-    instructors: { type: GraphQLList(GraphQLString) },  // TODO: map name to professorType
     max_capacity: { type: GraphQLFloat },
     meetings: { type: GraphQLList(meetingType) },
     num_section_enrolled: { type: GraphQLFloat },

@@ -33,7 +33,11 @@ describe('POST /graphql/', () => {
                   year
                   quarter
                   final_exam
-                  instructors
+                  instructors {
+                    ucinetid
+                    name
+                    department
+                  }
                   max_capacity
                   meetings {
                     building
