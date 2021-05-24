@@ -1,7 +1,7 @@
 const faunadb = require('faunadb');
 const { keys } = require('underscore');
 const crypto = require('crypto')
-var {createErrorJSON} = require("../rest/v0/errors.helper")
+var {createErrorJSON} = require("../helpers/errors.helper")
 const client = new faunadb.Client({ secret: process.env.FAUNADB_KEY});
 const {
     Get,
@@ -17,7 +17,12 @@ const {
 } = faunadb.query;
 
 let apiKeyAuth = (req, res, next) => {
-    if (!req.headers["x-api-key"]) {
+    if (process.env.NODE_ENV != "production") {
+        next();
+    } else if (req.headers['referer'] && req.headers['referer'].includes('graphql-playground')) {
+        next();
+    } 
+    else if (!req.headers["x-api-key"]) {
         res.status(401).json(createErrorJSON(401, "No credentials sent.", "No credentials were found in the header of the request. See documentation for more info."));
     } else {
         // add check to make sure key is active
@@ -31,8 +36,6 @@ let apiKeyAuth = (req, res, next) => {
         ).then((ret) => {
             if (ret.data.status != 'active' ) {
                 res.status(401).json(createErrorJSON(401, "Invalid Credentials.", "The credentials found has not been activated. Please check your email to activate the key."));
-            } else if (ret.data.num_requests > parseInt(process.env.RATE_LIMIT)) {
-                res.status(401).json(createErrorJSON(401, "Invalid Credentials.", "The API key found has surpassed the request limit. Email 'peterportal.dev@gmail.com' for support."));
             } else {
                 client.query(
                     Update(

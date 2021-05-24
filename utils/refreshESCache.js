@@ -6,26 +6,8 @@ const fs = require('fs');
 const fetch = require('node-fetch');
 var path = require('path');
 const dotenv = require('dotenv').config();
-
-// fs mechanism to save json data in path
-async function storeData(data, path) {
-    try {
-        await fs.writeFileSync(path, JSON.stringify(data));
-        console.log('Data saved: ' + path)
-    } catch (err) {
-        console.error(err)
-    }
-}
-
-// Remove ES response metadata -> parse and save relevant data
-function parsedData(data, path) {
-    var result = {};
-    data['hits']['hits'].forEach((e) => {
-        result[e['_id']] = e["_source"]
-    })
-
-    storeData(result, path)
-}
+const {storeData, parsedData} = require("./fileStore.helper");
+const {mapInstructorName} = require("./mapInstructorID");
 
 // Send request to ES server to query the 'courses' index for all courses in the database
 // to be stored locally in the ./cache directory.
@@ -72,7 +54,8 @@ fetch(process.env.ELASTIC_ENDPOINT_URL + 'professors/_search/', {
     // storeData(data, path.resolve('cache', 'professors_cache.json'))
     console.log("Received response from ES/professors, saving data... ")
 
-    parsedData(data, path.resolve('../cache', 'parsed_professor_cache.json'))
+    parsedData(data, path.resolve('./cache', 'parsed_professor_cache.json'))
 })
 
 
+mapInstructorName();

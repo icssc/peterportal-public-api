@@ -1,19 +1,44 @@
 var express = require("express");
 var router = express.Router();
-var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('./grades.helper')
+var {createErrorJSON} = require("../../helpers/errors.helper")
+var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../../helpers/grades.helper')
 
-// var { apiKeyAuth } = require("../../keys/apiKeyAuth");
-
-router.get("/raw", async function (req, res, next) {
-    const where = parseGradesParamsToSQL(req, res);
-    if (!res.headersSent) //check if error msg already sent
-        queryDatabaseAndResponse(where, false, res)
+router.get("/raw", async (req, res) => {
+    try {
+        const where = parseGradesParamsToSQL(req.query);
+        const results = queryDatabaseAndResponse(where, false)
+        res.send(results)
+    } catch (err) {
+        if (err.name === "ValidationError") {
+            res.status(400).send(createErrorJSON(
+                400, 
+                "Bad Request: Invalid syntax in parameters", 
+                err.message
+            ));
+        } else {
+            res.status(500).send()
+            throw err
+        }
+    }        
 })
 
-router.get("/calculated", async function (req, res, next) {
-    const where = parseGradesParamsToSQL(req, res);
-    if (!res.headersSent) //check if error msg already sent
-        queryDatabaseAndResponse(where, true, res)
+router.get("/calculated", async (req, res) => {
+    try {
+        const where = parseGradesParamsToSQL(req.query);
+        const results = queryDatabaseAndResponse(where, true)
+        res.send(results)
+    } catch (err) {
+        if (err.name === "ValidationError") {
+            res.status(400).send(createErrorJSON(
+                400,
+                "Bad Request: Invalid syntax in parameters", 
+                err.message
+            ));
+        } else {
+            res.status(500).send()
+            throw err
+        }
+    }   
 })
 
 module.exports = router;

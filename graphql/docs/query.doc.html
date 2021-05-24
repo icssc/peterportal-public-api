@@ -75,9 +75,29 @@
                 Course
             </a>
         </li>
-        <li  title="Professor">
-            <a href="professor.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                Professor
+        <li  title="CourseOffering">
+            <a href="courseoffering.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                CourseOffering
+            </a>
+        </li>
+        <li  title="GradeDistribution">
+            <a href="gradedistribution.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                GradeDistribution
+            </a>
+        </li>
+        <li  title="GradeDistributionCollection">
+            <a href="gradedistributioncollection.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                GradeDistributionCollection
+            </a>
+        </li>
+        <li  title="GradeDistributionCollectionAggregate">
+            <a href="gradedistributioncollectionaggregate.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                GradeDistributionCollectionAggregate
+            </a>
+        </li>
+        <li  title="Instructor">
+            <a href="instructor.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                Instructor
             </a>
         </li>
         <li  title="__Directive">
@@ -163,7 +183,7 @@
             </a>
             GraphQL Schema definition
         </h2>
-        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Query</span> {</li><li></li><li><span class="tab"><span class="comment line">#   Search courses by their course id. Ex: ICS46.</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>id</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">course</span>(<span class="meta">id</span>: <a class="support type" href="string.doc.html">String</a>): <a class="support type" href="course.doc.html">Course</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   Search professors by their ucinetid</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>ucinetid</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">professor</span>(<span class="meta">ucinetid</span>: <a class="support type" href="string.doc.html">String</a>): <a class="support type" href="professor.doc.html">Professor</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   Return all courses. Takes no arguments</span></span></li><li><span class="tab"><span class="meta">allCourses</span>: [<a class="support type" href="course.doc.html">Course</a>] </span></li><li></li><li><span class="tab"><span class="comment line">#   Return all professors. Takes no arguments</span></span></li><li><span class="tab"><span class="meta">allProfessors</span>: [<a class="support type" href="professor.doc.html">Professor</a>] </span></li><li>}</li></ul></code>
+        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Query</span> {</li><li></li><li><span class="tab"><span class="comment line">#   Search courses by their course id. Ex: COMPSCI161</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>id</strong>: Course Department concatenated with Course Number. Ex: </span></span></li><li><span class="tab"><span class="comment line">#   COMPSCI161</span></span></li><li><span class="tab"><span class="meta">course</span>(<span class="meta">id</span>: <a class="support type" href="string.doc.html">String</a>): <a class="support type" href="course.doc.html">Course</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   Search instructors by their ucinetid</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>ucinetid</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">instructor</span>(<span class="meta">ucinetid</span>: <a class="support type" href="string.doc.html">String</a>): <a class="support type" href="instructor.doc.html">Instructor</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   Return all courses. Takes no arguments</span></span></li><li><span class="tab"><span class="meta">allCourses</span>: [<a class="support type" href="course.doc.html">Course</a>] </span></li><li></li><li><span class="tab"><span class="comment line">#   Return all instructors. Takes no arguments</span></span></li><li><span class="tab"><span class="meta">allInstructors</span>: [<a class="support type" href="instructor.doc.html">Instructor</a>] </span></li><li></li><li><span class="tab"><span class="comment line">#   Search for grades.</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>year</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="comment line">#   <strong>quarter</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="comment line">#   <strong>instructor</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="comment line">#   <strong>department</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="comment line">#   <strong>number</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="comment line">#   <strong>code</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">grades</span>(</span></li><li><span class="tab"><span class="tab"><span class="meta">year</span>: <a class="support type" href="string.doc.html">String</a>,</span></span></li><li><span class="tab"><span class="tab"><span class="meta">quarter</span>: <a class="support type" href="string.doc.html">String</a>,</span></span></li><li><span class="tab"><span class="tab"><span class="meta">instructor</span>: <a class="support type" href="string.doc.html">String</a>,</span></span></li><li><span class="tab"><span class="tab"><span class="meta">department</span>: <a class="support type" href="string.doc.html">String</a>,</span></span></li><li><span class="tab"><span class="tab"><span class="meta">number</span>: <a class="support type" href="string.doc.html">String</a>,</span></span></li><li><span class="tab"><span class="tab"><span class="meta">code</span>: <a class="support type" href="float.doc.html">Float</a></span></span></li><li><span class="tab">): <a class="support type" href="gradedistributioncollection.doc.html">GradeDistributionCollection</a> </span></li><li>}</li></ul></code>
     </div>
 </section>
 <section>

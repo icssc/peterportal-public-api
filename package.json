@@ -3,12 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon app",
+    "start": "nodemon server",
     "test": "jest",
-    "init_db": "node ./db/sqlite.js"
+    "init_db": "node ./db/sqlite.js",
+    "refresh": "node ./utils/refreshESCache.js"
   },
   "dependencies": {
     "@2fd/graphdoc": "^2.4.0",
+    "@sentry/node": "^6.2.0",
+    "@sentry/tracing": "^6.2.0",
     "better-sqlite3": "^7.1.1",
     "bottleneck": "^2.19.5",
     "cors": "^2.8.5",
@@ -23,10 +26,12 @@
     "fauna-shell": "^0.11.5",
     "faunadb": "^3.0.1",
     "flat-cache": "^2.0.1",
+    "googleapis": "^67.0.0",
     "graphql": "^15.3.0",
+    "graphql-parse-resolve-info": "^4.11.0",
     "graphql-playground-middleware-express": "^1.7.21",
     "http-errors": "~1.6.3",
-    "lambda-packager": "^0.2.1",
+    "moesif-nodejs": "^3.1.5",
     "morgan": "~1.9.1",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.11",
@@ -46,5 +51,10 @@
   "devDependencies": {
     "jest": "^26.4.2",
     "supertest": "^5.0.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/jest/setEnvVars.js"
+    ]
   }
 }
