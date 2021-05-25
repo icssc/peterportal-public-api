@@ -84,7 +84,8 @@ app.use('/docs', express.static('docs-site'));
 // app.use("/generateKey", generateKey);
 
 app.get('/', function(req, res) {
-  res.redirect('/dev/docs')
+  console.log("SDfsdf")
+  res.redirect('http://localhost:3000/dev/docs');
 });
 
 app.use(Sentry.Handlers.errorHandler());
