@@ -1,15 +1,14 @@
 # serverless.yml
-
+component: 
 service: my-express-application
 useDotenv: true
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: dev
   region: us-west-1
 
 package:
-  exclude:
+  patterns:
     - node_modules/**
 
 plugins:
@@ -22,7 +21,7 @@ custom:
   # Configures throttling settings for the API Gateway stage
   # They apply to all http endpoints, unless specifically overridden
   apiGatewayThrottling:
-    maxRequestsPerSecond: 20
+    maxRequestsPerSecond: 100
     maxConcurrentRequests: 50
   includeDependencies:
     enableCaching: true
