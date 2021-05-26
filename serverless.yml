@@ -1,11 +1,12 @@
 # serverless.yml
 component: 
-service: my-express-application
+service: peterportal-api
 useDotenv: true
 provider:
   name: aws
   runtime: nodejs12.x
   region: us-west-1
+  memorySize: 512
 
 package:
   patterns:

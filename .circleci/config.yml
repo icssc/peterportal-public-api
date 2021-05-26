@@ -1,6 +1,12 @@
 version: 2.1
 jobs:
   build:
+    filters:
+      branches:
+        only:
+          - master
+          - serverless-test
+
     docker:
       - image: circleci/node:12.22
     steps:
@@ -31,4 +37,4 @@ jobs:
 
       - run:
           name: Deploy application
-          command: sls deploy --stage pre
+          command: sls deploy --stage prod
