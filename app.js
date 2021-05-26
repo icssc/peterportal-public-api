@@ -88,7 +88,7 @@ app.get('/', function(req, res) {
   res.redirect('http://localhost:3000/dev/docs');
 });
 
-app.use(Sentry.Handlers.errorHandler());
+// app.use(Sentry.Handlers.errorHandler());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

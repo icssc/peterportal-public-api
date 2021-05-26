@@ -13,7 +13,7 @@ router.get("/", (req,res) => {
 
 router.use("/courses", coursesRouter);
 router.use("/instructors", instructorRouter);
-router.use("/grades", compression, gradesRouter);
+router.use("/grades", compression(), gradesRouter);
 router.use("/schedule", scheduleRouter);
 router.use("*", (req, res) => {
     res.status(404).send(createErrorJSON(404, "Not Found", "The requested resource was not found."))
