@@ -25,12 +25,6 @@ var graphQLRouter = require('./graphql/router');
 var app = express();
 app.set('trust proxy', 1);
 
-// const limiter = rateLimit({
-//     windowMs: 60 * 1000, // 60 seconds * 1000ms
-//     max: 100, // limit each IP to 100 requests per windowMs(minute)
-//     message: createErrorJSON(429, "Too Many Requests", "You have exceeded the rate limit. Please try again later.")
-// });
-
 // const moesifMiddleware = moesif({
 //   applicationId: process.env.MOESIF_KEY,
 
