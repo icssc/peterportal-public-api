@@ -1,12 +1,17 @@
 version: 2.1
+
+workflows: 
+  build-and-deploy:
+    jobs:
+      -build:
+        filters:
+          branches:
+            only:
+              - master
+              - serverless-test
+
 jobs:
   build:
-    filters:
-      branches:
-        only:
-          - master
-          - serverless-test
-
     docker:
       - image: circleci/node:12.22
     steps:
