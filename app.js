@@ -5,13 +5,12 @@ require('dotenv').config();
 var createError = require('http-errors');
 const serverless = require('serverless-http');
 const {createErrorJSON} = require("./helpers/errors.helper");
-// var { apiKeyAuth } = require("./keys/apiKeyAuth");
 var express = require('express');
 var cors = require('cors');
+const compression = require("compression");
 
 var path = require('path');
 var logger = require('morgan');
-const rateLimit = require("express-rate-limit");
 const moesif = require('moesif-nodejs');
 const expressPlayground = require('graphql-playground-middleware-express').default;
 const Sentry = require("@sentry/node");
@@ -22,7 +21,6 @@ var port = process.env.PORT || 8080;
 
 var restRouter = require('./rest/versionController');
 var graphQLRouter = require('./graphql/router');
-// var generateKey = require('./keys/generateKey');
 
 var app = express();
 app.set('trust proxy', 1);
@@ -63,12 +61,9 @@ app.use(cors(corsOptions));
 
 app.use(logger('dev'));
 app.use(express.json());
-// app.use(limiter);
+app.use(compression());
 // app.use(moesifMiddleware);
-// RequestHandler creates a separate execution context using domains, so that every
-// transaction/span/breadcrumb is attached to its own Hub instance
 // app.use(Sentry.Handlers.requestHandler());
-// TracingHandler creates a trace for every incoming request
 // app.use(Sentry.Handlers.tracingHandler());
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -81,11 +76,9 @@ app.use("/graphql", graphQLRouter);
 app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
 app.use('/graphql-docs', express.static('graphql/docs'));
 app.use('/docs', express.static('docs-site'));
-// app.use("/generateKey", generateKey);
 
 app.get('/', function(req, res) {
-  console.log("SDfsdf")
-  res.redirect('http://localhost:3000/dev/docs');
+  res.redirect('docs');
 });
 
 // app.use(Sentry.Handlers.errorHandler());
