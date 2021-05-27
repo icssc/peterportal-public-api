@@ -43,7 +43,8 @@
     "serverless-plugin-include-dependencies": "^4.1.0",
     "swagger-jsdoc": "^4.3.2",
     "underscore": "^1.11.0",
-    "websoc-api": "^0.0.5"
+    "websoc-api": "^0.0.5",
+    "yargs": "^17.0.1"
   },
   "devDependencies": {
     "jest": "^26.6.3",
