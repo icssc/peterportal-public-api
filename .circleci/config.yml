@@ -1,5 +1,14 @@
 version: 2.1
 
+commands:
+  create-env-file:
+    steps:
+      - run:
+          name: Create ENV File
+          command: |
+            printf "NODE_ENV='$NODE_ENV'\nMOESIF_KEY='$MOESIF_KEY'
+            SENTRY_DSN='$SENTRY_DSN'" > .env
+
 workflows: 
   build-and-deploy:
     jobs:
@@ -16,7 +25,7 @@ jobs:
       - image: circleci/node:12.22
     steps:
       - checkout
-
+      - create-env-file
       # Download and cache dependencies
       - restore_cache:
           keys:

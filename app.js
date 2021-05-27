@@ -25,27 +25,27 @@ var graphQLRouter = require('./graphql/router');
 var app = express();
 app.set('trust proxy', 1);
 
-// const moesifMiddleware = moesif({
-//   applicationId: process.env.MOESIF_KEY,
+const moesifMiddleware = moesif({
+  applicationId: process.env.MOESIF_KEY,
 
-//   // Link API Calls to Api Key
-//   // getSessionToken: function (req, res) {
-//   //   return req.headers["x-api-key"] ? req.headers["x-api-key"] : undefined;
-//   // },
-// });
+  // Link API Calls to Api Key
+  // getSessionToken: function (req, res) {
+  //   return req.headers["x-api-key"] ? req.headers["x-api-key"] : undefined;
+  // },
+});
 
-// Sentry.init({
-//   dsn: process.env.SENTRY_DSN,
-//   integrations: [
-//     // enable HTTP calls tracing
-//     new Sentry.Integrations.Http({ tracing: true }),
-//     // enable Express.js middleware tracing
-//     new Tracing.Integrations.Express({ app }),
-//   ],
-//   // We recommend adjusting this value in production, or using tracesSampler
-//   // for finer control
-//   tracesSampleRate: 1.0,
-// });
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  integrations: [
+    // enable HTTP calls tracing
+    new Sentry.Integrations.Http({ tracing: true }),
+    // enable Express.js middleware tracing
+    new Tracing.Integrations.Express({ app }),
+  ],
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 1.0,
+});
 
 var corsOptions = {
   origin: ['http://127.0.0.1:' + port, 'http://api.peterportal.org', 'https://api.peterportal.org'],
@@ -56,9 +56,9 @@ app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(compression());
-// app.use(moesifMiddleware);
-// app.use(Sentry.Handlers.requestHandler());
-// app.use(Sentry.Handlers.tracingHandler());
+app.use(moesifMiddleware);
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static("./docs-site"));
@@ -75,7 +75,7 @@ app.get('/', function(req, res) {
   res.redirect('docs');
 });
 
-// app.use(Sentry.Handlers.errorHandler());
+app.use(Sentry.Handlers.errorHandler());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
