@@ -55,7 +55,7 @@ app.use(cors(corsOptions));
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(compression());
+// app.use(compression());
 app.use(moesifMiddleware);
 app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
