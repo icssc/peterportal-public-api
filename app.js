@@ -11,7 +11,7 @@ const compression = require("compression");
 
 var path = require('path');
 var logger = require('morgan');
-const moesif = require('moesif-aws-lambda');
+const moesif = require('moesif-nodejs');
 const expressPlayground = require('graphql-playground-middleware-express').default;
 const Sentry = require("@sentry/node");
 const Tracing = require("@sentry/tracing");
@@ -24,17 +24,9 @@ var graphQLRouter = require('./graphql/router');
 
 var app = express();
 app.set('trust proxy', 1);
-// const moesifMiddleware = moesif({
-//   applicationId: process.env.MOESIF_KEY,
-
-//     // Optional hook to link API calls to users
-//     identifyUser: function (event, context) {
-//         if (event.requestContext.identity) {
-//             return event.requestContext.identity.cognitoIdentityId;
-//         }
-//         return undefined;
-//     }
-// });
+const moesifOptions = {
+  applicationId: process.env.MOESIF_KEY
+};
 
 if (process.env.NODE_ENV == 'production') {
   Sentry.init({
@@ -63,7 +55,7 @@ app.use(express.json());
 app.use(compression());
 
 if (process.env.NODE_ENV == 'production') { 
-  // app.use(moesifMiddleware);
+  app.use(moesif(moesifOptions));
   app.use(Sentry.Handlers.requestHandler());
   app.use(Sentry.Handlers.tracingHandler());
 }
