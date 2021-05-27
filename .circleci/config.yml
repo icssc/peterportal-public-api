@@ -37,7 +37,7 @@ jobs:
           name: Install Serverless CLI and dependencies
           command: |
             sudo npm i -g --unsafe-perm serverless
-            npm install
+            npm ci
 
       - save_cache:
           paths:
