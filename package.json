@@ -40,8 +40,7 @@
     "serverless-plugin-include-dependencies": "^4.1.0",
     "supertest": "^6.1.3",
     "underscore": "^1.11.0",
-    "websoc-api": "^0.0.5",
-    "yargs": "^17.0.1"
+    "websoc-api": "^0.0.5"
   },
   "devDependencies": {},
   "jest": {
