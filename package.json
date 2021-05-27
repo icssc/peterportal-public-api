@@ -33,6 +33,7 @@
     "graphql-playground-middleware-express": "^1.7.22",
     "http-errors": "~1.6.3",
     "ip-regex": "^4.3.0",
+    "jest": "^27.0.1",
     "moesif-nodejs": "^3.1.6",
     "morgan": "~1.9.1",
     "node-fetch": "^2.6.1",
@@ -48,9 +49,7 @@
     "yargs": "^17.0.1"
   },
   "devDependencies": {
-    "jest": "^26.6.3",
-    "serverless-offline": "^7.0.0",
-    "supertest": "^5.0.0"
+    "serverless-offline": "^7.0.0"
   },
   "jest": {
     "setupFiles": [
