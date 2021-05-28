@@ -173,10 +173,10 @@ const courseOfferingType = new GraphQLObjectType({
           if (ucinetids && ucinetids.length == 1) { return getInstructor(ucinetids[0]); }
           
           //If there is more than one, figure it out.
-          else if (ucinetids && ucinetids.length > 1) {
+          else if (ucinetids && ucinetids.length > 1 && (course = getCourse(temp.course))) {
               
               //Filter our instructors by those with related departments.
-              let course_dept = getCourse(temp.course).department;
+              let course_dept = course.department;
               let instructors = ucinetids.map(id => getInstructor(id)).filter( temp => temp.related_departments.includes(course_dept));
               
               //If only one is left, we can return it.
