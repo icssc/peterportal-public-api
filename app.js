@@ -28,18 +28,18 @@ const moesifOptions = {
 };
 
 if (process.env.NODE_ENV == 'production') {
-  Sentry.init({
-    dsn: process.env.SENTRY_DSN,
-    integrations: [
-      // enable HTTP calls tracing
-      new Sentry.Integrations.Http({ tracing: true }),
-      // enable Express.js middleware tracing
-      new Tracing.Integrations.Express({ app }),
-    ],
-    // We recommend adjusting this value in production, or using tracesSampler
-    // for finer control
-    tracesSampleRate: 1.0,
-  });
+  // Sentry.init({
+  //   dsn: process.env.SENTRY_DSN,
+  //   integrations: [
+  //     // enable HTTP calls tracing
+  //     new Sentry.Integrations.Http({ tracing: true }),
+  //     // enable Express.js middleware tracing
+  //     new Tracing.Integrations.Express({ app }),
+  //   ],
+  //   // We recommend adjusting this value in production, or using tracesSampler
+  //   // for finer control
+  //   tracesSampleRate: 1.0,
+  // });
 }
 
 
@@ -53,9 +53,9 @@ app.use(logger('dev'));
 app.use(express.json());
 
 if (process.env.NODE_ENV == 'production') { 
-  app.use(moesif(moesifOptions));
-  app.use(Sentry.Handlers.requestHandler());
-  app.use(Sentry.Handlers.tracingHandler());
+  // app.use(moesif(moesifOptions));
+  // app.use(Sentry.Handlers.requestHandler());
+  // app.use(Sentry.Handlers.tracingHandler());
 }
 
 
@@ -75,7 +75,7 @@ app.get('/', function(req, res) {
 });
 
 if (process.env.NODE_ENV == 'production') {
-  app.use(Sentry.Handlers.errorHandler());
+  // app.use(Sentry.Handlers.errorHandler());
 }
 
 
