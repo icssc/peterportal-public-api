@@ -29,9 +29,9 @@ custom:
   includeDependencies:
     enableCaching: true
   customDomain: 
-    domainName: api.peter-portal.com
+    domainName: api-staging.peterportal.org
     basepath: ""
-    certificateName: "*.peter-portal.com"
+    certificateName: "*.peterportal.org"
     createRoute53Record: true
     stage: ${self:provider.stage}
     certificateArn: ${env:AWS_CERT_ARN}
