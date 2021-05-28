@@ -7,7 +7,6 @@ const serverless = require('serverless-http');
 const {createErrorJSON} = require("./helpers/errors.helper");
 var express = require('express');
 var cors = require('cors');
-const compression = require("compression");
 
 var path = require('path');
 var logger = require('morgan');
@@ -52,7 +51,6 @@ app.use(cors(corsOptions));
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(compression());
 
 if (process.env.NODE_ENV == 'production') { 
   app.use(moesif(moesifOptions));
