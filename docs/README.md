@@ -24,7 +24,7 @@ PeterPortal Public API provides software developers with easy-access to UC Irvin
 We consolidate our data directly from official UCI sources such as: UCI Catalogue, UCI Public Records Office, and UCI Webreg. We routinely monitor for updates to ensure you get the most accurate information to serve on your application.
 
 ## Disclaimer
-👩‍💻 We are currently in the early stages for this project. Every participants are welcomed to integrate this API into your project as a tool. However, if you choose to do so, please be aware that this project is currently in its early release phase. Every user will be considered as testers and are highly encouraged to do their part and submit a bug report if you encounter any issues. Our team will respond as quickly as possible to resolve the issue. 
+👩‍💻 We are currently in the early stages for this project. Anyone is welcome to integrate this API into your project as a tool. However, if you choose to do so, please be aware that this project is currently in its early release phase. Every user will be considered as testers and are highly encouraged to do their part and submit a bug report if you encounter any issues. Our team will respond as quickly as possible to resolve the issue. 
 
 ## Bug Report
 🐞 If you encountered any issues or bug, please open an issue @ https://github.com/icssc-projects/peterportal-public-api/issues/new
