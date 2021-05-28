@@ -443,7 +443,7 @@ const queryType = new GraphQLObjectType({
               grade_p_count: result.gradePCount,
               grade_np_count: result.gradeNPCount,
               grade_w_count: result.gradeWCount,
-              average_gpa: result.averageGPA != "nan"? result.averageGPA : null,
+              average_gpa: (result.averageGPA && result.averageGPA !== "nan") ? result.averageGPA : null,
               course_offering: {
                 year: result.year,
                 quarter: result.quarter,
