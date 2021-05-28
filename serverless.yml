@@ -17,6 +17,7 @@ plugins:
   - serverless-offline
   - serverless-dotenv-plugin
   - serverless-plugin-include-dependencies
+  - serverless-domain-manager
 
 custom:
   # Configures throttling settings for the API Gateway stage
@@ -26,6 +27,13 @@ custom:
     maxConcurrentRequests: 50
   includeDependencies:
     enableCaching: true
+  customDomain: 
+    domainName: api.peter-portal.com
+    basepath: ""
+    certificateName: "*.peter-portal.com"
+    createRoute53Record: true
+    stage: ${self:provider.stage}
+    certificateArn: arn:aws:acm:us-east-1:990864464737:certificate/3415cae4-4355-45a9-ab6b-46e17230fb04
     
 
 functions:
