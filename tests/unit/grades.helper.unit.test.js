@@ -19,7 +19,7 @@ describe('Test parseGradesParamsToSQL', () => {
 });
 
 describe('Test queryDatabaseAndResponse', () => {
-    it('returns FaunaDB database response to grades query if calculated = false', () => {
+    it('returns SQLite database response to grades query if calculated = false', () => {
         const falseRes = queryDatabaseAndResponse(expectedSQL, false);
         expect(falseRes).not.toBeNull();
         expect(falseRes).toMatchObject([
@@ -27,6 +27,8 @@ describe('Test queryDatabaseAndResponse', () => {
               year: '2019-20',
               quarter: 'SPRING',
               department: 'ECON',
+              department_name: 'Economics',
+              title: "INTER ECONOMICS II",
               number: '100B',
               code: 62110,
               section: 'A',
@@ -45,7 +47,7 @@ describe('Test queryDatabaseAndResponse', () => {
         ]);
     });
 
-    it('returns FaunaDB database response to grades query if calculated = true', () => {
+    it('returns SQLite database response to grades query if calculated = true', () => {
         const trueRes = queryDatabaseAndResponse(expectedSQL, true);
         expect(trueRes).not.toBeNull();
         expect(trueRes).toMatchObject({
@@ -66,6 +68,8 @@ describe('Test queryDatabaseAndResponse', () => {
                 year: '2019-20',
                 quarter: 'SPRING',
                 department: 'ECON',
+                department_name: 'Economics',
+                title: "INTER ECONOMICS II",
                 number: '100B',
                 code: 62110,
                 section: 'A',
