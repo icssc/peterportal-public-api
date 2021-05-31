@@ -148,7 +148,7 @@ function queryDatabaseAndResponse(where, calculate) {
                                 year, 
                                 quarter, 
                                 department,
-                                department_name
+                                department_name,
                                 number,
                                 code,
                                 section,
