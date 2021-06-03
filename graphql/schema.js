@@ -485,7 +485,9 @@ const queryType = new GraphQLObjectType({
                 course: {
                   id: result.department.replace(/\s/g, '')+result.number,
                   department: result.department,
-                  number: result.number
+                  number: result.number,
+                  department_name: result.department_name,
+                  title: result.title
                 }
               }
             }
