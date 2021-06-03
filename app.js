@@ -11,6 +11,7 @@ var cors = require('cors');
 var path = require('path');
 var logger = require('morgan');
 const rateLimit = require("express-rate-limit");
+const compression = require("compression");
 const moesif = require('moesif-nodejs');
 const expressPlayground = require('graphql-playground-middleware-express').default;
 const Sentry = require("@sentry/node");
@@ -59,7 +60,7 @@ var corsOptions = {
   optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions));
-
+app.use(compression());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(limiter);
