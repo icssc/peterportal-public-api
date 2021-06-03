@@ -61,7 +61,7 @@ var corsOptions = {
 }
 app.use(cors(corsOptions));
 app.use(compression({
-  level: 2, //using second fastest compression level: https://www.npmjs.com/package/compression
+  level: 3 //using second fastest compression level: https://www.npmjs.com/package/compression
 }));
 app.use(logger('dev'));
 app.use(express.json());
