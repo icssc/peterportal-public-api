@@ -61,7 +61,17 @@ var corsOptions = {
 }
 app.use(cors(corsOptions));
 app.use(compression({
-  level: 3 //using third fastest compression level: https://www.npmjs.com/package/compression
+  level: 3, //using third fastest compression level: https://www.npmjs.com/package/compression
+  threshold: "128kb",
+  filter: (req, res) => {
+    if (req.headers['x-no-compression']) {
+        // don't compress responses if this request header is present
+        return false;
+    }
+
+    // fallback to standard compression
+    return compression.filter(req, res);
+}
 }));
 app.use(logger('dev'));
 app.use(express.json());
