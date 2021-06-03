@@ -60,7 +60,9 @@ var corsOptions = {
   optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions));
-app.use(compression());
+app.use(compression({
+  level: 1
+}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(limiter);
