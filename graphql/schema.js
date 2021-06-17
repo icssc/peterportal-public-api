@@ -227,7 +227,7 @@ function validateScheduleArgs(args) {
   // Assert that a term is provided (year and quarter)
   // year and quarter are non-nullable, so they should never be false
   if (!(args.year && args.quarter)) {
-    throw new ValidationError("Must provdide both a year and a quarter.");
+    throw new ValidationError("Must provide both a year and a quarter.");
   }
   // Assert that GE, Department, Section Codes, or Instructor is provided
   if (!(args.ge || args.department || args.section_codes || args.instructor)){
