@@ -15,12 +15,9 @@ const getAllData = async () => {
         console.log(error)
     }
     schools = result.schools
-    console.log(schools)
+    //console.log(schools)
     
-    // schools.forEach((school) => {departments.push(school.departments)})
-    // //console.log(schools)
-    // console.log(departments[0][0].courses)
-    const courses = []
+    const data = []
     const schoolNames = schools.forEach(school => {
         //adding schoolName to Object
         const course = new Object();
@@ -32,17 +29,47 @@ const getAllData = async () => {
             return department
         })
         console.log(departments)
-
         //adding deptName, deptCode
         departments.forEach(department => {
-            course["deptName"] = department.deptName;
-            course["deptCode"] = department.deptCode;
-        })
-        courses.push(course)
+            const dept = new Object();
+            dept["deptName"] = department.deptName;
+            dept["deptCode"] = department.deptCode;
+            
+            const new_course = {
+                ...course,
+                ...dept
+            }
+            
+            data.push(new_course)
 
-        console.log("printing courses...");
-        
-        console.log(courses)
+            //console.log(department)
+            const courses = department.courses.map(course => {
+                return course
+            })
+            
+            console.log("courses here!!")
+            console.log(courses)
+           
+            // courses.forEach(course => {
+            //     const c = new Object();
+            //     c["courseNumber"]=course.courseNumber;
+
+            //     const new_course = {
+            //         ...data,
+            //         ...dept,
+            //         ...c
+            //     }
+            //     data.push(new_course)
+            // })
+
+
+
+        })
+
+        // console.log("printing courses...");
+        // console.log(courses)
     })
+    console.log("print final courses")
+    console.log(data)
 }
 getAllData();
