@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 var {callWebSocAPI} = require('websoc-api');
+const fs = require('fs')
 
 const getAllData = async () => {
     var result  = []
@@ -35,12 +36,12 @@ const getAllData = async () => {
             dept["deptName"] = department.deptName;
             dept["deptCode"] = department.deptCode;
             
-            const new_course = {
-                ...schoolObj,
-                ...dept
-            }
+            // const new_course = {
+            //     ...schoolObj,
+            //     ...dept
+            // }
             
-            data.push(new_course)
+            // data.push(new_course)
 
             //console.log(department)
             const courses = department.courses.map(course => {
@@ -50,17 +51,19 @@ const getAllData = async () => {
             console.log("courses here!!")
             console.log(courses)
            
-            // courses.forEach(course => {
-            //     const c = new Object();
-            //     c["courseNumber"]=course.courseNumber;
+            courses.forEach(course => {
+                const c = new Object();
+                c["courseNumber"]=course.courseNumber;
+                c["courseTitle"]=course.courseTitle;
+                c["prerequisiteLink"]=course.prerequisiteLink;
 
-            //     const new_course = {
-            //         ...schoolObj,
-            //         ...dept,
-            //         ...c
-            //     }
-            //     data.push(new_course)
-            // })
+                const new_course = {
+                    ...schoolObj,
+                    ...dept,
+                    ...c
+                }
+                data.push(new_course)
+            })
 
 
 
@@ -71,5 +74,12 @@ const getAllData = async () => {
     })
     console.log("print final courses")
     console.log(data)
+    const stringdata = JSON.stringify(data)
+    fs.writeFile('webSOCdata.JSON', stringdata, (err) =>{
+        if(err){
+            throw err;
+        }
+        console.log("JSON data is saved.");
+    })
 }
 getAllData();
