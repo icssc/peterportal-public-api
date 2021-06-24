@@ -20,8 +20,8 @@ const getAllData = async () => {
     const data = []
     const schoolNames = schools.forEach(school => {
         //adding schoolName to Object
-        const course = new Object();
-        course["schoolName"] = school.schoolName
+        const schoolObj = new Object();
+        schoolObj["schoolName"] = school.schoolName
         
         console.log("printing departments..")
         //get array of departments
@@ -36,7 +36,7 @@ const getAllData = async () => {
             dept["deptCode"] = department.deptCode;
             
             const new_course = {
-                ...course,
+                ...schoolObj,
                 ...dept
             }
             
@@ -55,7 +55,7 @@ const getAllData = async () => {
             //     c["courseNumber"]=course.courseNumber;
 
             //     const new_course = {
-            //         ...data,
+            //         ...schoolObj,
             //         ...dept,
             //         ...c
             //     }
