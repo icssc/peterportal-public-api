@@ -55,11 +55,7 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
-var corsOptions = {
-  origin: ['http://127.0.0.1:' + port, 'http://api.peterportal.org', 'https://api.peterportal.org'],
-  optionsSuccessStatus: 200
-}
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(compression({
   level: 4, //using fourth fastest compression level: https://www.npmjs.com/package/compression
   threshold: "128kb",
