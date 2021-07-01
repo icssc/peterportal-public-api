@@ -13,12 +13,6 @@ workflows:
   build-and-deploy:
     jobs:
       - build:
-        filters:
-          branches:
-            only:
-              - master
-              - serverless-test
-
 jobs:
   build:
     docker:

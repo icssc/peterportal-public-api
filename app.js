@@ -79,10 +79,6 @@ app.get('/', function(req, res) {
   res.redirect('docs');
 });
 
-if (process.env.NODE_ENV == 'production') {
-  // app.use(Sentry.Handlers.errorHandler());
-}
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
