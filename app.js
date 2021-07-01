@@ -97,4 +97,5 @@ app.use(function(err, req, res, next) {
 
 const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app));
 
+module.exports = app;
 module.exports.handler = sentry_wrapper;

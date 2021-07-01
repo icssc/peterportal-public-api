@@ -11,6 +11,7 @@
   "dependencies": {
     "@2fd/graphdoc": "^2.4.0",
     "@sentry/node": "^6.2.0",
+    "@sentry/serverless": "^6.8.0",
     "@sentry/tracing": "^6.2.0",
     "better-sqlite3": "^7.1.1",
     "bottleneck": "^2.19.5",
