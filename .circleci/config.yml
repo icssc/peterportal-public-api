@@ -12,7 +12,7 @@ commands:
 workflows: 
   build-and-deploy:
     jobs:
-      - build:
+      - build
 
 jobs:
   build:
