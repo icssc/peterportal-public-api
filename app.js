@@ -10,6 +10,7 @@ var cors = require('cors');
 
 var path = require('path');
 var logger = require('morgan');
+const compression = require("compression");
 const moesif = require('moesif-nodejs');
 const expressPlayground = require('graphql-playground-middleware-express').default;
 const Sentry = require("@sentry/node");
@@ -43,12 +44,20 @@ if (process.env.NODE_ENV == 'production') {
 }
 
 
-var corsOptions = {
-  origin: ['http://127.0.0.1:' + port, 'http://api.peterportal.org', 'https://api.peterportal.org'],
-  optionsSuccessStatus: 200
-}
-app.use(cors(corsOptions));
+app.use(cors());
+app.use(compression({
+  level: 4, //using fourth fastest compression level: https://www.npmjs.com/package/compression
+  threshold: "128kb",
+  filter: (req, res) => {
+    if (req.headers['x-no-compression']) {
+        // don't compress responses if this request header is present
+        return false;
+    }
 
+    // fallback to standard compression
+    return compression.filter(req, res);
+}
+}));
 app.use(logger('dev'));
 app.use(express.json());
 
@@ -97,5 +106,4 @@ app.use(function(err, req, res, next) {
 
 
 
-module.exports = app;
 module.exports.handler = serverless(app);

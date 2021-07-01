@@ -149,9 +149,11 @@ function queryDatabaseAndResponse(where, calculate) {
                                 year, 
                                 quarter, 
                                 department,
+                                department_name,
                                 number,
                                 code,
                                 section,
+                                title,
                                 instructor,
                                 type FROM gradeDistribution`;
 

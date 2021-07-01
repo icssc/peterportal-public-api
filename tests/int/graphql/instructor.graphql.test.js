@@ -9,6 +9,7 @@ describe('POST /graphql/', () => {
   .send({query:`{
       instructor(ucinetid:"pattis") {
         name
+        shortened_name
         ucinetid
         title
         department
@@ -32,6 +33,7 @@ describe('POST /graphql/', () => {
           expect.objectContaining({
               "department": "Computer Science",
               "name": "Richard Eric Pattis",
+              "shortened_name": "PATTIS, R.",
               "ucinetid": "pattis",
               "title": expect.any(String),
               "schools": expect.any(Array),
