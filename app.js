@@ -13,8 +13,7 @@ var logger = require('morgan');
 const compression = require("compression");
 const moesif = require('moesif-nodejs');
 const expressPlayground = require('graphql-playground-middleware-express').default;
-const Sentry = require("@sentry/node");
-const Tracing = require("@sentry/tracing");
+const Sentry = require("@sentry/serverless");
 
 
 var port = process.env.PORT || 8080;
@@ -29,18 +28,10 @@ const moesifOptions = {
 };
 
 if (process.env.NODE_ENV == 'production') {
-  // Sentry.init({
-  //   dsn: process.env.SENTRY_DSN,
-  //   integrations: [
-  //     // enable HTTP calls tracing
-  //     new Sentry.Integrations.Http({ tracing: true }),
-  //     // enable Express.js middleware tracing
-  //     new Tracing.Integrations.Express({ app }),
-  //   ],
-  //   // We recommend adjusting this value in production, or using tracesSampler
-  //   // for finer control
-  //   tracesSampleRate: 1.0,
-  // });
+  Sentry.AWSLambda.init({
+    dsn: process.env.SENTRY_DSN,
+    tracesSampleRate: 1.0,
+  });
 }
 
 
@@ -104,6 +95,6 @@ app.use(function(err, req, res, next) {
   res.status(status).send(createErrorJSON(status, err.message, ""));
 });
 
+const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app));
 
-
-module.exports.handler = serverless(app);
+module.exports.handler = sentry_wrapper;
