@@ -69,6 +69,9 @@ app.use("/graphql", graphQLRouter);
 app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
 app.use('/graphql-docs', express.static('graphql/docs'));
 app.use('/docs', express.static('docs-site'));
+app.use('/error', function(req, res, next) {
+  next(createError(500));
+});
 
 app.get('/', function(req, res) {
   res.redirect('docs');
