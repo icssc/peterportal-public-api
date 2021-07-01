@@ -41,9 +41,9 @@
     "websoc-api": "^0.0.5"
   },
   "devDependencies": {
-    "jest": "^26.4.2",
+    "jest": "^27.0.6",
     "serverless-offline": "^7.0.0",
-    "supertest": "^5.0.0"
+    "supertest": "^6.1.3"
   },
   "jest": {
     "setupFiles": [
