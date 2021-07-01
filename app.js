@@ -11,7 +11,7 @@ var cors = require('cors');
 var path = require('path');
 var logger = require('morgan');
 const compression = require("compression");
-const moesif = require('moesif-nodejs');
+const moesif = require('moesif-aws-lambda');
 const expressPlayground = require('graphql-playground-middleware-express').default;
 const Sentry = require("@sentry/serverless");
 
@@ -24,7 +24,15 @@ var graphQLRouter = require('./graphql/router');
 var app = express();
 app.set('trust proxy', 1);
 const moesifOptions = {
-  applicationId: process.env.MOESIF_KEY
+  applicationId: process.env.MOESIF_KEY,
+
+  // Optional hook to link API calls to users
+  identifyUser: function (event, context) {
+      if (event.requestContext.identity) {
+          return event.requestContext.identity.cognitoIdentityId;
+      }
+      return undefined;
+  }
 };
 
 if (process.env.NODE_ENV == 'production') {
@@ -32,6 +40,7 @@ if (process.env.NODE_ENV == 'production') {
     dsn: process.env.SENTRY_DSN,
     tracesSampleRate: 1.0,
   });
+  
 }
 
 
@@ -51,13 +60,6 @@ app.use(compression({
 }));
 app.use(logger('dev'));
 app.use(express.json());
-
-if (process.env.NODE_ENV == 'production') { 
-  // app.use(moesif(moesifOptions));
-  // app.use(Sentry.Handlers.requestHandler());
-  // app.use(Sentry.Handlers.tracingHandler());
-}
-
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static("./docs-site"));
@@ -99,6 +101,6 @@ app.use(function(err, req, res, next) {
 });
 
 const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app));
-
+const moesif_wrapper = moesif(moesifOptions, sentry_wrapper);
 module.exports = app;
-module.exports.handler = sentry_wrapper;
+module.exports.handler = moesif_wrapper;
