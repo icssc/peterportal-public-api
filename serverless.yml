@@ -8,7 +8,9 @@ provider:
   region: us-east-1
   stage: prod
   memorySize: 512
-
+  apiGateway:
+    binaryMediaTypes:
+      - 'image/*'
 package:
   patterns:
     - node_modules/**

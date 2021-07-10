@@ -100,7 +100,7 @@ app.use(function(err, req, res, next) {
   res.status(status).send(createErrorJSON(status, err.message, ""));
 });
 
-const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app));
+const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app, {binary: ['image/*']}));
 const moesif_wrapper = moesif(moesifOptions, sentry_wrapper);
 module.exports = app;
 module.exports.handler = moesif_wrapper;
