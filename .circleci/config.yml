@@ -30,7 +30,7 @@ workflows:
 jobs:
   build:
     docker:
-      - image: circleci/python:3.9.6-node
+      - image: circleci/node:12.22
     steps:
       - checkout
       - create-env-file
@@ -52,7 +52,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       
-      - build-docs
       - run: 
           name: Run tests with coverage
           command: npm test --coverage
