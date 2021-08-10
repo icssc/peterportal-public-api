@@ -25,7 +25,6 @@ workflows:
           branches:
             only:
               - master
-              - serverless-test
 
 jobs:
   build:
