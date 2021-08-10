@@ -32,11 +32,12 @@
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.11",
     "nodemon": "^2.0.2",
-    "serverless-api-gateway-throttling": "^1.1.0",
+    "serverless-api-gateway-throttling": "^1.1.1",
     "serverless-domain-manager": "^5.1.0",
     "serverless-dotenv-plugin": "^3.9.0",
     "serverless-http": "^2.7.0",
     "serverless-plugin-include-dependencies": "^4.1.0",
+    "serverless-plugin-lambda-insights": "^1.0.10",
     "underscore": "^1.11.0",
     "websoc-api": "^0.0.5"
   },

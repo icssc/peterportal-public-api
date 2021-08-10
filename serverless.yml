@@ -21,6 +21,7 @@ plugins:
   - serverless-dotenv-plugin
   - serverless-plugin-include-dependencies
   - serverless-domain-manager
+  - serverless-plugin-lambda-insights
 
 custom:
   # Configures throttling settings for the API Gateway stage
@@ -36,8 +37,8 @@ custom:
     certificateName: "*.peterportal.org"
     createRoute53Record: true
     stage: ${self:provider.stage}
-    certificateArn: ${env:AWS_CERT_ARN}
-    
+  lambdaInsights:
+    defaultLambdaInsights: true #enables Lambda Insights for all functions
 
 functions:
   app:
