@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../../app');
 
 
-jest.setTimeout(30000)
+jest.setTimeout(30000);
 
 describe('GET /courses/all', () => {
     it('returns a json of all the courses on the catalogue',  () => request(app)
