@@ -8,6 +8,14 @@ commands:
           command: |
             printf "NODE_ENV='$NODE_ENV'\nMOESIF_KEY='$MOESIF_KEY'
             SENTRY_DSN='$SENTRY_DSN'" > .env
+  build-docs:
+    steps:
+      - run:
+          name: Install dependencies
+          command: pip install mkdocs
+      - run: 
+          name: Build docs
+          command: mkdocs build -d docs-site
 
 workflows: 
   build-and-deploy:
@@ -22,7 +30,7 @@ workflows:
 jobs:
   build:
     docker:
-      - image: circleci/node:12.22
+      - image: cimg/python:3.9-node
     steps:
       - checkout
       - create-env-file
@@ -43,8 +51,8 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-        
-      # run tests!
+      
+      - build-docs
       - run: 
           name: Run tests with coverage
           command: npm test --coverage
