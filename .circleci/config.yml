@@ -12,7 +12,7 @@ commands:
     steps:
       - run:
           name: Install dependencies
-          command: pip install mkdocs
+          command: pip install mkdocs-material
       - run: 
           name: Build docs
           command: mkdocs build -d docs-site
