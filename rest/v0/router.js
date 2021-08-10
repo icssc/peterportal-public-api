@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-
 var coursesRouter = require("./courses");
 var gradesRouter = require("./grades");
 var instructorRouter = require("./instructor");
