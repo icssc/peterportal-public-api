@@ -29,7 +29,7 @@ workflows:
 jobs:
   build:
     docker:
-      - image: circleci/node:12.22-python
+      - image: circleci/node:12.22-pytho
     steps:
       - checkout
       - create-env-file
