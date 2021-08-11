@@ -4,13 +4,13 @@ PeterPortal Public API provides software developers with easy-access to UC Irvin
 
 🔨 Built with:
 
-* ExpressJS
-* Graphene
+* Express.js
+* GraphQL
 
 👯‍♂️ Works with:
 
-* FaunaDB
 * ElasticSearch
+* SQL
 
 !!! abstract "Our Misson"
     🎇 Our mission is to improve the UCI student experience with course planning and encourage student software developers to create open-source applications that are beneficial to the Anteater community.

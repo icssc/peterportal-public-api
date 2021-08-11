@@ -5,7 +5,7 @@
 
 ## Try it out
 
-You can try out our documentation live at our [GraphQL Playground](/graphql-playground).
+You can try out our API live at our [GraphQL Playground](/graphql-playground).
 
 ![playground demo](https://gifs.tisuela.com/web-dev/graphql_playground_demo.gif)
 
@@ -28,4 +28,4 @@ Not only can you try it out, but our Playground also has the most up-to-date doc
 
 ## Documentation
 
-📃 Checkout our documentation at [api.peterportal.org/graphql-docs/](/graphql-docs/).
+📃 Documentation can be found inside our [GraphQL Playground](/graphql-playground), by clicking the `DOCS` tab on the right-hand side.
