@@ -8,18 +8,20 @@
 | Folder | Purpose |
 | ----------- | ----------- |
 | /cache | Houses the local data cache |
-| /email | Outgoing email templates for various purposes |
-| /keys | Middleware for API Key Authentication feature |
+| /db | Houses grades data cache |
+| /docs | Markdown files for documentation |
+| /docs-site | Built HTML files for documentation |
+| /graphql | GraphQL schema files |
 | /public | Assets to be accessible via Public URL |
-| /rest | Contains the very heart and soul of the REST API |
-| /test | Self-explainatory |
-| /views | Text |
+| /rest | Contains the routes of our REST API |
+| /test | Jest test files  |
 | /utils | Utilities for server maintenance |
 
 ## Initial Setup
 
 !!! failure
     Documentation being developed
+
 
 
 ## Documentation
