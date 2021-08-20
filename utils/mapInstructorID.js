@@ -5,17 +5,14 @@ var path = require('path');
 function mapInstructorName() {
     let instructors = getAllInstructors()
     var name_to_ucinetid = {};
+    // create a mapping from instructor shortened name to ucinetid
     instructors.map((data) => {
-        let names = data["name"].split(" ");
-        var firstName = names[0];
-        var lastName = names[names.length-1];
-        var key = (lastName + ", " + firstName[0] + ".").toUpperCase();
-        if (key in name_to_ucinetid) {
-            console.log("KEY EXISTS: ", key, data["name"], data["ucinetid"])
-            console.log("DUPLICATE: ", name_to_ucinetid[key]);
-            name_to_ucinetid[key] = name_to_ucinetid[key].concat([data["ucinetid"]]);
+        if (data["shortened_name"] in name_to_ucinetid) {
+            console.log("KEY EXISTS: ", data["shortened_name"] , data["name"], data["ucinetid"])
+            console.log("DUPLICATE: ", name_to_ucinetid[data["shortened_name"] ]);
+            name_to_ucinetid[data["shortened_name"] ] = name_to_ucinetid[data["shortened_name"] ].concat([data["ucinetid"]]);
         } else {
-            name_to_ucinetid[key] = [data["ucinetid"]];
+            name_to_ucinetid[data["shortened_name"]] = [data["ucinetid"]];
         }
     });
     
