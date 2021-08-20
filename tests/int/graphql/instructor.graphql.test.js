@@ -11,6 +11,7 @@ describe('POST /graphql/', () => {
         name
         shortened_name
         ucinetid
+        email
         title
         department
         schools
@@ -34,6 +35,7 @@ describe('POST /graphql/', () => {
               "department": "Computer Science",
               "name": "Richard Eric Pattis",
               "shortened_name": "PATTIS, R.",
+              "email": "pattis@uci.edu",
               "ucinetid": "pattis",
               "title": expect.any(String),
               "schools": expect.any(Array),
