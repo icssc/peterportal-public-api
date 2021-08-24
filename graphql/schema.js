@@ -37,6 +37,7 @@ const instructorType = new GraphQLObjectType({
       }
     },
     ucinetid: { type: GraphQLString },
+    email: {type: GraphQLString },
     title: { type: GraphQLString },
     department: { type: GraphQLString },
     schools: { type: GraphQLList(GraphQLString) },
