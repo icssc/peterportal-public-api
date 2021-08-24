@@ -69,7 +69,6 @@ app.set('view engine', 'ejs')
 app.use("/rest", restRouter);
 app.use("/graphql", graphQLRouter);
 app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
-app.use('/graphql-docs', express.static('graphql/docs'));
 app.use('/docs', express.static('docs-site'));
 app.use('/error', function(req, res, next) {
   next(createError(500));
