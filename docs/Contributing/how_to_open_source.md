@@ -54,3 +54,8 @@ If you're wondering how to contribute to open source project and this is your fi
     ```
 
 12. Now, you are ready to make even more contributions!
+
+## Additional Resources
+- <https://www.dataschool.io/how-to-contribute-on-github/>
+- <https://opensource.guide/how-to-contribute/>
+- <https://github.com/freeCodeCamp/how-to-contribute-to-open-source>
