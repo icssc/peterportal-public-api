@@ -36,7 +36,9 @@ nav:
     - Schedule of Classes: REST-API/schedule.md
   - GraphQL API:
     - Start Here: GraphQL-API/start_here.md
-  - Contributing: Contributing.md
+  - Contributing: 
+    - Start Here: Contributing/start_here.md
+    - How to Contribute: Contributing/how_to_open_source.md
 
 
 extra:
