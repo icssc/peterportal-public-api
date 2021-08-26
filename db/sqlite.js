@@ -8,9 +8,11 @@ const gradeDistributionTableSchema = `
         year char(12) NOT NULL,
         quarter char(12) NOT NULL,
         department char(12) NOT NULL,
+        department_name varchar(64) NOT NULL,
         number char(6) NOT NULL,
         code int NOT NULL,
         section char(6) NOT NULL,
+        title varchar(64) NOT NULL,
         instructor char(64) NOT NULL,
         type char(6) NOT NULL,
         gradeACount int NOT NULL,
@@ -30,9 +32,11 @@ const gradeDistributionInsertQuery = `
         year, 
         quarter, 
         department, 
+        department_name,
         number, 
         code, 
         section, 
+        title, 
         instructor, 
         type, 
         gradeACount, 
@@ -44,7 +48,7 @@ const gradeDistributionInsertQuery = `
         gradeNPCount,
         gradeWCount,
         averageGPA) 
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
     );
 `;
 
@@ -78,10 +82,12 @@ function insertData() {
             connection.prepare(gradeDistributionInsertQuery).run(
                 row.year, 
                 row.quarter.toUpperCase(), 
-                row.deptCode, 
-                row.realNum, 
+                row.dept_code, 
+                row.dept,
+                row.number, 
                 row.code, 
                 row.section, 
+                row.title, 
                 row.instructor, 
                 row.type, 
                 row.A, 
@@ -92,7 +98,7 @@ function insertData() {
                 row.P, 
                 row.NP, 
                 row.W, 
-                row.avg);
+                row.avg_gpa);
     });
 
     stream.on('error', (err) => console.log(err));

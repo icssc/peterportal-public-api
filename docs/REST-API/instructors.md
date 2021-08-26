@@ -101,7 +101,7 @@ None. 💃
 | `200` | A JSON object containing every information available on a specific instructor |
 | `404` | Invaild UCInetID/Instructor not found |
 
-??? success "200 Succesful Response"
+??? success "200 Successful Response"
 
     `/instructors/mikes` returns
 
@@ -109,7 +109,6 @@ None. 💃
     {
         "name": "Michael Shindler",
         "ucinetid": "mikes",
-        "phone": "",
         "title": "Assistant Professor of Teaching",
         "department": "Computer Science",
         "schools": [

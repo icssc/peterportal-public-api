@@ -26,12 +26,12 @@ describe('Get instructors', () => {
             expect(instructor).toMatchObject({
                 "name":"Richard Eric Pattis",
                 "ucinetid":"pattis",
-                "phone":"(949) 824-2704",
+                "email": "pattis@uci.edu",
                 "title":"Professor of Teaching",
                 "department":"Computer Science",
                 "schools":["Donald Bren School of Information and Computer Sciences"],
                 "related_departments":["COMPSCI","IN4MATX","I&C SCI","SWE","STATS"],
-                "course_history":["I&C SCI 90","I&C SCI 193","I&C SCI 33","COMPSCI 199","I&C SCI 7","COMPSCI H198","I&C SCI 46"]
+                "course_history": expect.arrayContaining(["I&C SCI 90", "I&C SCI 193", "I&C SCI 33", "I&C SCI 46"])
             });
         });
     });

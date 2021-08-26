@@ -24,9 +24,9 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Getting Started: 
-    - Register: Getting-Started/Register-Here.md
-    - Using Your API Key: Getting-Started/Using-Your-API-Key.md
+  # - Getting Started: 
+  #   - Register: Getting-Started/Register-Here.md
+  #   - Using Your API Key: Getting-Started/Using-Your-API-Key.md
   - REST API:
     - Start Here: REST-API/start_here.md
     - Courses: REST-API/courses.md

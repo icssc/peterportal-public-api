@@ -5,7 +5,7 @@
 
 ## Try it out
 
-You can try out our documentation live at our [GraphQL Playground](https://api.peterportal.org/graphql-playground).
+You can try out our documentation live at our [GraphQL Playground](/graphql-playground).
 
 ![playground demo](https://gifs.tisuela.com/web-dev/graphql_playground_demo.gif)
 
@@ -14,7 +14,7 @@ Not only can you try it out, but our Playground also has the most up-to-date doc
 
 !!! example "Example Query"
     Here is an example which returns the ID, name, and department of every course in our database.
-    You can paste this into our [GraphQL Playground](https://api.peterportal.org/graphql-playground), or write this in the `body` of a `POST` request.
+    You can paste this into our [GraphQL Playground](/graphql-playground), or write this in the `body` of a `POST` request.
 
     ``` graphql
     query {
@@ -28,4 +28,4 @@ Not only can you try it out, but our Playground also has the most up-to-date doc
 
 ## Documentation
 
-📃 Checkout our documentation at [api.peterportal.org/graphql-docs/](https://api.peterportal.org/graphql-docs/).
+📃 Checkout our documentation at [api.peterportal.org/graphql-docs/](/graphql-docs/).

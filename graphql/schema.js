@@ -4,21 +4,40 @@ const {
   GraphQLSchema,
   GraphQLFloat,
   GraphQLList,
+  GraphQLScalarType,
   GraphQLNonNull
 } = require('graphql');
+const {
+	parseResolveInfo,
+} = require('graphql-parse-resolve-info');
+
 
 var {getAllCourses, getCourse} = require('../helpers/courses.helper')
-var {getAllInstructors, getInstructor} = require('../helpers/instructor.helper')
+var {getAllInstructors, getInstructor, getUCINetIDFromName} = require('../helpers/instructor.helper')
 var {getCourseSchedules} = require("../helpers/schedule.helper")
-var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../helpers/grades.helper');
+var {parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades} = require('../helpers/grades.helper');
 const { ValidationError } = require('../helpers/errors.helper');
 
 const instructorType = new GraphQLObjectType({
   name: 'Instructor',
   fields: () => ({
     name: { type: GraphQLString },
+    shortened_name: { 
+      type: GraphQLString, 
+      description: "Name as it appears on webreg. Follows the format: `DOE, J.`",
+      resolve: (instructor) => {
+        if (instructor.shortened_name) {
+          return instructor.shortened_name
+        } else {
+          // If the shortened_name wasn't provided, 
+          // we can construct it from the name.
+          const name_parts = instructor.name.split(' ');
+          return `${name_parts[name_parts.length-1]}, ${name_parts[0][0]}.`.toUpperCase()
+        }
+      }
+    },
     ucinetid: { type: GraphQLString },
-    phone: { type: GraphQLString },
+    email: {type: GraphQLString },
     title: { type: GraphQLString },
     department: { type: GraphQLString },
     schools: { type: GraphQLList(GraphQLString) },
@@ -157,8 +176,53 @@ const courseOfferingType = new GraphQLObjectType({
   fields: () => ({
     year: { type: GraphQLString },
     quarter: { type: GraphQLString },
+    instructors: { 
+      type: GraphQLList(instructorType),
+      resolve: (offering) => {
+        return offering.instructors.map((name) => {
+          
+          //Fetch all possible ucinetids from the instructor.
+          let ucinetids = getUCINetIDFromName(name);
+          
+          //If only one ucinetid exists and it's in the instructor cache, 
+          //then we can return the instructor for it.
+          if (ucinetids && ucinetids.length == 1) { 
+            const instructor = getInstructor(ucinetids[0]);
+            if (instructor) { return instructor; }
+          }
+          
+          //If there is more than one and the course exists, 
+          //use the course to figure it out.
+          else if (ucinetids && ucinetids.length > 1 && (course = getCourse(offering.course))) {
+
+              //Filter our instructors by those with related departments.
+              let course_dept = course.department;
+              let instructors = ucinetids.map(id => getInstructor(id)).filter( temp => temp.related_departments.includes(course_dept));
+              
+              //If only one is left and it's in the instructor cache, we can return it.
+              if (instructors.length == 1) {
+                const instructor = getInstructor(ucinetids[0]);
+                if (instructor) { return instructor; }  
+              } else {
+                //Filter instructors by those that taught the course before.
+                instructors = instructors.filter( inst => {
+                  return inst.course_history.map((course) => getCourse(course.replace(/ /g, ""))).includes(offering.course);
+                });
+              
+                //If only one is left and it's in the instructor cache, we can return it.
+                if (instructors.length == 1) { 
+                  const instructor = getInstructor(ucinetids[0]);
+                  if (instructor) { return instructor; }  
+                }
+              }
+          }
+          
+          //If we haven't found any instructors, then just return the shortened name.
+          return {shortened_name: name};
+        })
+      }
+    }, 
     final_exam: { type: GraphQLString },
-    instructors: { type: GraphQLList(GraphQLString) },  // TODO: map name to professorType
     max_capacity: { type: GraphQLFloat },
     meetings: { type: GraphQLList(meetingType) },
     num_section_enrolled: { type: GraphQLFloat },
@@ -178,7 +242,11 @@ const courseOfferingType = new GraphQLObjectType({
     course: { 
       type: courseType,
       resolve: (offering) => {
-        return getCourse(offering.course)
+        // Get the course from the cache.
+        const course = getCourse(offering.course.id);
+        // If it's not in our cache, return whatever information was provided.
+        // Usually, it will at least have id, department, and number
+        return course ? course : offering.course;
       }
     }
   })
@@ -260,7 +328,11 @@ const gradeDistributionCollectionType = new GraphQLObjectType({
 
   fields: () => ({
     aggregate: { type: gradeDistributionCollectionAggregateType },
-    grade_distributions: {type: GraphQLList(gradeDistributionType)}
+    grade_distributions: {type: GraphQLList(gradeDistributionType)},
+    instructors: { 
+      type: GraphQLList(GraphQLString),
+      description: "List of instructors present in the Grade Distribution Collection" 
+    }
   })
 });
 
@@ -374,62 +446,92 @@ const queryType = new GraphQLObjectType({
         instructor: { type: GraphQLString },
         department: { type: GraphQLString },
         number: { type: GraphQLString },
-        code: { type: GraphQLFloat }
+        code: { type: GraphQLString }
       },
 
-      resolve: (_, args) => {
-        // Send request to rest
-        var query = {
-            ... args
+      resolve: (_, args, __, info) => {
+        // Get the fields requested in the query
+        // This allows us to only fetch what the client wants from sql
+        const requestedFields = Object.keys(parseResolveInfo(info).fieldsByTypeName.GradeDistributionCollection)
+      
+        // Construct a WHERE clause from the arguments
+        const where = parseGradesParamsToSQL(args);
+        
+        // If requested, retrieve the grade distributions
+        let grade_distributions, gradeResults;
+        if (requestedFields.includes('grade_distributions')) {
+          gradeResults = fetchGrades(where)
+
+          // Format the results to GraphQL
+          grade_distributions = gradeResults.map(result => {
+            return {
+              grade_a_count: result.gradeACount,
+              grade_b_count: result.gradeBCount,
+              grade_c_count: result.gradeCCount,
+              grade_d_count: result.gradeDCount,
+              grade_f_count: result.gradeFCount,
+              grade_p_count: result.gradePCount,
+              grade_np_count: result.gradeNPCount,
+              grade_w_count: result.gradeWCount,
+              average_gpa: (result.averageGPA && result.averageGPA !== "nan") ? result.averageGPA : null,
+              course_offering: {
+                year: result.year,
+                quarter: result.quarter,
+                section: {
+                  code: result.code,
+                  number: result.section,
+                  type: result.type,
+                },
+                instructors: [result.instructor],
+                course: {
+                  id: result.department.replace(/\s/g, '')+result.number,
+                  department: result.department,
+                  number: result.number,
+                  department_name: result.department_name,
+                  title: result.title
+                }
+              }
+            }
+          })
         }
-        const where = parseGradesParamsToSQL(query);
-        const gradeResults = queryDatabaseAndResponse(where, false)
-        const aggregateResult = queryDatabaseAndResponse(where, true).gradeDistribution
-    
-        // Format to GraphQL
-        let aggregate = {
-          sum_grade_a_count: aggregateResult['SUM(gradeACount)'],
-          sum_grade_b_count: aggregateResult['SUM(gradeBCount)'],
-          sum_grade_c_count: aggregateResult['SUM(gradeCCount)'],
-          sum_grade_d_count: aggregateResult['SUM(gradeDCount)'],
-          sum_grade_f_count: aggregateResult['SUM(gradeFCount)'],
-          sum_grade_p_count: aggregateResult['SUM(gradePCount)'],
-          sum_grade_np_count: aggregateResult['SUM(gradeNPCount)'],
-          sum_grade_w_count: aggregateResult['SUM(gradeWCount)'],
-          average_gpa: aggregateResult['AVG(averageGPA)']
+        
+        // If requested, retrieve the aggregate
+        let aggregate;
+        if (requestedFields.includes('aggregate')) {
+          const aggregateResult = fetchAggregatedGrades(where)
+      
+          // Format results to GraphQL
+          aggregate = {
+            sum_grade_a_count: aggregateResult['SUM(gradeACount)'],
+            sum_grade_b_count: aggregateResult['SUM(gradeBCount)'],
+            sum_grade_c_count: aggregateResult['SUM(gradeCCount)'],
+            sum_grade_d_count: aggregateResult['SUM(gradeDCount)'],
+            sum_grade_f_count: aggregateResult['SUM(gradeFCount)'],
+            sum_grade_p_count: aggregateResult['SUM(gradePCount)'],
+            sum_grade_np_count: aggregateResult['SUM(gradeNPCount)'],
+            sum_grade_w_count: aggregateResult['SUM(gradeWCount)'],
+            average_gpa: aggregateResult['AVG(averageGPA)']
+          }
         }
 
-        let gradeDistributions = gradeResults.map(result => {
-          return {
-            grade_a_count: result.gradeACount,
-            grade_b_count: result.gradeBCount,
-            grade_c_count: result.gradeCCount,
-            grade_d_count: result.gradeDCount,
-            grade_f_count: result.gradeFCount,
-            grade_p_count: result.gradePCount,
-            grade_np_count: result.gradeNPCount,
-            grade_w_count: result.gradeWCount,
-            average_gpa: result.averageGPA != "nan"? result.averageGPA : null,
-            course_offering: {
-              year: result.year,
-              quarter: result.quarter,
-              section: {
-                code: result.code,
-                number: result.section,
-                type: result.type,
-              },
-              instructors: [result.instructor],
-              course: result.department.replace(/\s/g, '')+result.number,
-            }
+        // If requested, retrieve the instructors
+        let instructors
+        if (requestedFields.includes('instructors')) {
+          if (gradeResults) {
+            // If the grade results exist, we can get the instructors from there
+            instructors = [...new Set(gradeResults.map(result => result.instructor))]
+          } else {
+            // Else query sql for the instructors
+            instructors = fetchInstructors(where)
           }
-        })
-        
-        let result = {
-          aggregate: aggregate,
-          grade_distributions: gradeDistributions
         }
         
-        return result;
+        // Return results
+        return {
+          aggregate,
+          grade_distributions,
+          instructors
+        }
       },
 
       description: "Search for grades."
@@ -468,13 +570,12 @@ Example:
   }
 
 "hits":[{"_index":"professors","_type":"_doc","_id":"kakagi","_score":1,"_source":{"name":"Kei Akagi","ucinetid":"kakagi",
-  "phone":"(949) 824-2171","title":"Chancellor's Professor","department":"Arts-Music","schools":["Claire Trevor School of the Arts"]
+  "title":"Chancellor's Professor","department":"Arts-Music","schools":["Claire Trevor School of the Arts"]
 
   {
     professor(ucinetid: "kakagi"){
       name
       ucinetid
-      phone
       title
       department
       schools
