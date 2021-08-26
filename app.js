@@ -23,19 +23,21 @@ var graphQLRouter = require('./graphql/router');
 
 var app = express();
 app.set('trust proxy', 1);
-const moesifOptions = {
-  applicationId: process.env.MOESIF_KEY,
+let moesifOptions = {};
 
-  // Optional hook to link API calls to users
-  identifyUser: function (event, context) {
-      if (event.requestContext.identity) {
-          return event.requestContext.identity.cognitoIdentityId;
-      }
-      return undefined;
-  }
-};
 
 if (process.env.NODE_ENV == 'production') {
+  moesifOptions = {
+    applicationId: process.env.MOESIF_KEY,
+  
+    // Optional hook to link API calls to users
+    identifyUser: function (event, context) {
+        if (event.requestContext.identity) {
+            return event.requestContext.identity.cognitoIdentityId;
+        }
+        return undefined;
+    }
+  };
   Sentry.AWSLambda.init({
     dsn: process.env.SENTRY_DSN,
     tracesSampleRate: 1.0,
@@ -100,7 +102,11 @@ app.use(function(err, req, res, next) {
   res.status(status).send(createErrorJSON(status, err.message, ""));
 });
 
-const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app, {binary: ['image/*']}));
-const moesif_wrapper = moesif(moesifOptions, sentry_wrapper);
 module.exports = app;
-module.exports.handler = moesif_wrapper;
+
+if (process.env.NODE_ENV == "production") {
+  const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app, {binary: ['image/*']}));
+  const moesif_wrapper = moesif(moesifOptions, sentry_wrapper);
+  module.exports.handler = moesif_wrapper;
+}
+
