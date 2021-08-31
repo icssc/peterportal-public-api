@@ -22,7 +22,22 @@ const instructorType = new GraphQLObjectType({
   name: 'Instructor',
   fields: () => ({
     name: { type: GraphQLString },
+    shortened_name: { 
+      type: GraphQLString, 
+      description: "Name as it appears on webreg. Follows the format: `DOE, J.`",
+      resolve: (instructor) => {
+        if (instructor.shortened_name) {
+          return instructor.shortened_name
+        } else {
+          // If the shortened_name wasn't provided, 
+          // we can construct it from the name.
+          const name_parts = instructor.name.split(' ');
+          return `${name_parts[name_parts.length-1]}, ${name_parts[0][0]}.`.toUpperCase()
+        }
+      }
+    },
     ucinetid: { type: GraphQLString },
+    email: {type: GraphQLString },
     title: { type: GraphQLString },
     department: { type: GraphQLString },
     schools: { type: GraphQLList(GraphQLString) },
@@ -163,36 +178,47 @@ const courseOfferingType = new GraphQLObjectType({
     quarter: { type: GraphQLString },
     instructors: { 
       type: GraphQLList(instructorType),
-      resolve: (temp) => {
-        return temp.instructors.map((name) => {
-
+      resolve: (offering) => {
+        return offering.instructors.map((name) => {
+          
           //Fetch all possible ucinetids from the instructor.
           let ucinetids = getUCINetIDFromName(name);
           
-          //If only one exists, then we can return the instructor for it.
-          if (ucinetids && ucinetids.length == 1) { return getInstructor(ucinetids[0]); }
-          
-          //If there is more than one, figure it out.
-          else if (ucinetids && ucinetids.length > 1) {
-              
-              //Filter our instructors by those with related departments.
-              let course_dept = getCourse(temp.course).department;
-              let instructors = ucinetids.map(id => getInstructor(id)).filter( temp => temp.related_departments.includes(course_dept));
-              
-              //If only one is left, we can return it.
-              if (instructors.length == 1) {  return getInstructor(instructors[0].ucinetid); } 
-
-              //Filter instructors by those that taught the course before.
-              instructors = instructors.filter( inst => {
-                  return inst.course_history.map((course) => getCourse(course.replace(/ /g, ""))).includes(temp.course);
-              });
-              
-              //If only one is left, we can return it.
-              if (instructors.length == 1) { return getInstructor(instructors[0].ucinetid); }
+          //If only one ucinetid exists and it's in the instructor cache, 
+          //then we can return the instructor for it.
+          if (ucinetids && ucinetids.length == 1) { 
+            const instructor = getInstructor(ucinetids[0]);
+            if (instructor) { return instructor; }
           }
           
-          //If we haven't found any instructors, then just return the name.
-          return {name};
+          //If there is more than one and the course exists, 
+          //use the course to figure it out.
+          else if (ucinetids && ucinetids.length > 1 && (course = getCourse(offering.course))) {
+
+              //Filter our instructors by those with related departments.
+              let course_dept = course.department;
+              let instructors = ucinetids.map(id => getInstructor(id)).filter( temp => temp.related_departments.includes(course_dept));
+              
+              //If only one is left and it's in the instructor cache, we can return it.
+              if (instructors.length == 1) {
+                const instructor = getInstructor(ucinetids[0]);
+                if (instructor) { return instructor; }  
+              } else {
+                //Filter instructors by those that taught the course before.
+                instructors = instructors.filter( inst => {
+                  return inst.course_history.map((course) => getCourse(course.replace(/ /g, ""))).includes(offering.course);
+                });
+              
+                //If only one is left and it's in the instructor cache, we can return it.
+                if (instructors.length == 1) { 
+                  const instructor = getInstructor(ucinetids[0]);
+                  if (instructor) { return instructor; }  
+                }
+              }
+          }
+          
+          //If we haven't found any instructors, then just return the shortened name.
+          return {shortened_name: name};
         })
       }
     }, 
@@ -216,7 +242,11 @@ const courseOfferingType = new GraphQLObjectType({
     course: { 
       type: courseType,
       resolve: (offering) => {
-        return getCourse(offering.course)
+        // Get the course from the cache.
+        const course = getCourse(offering.course.id);
+        // If it's not in our cache, return whatever information was provided.
+        // Usually, it will at least have id, department, and number
+        return course ? course : offering.course;
       }
     }
   })
@@ -416,7 +446,7 @@ const queryType = new GraphQLObjectType({
         instructor: { type: GraphQLString },
         department: { type: GraphQLString },
         number: { type: GraphQLString },
-        code: { type: GraphQLFloat }
+        code: { type: GraphQLString }
       },
 
       resolve: (_, args, __, info) => {
@@ -453,7 +483,13 @@ const queryType = new GraphQLObjectType({
                   type: result.type,
                 },
                 instructors: [result.instructor],
-                course: result.department.replace(/\s/g, '')+result.number,
+                course: {
+                  id: result.department.replace(/\s/g, '')+result.number,
+                  department: result.department,
+                  number: result.number,
+                  department_name: result.department_name,
+                  title: result.title
+                }
               }
             }
           })

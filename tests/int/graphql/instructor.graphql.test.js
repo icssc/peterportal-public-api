@@ -1,6 +1,6 @@
 const supertest = require('../api.int.test');
 const request = supertest.request;
-jest.setTimeout(10000)
+jest.setTimeout(30000)
 
 // Instructors
 describe('POST /graphql/', () => {
@@ -9,7 +9,9 @@ describe('POST /graphql/', () => {
   .send({query:`{
       instructor(ucinetid:"pattis") {
         name
+        shortened_name
         ucinetid
+        email
         title
         department
         schools
@@ -32,6 +34,8 @@ describe('POST /graphql/', () => {
           expect.objectContaining({
               "department": "Computer Science",
               "name": "Richard Eric Pattis",
+              "shortened_name": "PATTIS, R.",
+              "email": "pattis@uci.edu",
               "ucinetid": "pattis",
               "title": expect.any(String),
               "schools": expect.any(Array),

@@ -1,6 +1,6 @@
 const supertest = require('../api.int.test');
 const request = supertest.request;
-jest.setTimeout(10000)
+jest.setTimeout(30000)
 
 // Grades
 describe('POST /graphql/', () => {

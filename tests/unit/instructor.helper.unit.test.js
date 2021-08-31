@@ -26,6 +26,7 @@ describe('Get instructors', () => {
             expect(instructor).toMatchObject({
                 "name":"Richard Eric Pattis",
                 "ucinetid":"pattis",
+                "email": "pattis@uci.edu",
                 "title":"Professor of Teaching",
                 "department":"Computer Science",
                 "schools":["Donald Bren School of Information and Computer Sciences"],

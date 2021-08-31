@@ -1,4 +1,5 @@
 const db = require('better-sqlite3'); 
+// const sqlite3 = require('sqlite3').verbose();
 var path = require('path');
 
 var {ValidationError} = require("./errors.helper")
@@ -148,9 +149,11 @@ function queryDatabaseAndResponse(where, calculate) {
                                 year, 
                                 quarter, 
                                 department,
+                                department_name,
                                 number,
                                 code,
                                 section,
+                                title,
                                 instructor,
                                 type FROM gradeDistribution`;
 
