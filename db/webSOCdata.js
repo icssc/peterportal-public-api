@@ -2,6 +2,63 @@ const fetch = require('node-fetch');
 var { callWebSocAPI } = require('websoc-api');
 const fs = require('fs')
 
+var connection; 
+
+const webSOCTableSchema = `
+    CREATE TABLE webSOC (
+        schoolname char(20) NOT NULL,
+        department char(12) NOT NULL,
+        departmentCode char(12) NOT NULL,
+        courseNumber int NOT NULL,
+        courseTitle char(12) NOT NULL,
+        prerequisiteLink char(64) NOT NULL,
+        sectionCode char(12) NOT NULL,
+        sectionType char(6) NOT NULL,
+        sectionNum int NOT NULL,
+        units decimal NOT NULL,
+        instructors char(100) NOT NULL,
+        finalExam char(64) NOT NULL,
+        maxCapacity char(64) NOT NULL,
+        numCurrentlyEnrolledTotalEnrolled int NOT NULL,
+        numCurrentlyEnrolledSectionEnrolled int NOT NULL,
+        numOnWaitlist int NOT NULL,
+        numRequested int NOT NULL,
+        numNewOnlyReserved int NOT NULL,
+        restrictions char(100) NOT NULL,
+        status char(64) NOT NULL,
+        meetingDays char(12) NOT NULL,
+        meetingTime char(12) NOT NULL,
+        meetingBldg char(12) NOT NULL
+    );
+`;
+async function initSQLiteWebSoc() {
+    console.log("🧠 Creating in-memory SQLite instance...")
+
+    await fs.open(path.join(__dirname, 'dbwebSOC.sqlite'), 'w', function (err, file) {
+        if (err) throw err;
+        console.log("✅ SQLite file created!");
+      });
+
+    console.log("🗄️ Creating webSOC table...");
+
+    connection = new db(path.join(__dirname, 'dbwebSOC.sqlite'));
+
+    console.log("✅ webSOC table created!");
+
+    connection.prepare(webSOCTableSchema).run();
+    
+    console.log("✅ Schema ran!");
+
+    //gets all data and stores it into SQLite DB
+    try {
+        await getAllData();
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
+
+
 const getAllData = async () => {
     const years = ["2020"] //<-- to add more years
     const quarters = ["Fall", "Winter"/*, "Spring", "Summer1", "Summer2", "Summer10wk"*/]
@@ -114,16 +171,10 @@ const getAllData = async () => {
 
                     })
                 })
-                //appends 'data' onto the JSON file for each iteration
-                const stringdata = JSON.stringify(data)
-                console.log(stringdata)
-                fs.appendFile('webSOCdata.JSON', stringdata, function (err) {
-                    if (err) throw err;
-                    console.log('Updated!');
-                  });
-                console.log(data.length)
+                //insert data into SQLite
             }
         }
     }
 }
-getAllData();
+
+initSQLiteWebSoc();
