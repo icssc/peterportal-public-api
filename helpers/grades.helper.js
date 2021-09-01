@@ -123,7 +123,7 @@ function queryDatabase(statement) {
     return connection.prepare(statement)
 }
 
-function queryDatabaseAndResponse(where, calculate) {
+function queryDatabaseAndResponse(where, calculate, passOrNoPass) {
     const connection = new db(path.join(__dirname, '../db/db.sqlite'));
 
     switch (calculate) {
@@ -132,18 +132,40 @@ function queryDatabaseAndResponse(where, calculate) {
                 gradeDistribution: null,
                 courseList: []
             };
+            let sqlFunction = ``
 
-            let sqlFunction = `SELECT 
-                                SUM(gradeACount), 
-                                SUM(gradeBCount), 
-                                SUM(gradeCCount),
-                                SUM(gradeDCount),
-                                SUM(gradeFCount),
-                                SUM(gradePCount),
-                                SUM(gradeNPCount),
-                                SUM(gradeWCount),
-                                AVG(averageGPA),
-                                COUNT() FROM gradeDistribution`;
+            if (passOrNoPass){
+                //includes P/NP averageGPA as 0
+                sqlFunction = `SELECT 
+                SUM(gradeACount), 
+                SUM(gradeBCount), 
+                SUM(gradeCCount),
+                SUM(gradeDCount),
+                SUM(gradeFCount),
+                SUM(gradePCount),
+                SUM(gradeNPCount),
+                SUM(gradeWCount),
+                AVG(averageGPA),
+                COUNT() FROM gradeDistribution`;
+            }
+            else{
+                //excludes P/NP averageGPA
+                sqlFunction = `SELECT 
+                SUM(gradeACount), 
+                SUM(gradeBCount), 
+                SUM(gradeCCount),
+                SUM(gradeDCount),
+                SUM(gradeFCount),
+                SUM(gradePCount),
+                SUM(gradeNPCount),
+                SUM(gradeWCount),
+                AVG(averageGPA),
+                COUNT() FROM (SELECT *
+                    FROM gradeDistribution
+                    WHERE averageGPA != "" )`;
+            }
+
+            
             
             let sqlCourseList = `SELECT 
                                 year, 

@@ -25,7 +25,7 @@ router.get("/raw", async (req, res) => {
 router.get("/calculated", async (req, res) => {
     try {
         const where = parseGradesParamsToSQL(req.query);
-        const results = queryDatabaseAndResponse(where, true)
+        const results = queryDatabaseAndResponse(where, true, req.query.passOrNoPass) //passOrNoPass adds another parameter to the query
         res.send(results)
     } catch (err) {
         if (err.name === "ValidationError") {
