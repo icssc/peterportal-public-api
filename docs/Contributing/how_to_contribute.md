@@ -59,17 +59,21 @@ If you're wondering how to contribute to open source project and this is your fi
 
 ## Repo Overview
 
-| Folder | Purpose |
+| Folder/File | Purpose |
 | ----------- | ----------- |
 | /cache | Houses the local data cache |
 | /db | Houses grades data cache |
 | /docs | Markdown files for documentation |
 | /docs-site | Built HTML files for documentation |
 | /graphql | GraphQL schema files |
+| /helpers | Helper methods for both APIs |
 | /public | Assets to be accessible via Public URL |
 | /rest | Contains the routes of our REST API |
-| /test | Jest test files  |
-| /utils | Utilities for server maintenance |
+| /tests | Jest test files  |
+| /utils | Utilities for data changes |
+| app.js | Configuration for Express |
+| mkdocs.yml | Configuration for MkDocs |
+| server.js | Starting server locally for development |
 
 ## Additional Resources
 - <https://www.dataschool.io/how-to-contribute-on-github/>
