@@ -1,5 +1,7 @@
 # How to Contribute
 
+## Setup
+
 If you're wondering how to contribute to open source project and this is your first time, you're at the right place. 
 
 1. First, you'll want to fork the repository to your own account. You can do that by clicking the fork button in the top right of our [repository](https://github.com/icssc-projects/peterportal-public-api). 
@@ -54,6 +56,20 @@ If you're wondering how to contribute to open source project and this is your fi
     ```
 
 12. Now, you are ready to make even more contributions!
+
+## Repo Overview
+
+| Folder | Purpose |
+| ----------- | ----------- |
+| /cache | Houses the local data cache |
+| /db | Houses grades data cache |
+| /docs | Markdown files for documentation |
+| /docs-site | Built HTML files for documentation |
+| /graphql | GraphQL schema files |
+| /public | Assets to be accessible via Public URL |
+| /rest | Contains the routes of our REST API |
+| /test | Jest test files  |
+| /utils | Utilities for server maintenance |
 
 ## Additional Resources
 - <https://www.dataschool.io/how-to-contribute-on-github/>

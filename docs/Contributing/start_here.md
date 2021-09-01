@@ -10,84 +10,34 @@ We would love for you to help us out! You can look to contribute to this open so
 
 If your looking to join our team and be even more involved, ICS Student Council recruits students at the beginning of every year to their committees. For more information, please visit <https://studentcouncil.ics.uci.edu/>.
 
+## What should you work on?
+
+You can check out which issues we need help on our [repo](https://github.com/icssc-projects/peterportal-public-api). 
+
+Check out these issues we have labeled [help wanted](https://github.com/icssc-projects/peterportal-public-api/labels/help%20wanted). If you're a beginner, I would recommend looking at some [good first issues](https://github.com/icssc-projects/peterportal-public-api/labels/good%20first%20issue).
+
+## How to get in touch?
+
+If you have feature requests, questions, ideas, and want to contribute, there are multiple channels you can communicate with us. 
+
+### :material-github: GitHub
+Repository: <https://github.com/icssc-projects/peterportal-public-api>
+
+ - Issues and Bugs
+ - Feature Requests
+
+### :material-discord: Discord
+
+Join our [discord](https://discord.gg/WVNWdT33nh)!
+
+Most of our communication is done on the ICSSC Projects Discord. The server also includes other projects we work on, such as [Antalmanac](https://antalmanac.com/) and [Zotistics](https://zotistics.com/). 
+
+### :fontawesome-brands-medium: Medium
+
+Blog: <https://icsscprojects.medium.com/>
+
+ - Project News
+ - Tutorials
 
 
-## Repo Overview
 
-| Folder | Purpose |
-| ----------- | ----------- |
-| /cache | Houses the local data cache |
-| /db | Houses grades data cache |
-| /docs | Markdown files for documentation |
-| /docs-site | Built HTML files for documentation |
-| /graphql | GraphQL schema files |
-| /public | Assets to be accessible via Public URL |
-| /rest | Contains the routes of our REST API |
-| /test | Jest test files  |
-| /utils | Utilities for server maintenance |
-
-
-
-## Documentation
-
-**🤔 Documentation for the documentation. How do you contribute to the documentation?**
-
-The documentation you see right now is created via [MkDocs](https://www.mkdocs.org/). We use a specific extension called [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) which is what makes this site look pretty.
-
-For Graph static documentation, we use [graphdoc](https://github.com/2fd/graphdoc). While it is a little buggy, it's the best tool I'm aware of that automatically generates static documentation. To update it, you will need two shells open.
-
-
-!!! example "Shell 1"
-    In the first shell, install dependencies and start the server.
-
-    ``` bash
-    npm install
-    npm start
-    ```
-
-    That's it, leave it alone. We need the server to be on because graphdoc will be using the live GraphQL endpoint
-
-!!! example "Shell 2"
-
-    In the next shell, run this command:
-
-    === "Windows"
-
-        ```
-        graphdoc -e http://localhost:8080/graphql -o .\graphql\docs --force
-        ```
-
-    === "macOS/Linux"
-
-        ```
-        graphdoc -e http://localhost:8080/graphql -o graphql/docs --force
-        ```
-
-    This specifies the endpoint for GraphQL to use and forces an update on existing documentation files.
-
-### Writing Documentation
-
-**📝 Writing documentation is simple with MkDocs.**
-
-1. Checkout the `docs` branch. All edits to documentation should be made within this branch
-2. Make your changes to the markdown (`.md`) files within [`/docs`](https://github.com/icssc-projects/peterportal-public-api/tree/master/docs). You can add or delete files as you so choose.
-3. Create a pull request to `master`. Once your pull request is merged with `master`, the documentation site will be automatically rebuilt.
-
-??? info "How is the docs site updated?"
-    All documentation site files are built within `/docs-site`.
-
-    A Github Action, [`/.github/workflows/docs.yml`](https://github.com/icssc-projects/peterportal-public-api/blob/master/.github/workflows/docs.yml) automatically rebuilds the site on every push to master. `docs.yml` calls `mkdocs`, a python package, to build the site and automatically commit the new changes.
-
-
-### Designing Documentation
-
-**✨ Make your documentation user-friendly.**
-
-**👀 Preview your changes live.**
-
-🐍 Our documentation website is made through [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/), a python package.
-
-To setup `mkdocs-material`, see their [cool instructions](https://squidfunk.github.io/mkdocs-material/getting-started/).
-
-
-Configure documentation site settings in [`/mkdocs.yml`](https://github.com/icssc-projects/peterportal-public-api/blob/master/mkdocs.yml).
