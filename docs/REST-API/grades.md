@@ -107,6 +107,7 @@ Try out one of these quick ways to play with our grades endpoints:
 | `department` | Department short-hand | I&C SCI |
 | `number` | Course number | 32A |
 |  `code` | 5-digit course code on WebSoC | 35540 |
+| `excludePNP` | Exclude P/NP | true/false |
 
 
 !!! tip 
