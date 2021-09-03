@@ -27,7 +27,7 @@ Not only can you try it out, but our Playground also has the most up-to-date doc
     ```
 
 !!! example "Example Query 2"
-    Here is another example which returns sum of students who received As, Bs, Cs, Ds, Fs, and the average GPA of instructor "PATTIS, R."
+    Here is another example which returns sum of students who received As, Bs, Cs, Ds, Fs, and the average GPA of instructor "PATTIS, R." excluding P/NP.
     You can paste this into our [GraphQL Playground](/graphql-playground), or write this in the `body` of a `POST` request.
 
     ``` graphql
