@@ -32,7 +32,7 @@ Not only can you try it out, but our Playground also has the most up-to-date doc
 
     ``` graphql
     query {
-      grades(excludePNP: false, instructor: "PATTIS, R.")
+      grades(excludePNP: true, instructor: "PATTIS, R.")
       {
         aggregate{
           sum_grade_a_count
