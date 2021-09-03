@@ -5,7 +5,8 @@ const {
   GraphQLFloat,
   GraphQLList,
   GraphQLScalarType,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLBoolean
 } = require('graphql');
 const {
 	parseResolveInfo,
@@ -446,12 +447,14 @@ const queryType = new GraphQLObjectType({
         instructor: { type: GraphQLString },
         department: { type: GraphQLString },
         number: { type: GraphQLString },
-        code: { type: GraphQLString }
+        code: { type: GraphQLString }, 
+        passOrNoPass: { type: GraphQLBoolean}
       },
 
       resolve: (_, args, __, info) => {
         // Get the fields requested in the query
         // This allows us to only fetch what the client wants from sql
+
         const requestedFields = Object.keys(parseResolveInfo(info).fieldsByTypeName.GradeDistributionCollection)
       
         // Construct a WHERE clause from the arguments
@@ -498,8 +501,7 @@ const queryType = new GraphQLObjectType({
         // If requested, retrieve the aggregate
         let aggregate;
         if (requestedFields.includes('aggregate')) {
-          const aggregateResult = fetchAggregatedGrades(where)
-      
+          const aggregateResult = fetchAggregatedGrades(where, args.passOrNoPass)
           // Format results to GraphQL
           aggregate = {
             sum_grade_a_count: aggregateResult['SUM(gradeACount)'],
@@ -513,7 +515,7 @@ const queryType = new GraphQLObjectType({
             average_gpa: aggregateResult['AVG(averageGPA)']
           }
         }
-
+        console.log(aggregate)
         // If requested, retrieve the instructors
         let instructors
         if (requestedFields.includes('instructors')) {

@@ -4,6 +4,7 @@ var path = require('path');
 
 var {ValidationError} = require("./errors.helper")
 
+// Constructs a WHERE clause from the query
 function parseGradesParamsToSQL(query) {
     var whereClause = "";
 
@@ -83,8 +84,8 @@ function parseGradesParamsToSQL(query) {
         }
         
         whereClause === "" ?  
-            (condition.length > 0 ? whereClause += "(" + condition + ")" : null) : 
-            (condition.length > 0 ? whereClause += " AND (" + condition + ")" : null)
+            (condition.length > 0 ? whereClause += condition : null) : 
+            (condition.length > 0 ? whereClause += " AND " + condition : null)
     })
     
     const retVal = whereClause === "" ? null : " WHERE " + whereClause;
@@ -102,20 +103,28 @@ function fetchInstructors(where) {
     return queryDatabase(where !== null ? sqlStatement + where : sqlStatement).all().map(result => result.instructor);
 }
 
-function fetchAggregatedGrades(where) {
+//For GraphQL API
+function fetchAggregatedGrades(where, passOrNoPass = false) {
     let sqlStatement = `SELECT 
-                        SUM(gradeACount), 
-                        SUM(gradeBCount), 
-                        SUM(gradeCCount),
-                        SUM(gradeDCount),
-                        SUM(gradeFCount),
-                        SUM(gradePCount),
-                        SUM(gradeNPCount),
-                        SUM(gradeWCount),
-                        AVG(averageGPA),
-                        COUNT() FROM gradeDistribution`;
+    SUM(gradeACount), 
+    SUM(gradeBCount), 
+    SUM(gradeCCount),
+    SUM(gradeDCount),
+    SUM(gradeFCount),
+    SUM(gradePCount),
+    SUM(gradeNPCount),
+    SUM(gradeWCount),
+    AVG(averageGPA),
+    COUNT() FROM gradeDistribution`;
+    
+    if (where !== null){
+        sqlStatement = sqlStatement + where
+        if(!passOrNoPass){
+            sqlStatement = sqlStatement + ` AND averageGPA != ''` //make sure to use single quote '' instead of "" in SQLite
+        }
+    }
 
-    return queryDatabase(where !== null ? sqlStatement + where : sqlStatement).get();
+    return queryDatabase(sqlStatement).get();
 }
 
 function queryDatabase(statement) {
@@ -123,64 +132,49 @@ function queryDatabase(statement) {
     return connection.prepare(statement)
 }
 
-function queryDatabaseAndResponse(where, calculate, passOrNoPass) {
+//For REST API 
+function queryDatabaseAndResponse(where, calculate, passOrNoPass = 'false') {
     const connection = new db(path.join(__dirname, '../db/db.sqlite'));
-
+    boolPassOrNoPass = (passOrNoPass.toLowerCase() == 'true') //passOrNoPass string->bool
     switch (calculate) {
         case true:
             let result = {
                 gradeDistribution: null,
                 courseList: []
             };
-            let sqlFunction = ``
 
-            if (passOrNoPass){
-                //includes P/NP averageGPA as 0
-                sqlFunction = `SELECT 
-                SUM(gradeACount), 
-                SUM(gradeBCount), 
-                SUM(gradeCCount),
-                SUM(gradeDCount),
-                SUM(gradeFCount),
-                SUM(gradePCount),
-                SUM(gradeNPCount),
-                SUM(gradeWCount),
-                AVG(averageGPA),
-                COUNT() FROM gradeDistribution`;
-            }
-            else{
-                //excludes P/NP averageGPA
-                sqlFunction = `SELECT 
-                SUM(gradeACount), 
-                SUM(gradeBCount), 
-                SUM(gradeCCount),
-                SUM(gradeDCount),
-                SUM(gradeFCount),
-                SUM(gradePCount),
-                SUM(gradeNPCount),
-                SUM(gradeWCount),
-                AVG(averageGPA),
-                COUNT() FROM (SELECT *
-                    FROM gradeDistribution
-                    WHERE averageGPA != "" )`;
-            }
-
-            
-            
+            let sqlFunction = `SELECT 
+            SUM(gradeACount), 
+            SUM(gradeBCount), 
+            SUM(gradeCCount),
+            SUM(gradeDCount),
+            SUM(gradeFCount),
+            SUM(gradePCount),
+            SUM(gradeNPCount),
+            SUM(gradeWCount),
+            AVG(averageGPA),
+            COUNT() FROM gradeDistribution`;
+        
             let sqlCourseList = `SELECT 
-                                year, 
-                                quarter, 
-                                department,
-                                department_name,
-                                number,
-                                code,
-                                section,
-                                title,
-                                instructor,
-                                type FROM gradeDistribution`;
+            year, 
+            quarter, 
+            department,
+            department_name,
+            number,
+            code,
+            section,
+            title,
+            instructor,
+            type FROM gradeDistribution`;
 
-            result.gradeDistribution = connection.prepare(where !== null ? sqlFunction + where : sqlFunction).get();
-
+            
+            if (where !== null){
+                sqlFunction = sqlFunction + where
+                if(!boolPassOrNoPass){
+                    sqlFunction = sqlFunction + ` AND averageGPA != ''` //make sure to use single quote '' instead of "" in SQLite
+                }
+            }        
+            result.gradeDistribution = connection.prepare(sqlFunction).get();
             result.courseList = connection.prepare(where !== null ? sqlCourseList + where : sqlCourseList).all();
 
             return result;
