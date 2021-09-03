@@ -448,7 +448,7 @@ const queryType = new GraphQLObjectType({
         department: { type: GraphQLString },
         number: { type: GraphQLString },
         code: { type: GraphQLString }, 
-        passOrNoPass: { type: GraphQLBoolean}
+        excludePNP: { type: GraphQLBoolean}
       },
 
       resolve: (_, args, __, info) => {
@@ -501,7 +501,7 @@ const queryType = new GraphQLObjectType({
         // If requested, retrieve the aggregate
         let aggregate;
         if (requestedFields.includes('aggregate')) {
-          const aggregateResult = fetchAggregatedGrades(where, args.passOrNoPass)
+          const aggregateResult = fetchAggregatedGrades(where, args.excludePNP)
           // Format results to GraphQL
           aggregate = {
             sum_grade_a_count: aggregateResult['SUM(gradeACount)'],
@@ -515,7 +515,6 @@ const queryType = new GraphQLObjectType({
             average_gpa: aggregateResult['AVG(averageGPA)']
           }
         }
-        console.log(aggregate)
         // If requested, retrieve the instructors
         let instructors
         if (requestedFields.includes('instructors')) {

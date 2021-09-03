@@ -104,7 +104,7 @@ function fetchInstructors(where) {
 }
 
 //For GraphQL API
-function fetchAggregatedGrades(where, passOrNoPass = false) {
+function fetchAggregatedGrades(where, excludePNP = true) {
     let sqlStatement = `SELECT 
     SUM(gradeACount), 
     SUM(gradeBCount), 
@@ -119,7 +119,7 @@ function fetchAggregatedGrades(where, passOrNoPass = false) {
     
     if (where !== null){
         sqlStatement = sqlStatement + where
-        if(!passOrNoPass){
+        if(excludePNP){
             sqlStatement = sqlStatement + ` AND averageGPA != ''` //make sure to use single quote '' instead of "" in SQLite
         }
     }
@@ -133,9 +133,9 @@ function queryDatabase(statement) {
 }
 
 //For REST API 
-function queryDatabaseAndResponse(where, calculate, passOrNoPass = 'false') {
+function queryDatabaseAndResponse(where, calculate, excludePNP = 'true') {
     const connection = new db(path.join(__dirname, '../db/db.sqlite'));
-    boolPassOrNoPass = (passOrNoPass.toLowerCase() == 'true') //passOrNoPass string->bool
+    const boolExcludePNP = (excludePNP.toLowerCase() == 'true') //passOrNoPass string->bool
     switch (calculate) {
         case true:
             let result = {
@@ -170,7 +170,7 @@ function queryDatabaseAndResponse(where, calculate, passOrNoPass = 'false') {
             
             if (where !== null){
                 sqlFunction = sqlFunction + where
-                if(!boolPassOrNoPass){
+                if(boolExcludePNP){
                     sqlFunction = sqlFunction + ` AND averageGPA != ''` //make sure to use single quote '' instead of "" in SQLite
                 }
             }        
