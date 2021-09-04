@@ -84,8 +84,8 @@ function parseGradesParamsToSQL(query) {
         }
         
         whereClause === "" ?  
-            (condition.length > 0 ? whereClause += condition : null) : 
-            (condition.length > 0 ? whereClause += " AND " + condition : null)
+            (condition.length > 0 ? whereClause += "(" + condition + ")" : null) : 
+            (condition.length > 0 ? whereClause += " AND " + "(" + condition + ")" : null)
     })
     
     const retVal = whereClause === "" ? null : " WHERE " + whereClause;
@@ -120,10 +120,9 @@ function fetchAggregatedGrades(where, excludePNP = true) {
     if (where !== null){
         sqlStatement = sqlStatement + where
         if(excludePNP){
-            sqlStatement = sqlStatement + ` AND averageGPA != ''` //make sure to use single quote '' instead of "" in SQLite
+            sqlStatement = sqlStatement + ` AND (averageGPA != '')` //make sure to use single quote '' instead of "" in SQLite
         }
     }
-
     return queryDatabase(sqlStatement).get();
 }
 
@@ -171,9 +170,9 @@ function queryDatabaseAndResponse(where, calculate, excludePNP = 'true') {
             if (where !== null){
                 sqlFunction = sqlFunction + where
                 if(boolExcludePNP){
-                    sqlFunction = sqlFunction + ` AND averageGPA != ''` //make sure to use single quote '' instead of "" in SQLite
+                    sqlFunction = sqlFunction + ` AND (averageGPA != '')` //make sure to use single quote '' instead of "" in SQLite
                 }
-            }        
+            }     
             result.gradeDistribution = connection.prepare(sqlFunction).get();
             result.courseList = connection.prepare(where !== null ? sqlCourseList + where : sqlCourseList).all();
 
