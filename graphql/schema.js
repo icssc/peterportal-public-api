@@ -448,7 +448,7 @@ const queryType = new GraphQLObjectType({
         department: { type: GraphQLString },
         number: { type: GraphQLString },
         code: { type: GraphQLString }, 
-        excludePNP: { type: GraphQLBoolean}
+        excludePNP: { type: GraphQLBoolean }
       },
 
       resolve: (_, args, __, info) => {
@@ -458,7 +458,7 @@ const queryType = new GraphQLObjectType({
         const requestedFields = Object.keys(parseResolveInfo(info).fieldsByTypeName.GradeDistributionCollection)
       
         // Construct a WHERE clause from the arguments
-        const where = parseGradesParamsToSQL(args);
+        const where = parseGradesParamsToSQL(args, args.excludePNP);
         
         // If requested, retrieve the grade distributions
         let grade_distributions, gradeResults;
@@ -501,7 +501,7 @@ const queryType = new GraphQLObjectType({
         // If requested, retrieve the aggregate
         let aggregate;
         if (requestedFields.includes('aggregate')) {
-          const aggregateResult = fetchAggregatedGrades(where, args.excludePNP)
+          const aggregateResult = fetchAggregatedGrades(where)
           // Format results to GraphQL
           aggregate = {
             sum_grade_a_count: aggregateResult['SUM(gradeACount)'],

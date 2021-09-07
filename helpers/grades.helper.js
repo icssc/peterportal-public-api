@@ -5,7 +5,7 @@ var path = require('path');
 var {ValidationError} = require("./errors.helper")
 
 // Constructs a WHERE clause from the query
-function parseGradesParamsToSQL(query) {
+function parseGradesParamsToSQL(query, excludePNP = false) {
     var whereClause = "";
 
     const params = {
@@ -88,7 +88,8 @@ function parseGradesParamsToSQL(query) {
             (condition.length > 0 ? whereClause += " AND " + "(" + condition + ")" : null)
     })
     
-    const retVal = whereClause === "" ? null : " WHERE " + whereClause;
+    var retVal = whereClause === "" ? null : " WHERE " + whereClause;
+    retVal = (excludePNP && retVal !== null) ? retVal += `AND (averageGPA != '')` : retVal
 
     return retVal;
 }
@@ -104,7 +105,7 @@ function fetchInstructors(where) {
 }
 
 //For GraphQL API
-function fetchAggregatedGrades(where, excludePNP = true) {
+function fetchAggregatedGrades(where) {
     let sqlStatement = `SELECT 
     SUM(gradeACount), 
     SUM(gradeBCount), 
@@ -117,13 +118,7 @@ function fetchAggregatedGrades(where, excludePNP = true) {
     AVG(averageGPA),
     COUNT() FROM gradeDistribution`;
     
-    if (where !== null){
-        sqlStatement = sqlStatement + where
-        if(excludePNP){
-            sqlStatement = sqlStatement + ` AND (averageGPA != '')` //make sure to use single quote '' instead of "" in SQLite
-        }
-    }
-    return queryDatabase(sqlStatement).get();
+    return queryDatabase(where != null ? sqlStatement + where : sqlStatement).get();
 }
 
 function queryDatabase(statement) {
@@ -132,9 +127,8 @@ function queryDatabase(statement) {
 }
 
 //For REST API 
-function queryDatabaseAndResponse(where, calculate, excludePNP = 'true') {
+function queryDatabaseAndResponse(where, calculate) {
     const connection = new db(path.join(__dirname, '../db/db.sqlite'));
-    const boolExcludePNP = (excludePNP.toLowerCase() == 'true') //passOrNoPass string->bool
     switch (calculate) {
         case true:
             let result = {
@@ -166,14 +160,8 @@ function queryDatabaseAndResponse(where, calculate, excludePNP = 'true') {
             instructor,
             type FROM gradeDistribution`;
 
+            result.gradeDistribution = connection.prepare(where !== null ? sqlFunction + where : sqlFunction).get();
             
-            if (where !== null){
-                sqlFunction = sqlFunction + where
-                if(boolExcludePNP){
-                    sqlFunction = sqlFunction + ` AND (averageGPA != '')` //make sure to use single quote '' instead of "" in SQLite
-                }
-            }     
-            result.gradeDistribution = connection.prepare(sqlFunction).get();
             result.courseList = connection.prepare(where !== null ? sqlCourseList + where : sqlCourseList).all();
 
             return result;

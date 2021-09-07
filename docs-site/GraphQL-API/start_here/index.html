@@ -475,7 +475,7 @@
 <p><img alt="playground demo" src="https://gifs.tisuela.com/web-dev/graphql_playground_demo.gif" /></p>
 <p>Not only can you try it out, but our Playground also has the most up-to-date docs -- we highly recommend you check it out if you're interested in learning GraphQL or using our endpoint.</p>
 <div class="admonition example">
-<p class="admonition-title">Example Query</p>
+<p class="admonition-title">Example Query 1</p>
 <p>Here is an example which returns the ID, name, and department of every course in our database.
 You can paste this into our <a href="/graphql-playground">GraphQL Playground</a>, or write this in the <code>body</code> of a <code>POST</code> request.</p>
 <div class="highlight"><pre><span></span><code>query {
@@ -483,6 +483,26 @@ You can paste this into our <a href="/graphql-playground">GraphQL Playground</a>
     id
     name
     department
+  }
+}
+</code></pre></div>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Example Query 2</p>
+<p>Here is another example which returns sum of students who received As, Bs, Cs, Ds, Fs, and the average GPA of instructor "PATTIS, R." excluding P/NP.
+You can paste this into our <a href="/graphql-playground">GraphQL Playground</a>, or write this in the <code>body</code> of a <code>POST</code> request.</p>
+<div class="highlight"><pre><span></span><code>query {
+  grades(excludePNP: true, instructor: &quot;PATTIS, R.&quot;)
+  {
+    aggregate{
+      sum_grade_a_count
+      sum_grade_b_count
+      sum_grade_c_count
+      sum_grade_d_count
+      sum_grade_f_count
+      average_gpa
+    }
+    instructors
   }
 }
 </code></pre></div>
