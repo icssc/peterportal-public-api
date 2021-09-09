@@ -458,7 +458,7 @@ const queryType = new GraphQLObjectType({
         const requestedFields = Object.keys(parseResolveInfo(info).fieldsByTypeName.GradeDistributionCollection)
       
         // Construct a WHERE clause from the arguments
-        const where = parseGradesParamsToSQL(args, args.excludePNP);
+        const where = parseGradesParamsToSQL(args);
         
         // If requested, retrieve the grade distributions
         let grade_distributions, gradeResults;

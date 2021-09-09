@@ -25,8 +25,8 @@ router.get("/raw", async (req, res) => {
 router.get("/calculated", async (req, res) => {
     
     try {
-        const boolExcludePNP = (req.query.excludePNP == 'true') ? true : false //excludePNP string->bool
-        const where = parseGradesParamsToSQL(req.query, boolExcludePNP);
+        req.query.excludePNP = (req.query.excludePNP == 'true') ? true : false // converting excludePNP string -> bool
+        const where = parseGradesParamsToSQL(req.query);
         const results = queryDatabaseAndResponse(where, true) //excludePNP adds another parameter to the query
         res.send(results)
     } catch (err) {

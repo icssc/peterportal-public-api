@@ -5,7 +5,7 @@ var path = require('path');
 var {ValidationError} = require("./errors.helper")
 
 // Constructs a WHERE clause from the query
-function parseGradesParamsToSQL(query, excludePNP = false) {
+function parseGradesParamsToSQL(query) {
     var whereClause = "";
 
     const params = {
@@ -89,8 +89,7 @@ function parseGradesParamsToSQL(query, excludePNP = false) {
     })
     
     var retVal = whereClause === "" ? null : " WHERE " + whereClause;
-    retVal = (excludePNP && retVal !== null) ? retVal += `AND (averageGPA != '')` : retVal
-
+    retVal = (query.excludePNP && retVal !== null) ? retVal += ` AND (averageGPA != '')` : retVal
     return retVal;
 }
 
