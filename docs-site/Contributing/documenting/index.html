@@ -10,18 +10,18 @@
       
       
       <link rel="shortcut icon" href="../../images/peter_favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.5">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.3">
     
     
       
-        <title>Using Your API Key - PeterPortal API Docs</title>
+        <title>Documenting - PeterPortal API Docs</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.21aed14c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.3b61ea93.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.39b8e14a.min.css">
         
           
           
@@ -30,14 +30,10 @@
       
     
     
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.7.1.min.js"></script>
-    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-
-
     
       
         
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
       
@@ -45,6 +41,8 @@
     
     
       <link rel="stylesheet" href="../../css/termynal.css">
+    
+      <link rel="stylesheet" href="../../css/admonitions.css">
     
     
       
@@ -61,13 +59,14 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="">
       
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
         
-        <a href="#using-an-api-key" class="md-skip">
+        <a href="#documentation" class="md-skip">
           Skip to content
         </a>
       
@@ -89,18 +88,20 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
     <div class="md-header-nav__title" data-md-component="header-title">
-      
-        <div class="md-header-nav__ellipsis">
-          <span class="md-header-nav__topic md-ellipsis">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             PeterPortal API Docs
           </span>
-          <span class="md-header-nav__topic md-ellipsis">
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             
-              Using Your API Key
+              Documenting
             
           </span>
         </div>
-      
+      </div>
     </div>
     
       <label class="md-header-nav__button md-icon" for="__search">
@@ -159,10 +160,14 @@
         <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
+
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
@@ -194,6 +199,7 @@
       
 
 
+
   <li class="md-nav__item">
     <a href="../.." class="md-nav__link">
       Home
@@ -206,15 +212,32 @@
       
 
 
+
+  <li class="md-nav__item">
+    <a href="../../Introduction/Getting-Started/" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  
   <li class="md-nav__item md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
-    <label class="md-nav__link" for="nav-2">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    
+    <label class="md-nav__link" for="nav-3">
       REST API
       <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="REST API" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
+      <label class="md-nav__title" for="nav-3">
         <span class="md-nav__icon md-icon"></span>
         REST API
       </label>
@@ -224,6 +247,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -238,6 +262,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="../../REST-API/courses/" class="md-nav__link">
       Courses
@@ -248,6 +273,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -262,6 +288,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="../../REST-API/grades/" class="md-nav__link">
       Grades
@@ -274,9 +301,10 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="../../REST-API/schedule/" class="md-nav__link">
-      Schedule
+      Schedule of Classes
     </a>
   </li>
 
@@ -291,15 +319,19 @@
       
 
 
+
+  
   <li class="md-nav__item md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
-    <label class="md-nav__link" for="nav-3">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    
+    <label class="md-nav__link" for="nav-4">
       GraphQL API
       <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="GraphQL API" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+      <label class="md-nav__title" for="nav-4">
         <span class="md-nav__icon md-icon"></span>
         GraphQL API
       </label>
@@ -311,9 +343,36 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="../../GraphQL-API/start_here/" class="md-nav__link">
       Start Here
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../GraphQL-API/learn_more/" class="md-nav__link">
+      Learn More
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="/graphql-playground" class="md-nav__link">
+      Playground
     </a>
   </li>
 
@@ -328,10 +387,122 @@
       
 
 
-  <li class="md-nav__item">
-    <a href="../../Contributing/" class="md-nav__link">
+  
+
+
+  
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
       Contributing
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Contributing" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Contributing
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../start_here/" class="md-nav__link">
+      Start Here
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../how_to_contribute/" class="md-nav__link">
+      How to Contribute
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Documenting
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Documenting
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#writing-documentation" class="md-nav__link">
+    Writing Documentation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#designing-documentation" class="md-nav__link">
+    Designing Documentation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -342,14 +513,13 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
-  
-    
   
   
     <label class="md-nav__title" for="__toc">
@@ -359,16 +529,29 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-to-use-your-api-key" class="md-nav__link">
-    How to use your API key
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#writing-documentation" class="md-nav__link">
+    Writing Documentation
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#securing-your-api-key" class="md-nav__link">
-    Securing your API key
+        
+          <li class="md-nav__item">
+  <a href="#designing-documentation" class="md-nav__link">
+    Designing Documentation
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -384,72 +567,33 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/icssc-projects/peterportal-public-api/edit/master/docs/Getting-Started/Using-Your-API-Key.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/icssc-projects/peterportal-public-api/edit/master/docs/Contributing/documenting.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="using-an-api-key">Using an API Key</h1>
-<h2 id="how-to-use-your-api-key">How to use your API key</h2>
-<p>To use your api key, add it to the headers of your request, with <code>x-api-key</code> as the key and your api key as the value.
-<div class="highlight"><pre><span></span><code>x-api-key: YOUR_API_KEY_HERE
-</code></pre></div></p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">curl</label><div class="tabbed-content">
-<div class="termy">
-<div class="highlight"><pre><span></span><code><span class="gp">$</span> curl https://api.peterportal.org/rest/v0/courses/all --header <span class="s2">&quot;x-api-key: YOUR_API_KEY_HERE&quot;</span>
-
-<span class="go">[</span>
-<span class="go">...</span>
-<span class="go">{</span>
-<span class="go">    &quot;department&quot;: &quot;I&amp;C SCI&quot;,</span>
-<span class="go">    &quot;number&quot;: &quot;51&quot;,</span>
-<span class="go">    &quot;title&quot;: &quot;Introductory Computer Organization&quot;,</span>
-<span class="go">    &quot;description&quot;: &quot;Multilevel view of system hardware and software...&quot;</span>
-<span class="go">},</span>
-<span class="go">...</span>
-<span class="go">]</span>
-</code></pre></div>
-</div>
-</div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">python</label><div class="tabbed-content">
-<div class="termy">
-<div class="highlight"><pre><span></span><code><span class="gp">$</span> python -m pip install requests
-<span class="go">---&gt; 100%</span>
-<span class="gp">$</span> python 
-<span class="go">Python 3.8.5 </span>
-<span class="gp">#</span> &gt;&gt;&gt;$ import requests
-<span class="gp">#</span> &gt;&gt;&gt;$ <span class="nv">headers</span> <span class="o">=</span> <span class="o">{</span> <span class="s2">&quot;x-api-key&quot;</span>: <span class="s2">&quot;YOUR_API_KEY_HERE&quot;</span><span class="o">}</span>
-<span class="gp">#</span> &gt;&gt;&gt;$ <span class="nv">response</span> <span class="o">=</span> requests.get<span class="o">(</span><span class="s2">&quot;https://api.peterportal.org/rest/v0/courses/all&quot;</span>, <span class="nv">headers</span><span class="o">=</span>headers<span class="o">)</span>
-<span class="gp">#</span> &gt;&gt;&gt;$ response.json<span class="o">()</span>
-
-<span class="go">[</span>
-<span class="go">...</span>
-<span class="go">{</span>
-<span class="go">    &quot;department&quot;: &quot;I&amp;C SCI&quot;,</span>
-<span class="go">    &quot;number&quot;: &quot;51&quot;,</span>
-<span class="go">    &quot;title&quot;: &quot;Introductory Computer Organization&quot;,</span>
-<span class="go">    &quot;description&quot;: &quot;Multilevel view of system hardware and software...&quot;</span>
-<span class="go">},</span>
-<span class="go">...</span>
-<span class="go">]</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<p>Failing to provide valid credentials will respond with a JSON error object.</p>
-<div class="admonition fail">
-<p class="admonition-title">401 Unauthorized</p>
-<div class="highlight"><pre><span></span><code>{
-    &quot;timestamp&quot;: &quot;Fri, 01 Jan 2021 00:00:00 GMT&quot;,
-    &quot;status&quot;: 401,
-    &quot;error&quot;: &quot;Invalid Credentials.&quot;,
-    &quot;message&quot;: &quot;The credentials found were invalid. Please ensure a valid api key is in the request. See documentation for more info.&quot;
-}
-</code></pre></div>
-</div>
-<h2 id="securing-your-api-key">Securing your API key</h2>
-<p>It is important that you keep your api key a secret and do NOT share it with others. Ensure you do not include your api key when committing to a public repository such as GitHub. For some helpful tips
-on how to keep your api key safe, please click <a href="https://medium.com/chingu/an-introduction-to-environment-variables-and-how-to-use-them-f602f66d15fa">here</a>.</p>
+                  <h1>Documenting</h1>
+                
+                <h2 id="documentation">Documentation</h2>
+<p><strong>🤔 Documentation for the documentation. How do you contribute to the documentation?</strong></p>
+<p>The documentation you see right now is created via <a href="https://www.mkdocs.org/">MkDocs</a>. We use a specific extension called <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a> which is what makes this site look pretty.</p>
+<p>For GraphQL documentation, the playground generates the documentation for us automatically.</p>
+<h3 id="writing-documentation">Writing Documentation</h3>
+<p><strong>📝 Writing documentation is simple with MkDocs.</strong></p>
+<ol>
+<li>Open up the project, and navigate to the <a href="https://github.com/icssc-projects/peterportal-public-api/tree/master/docs"><code>/docs</code></a> folder.</li>
+<li>Make your changes to the markdown (<code>.md</code>) files within this folder.</li>
+<li>Create a pull request to <code>master</code>. Once your pull request is merged with <code>master</code>, the documentation site will be automatically rebuilt.</li>
+</ol>
+<details class="info"><summary>How is the docs site updated?</summary><p>All documentation site files are built within <code>/docs-site</code>.</p>
+<p>The docs are run through a CI pipeline through <a href="https://circleci.com/">CircleCI</a>, that will automatically build the documentation into the <code>/docs-site</code> folder. This build is run through a command by the MkDocs python package.</p>
+</details>
+<h3 id="designing-documentation">Designing Documentation</h3>
+<p><strong>✨ Make your documentation user-friendly.</strong></p>
+<p><strong>👀 Preview your changes live.</strong></p>
+<p>🐍 Our documentation website is made through <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a>, a python package.</p>
+<p>To setup <code>mkdocs-material</code>, see their <a href="https://squidfunk.github.io/mkdocs-material/getting-started/">cool instructions</a>.</p>
+<p>Configure documentation site settings in <a href="https://github.com/icssc-projects/peterportal-public-api/blob/master/mkdocs.yml"><code>/mkdocs.yml</code></a>.</p>
                 
               
               
@@ -464,6 +608,27 @@ on how to keep your api key safe, please click <a href="https://medium.com/ching
       
         
 <footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../how_to_contribute/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                How to Contribute
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -507,15 +672,15 @@ on how to keep your api key safe, please click <a href="https://medium.com/ching
       
     </div>
     
-      <script src="../../assets/javascripts/vendor.7e0ee788.min.js"></script>
-      <script src="../../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../../assets/javascripts/vendor.08c56446.min.js"></script>
+      <script src="../../assets/javascripts/bundle.6ced434e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+            worker: "../../assets/javascripts/worker/search.8c7e0a7e.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
