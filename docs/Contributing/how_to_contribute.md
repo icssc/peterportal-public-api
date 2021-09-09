@@ -5,7 +5,7 @@
 If you're wondering how to contribute to open source project and this is your first time, you're at the right place. 
 
 1. First, you'll want to fork the repository to your own account. You can do that by clicking the fork button in the top right of our [repository](https://github.com/icssc-projects/peterportal-public-api). 
-2. Clone the respository to your local machine. Click the green **Code** button, and copy the URL. Open up a terminal on your local computer to where you want the repository to be and enter: 
+2. Clone the forked respository to your local machine. Click the green **Code** button, and copy the URL. Open up a terminal on your local computer to where you want the repository to be and enter: 
 
      ```
      git clone PASTED_URL_HERE

@@ -10,9 +10,28 @@ There's a lot that REST APIs are used for, but I'll explain it more in the scope
 * A REST API is Stateless. This means that it does not rely on nor take into account previous messages that you sent to it. That means for each request you send to it, you need to send all the information that the REST API needs to understand your request.  
 * Our REST API returns and accepts [JSON](https://www.w3schools.com/whatis/whatis_json.asp). REST APIs are not restricted to JSON; however, that is the standard you will see for almost every public Web API. [JSON syntax is similar to a Python dictionary](https://www.w3schools.com/whatis/whatis_json.asp). 
 
+## The API
 
+* The REST Endpoint URL is <https://api.peterportal.org/rest/v0/>
+* REST Services can be accessed through GET actions.
+* Our endpoints return data in JSON.
 
-## Quickstart
+### Error Messages
+
+Error messages will look like this: 
+
+``` JSON
+{
+    "timestamp": "Thu, 31 Dec 2020 00:00:00 GMT",
+    "status": 404,
+    "error": "Error", 
+    "message": "Error message"
+}
+```
+
+If you are gettnig error messages, each endpoints respective documentation will give more details and possible reasons for why they may occur.
+
+## API Reference
 
 Here are some of the endpoints you might want to use in your project. 
 

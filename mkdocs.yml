@@ -35,6 +35,7 @@ nav:
     - Schedule of Classes: REST-API/schedule.md
   - GraphQL API:
     - Start Here: GraphQL-API/start_here.md
+    - Learn More: GraphQL-API/learn_more.md
     - Playground: /graphql-playground
   - Contributing: 
     - Start Here: Contributing/start_here.md

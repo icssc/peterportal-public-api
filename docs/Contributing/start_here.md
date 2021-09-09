@@ -8,7 +8,7 @@ Our goal is to encourage more students and developers to create applications ben
 
 We would love for you to help us out! You can look to contribute to this open source project on GitHub. Our repository can be found [here](https://github.com/icssc-projects/peterportal-public-api). 
 
-If your looking to join our team and be even more involved, ICS Student Council recruits students at the beginning of every year to their committees. For more information, please visit <https://studentcouncil.ics.uci.edu/>.
+If your looking to join our team and be even more involved, ICS Student Council recruits students at the beginning of every school year to their committees. For more information, please visit <https://studentcouncil.ics.uci.edu/>.
 
 ## What should you work on?
 
