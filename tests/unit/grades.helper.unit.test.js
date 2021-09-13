@@ -60,7 +60,7 @@ describe('Test queryDatabaseAndResponse', () => {
               'SUM(gradePCount)': 61,
               'SUM(gradeNPCount)': 5,
               'SUM(gradeWCount)': 0,
-              'AVG(averageGPA)': 3.5,
+              "AVG(NULLIF(averageGPA, ''))": 3.5,
               'COUNT()': 1
             },
             courseList: [
