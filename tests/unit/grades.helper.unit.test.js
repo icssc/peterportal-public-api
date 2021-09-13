@@ -52,16 +52,16 @@ describe('Test queryDatabaseAndResponse', () => {
         expect(trueRes).not.toBeNull();
         expect(trueRes).toMatchObject({
             gradeDistribution: {
-              'SUM(gradeACount)': 143,
-              'SUM(gradeBCount)': 93,
-              'SUM(gradeCCount)': 11,
-              'SUM(gradeDCount)': 1,
-              'SUM(gradeFCount)': 0,
-              'SUM(gradePCount)': 61,
-              'SUM(gradeNPCount)': 5,
-              'SUM(gradeWCount)': 0,
-              "AVG(NULLIF(averageGPA, ''))": 3.5,
-              'COUNT()': 1
+              'sum_grade_a_count': 143,
+              'sum_grade_b_count': 93,
+              'sum_grade_c_count': 11,
+              'sum_grade_d_count': 1,
+              'sum_grade_f_count': 0,
+              'sum_grade_p_count': 61,
+              'sum_grade_np_count': 5,
+              'sum_grade_w_count': 0,
+              'average_gpa': 3.5,
+              'count': 1
             },
             courseList: [
               {

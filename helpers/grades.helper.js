@@ -106,16 +106,16 @@ function fetchInstructors(where) {
 //For GraphQL API
 function fetchAggregatedGrades(where) {
     let sqlStatement = `SELECT 
-    SUM(gradeACount), 
-    SUM(gradeBCount), 
-    SUM(gradeCCount),
-    SUM(gradeDCount),
-    SUM(gradeFCount),
-    SUM(gradePCount),
-    SUM(gradeNPCount),
-    SUM(gradeWCount),
-    AVG(NULLIF(averageGPA, '')),
-    COUNT() FROM gradeDistribution`;
+    SUM(gradeACount) as sum_grade_a_count, 
+    SUM(gradeBCount) as sum_grade_b_count, 
+    SUM(gradeCCount) as sum_grade_c_count,
+    SUM(gradeDCount) as sum_grade_d_count,
+    SUM(gradeFCount) as sum_grade_f_count,
+    SUM(gradePCount) as sum_grade_p_count,
+    SUM(gradeNPCount) as sum_grade_np_count,
+    SUM(gradeWCount) as sum_grade_w_count,
+    AVG(NULLIF(averageGPA, '')) as average_gpa,
+    COUNT() as count FROM gradeDistribution`;
     
     return queryDatabase(where != null ? sqlStatement + where : sqlStatement).get();
 }
@@ -136,16 +136,16 @@ function queryDatabaseAndResponse(where, calculate) {
             };
 
             let sqlFunction = `SELECT 
-            SUM(gradeACount), 
-            SUM(gradeBCount), 
-            SUM(gradeCCount),
-            SUM(gradeDCount),
-            SUM(gradeFCount),
-            SUM(gradePCount),
-            SUM(gradeNPCount),
-            SUM(gradeWCount),
-            AVG(NULLIF(averageGPA, '')),
-            COUNT() FROM gradeDistribution`;
+            SUM(gradeACount) as sum_grade_a_count, 
+            SUM(gradeBCount) as sum_grade_b_count, 
+            SUM(gradeCCount) as sum_grade_c_count,
+            SUM(gradeDCount) as sum_grade_d_count,
+            SUM(gradeFCount) as sum_grade_f_count,
+            SUM(gradePCount) as sum_grade_p_count,
+            SUM(gradeNPCount) as sum_grade_np_count,
+            SUM(gradeWCount) as sum_grade_w_count,
+            AVG(NULLIF(averageGPA, '')) as average_gpa,
+            COUNT() as count FROM gradeDistribution`;
         
             let sqlCourseList = `SELECT 
             year, 

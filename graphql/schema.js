@@ -320,7 +320,8 @@ const gradeDistributionCollectionAggregateType = new GraphQLObjectType({
     sum_grade_p_count: { type: GraphQLFloat }, 
     sum_grade_np_count: { type: GraphQLFloat }, 
     sum_grade_w_count: { type: GraphQLFloat }, 
-    average_gpa: { type: GraphQLFloat }
+    average_gpa: { type: GraphQLFloat },
+    count: { type: GraphQLFloat }
   })
 });
 
@@ -504,15 +505,16 @@ const queryType = new GraphQLObjectType({
           const aggregateResult = fetchAggregatedGrades(where)
           // Format results to GraphQL
           aggregate = {
-            sum_grade_a_count: aggregateResult['SUM(gradeACount)'],
-            sum_grade_b_count: aggregateResult['SUM(gradeBCount)'],
-            sum_grade_c_count: aggregateResult['SUM(gradeCCount)'],
-            sum_grade_d_count: aggregateResult['SUM(gradeDCount)'],
-            sum_grade_f_count: aggregateResult['SUM(gradeFCount)'],
-            sum_grade_p_count: aggregateResult['SUM(gradePCount)'],
-            sum_grade_np_count: aggregateResult['SUM(gradeNPCount)'],
-            sum_grade_w_count: aggregateResult['SUM(gradeWCount)'],
-            average_gpa: aggregateResult["AVG(NULLIF(averageGPA, ''))"]
+            sum_grade_a_count: aggregateResult['sum_grade_a_count'],
+            sum_grade_b_count: aggregateResult['sum_grade_b_count'],
+            sum_grade_c_count: aggregateResult['sum_grade_c_count'],
+            sum_grade_d_count: aggregateResult['sum_grade_d_count'],
+            sum_grade_f_count: aggregateResult['sum_grade_f_count'],
+            sum_grade_p_count: aggregateResult['sum_grade_p_count'],
+            sum_grade_np_count: aggregateResult['sum_grade_np_count'],
+            sum_grade_w_count: aggregateResult['sum_grade_w_count'],
+            average_gpa: aggregateResult['average_gpa'],
+            count: aggregateResult['count']
           }
         }
         // If requested, retrieve the instructors
