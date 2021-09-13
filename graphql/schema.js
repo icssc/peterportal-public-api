@@ -512,7 +512,7 @@ const queryType = new GraphQLObjectType({
             sum_grade_p_count: aggregateResult['SUM(gradePCount)'],
             sum_grade_np_count: aggregateResult['SUM(gradeNPCount)'],
             sum_grade_w_count: aggregateResult['SUM(gradeWCount)'],
-            average_gpa: aggregateResult['AVG(averageGPA)']
+            average_gpa: aggregateResult["AVG(NULLIF(averageGPA, ''))"]
           }
         }
         // If requested, retrieve the instructors

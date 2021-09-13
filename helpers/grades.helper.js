@@ -114,7 +114,7 @@ function fetchAggregatedGrades(where) {
     SUM(gradePCount),
     SUM(gradeNPCount),
     SUM(gradeWCount),
-    AVG(averageGPA),
+    AVG(NULLIF(averageGPA, '')),
     COUNT() FROM gradeDistribution`;
     
     return queryDatabase(where != null ? sqlStatement + where : sqlStatement).get();
@@ -144,7 +144,7 @@ function queryDatabaseAndResponse(where, calculate) {
             SUM(gradePCount),
             SUM(gradeNPCount),
             SUM(gradeWCount),
-            AVG(averageGPA),
+            AVG(NULLIF(averageGPA, '')),
             COUNT() FROM gradeDistribution`;
         
             let sqlCourseList = `SELECT 
