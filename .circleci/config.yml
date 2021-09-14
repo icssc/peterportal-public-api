@@ -35,24 +35,23 @@ jobs:
       - checkout
       - create-env-file
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+      # - restore_cache:
+      #     keys:
+      #     - v1-dependencies-{{ checksum "package.json" }}
+      #     # fallback to using the latest cache if no exact match is found
+      #     - v1-dependencies-
 
       - run:
           name: Install Serverless CLI and dependencies
           command: |
             sudo npm i -g --unsafe-perm serverless
             npm install --also=dev
-
+      #Build the docs html files
+      - build-docs
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      #Build the docs html files
-      - build-docs
 
       - run: 
           name: Run tests with coverage
