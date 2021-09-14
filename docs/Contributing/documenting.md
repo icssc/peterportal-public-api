@@ -13,10 +13,11 @@ For GraphQL documentation, the playground generates the documentation for us aut
 
 1. Open up the project, and navigate to the [`/docs`](https://github.com/icssc-projects/peterportal-public-api/tree/master/docs) folder.
 2. Make your changes to the markdown (`.md`) files within this folder.
-3. Create a pull request to `master`. Once your pull request is merged with `master`, the documentation site will be automatically rebuilt.
+3. Preview your changes with `mkdocs serve`, and see it locally in `mkdocs build -d docs-site`. 
+4. Create a pull request to `master`. Once your pull request is merged with `master`, the documentation site will be automatically rebuilt.
 
 ??? info "How is the docs site updated?"
-    All documentation site files are built within `/docs-site`.
+    All documentation site files are built to `/docs-site`.
 
     The docs are run through a CI pipeline through [CircleCI](https://circleci.com/), that will automatically build the documentation into the `/docs-site` folder. This build is run through a command by the MkDocs python package.
 
