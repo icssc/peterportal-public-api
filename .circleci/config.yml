@@ -30,16 +30,16 @@ workflows:
 jobs:
   build:
     docker:
-      - image: circleci/node:12.22
+      - image: cimg/python:3.9-node
     steps:
       - checkout
       - create-env-file
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+      # - restore_cache:
+      #     keys:
+      #     - v1-dependencies-{{ checksum "package.json" }}
+      #     # fallback to using the latest cache if no exact match is found
+      #     - v1-dependencies-
 
       - run:
           name: Install Serverless CLI and dependencies

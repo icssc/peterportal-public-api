@@ -1,56 +1,24 @@
 # Contributing
 
-Most information is incomplete.
+PeterPortal API is an open source project, [hosted on Github](https://github.com/icssc-projects/peterportal-public-api), created by the ICS Student Council Projects Committee at UCI. We welcome anyone to contribute to our project and improve our API.
 
-## Repo Overview
+Our goal is to encourage more students and developers to create applications beneficial to the UCI community. 
 
-| Folder | Purpose |
-| ----------- | ----------- |
-| /cache | Houses the local data cache |
-| /email | Outgoing email templates for various purposes |
-| /keys | Middleware for API Key Authentication feature |
-| /public | Assets to be accessible via Public URL |
-| /rest | Contains the very heart and soul of the REST API |
-| /test | Self-explainatory |
-| /views | Text |
-| /utils | Utilities for server maintenance |
+## Want to get Involved?
 
-## Initial Setup
+We would love for you to help us out! You can look to contribute to this open source project on GitHub. Our repository can be found [here](https://github.com/icssc-projects/peterportal-public-api). 
 
-Documentation being developed
+If your looking to join our team and be even more involved, ICS Student Council recruits students at the beginning of every school year to their committees. For more information, please visit <https://studentcouncil.ics.uci.edu/>.
 
+## What should you work on?
 
-## Documentation
+You can check out which issues we need help on our [repo](https://github.com/icssc-projects/peterportal-public-api). 
 
-**🤔 Documentation for the documentation. How do you contribute to the documentation?**
+Check out these issues we have labeled [help wanted](https://github.com/icssc-projects/peterportal-public-api/labels/help%20wanted). If you're a beginner, I would recommend looking at some [good first issues](https://github.com/icssc-projects/peterportal-public-api/labels/good%20first%20issue).
 
-The documentation you see right now is created via [MkDocs](https://www.mkdocs.org/). We use a specific extension called [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) which is what makes this site look pretty.
+## How to get in touch?
+
+If you have feature requests, questions, ideas, and want to contribute, there are multiple channels you can communicate with us. 
 
 
-### Writing Documentation
 
-**📝 Writing documentation is simple with MkDocs.**
-
-1. Checkout the `docs` branch. All edits to documentation should be made within this branch
-2. Make your changes to the markdown (`.md`) files within [`/docs`](https://github.com/icssc-projects/peterportal-public-api/tree/master/docs). You can add or delete files as you so choose.
-3. Create a pull request to `master`. Once your pull request is merged with `master`, the documentation site will be automatically rebuilt.
-
-#### How is the docs site updated
-
-All documentation site files are built within `/docs-site`.
-
-A Github Action, [`/.github/workflows/docs.yml`](https://github.com/icssc-projects/peterportal-public-api/blob/master/.github/workflows/docs.yml) automatically rebuilds the site on every push to master. `docs.yml` calls `mkdocs`, a python package, to build the site and automatically commit the new changes.
-
-
-### Designing Documentation
-
-**✨ Make your documentation user-friendly.**
-
-**👀 Preview your changes live.**
-
-🐍 Our documentation website is made through [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/), a python package.
-
-To setup `mkdocs-material`, see their [cool instructions](https://squidfunk.github.io/mkdocs-material/getting-started/).
-
-
-Configure documentation site settings in [`/mkdocs.yml`](https://github.com/icssc-projects/peterportal-public-api/blob/master/mkdocs.yml).
