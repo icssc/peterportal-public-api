@@ -25,6 +25,7 @@ workflows:
             branches:
               only:
                 - master
+                - docs-update
 
 jobs:
   build:
@@ -50,11 +51,13 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      
+      #Build the docs html files
+      - build-docs
+
       - run: 
           name: Run tests with coverage
           command: npm test --coverage
 
-      - run:
-          name: Deploy application
-          command: sls deploy --stage prod
+      # - run:
+      #     name: Deploy application
+      #     command: sls deploy --stage prod
