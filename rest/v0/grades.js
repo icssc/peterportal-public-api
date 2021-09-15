@@ -27,7 +27,7 @@ router.get("/calculated", async (req, res) => {
     try {
         req.query.excludePNP = (req.query.excludePNP == 'true') ? true : false // converting excludePNP string -> bool
         const where = parseGradesParamsToSQL(req.query);
-        const results = queryDatabaseAndResponse(where, true) //excludePNP adds another parameter to the query
+        const results = queryDatabaseAndResponse(where, true)
         res.send(results)
     } catch (err) {
         if (err.name === "ValidationError") {
