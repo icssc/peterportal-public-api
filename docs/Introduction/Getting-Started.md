@@ -1,7 +1,7 @@
 # Getting Started
 
 ## What is an API?
-An API is an **Application Programming Interface**. It's how programs talk to each other. PeterPortal Public API is a Web API, meaning anyone and any app can talk to it over the web! You can use Peterportal Public API to get data for apps that help students.
+An API is an **Application Programming Interface**. It's how programs talk to each other. PeterPortal Public API is a Web API, meaning anyone and any app can talk to it over the web! You can use Peterportal Public API to get data and use it in your own projects.
 
 PeterPortal API offers a [RESTful API](/docs/REST-API/start_here) as well as a [GraphQL API](/docs/GraphQL-API/start_here), and both will return JSON-encoded responses, with standard HTTP response codes and verbs. 
 
@@ -28,7 +28,7 @@ To help you make a decision you can learn more about each of the APIs, in their 
 
 
 ## How do I get started?
-Just go for it. Unlike many other APIs, we do NOT require any API keys, or authentication to utilize our API. We wanted to make this API open to everyone with no barriers to start using our API. 
+Just go for it. Unlike many other APIs, we do NOT require any API keys, or authentication to utilize our API. We wanted to make this API open to anyone looking to start their own project. 
 
 ## Compression
 By default our API uses compression to shorten response times and reduce payload size. We are using a [Node.js](https://nodejs.org/en/) module to compress our responses. You can learn more about this module [here](https://github.com/expressjs/compression). 

@@ -5,6 +5,8 @@
 
 The documentation you see right now is created via [MkDocs](https://www.mkdocs.org/). We use a specific extension called [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) which is what makes this site look pretty.
 
+To setup `mkdocs-material`, see their [cool instructions](https://squidfunk.github.io/mkdocs-material/getting-started/).
+
 For GraphQL documentation, the playground generates the documentation for us automatically.
 
 ### Writing Documentation
@@ -13,8 +15,7 @@ For GraphQL documentation, the playground generates the documentation for us aut
 
 1. Open up the project, and navigate to the [`/docs`](https://github.com/icssc-projects/peterportal-public-api/tree/master/docs) folder.
 2. Make your changes to the markdown (`.md`) files within this folder.
-3. Preview your changes with `mkdocs serve`, and see it locally in `mkdocs build -d docs-site`. 
-4. Create a pull request to `master`. Once your pull request is merged with `master`, the documentation site will be automatically rebuilt.
+3. Create a pull request to `master`. Once your pull request is merged with `master`, the documentation site will be automatically rebuilt.
 
 ??? info "How is the docs site updated?"
     All documentation site files are built to `/docs-site`.
@@ -28,9 +29,7 @@ For GraphQL documentation, the playground generates the documentation for us aut
 
 **👀 Preview your changes live.**
 
-🐍 Our documentation website is made through [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/), a python package.
-
-To setup `mkdocs-material`, see their [cool instructions](https://squidfunk.github.io/mkdocs-material/getting-started/).
-
+Preview your changes with `mkdocs serve`, and see the generated documentation locally with `mkdocs build -d docs-site`. 
 
 Configure documentation site settings in [`/mkdocs.yml`](https://github.com/icssc-projects/peterportal-public-api/blob/master/mkdocs.yml).
+

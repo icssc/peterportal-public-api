@@ -128,4 +128,5 @@ Almost all objects are linked to other objects in different ways. A `Course` wil
 
 These are the basics of using GraphQL for the PeterPortal API. However, GraphQL really has so much more to offer, and if you're looking to learn more about this new technology, we highly recommend checking out their website, <https://graphql.org/>. There are links to so many more tutorials, examples and more.
 
+## How we added GraphQL
 To build our GraphQL endpoint, we used [GraphQL.js](https://graphql.org/graphql-js/), a node module you can use to create your own GraphQL API.

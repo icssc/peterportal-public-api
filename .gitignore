@@ -5,6 +5,7 @@
 
 # Dependencies
 node_modules
+env
 
 # Generated Files
 docs-site/
