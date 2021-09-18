@@ -45,3 +45,7 @@ Not only can you try it out, but our Playground also has the most up-to-date doc
         instructors
       }
     }
+    ```
+## Documentation
+
+📃 Checkout our documentation at [api.peterportal.org/graphql-docs/](/graphql-docs/).
