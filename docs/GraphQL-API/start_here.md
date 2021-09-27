@@ -28,6 +28,7 @@ Not only can you try it out, but our Playground also has the most up-to-date doc
     }
     ```
 
+
 ## Documentation
 
 📃 Documentation can be found inside our [GraphQL Playground](/graphql-playground), by clicking the `DOCS` tab on the right-hand side.

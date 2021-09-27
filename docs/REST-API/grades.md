@@ -106,6 +106,7 @@ Try out one of these quick ways to play with our grades endpoints:
 | `department` | Department short-hand | I&C SCI |
 | `number` | Course number | 32A |
 |  `code` | 5-digit course code on WebSoC | 35540 |
+| `excludePNP` | Exclude P/NP | true/false |
 
 
 !!! tip 
@@ -208,16 +209,16 @@ Please follow the above documentation on the `/grades/raw` endpoint, for informa
     ``` JSON
     {
         "gradeDistribution": {
-            "SUM(gradeACount)": 257,
-            "SUM(gradeBCount)": 155,
-            "SUM(gradeCCount)": 72,
-            "SUM(gradeDCount)": 34,
-            "SUM(gradeFCount)": 69,
-            "SUM(gradePCount)": 1,
-            "SUM(gradeNPCount)": 3,
-            "SUM(gradeWCount)": 2,
-            "AVG(averageGPA)": 2.82,
-            "COUNT()": 2
+            "sum_grade_a_count": 257,
+            "sum_grade_b_count": 155,
+            "sum_grade_c_count": 72,
+            "sum_grade_d_count": 34,
+            "sum_grade_f_count": 69,
+            "sum_grade_p_count": 1,
+            "sum_grade_np_count": 3,
+            "sum_grade_w_count": 2,
+            "average_gpa": 2.82,
+            "count": 2
         },
         "courseList": [
             {

@@ -85,7 +85,7 @@ Based on the type, different fields can be specified. A `Course` type would have
 
 Some queries require arguments that will like our REST endpoints have parameters. This will help specify which course or instructor you want in a query. 
 
-??? example "Example"
+??? example "Example Query 1"
     
     In this example, the `course` query returns the `ID`, `title`, and `department` of the course `COMPSCI 161`, based on the argument passed.
 
@@ -95,6 +95,24 @@ Some queries require arguments that will like our REST endpoints have parameters
         id
         title
         department
+      }
+    }
+    
+!!! example "Example Query 2"
+    Here is another example which returns sum of students who received As, Bs, Cs, Ds, Fs, and the average GPA of instructor "PATTIS, R." excluding P/NP.
+
+    ``` graphql
+    query {
+      grades(excludePNP: true, instructor: "PATTIS, R.")
+      {
+        aggregate{
+          sum_grade_a_count
+          sum_grade_b_count
+          sum_grade_c_count
+          sum_grade_d_count
+          sum_grade_f_count
+          average_gpa
+        }
       }
     }
     ```
