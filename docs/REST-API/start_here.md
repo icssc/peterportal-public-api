@@ -3,7 +3,7 @@
 ## What is a RESTful API?
 To call a Web API RESTful, or REST, means that it meets a set of communication standards.
 
-First of all, REST is an an acronym: **RE**presentational **S**tate **T**ransfer. But that doesn't really help understanding it :'( 
+First of all, REST is an an acronym: **RE**presentational **S**tate **T**ransfer. But that doesn't really help understanding it :fontawesome-regular-sad-tear:
 
 There's a lot that REST APIs are used for, but I'll explain it more in the scope of what you can do with PeterPortal API.  
 
