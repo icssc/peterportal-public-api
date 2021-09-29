@@ -1,8 +1,8 @@
 version: 2.1
 orbs:
-   aws-cli: circleci/aws-cli@2.0
-   serverless: circleci/serverless-framework@1.0
-   python: circleci/python@1.4.0
+  aws-cli: circleci/aws-cli@2.0
+  serverless: circleci/serverless-framework@1.0
+  node: circleci/node@4.7.0
 
 commands:
   create-env-file:
@@ -14,9 +14,6 @@ commands:
             SENTRY_DSN='$SENTRY_DSN'" > .env
   build-docs:
     steps:
-      - run:
-          name: Install dependencies
-          command: python3 -m ensurepip --upgrade
       - run:
           name: Install dependencies
           command: pip install mkdocs-material
@@ -37,9 +34,11 @@ workflows:
 jobs:
   build:
     docker:
-      - image: circleci/node:12.22
+      - image: circleci/python:3.9
     steps:
       - checkout
+      - node/install:
+          install-npm: true
       - create-env-file
       # # Download and cache dependencies
       # - restore_cache:
