@@ -16,6 +16,9 @@ commands:
     steps:
       - run:
           name: Install dependencies
+          command: python3 -m ensurepip --upgrade
+      - run:
+          name: Install dependencies
           command: pip install mkdocs-material
       - run: 
           name: Build docs
