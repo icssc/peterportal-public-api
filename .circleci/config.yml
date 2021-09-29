@@ -29,7 +29,6 @@ workflows:
             branches:
               only:
                 - master
-                - bugfix
 
 jobs:
   build:
