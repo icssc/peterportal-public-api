@@ -31,7 +31,8 @@ workflows:
 
 jobs:
   build:
-    executor: serverless/default
+    docker:
+      - image: circleci/node:12.22
     steps:
       - checkout
       - create-env-file
@@ -48,7 +49,7 @@ jobs:
             sudo npm i -g --unsafe-perm serverless
             npm install --also=dev
       #Build the docs html files
-      - build-docs
+      # - build-docs
       - save_cache:
           paths:
             - node_modules
