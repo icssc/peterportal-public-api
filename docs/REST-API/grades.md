@@ -8,7 +8,7 @@ Try out one of these quick ways to play with our grades endpoints:
     <div class="termy">
 
     ```console
-    $ curl https://api.peterportal.org/rest/v0/grades/raw --header "x-api-key: YOUR_API_KEY_HERE"
+    $ curl https://api.peterportal.org/rest/v0/grades/raw 
 
     [
       ...
@@ -47,8 +47,7 @@ Try out one of these quick ways to play with our grades endpoints:
     $ python 
     Python 3.8.5 
     # >>>$ import requests
-    # >>>$ headers = { "x-api-key": "YOUR_API_KEY_HERE"}
-    # >>>$ response = requests.get("https://api.peterportal.org/rest/v0/grades/raw", headers=headers)
+    # >>>$ response = requests.get("https://api.peterportal.org/rest/v0/grades/raw")
     # >>>$ response.json()
 
     [

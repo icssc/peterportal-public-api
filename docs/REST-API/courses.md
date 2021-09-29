@@ -7,7 +7,7 @@ Try out one of these quick ways to play with our courses endpoints:
     <div class="termy">
 
     ```console
-    $ curl https://api.peterportal.org/rest/v0/courses/all --header "x-api-key: YOUR_API_KEY_HERE"
+    $ curl https://api.peterportal.org/rest/v0/courses/all 
 
     [
     ...
@@ -33,8 +33,7 @@ Try out one of these quick ways to play with our courses endpoints:
     $ python 
     Python 3.8.5 
     # >>>$ import requests
-    # >>>$ headers = { "x-api-key": "YOUR_API_KEY_HERE"}
-    # >>>$ response = requests.get("https://api.peterportal.org/rest/v0/courses/all", headers=headers)
+    # >>>$ response = requests.get("https://api.peterportal.org/rest/v0/courses/all")
     # >>>$ response.json()
 
     [

@@ -1,31 +1,51 @@
 # Start here
 
 ## What is a RESTful API?
-
-An API is an Application Programming Interface. It's how programs talk to each other. PeterPortal Public API is a Web API, meaning anyone and any app can talk to it over the web! You can use Peterportal Public API to get data for apps that help students.
-
 To call a Web API RESTful, or REST, means that it meets a set of communication standards.
 
-First of all, REST is an an acronym: **RE**presentational **S**tate **T**ransfer. But that doesn't really help understanding it :'( 
+First of all, REST is an an acronym: **RE**presentational **S**tate **T**ransfer. But that doesn't really help understanding it :fontawesome-regular-sad-tear:
 
 There's a lot that REST APIs are used for, but I'll explain it more in the scope of what you can do with PeterPortal API.  
 
 * A REST API is Stateless. This means that it does not rely on nor take into account previous messages that you sent to it. That means for each request you send to it, you need to send all the information that the REST API needs to understand your request.  
-* Our REST API returns and accepts [JSON](https://www.w3schools.com/whatis/whatis_json.asp). REST APIs are not restricted to JSON; however, that is the standard you will see for almost every public Web API. [JSON syntax is kinda like a Python dictionary](https://www.w3schools.com/whatis/whatis_json.asp). 
+* Our REST API returns and accepts [JSON](https://www.w3schools.com/whatis/whatis_json.asp). REST APIs are not restricted to JSON; however, that is the standard you will see for almost every public Web API. [JSON syntax is similar to a Python dictionary](https://www.w3schools.com/whatis/whatis_json.asp). 
 
+## The API
 
+* The REST Endpoint URL is <https://api.peterportal.org/rest/v0/>
+* REST Services can be accessed through GET actions.
+* Our endpoints return data in JSON.
 
-## Quickstart
+### Error Messages
 
-Try out our REST API using any of the following methods:
+Error messages will look like this: 
 
+``` JSON
+{
+    "timestamp": "Thu, 31 Dec 2020 00:00:00 GMT",
+    "status": 404,
+    "error": "Error", 
+    "message": "Error message"
+}
+```
+
+If you are gettnig error messages, each endpoints respective documentation will give more details and possible reasons for why they may occur.
+
+## API Reference
+
+Here are some of the endpoints you might want to use in your project. 
+
+* [Courses](/docs/REST-API/courses)  
+* [Instructors](/docs/REST-API/instructors)  
+* [Grades](/docs/REST-API/grades)  
+* [Schedule of Classes](/docs/REST-API/schedule)  
 
 === "curl"
 
     <div class="termy">
 
     ```console
-    $ curl https://api.peterportal.org/rest/v0/courses/all --header "x-api-key: YOUR_API_KEY_HERE"
+    $ curl https://api.peterportal.org/rest/v0/courses/all
 
     [
     ...
@@ -51,7 +71,6 @@ Try out our REST API using any of the following methods:
     $ python 
     Python 3.8.5 
     # >>>$ import requests
-    # >>>$ headers = { "x-api-key": "YOUR_API_KEY_HERE"}
     # >>>$ response = requests.get("https://api.peterportal.org/rest/v0/courses/all", headers=headers)
     # >>>$ response.json()
 
@@ -70,6 +89,4 @@ Try out our REST API using any of the following methods:
     </div>
 
 
-
-Full documentation can be found [here](https://api.peterportal.org/docs/REST-API/endpoints/)
 
