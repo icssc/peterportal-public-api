@@ -14,6 +14,7 @@ commands:
             SENTRY_DSN='$SENTRY_DSN'" > .env
   build-docs:
     steps:
+      - python/dist
       - run:
           name: Install dependencies
           command: pip install mkdocs-material
@@ -34,11 +35,9 @@ workflows:
 jobs:
   build:
     docker:
-      - image: circleci/python:3.9
+      - image: circleci/node:12.22
     steps:
       - checkout
-      - node/install:
-          install-npm: true
       - create-env-file
       # # Download and cache dependencies
       # - restore_cache:
