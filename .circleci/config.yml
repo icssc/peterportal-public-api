@@ -65,10 +65,10 @@ jobs:
       - aws-cli/setup
       - serverless/setup
 
-      - run:
-          name: Deploy application
-          command: sls package
-
       # - run:
       #     name: Deploy application
-      #     command: sls deploy --stage prod
+      #     command: sls package
+
+      - run:
+          name: Deploy application
+          command: sls deploy --stage prod
