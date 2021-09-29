@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  serverless-framework: circleci/serverless-framework@1.0.1
 
 commands:
   create-env-file:
@@ -29,8 +31,7 @@ workflows:
 
 jobs:
   build:
-    docker:
-      - image: cimg/python:3.7-node
+    executor: serverless/default
     steps:
       - checkout
       - create-env-file
@@ -39,7 +40,7 @@ jobs:
           keys:
           - v2-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
-          - v2-dependencies-
+          - v2-dependencies-{{ .Branch }}
 
       - run:
           name: Install Serverless CLI and dependencies
