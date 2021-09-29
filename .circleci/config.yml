@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
-  serverless: circleci/serverless-framework@1.0.1
+  aws-cli: circleci/aws-cli@1.0
+  serverless: circleci/serverless-framework@1.0
 
 commands:
   create-env-file:
@@ -31,8 +32,7 @@ workflows:
 
 jobs:
   build:
-    docker:
-      - image: circleci/node:12.22
+    executor: serverless/default
     steps:
       - checkout
       - create-env-file
@@ -43,13 +43,8 @@ jobs:
       #     # fallback to using the latest cache if no exact match is found
       #     - v2-dependencies-{{ .Branch }}
 
-      - run:
-          name: Install Serverless CLI and dependencies
-          command: |
-            sudo npm i -g --unsafe-perm serverless
-            npm install --also=dev
       #Build the docs html files
-      # - build-docs
+      - build-docs
       - save_cache:
           paths:
             - node_modules
@@ -58,7 +53,8 @@ jobs:
       - run: 
           name: Run tests with coverage
           command: npm test --coverage
-
+      - aws-cli/setup
+      - serverless/setup
       - run:
           name: Deploy application
-          command: sls deploy --stage prod
+          command: sls package
