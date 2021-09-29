@@ -52,7 +52,7 @@ jobs:
           command: |
             npm install --also=dev
       #Build the docs html files
-      # - build-docs
+      - build-docs
       - save_cache:
           paths:
             - node_modules
