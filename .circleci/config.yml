@@ -34,8 +34,9 @@ workflows:
 
 jobs:
   build:
-    executor: lambda_ci/lambda_runtime
-        - lambda_runtime: 'nodejs12.x'
+    executor: 
+      name: lambda_ci/lambda_executor
+      lambda_runtime: 'nodejs12.22'
     steps:
       - checkout
       - create-env-file
