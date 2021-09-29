@@ -49,9 +49,9 @@ jobs:
       - run:
           name: Install Serverless CLI and dependencies
           command: |
-            npm install --also=dev
+            npm ci
       #Build the docs html files
-      - build-docs
+      # - build-docs
       - save_cache:
           paths:
             - node_modules
