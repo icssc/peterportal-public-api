@@ -10,8 +10,16 @@ theme:
   icon:
     repo: fontawesome/brands/github
   palette:
-    scheme: default
-    primary: indigo
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
 
 markdown_extensions:
   - admonition
