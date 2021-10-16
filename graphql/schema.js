@@ -1,25 +1,25 @@
-import {
+const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLSchema,
   GraphQLFloat,
   GraphQLList,
   GraphQLNonNull
-} from 'graphql';
-import {
+} = require("graphql");
+const {
 	parseResolveInfo,
-} from 'graphql-parse-resolve-info';
+} = require("graphql-parse-resolve-info");
 
-import {courseType} from'./course.js'
-import {instructorType} from'./instructor.js'
-import {meetingType, sectionInfoType, courseOfferingType} from './schedule.js'
-import {gradeDistributionType, gradeDistributionCollectionAggregateType, gradeDistributionCollectionType} from './grades.js'
+const {courseType} = require("./course.js");
+const {instructorType} = require("./instructor.js");
+const {meetingType, sectionInfoType, courseOfferingType} = require( './schedule.js');
+const {gradeDistributionType, gradeDistributionCollectionAggregateType, gradeDistributionCollectionType} = require( './grades.js');
 
-import {getAllCourses, getCourse} from '../helpers/courses.helper'
-import {getAllInstructors, getInstructor, getUCINetIDFromName} from '../helpers/instructor.helper'
-import {getCourseSchedules} from "../helpers/schedule.helper"
-import {parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades} from '../helpers/grades.helper'
-import { ValidationError } from '../helpers/errors.helper';
+const {getAllCourses, getCourse} = require('../helpers/courses.helper')
+const {getAllInstructors, getInstructor, getUCINetIDFromName} = require('../helpers/instructor.helper')
+const {getCourseSchedules} = require("../helpers/schedule.helper")
+const {parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades} = require('../helpers/grades.helper');
+const { ValidationError } = require('../helpers/errors.helper');
 
 
 const queryType = new GraphQLObjectType({

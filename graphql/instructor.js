@@ -1,11 +1,11 @@
-import {
+const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLList
-  } from 'graphql';
+  } = require('graphql');
 
-import {courseType} from './course.js'
-import {getInstructor} from '../helpers/instructor.helper'
+const {courseType} = require('./course.js')
+const {getInstructor} =  require('../helpers/instructor.helper')
 
 const instructorType = new GraphQLObjectType({
     name: 'Instructor',

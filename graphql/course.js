@@ -1,16 +1,16 @@
-import {
+const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLFloat,
     GraphQLList,
-  } from 'graphql';
+  } = require('graphql');
 
-import {instructorType} from './instructor.js'
-import {scheduleArgsToQuery, courseOfferingType} from './schedule.js'
+const {instructorType} = require('./instructor.js');
+const {scheduleArgsToQuery, courseOfferingType} = require ('./schedule.js');
 
-import {getCourseSchedules} from "../helpers/schedule.helper"
-import {getInstructor} from '../helpers/instructor.helper'
-import {getCourse} from '../helpers/courses.helper';
+const {getCourseSchedules} = require("../helpers/schedule.helper");
+const {getInstructor} = require('../helpers/instructor.helper');
+const {getCourse} = require('../helpers/courses.helper');
 
 const courseType = new GraphQLObjectType({
     name: 'Course',

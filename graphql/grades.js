@@ -1,11 +1,11 @@
-import {
+const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLFloat,
     GraphQLList,
-  } from 'graphql';
+  } = require ('graphql');
 
-import {courseOfferingType} from './schedule.js'
+const {courseOfferingType} = require ('./schedule.js')
 
 const gradeDistributionType = new GraphQLObjectType({
     name: "GradeDistribution",
