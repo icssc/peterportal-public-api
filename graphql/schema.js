@@ -4,7 +4,8 @@ const {
   GraphQLSchema,
   GraphQLFloat,
   GraphQLList,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLBoolean
 } = require("graphql");
 const {
 	parseResolveInfo,
@@ -12,15 +13,12 @@ const {
 
 const {courseType} = require("./course.js");
 const {instructorType} = require("./instructor.js");
-const {meetingType, sectionInfoType, courseOfferingType} = require( './schedule.js');
-const {gradeDistributionType, gradeDistributionCollectionAggregateType, gradeDistributionCollectionType} = require( './grades.js');
+const { gradeDistributionCollectionType} = require( './grades.js');
 
 const {getAllCourses, getCourse} = require('../helpers/courses.helper')
-const {getAllInstructors, getInstructor, getUCINetIDFromName} = require('../helpers/instructor.helper')
+const {getAllInstructors, getInstructor} = require('../helpers/instructor.helper')
 const {getCourseSchedules} = require("../helpers/schedule.helper")
 const {parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades} = require('../helpers/grades.helper');
-const { ValidationError } = require('../helpers/errors.helper');
-
 
 const queryType = new GraphQLObjectType({
   name: 'Query',
@@ -132,7 +130,8 @@ const queryType = new GraphQLObjectType({
         instructor: { type: GraphQLString },
         department: { type: GraphQLString },
         number: { type: GraphQLString },
-        code: { type: GraphQLString }
+        code: { type: GraphQLString },
+        excludePNP: { type: GraphQLBoolean }
       },
 
       resolve: (_, args, __, info) => {
@@ -188,15 +187,16 @@ const queryType = new GraphQLObjectType({
       
           // Format results to GraphQL
           aggregate = {
-            sum_grade_a_count: aggregateResult['SUM(gradeACount)'],
-            sum_grade_b_count: aggregateResult['SUM(gradeBCount)'],
-            sum_grade_c_count: aggregateResult['SUM(gradeCCount)'],
-            sum_grade_d_count: aggregateResult['SUM(gradeDCount)'],
-            sum_grade_f_count: aggregateResult['SUM(gradeFCount)'],
-            sum_grade_p_count: aggregateResult['SUM(gradePCount)'],
-            sum_grade_np_count: aggregateResult['SUM(gradeNPCount)'],
-            sum_grade_w_count: aggregateResult['SUM(gradeWCount)'],
-            average_gpa: aggregateResult['AVG(averageGPA)']
+            sum_grade_a_count: aggregateResult['sum_grade_a_count'],
+            sum_grade_b_count: aggregateResult['sum_grade_b_count'],
+            sum_grade_c_count: aggregateResult['sum_grade_c_count'],
+            sum_grade_d_count: aggregateResult['sum_grade_d_count'],
+            sum_grade_f_count: aggregateResult['sum_grade_f_count'],
+            sum_grade_p_count: aggregateResult['sum_grade_p_count'],
+            sum_grade_np_count: aggregateResult['sum_grade_np_count'],
+            sum_grade_w_count: aggregateResult['sum_grade_w_count'],
+            average_gpa: aggregateResult['average_gpa'],
+            count: aggregateResult['count']
           }
         }
 

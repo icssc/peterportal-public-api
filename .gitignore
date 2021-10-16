@@ -1,7 +1,15 @@
-node_modules
+# Configuration files
 .env
 .faunarc
-.DS_Store
+
+
+# Dependencies
+node_modules
+env
+
+# Generated Files
+docs-site/
 .serverless/
 
-env
+#OS
+.DS_Store

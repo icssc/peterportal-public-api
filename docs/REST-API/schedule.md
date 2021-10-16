@@ -1,5 +1,151 @@
+**:calendar: Find information on UCI Schedule of Classes here.**
 
-## Schedule
+
+
+Try out one of these quick ways to play with our grades endpoints:
+
+=== "curl"
+
+    <div class="termy">
+
+    ```console
+    $ curl https://api.peterportal.org/rest/v0/schedule/soc?term=2018%20Fall&department=COMPSCI&courseNumber=161
+
+    {
+        "schools": [
+            {
+                "departments": [
+                    {
+                        "courseNumberRangeComments": [],
+                        "courses": [
+                            {
+                                "courseComment": "",
+                                "courseNumber": "161",
+                                "courseTitle": "DES&ANALYS OF ALGOR",
+                                "deptCode": "COMPSCI",
+                                "prerequisiteLink": "https://www.reg.uci.edu/cob/prrqcgi?term=201892&dept=COMPSCI&action=view_by_term#161",
+                                "sections": [
+                                    ...
+                                    {
+                                        "finalExam": "",
+                                        "instructors": [
+                                            "KUMAR, A.",
+                                            "DILLENCOURT, M."
+                                        ],
+                                        "maxCapacity": "108",
+                                        "meetings": [
+                                            {
+                                                "bldg": "SSL 248",
+                                                "days": "TuTh",
+                                                "time": " 5:00- 5:50p"
+                                            }
+                                        ],
+                                        "numCurrentlyEnrolled": {
+                                            "sectionEnrolled": "",
+                                            "totalEnrolled": "105"
+                                        },
+                                        "numNewOnlyReserved": "",
+                                        "numOnWaitlist": "",
+                                        "numRequested": "143",
+                                        "restrictions": "A",
+                                        "sectionCode": "34191",
+                                        "sectionComment": "",
+                                        "sectionNum": "1",
+                                        "sectionType": "Dis",
+                                        "status": "OPEN",
+                                        "units": "0"
+                                    },
+                                    ...
+                        ],
+                        "deptCode": "COMPSCI",
+                        "deptComment": "...",
+                        "deptName": "Computer Science",
+                        "sectionCodeRangeComments": []
+                    }
+                ],
+                "schoolComment": "...",
+                "schoolName": "Donald Bren School of Information and Computer Sciences"
+            }
+        ]
+    }
+    ```
+    
+    </div>
+
+=== "python"
+
+    <div class="termy">
+
+    ```console
+    $ python -m pip install requests
+    ---> 100%
+    $ python 
+    Python 3.8.5 
+    # >>>$ import requests
+    # >>>$ response = requests.get("https://api.peterportal.org/rest/v0/schedule/soc?term=2018%20Fall&department=COMPSCI&courseNumber=161")
+    # >>>$ response.json()
+
+    {
+        "schools": [
+            {
+                "departments": [
+                    {
+                        "courseNumberRangeComments": [],
+                        "courses": [
+                            {
+                                "courseComment": "",
+                                "courseNumber": "161",
+                                "courseTitle": "DES&ANALYS OF ALGOR",
+                                "deptCode": "COMPSCI",
+                                "prerequisiteLink": "https://www.reg.uci.edu/cob/prrqcgi?term=201892&dept=COMPSCI&action=view_by_term#161",
+                                "sections": [
+                                    ...
+                                    {
+                                        "finalExam": "",
+                                        "instructors": [
+                                            "KUMAR, A.",
+                                            "DILLENCOURT, M."
+                                        ],
+                                        "maxCapacity": "108",
+                                        "meetings": [
+                                            {
+                                                "bldg": "SSL 248",
+                                                "days": "TuTh",
+                                                "time": " 5:00- 5:50p"
+                                            }
+                                        ],
+                                        "numCurrentlyEnrolled": {
+                                            "sectionEnrolled": "",
+                                            "totalEnrolled": "105"
+                                        },
+                                        "numNewOnlyReserved": "",
+                                        "numOnWaitlist": "",
+                                        "numRequested": "143",
+                                        "restrictions": "A",
+                                        "sectionCode": "34191",
+                                        "sectionComment": "",
+                                        "sectionNum": "1",
+                                        "sectionType": "Dis",
+                                        "status": "OPEN",
+                                        "units": "0"
+                                    },
+                                    ...
+                        ],
+                        "deptCode": "COMPSCI",
+                        "deptComment": "...",
+                        "deptName": "Computer Science",
+                        "sectionCodeRangeComments": []
+                    }
+                ],
+                "schoolComment": "...",
+                "schoolName": "Donald Bren School of Information and Computer Sciences"
+            }
+        ]
+    }
+    ```
+
+    </div>
+
 
 ### /schedule/soc
 
@@ -24,7 +170,7 @@ This API allows access to school, department, course, and section data in a hier
 Descriptions found [here](https://www.reg.uci.edu/help/WebSoc-Glossary.shtml)
 
 | Name             | Formatting                                                                                                                                                                                                                                                                                                                                                      | Notes                                                                                         |
-|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
 | term             | [Year\] \['Fall'&#124;'Winter'&#124;'Spring'&#124;'Summer1'&#124;'Summer2'&#124;'Summer10wk'\]<br />Example: '2017 Fall' <br/> Default: ' '                                                                                                                                                                                                                     | Required. Schedule for your selected term must be available on WebSoc.                        |
 | ge               |\['ANY'&#124;'GE-1A'&#124;'GE-1B'&#124;'GE-2'&#124;'GE-3'&#124;'GE-4'&#124;'GE-5A'&#124;'GE-5B'&#124;'GE-6'&#124;'GE-7'&#124;'GE-8'\]<br />Example: 'GE-1B' <br/> Default: ' '                                                                                                                                                                                   | Must specify at least one of department, GE, courseCodes, or instructorName                   |
 | department       |List of available departments to search available in file depts.txt<br />Example: 'I&C SCI' <br/> Default: ' '                                                                                                                                                                                                                                                   | Must specify at least one of department, GE, courseCodes, or instructorName                   |
@@ -45,15 +191,6 @@ Descriptions found [here](https://www.reg.uci.edu/help/WebSoc-Glossary.shtml)
 | room             |Any valid room number<br />Example: '223' <br/> Default: ' '                                                                                                                                                                                                                                                                                                     | You must specify a building code if you specify a room number                                 |
 
 
-
-!!! tip 
-    **All params are optional and multiple can be included by using ; as a separator.**
-
-    i.e. `key1=value1;value2&key2=value2`
-
-!!! tip
-    The more you narrow down your query, the faster the response! 🏃‍♀️💨 😎
-
 #### Response
 
 | Code | Description |
@@ -62,5 +199,84 @@ Descriptions found [here](https://www.reg.uci.edu/help/WebSoc-Glossary.shtml)
 | `400` | Invalid parameter syntax. |
 
 
+??? success "200 Successful Response"
+    To find the schedule of COMPSCI 161 in 2018 Fall: 
 
-This endpoint is based off of this [npm package](https://github.com/icssc-projects/websoc-api).
+    `/schedule/soc?term=2018%20Fall&department=COMPSCI&courseNumber=161` returns
+
+    ``` JSON
+    {
+        "schools": [
+            {
+                "departments": [
+                    {
+                        "courseNumberRangeComments": [],
+                        "courses": [
+                            {
+                                "courseComment": "",
+                                "courseNumber": "161",
+                                "courseTitle": "DES&ANALYS OF ALGOR",
+                                "deptCode": "COMPSCI",
+                                "prerequisiteLink": "https://www.reg.uci.edu/cob/prrqcgi?term=201892&dept=COMPSCI&action=view_by_term#161",
+                                "sections": [
+                                    ...
+                                    {
+                                        "finalExam": "",
+                                        "instructors": [
+                                            "KUMAR, A.",
+                                            "DILLENCOURT, M."
+                                        ],
+                                        "maxCapacity": "108",
+                                        "meetings": [
+                                            {
+                                                "bldg": "SSL 248",
+                                                "days": "TuTh",
+                                                "time": " 5:00- 5:50p"
+                                            }
+                                        ],
+                                        "numCurrentlyEnrolled": {
+                                            "sectionEnrolled": "",
+                                            "totalEnrolled": "105"
+                                        },
+                                        "numNewOnlyReserved": "",
+                                        "numOnWaitlist": "",
+                                        "numRequested": "143",
+                                        "restrictions": "A",
+                                        "sectionCode": "34191",
+                                        "sectionComment": "",
+                                        "sectionNum": "1",
+                                        "sectionType": "Dis",
+                                        "status": "OPEN",
+                                        "units": "0"
+                                    },
+                                    ...
+                        ],
+                        "deptCode": "COMPSCI",
+                        "deptComment": "...",
+                        "deptName": "Computer Science",
+                        "sectionCodeRangeComments": []
+                    }
+                ],
+                "schoolComment": "...",
+                "schoolName": "Donald Bren School of Information and Computer Sciences"
+            }
+        ]
+    }
+    ```
+
+??? fail "400 Bad Request"
+    
+    `/schedule/soc?term=2018%20Fall&department=COMPSCI&incorrect=161` returns
+
+    ``` JSON
+    {
+        "timestamp": "Thu, 31 Dec 2020 00:00:00 GMT",
+        "status": 400,
+        "error":"Bad Request: Invalid parameter",
+        "message":"Unable to complete websoc-api query"
+    }
+    
+    ```
+
+
+This endpoint is based off of this [npm package](https://github.com/icssc-projects/websoc-api) with help from AntAlmanac developers.

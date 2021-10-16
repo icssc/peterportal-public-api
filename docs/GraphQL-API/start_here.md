@@ -5,7 +5,9 @@
 
 ## Try it out
 
-You can try out our documentation live at our [GraphQL Playground](/graphql-playground).
+To make a request simply send a POST request to our graphql endpoint, <https://api.peterportal.org/graphql/>
+
+You can try out our API live at our [GraphQL Playground](/graphql-playground).
 
 ![playground demo](https://gifs.tisuela.com/web-dev/graphql_playground_demo.gif)
 
@@ -13,19 +15,22 @@ Not only can you try it out, but our Playground also has the most up-to-date doc
 
 
 !!! example "Example Query"
-    Here is an example which returns the ID, name, and department of every course in our database.
+    Here is an example which returns the ID, title, and department of every course in our database.
     You can paste this into our [GraphQL Playground](/graphql-playground), or write this in the `body` of a `POST` request.
 
     ``` graphql
     query {
       allCourses {
         id
-        name
+        title
         department
       }
     }
     ```
 
+
 ## Documentation
 
-📃 Checkout our documentation at [api.peterportal.org/graphql-docs/](/graphql-docs/).
+📃 Documentation can be found inside our [GraphQL Playground](/graphql-playground), by clicking the `DOCS` tab on the right-hand side.
+
+If you're new to GraphQL, you can learn more about how to use it in our API [here](/docs/GraphQL-API/learn_more).

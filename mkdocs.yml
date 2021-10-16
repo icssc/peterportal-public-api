@@ -5,7 +5,6 @@ repo_name: icssc-projects/peterportal-public-api
 
 theme:
   name: material
-  custom_dir: overrides
   favicon: images/peter_favicon.png
   logo: images/peter_favicon.png
   icon:
@@ -21,21 +20,27 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.snippets:
       base_path: docs/
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
 
 nav:
   - Home: index.md
-  # - Getting Started: 
-  #   - Register: Getting-Started/Register-Here.md
-  #   - Using Your API Key: Getting-Started/Using-Your-API-Key.md
+  - Getting Started: Introduction/Getting-Started.md 
   - REST API:
     - Start Here: REST-API/start_here.md
     - Courses: REST-API/courses.md
     - Instructors: REST-API/instructors.md
     - Grades: REST-API/grades.md
-    - Schedule: REST-API/schedule.md
+    - Schedule of Classes: REST-API/schedule.md
   - GraphQL API:
     - Start Here: GraphQL-API/start_here.md
-  - Contributing: Contributing.md
+    - Learn More: GraphQL-API/learn_more.md
+    - Playground: /graphql-playground
+  - Contributing: 
+    - Start Here: Contributing/start_here.md
+    - How to Contribute: Contributing/how_to_contribute.md
+    - Documenting: Contributing/documenting.md
 
 
 extra:
@@ -49,6 +54,7 @@ extra:
 copyright: Copyright &copy; 2020 - 2021 ICSSC Projects
 extra_css:
   - css/termynal.css
+  - css/admonitions.css
 
 extra_javascript:
   - js/termynal.js
