@@ -61,7 +61,6 @@ jobs:
           command: npm test --coverage
 
       - aws-cli/setup
-      - serverless/setup
 
       - run:
           name: Deploy application
