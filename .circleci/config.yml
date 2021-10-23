@@ -47,10 +47,14 @@ jobs:
           - v3-dependencies-{{ .Branch }}
 
       - run:
-          name: Install Serverless CLI and dependencies
+          name: Install Serverless CLI 
           command: |
-            sudo npm install -g serverless
-            npm install --also=dev
+            npm install -g serverless
+
+      - run: 
+          name: Install dependencies
+          command: |
+            npm install 
       #Build the docs html files
       - build-docs
       - save_cache:
