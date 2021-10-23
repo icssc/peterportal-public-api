@@ -16,7 +16,7 @@ commands:
     steps:
       - run:
           name: Install dependencies
-          command: pip install mkdocs-material
+          command: pip install -r docs_requirements.txt
       - run: 
           name: Build docs
           command: mkdocs build -d docs-site
@@ -29,6 +29,7 @@ workflows:
             branches:
               only:
                 - master
+                - docs_install
 
 jobs:
   build:
@@ -48,6 +49,7 @@ jobs:
       - run:
           name: Install Serverless CLI and dependencies
           command: |
+            sudo npm install -g serverless
             npm install --also=dev
       #Build the docs html files
       - build-docs
