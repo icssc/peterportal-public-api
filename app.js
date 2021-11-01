@@ -45,6 +45,16 @@ if (process.env.NODE_ENV == 'production') {
   
 }
 
+app.use(function(req, res, next) {
+  const event = {
+    Host: req.headers.host,
+    Referer: req.headers.referer,
+    Method: req.method,
+    url: req.url
+  }
+  console.log("EVENT\n" + JSON.stringify(event, null, 2))
+  next();
+});
 
 app.use(cors());
 app.use(compression({
@@ -102,6 +112,7 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+module.exports.handler = serverless(app, {binary: ['image/*']});
 
 if (process.env.NODE_ENV == "production") {
   const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app, {binary: ['image/*']}));
