@@ -8,6 +8,7 @@ provider:
   region: us-east-1
   stage: prod
   memorySize: 512
+  logRetentionInDays: 90
   apiGateway:
     binaryMediaTypes:
       - 'image/*'

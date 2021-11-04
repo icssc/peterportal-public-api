@@ -47,7 +47,6 @@ if (process.env.NODE_ENV == 'production') {
 
 app.use(function(req, res, next) {
   const event = {
-    Host: req.headers.host,
     Referer: req.headers.referer,
     Method: req.method,
     url: req.url
