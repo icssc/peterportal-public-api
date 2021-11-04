@@ -101,7 +101,7 @@ app.use(function(err, req, res, next) {
   res.status(status).send(createErrorJSON(status, err.message, ""));
 });
 
-module.exports = app;
+module.exports = {app, Sentry};
 
 if (process.env.NODE_ENV == "production") {
   const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app, {binary: ['image/*']}));
