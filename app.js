@@ -49,9 +49,21 @@ app.use(function(req, res, next) {
   const event = {
     Referer: req.headers.referer,
     Method: req.method,
-    url: req.url
+    url: req.originalUrl
   }
-  console.log("EVENT\n" + JSON.stringify(event, null, 2))
+  console.log("REQUEST\n" + JSON.stringify(event, null, 2));
+  
+  res.on('finish', () => {
+    const finishEvent = {
+      statusCode: res.statusCode,
+      statusMessage: res.statusMessage
+    }
+    if (finishEvent.statusCode >= 400) {
+      console.error("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
+    } else {
+      console.log("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
+    }
+  })
   next();
 });
 
