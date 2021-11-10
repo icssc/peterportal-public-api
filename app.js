@@ -46,8 +46,8 @@ if (process.env.NODE_ENV == 'production') {
 }
 function logging(req, res, next) {
   const event = {
-    Referer: req.headers.referer,
-    Method: req.method,
+    referer: req.headers.referer,
+    method: req.method,
     url: req.originalUrl,
     body: req.body.query
   }
