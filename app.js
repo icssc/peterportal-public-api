@@ -44,12 +44,12 @@ if (process.env.NODE_ENV == 'production') {
   });
   
 }
-
-app.use(function(req, res, next) {
+function logging(req, res, next) {
   const event = {
     Referer: req.headers.referer,
     Method: req.method,
-    url: req.originalUrl
+    url: req.originalUrl,
+    body: req.body.query
   }
   console.log("REQUEST\n" + JSON.stringify(event, null, 2));
   
@@ -63,9 +63,9 @@ app.use(function(req, res, next) {
     } else {
       console.log("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
     }
-  })
+  });
   next();
-});
+}
 
 app.use(cors());
 app.use(compression({
@@ -89,8 +89,8 @@ app.use(express.static("./docs-site"));
 app.use(express.static("./graphql/docs"));
 app.set('view engine', 'ejs')
 
-app.use("/rest", restRouter);
-app.use("/graphql", graphQLRouter);
+app.use("/rest", logging, restRouter);
+app.use("/graphql", logging, graphQLRouter);
 app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
 app.use('/docs', express.static('docs-site'));
 app.use('/error', function(req, res, next) {
