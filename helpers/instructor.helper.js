@@ -9,7 +9,12 @@ function getAllInstructors() {
 function getInstructor(ucinetid) {
     let ret = cache[ucinetid] ? cache[ucinetid] : null;
     if(process.env.NODE_ENV == 'production' && ret == null){
-        Sentry.captureMessage('instructor.helper.js: getInstructor could not find ucinetid: ' + ucinetid);
+        // If the following works, attempt use of 'const e = new Error()' and pass e to Sentry.captureException without try/catch
+        try {
+            throw new Error('instructor.helper.js: getInstructor could not find ucinetid: ' + ucinetid);
+        } catch(e) {
+            Sentry.captureException(e);
+        }
     }
     return ret;
 }
@@ -17,7 +22,12 @@ function getInstructor(ucinetid) {
 function getUCINetIDFromName(name) {
     let ret = name_map[name] ? name_map[name] : null;
     if(process.env.NODE_ENV == 'production' && ret == null){
-        Sentry.captureMessage('instructor.helper.js: getUCINetIDFromName could not find name: ' + name);
+        // If the following works, attempt use of 'const e = new Error()' and pass e to Sentry.captureException without try/catch
+        try {
+            throw new Error('instructor.helper.js: getUCINetIDFromName could not find name: ' + name);
+        } catch(e) {
+            Sentry.captureException(e);
+        }
     }
     return ret;
 }

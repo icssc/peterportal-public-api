@@ -8,7 +8,12 @@ function getAllCourses() {
 function getCourse(courseID) {
     let ret = cache[courseID] ? cache[courseID] : null;
     if(process.env.NODE_ENV == 'production' && ret == null){
-        Sentry.captureMessage('courses.helper.js: getCourse could not find: ' + courseID);
+        // If the following works, attempt use of 'const e = new Error()' and pass e to Sentry.captureException without try/catch
+        try {
+            throw new Error('courses.helper.js: getCourse could not find: ' + courseID);
+        } catch(e) {
+            Sentry.captureException(e);
+        }
     }
     return ret;
 }
