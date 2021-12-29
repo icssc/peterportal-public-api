@@ -1,15 +1,17 @@
+from numpy import NaN
 import pandas
-import WebSocAPI
 import time
 import requests
 
 def scrape(term, code):
     ## can replace this with request to peterportal api
+    time.sleep(0.2)
     url = "http://localhost:8000/rest/v0/schedule/soc"
     res = requests.get(url, params={"term": term, "sectionCodes": code})
+
     data = res.json()
-    course = data["schools"][0]["departments"]["courses"][0]
-    department = data["schools"][0]["departments"]
+    course = data["schools"][0]["departments"][0]["courses"][0]
+    department = data["schools"][0]["departments"][0]
 
     dept = department["deptName"].replace('&amp;', 'and').strip()
     deptCode = department["deptCode"]
@@ -26,17 +28,23 @@ def saveData(df, tup, num):
     df.at[num, 'dept_code'] = tup[1]
     df.at[num, 'exact_year'] = tup[4]
 
+
+# for some reason summer 10wk classes cannot be found
 def scrapeAndSave(num, code, year, quarter):
     if quarter == 'Summer':
         summertypes = ["Summer1", "Summer2", "Summer10wk"]
+        found = False
         for j in summertypes:
             try:
                 tup = scrape(f'{year} {j}', code)
                 saveData(df, tup, num)
+                found = True
                 break
-            except:
+            except Exception as e:
                 pass
-
+        
+        if not found:
+            print("no class found for ", code)
     elif quarter == 'Fall':
         tup = scrape(f'{year} {quarter}', code)
         saveData(df, tup, num)
@@ -94,7 +102,7 @@ if __name__ == '__main__':
     df = df.astype(str)
 
     print('Started...')
-    for i in range(0, len(df.index)):
+    for i in range(0, min(50, len(df.index))):
         code = df.at[i, 'code']
         year = df.at[i, 'year'].split('-')[0]
         quarter = df.at[i, 'quarter']
@@ -102,7 +110,7 @@ if __name__ == '__main__':
         try:
             scrapeAndSave(i, code, year, quarter)
             # print(i, code, year, quarter)
-            time.sleep(0.2)
+            time.sleep(1)
 
         except Exception as ex:
             print('Error Occurred:\n', ex)
@@ -113,9 +121,9 @@ if __name__ == '__main__':
 
     print("Finished scraping")
 
-    df['base_number'] = df['base_number'].str.replace(r'[^0-9]+', '', regex=True)  # removes letters from number (45C -> 45)
-    df['base_number'] = pandas.to_numeric(df['base_number'])
-    df['avg_gpa'] = pandas.to_numeric(df['avg_gpa'])
+    # df['base_number'] = df['base_number'].str.replace(r'[^0-9]+', '', regex=True)  # removes letters from number (45C -> 45)
+    # df['base_number'] = pandas.to_numeric(df['base_number'])
+    df['avg_gpa'] = pandas.to_numeric(df['avg_gpa'], errors='coerce')
 
     # Format Instructors
     df['prof'] = df['prof'].str.replace(',', '')
@@ -139,5 +147,5 @@ if __name__ == '__main__':
     # df2 = pandas.read_csv(OLD_FILE_INPUT, index_col=None)
     # df2 = df2.append(df, ignore_index=True)
 
-    df.to_csv('last_quarter.csv', index=False)  # csv for only the new data
+    df.to_csv('./utils/grades-scripts/last_quarter.csv', index=False)  # csv for only the new data
     # df2.to_csv('complete_new.csv', index=False)  # csv for combined old and new data
