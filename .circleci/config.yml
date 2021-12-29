@@ -29,6 +29,7 @@ workflows:
             branches:
               only:
                 - master
+                - cleanup
 
 jobs:
   build:
