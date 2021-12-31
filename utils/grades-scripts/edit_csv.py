@@ -5,7 +5,7 @@ import requests
 
 def scrape(term, code):
     ## can replace this with request to peterportal api
-    time.sleep(0.2)
+    time.sleep(0.4)
     url = "http://localhost:8000/rest/v0/schedule/soc"
     res = requests.get(url, params={"term": term, "sectionCodes": code})
 
@@ -45,6 +45,8 @@ def scrapeAndSave(num, code, year, quarter):
         
         if not found:
             print("no class found for ", code)
+            
+
     elif quarter == 'Fall':
         tup = scrape(f'{year} {quarter}', code)
         saveData(df, tup, num)
@@ -67,7 +69,7 @@ quarterDict = {
 
 if __name__ == '__main__':
     NEW_FILE_INPUT = './utils/grades-scripts/small.xlsx'
-    OLD_FILE_INPUT = './utils/grades-scripts/updated.csv'
+    OLD_FILE_INPUT = './db/grades.csv'
     df = pandas.read_excel(NEW_FILE_INPUT, index_col=None)
 
     cols = df.columns
@@ -102,7 +104,7 @@ if __name__ == '__main__':
     df = df.astype(str)
 
     print('Started...')
-    for i in range(0, min(50, len(df.index))):
+    for i in range(0, len(df.index)):
         code = df.at[i, 'code']
         year = df.at[i, 'year'].split('-')[0]
         quarter = df.at[i, 'quarter']
@@ -144,8 +146,8 @@ if __name__ == '__main__':
 
 
 
-    # df2 = pandas.read_csv(OLD_FILE_INPUT, index_col=None)
-    # df2 = df2.append(df, ignore_index=True)
+    df2 = pandas.read_csv(OLD_FILE_INPUT, index_col=None)
+    df2 = df2.append(df, ignore_index=True)
 
-    df.to_csv('./utils/grades-scripts/last_quarter.csv', index=False)  # csv for only the new data
-    # df2.to_csv('complete_new.csv', index=False)  # csv for combined old and new data
+    # df.to_csv('./utils/grades-scripts/last_quarter.csv', index=False)  # csv for only the new data
+    df2.to_csv('./db/updated_grades.csv', index=False)  # csv for combined old and new data
