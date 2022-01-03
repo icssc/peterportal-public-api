@@ -4,8 +4,9 @@ import time
 import requests
 
 def scrape(term, code):
-    ## can replace this with request to peterportal api
     time.sleep(0.4)
+
+    # send request to peterportal api locally
     url = "http://localhost:8000/rest/v0/schedule/soc"
     res = requests.get(url, params={"term": term, "sectionCodes": code})
 
@@ -13,6 +14,7 @@ def scrape(term, code):
     course = data["schools"][0]["departments"][0]["courses"][0]
     department = data["schools"][0]["departments"][0]
 
+    # get the data from response
     dept = department["deptName"].replace('&amp;', 'and').strip()
     deptCode = department["deptCode"]
     prof = course["sections"][0]["instructors"][0]
@@ -32,6 +34,7 @@ def saveData(df, tup, num):
 # for some reason summer 10wk classes cannot be found
 def scrapeAndSave(num, code, year, quarter):
     if quarter == 'Summer':
+        # check for each summer session and when we find one, save it
         summertypes = ["Summer1", "Summer2", "Summer10wk"]
         found = False
         for j in summertypes:
@@ -59,13 +62,6 @@ def scrapeAndSave(num, code, year, quarter):
         tup = scrape(f'{str(int(year) + 1)} {quarter}', code)
         saveData(df, tup, num)
 
-
-quarterDict = {
-    'Fall': '92',
-    'Winter': '03',
-    'Spring': '14',
-    'Summer': ['25', '39', '51', '76']
-}
 
 if __name__ == '__main__':
     NEW_FILE_INPUT = './utils/grades-scripts/small.xlsx'
