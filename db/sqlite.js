@@ -27,6 +27,11 @@ const gradeDistributionTableSchema = `
     );
 `;
 
+const gradeDistributionIndexes = [
+    `CREATE INDEX idx_department ON gradeDistribution(department);`,
+    `CREATE INDEX idx_instructor ON gradeDistribution(instructor);`
+]
+
 const gradeDistributionInsertQuery = `
     INSERT INTO gradeDistribution (
         year, 
@@ -69,6 +74,10 @@ async function initSQLite() {
     console.log("✅ gradeDistribution table created!");
 
     connection.prepare(gradeDistributionTableSchema).run();
+    for (const index of gradeDistributionIndexes) {
+        connection.prepare(index).run();
+    }
+
     
     insertData();
     
