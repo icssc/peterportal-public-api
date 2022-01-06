@@ -24,10 +24,10 @@ def scrape(term, code):
     return dept, deptCode, prof, num, year
 
 def saveData(df, tup, num):
-    df.at[num, 'number'] = tup[3]
     df.at[num, 'dept'] = tup[0]
-    df.at[num, 'prof'] = tup[2]
     df.at[num, 'dept_code'] = tup[1]
+    df.at[num, 'prof'] = tup[2]
+    df.at[num, 'number'] = tup[3]
     df.at[num, 'exact_year'] = tup[4]
 
 
