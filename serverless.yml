@@ -9,7 +9,7 @@ provider:
   stage: prod
   timeout: 10
   memorySize: 512
-  logRetentionInDays: 90
+  logRetentionInDays: 30
   apiGateway:
     binaryMediaTypes:
       - 'image/*'
