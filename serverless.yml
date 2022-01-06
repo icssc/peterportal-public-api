@@ -6,7 +6,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: us-east-1
-  stage: prod
+  stage: dev
   timeout: 10
   memorySize: 512
   logRetentionInDays: 90
@@ -33,12 +33,12 @@ custom:
     maxConcurrentRequests: 50
   includeDependencies:
     enableCaching: true
-  customDomain: 
-    domainName: api.peterportal.org
-    basepath: ""
-    certificateName: "*.peterportal.org"
-    createRoute53Record: true
-    stage: ${self:provider.stage}
+  # customDomain: 
+  #   domainName: api.peterportal.org
+  #   basepath: ""
+  #   certificateName: "*.peterportal.org"
+  #   createRoute53Record: true
+  #   stage: ${self:provider.stage}
   lambdaInsights:
     defaultLambdaInsights: true #enables Lambda Insights for all functions
 
