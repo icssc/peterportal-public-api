@@ -6,7 +6,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: us-east-1
-  stage: dev
+  stage: prod
   timeout: 10
   memorySize: 512
   logRetentionInDays: 90
@@ -22,7 +22,7 @@ plugins:
   - serverless-offline
   - serverless-dotenv-plugin
   - serverless-plugin-include-dependencies
-  # - serverless-domain-manager
+  - serverless-domain-manager
   - serverless-plugin-lambda-insights
 
 custom:
@@ -33,12 +33,12 @@ custom:
     maxConcurrentRequests: 50
   includeDependencies:
     enableCaching: true
-  # customDomain: 
-  #   domainName: api.peterportal.org
-  #   basepath: ""
-  #   certificateName: "*.peterportal.org"
-  #   createRoute53Record: true
-  #   stage: ${self:provider.stage}
+  customDomain: 
+    domainName: api.peterportal.org
+    basepath: ""
+    certificateName: "*.peterportal.org"
+    createRoute53Record: true
+    stage: ${self:provider.stage}
   lambdaInsights:
     defaultLambdaInsights: true #enables Lambda Insights for all functions
 

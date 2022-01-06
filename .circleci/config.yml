@@ -29,7 +29,6 @@ workflows:
             branches:
               only:
                 - master
-                - grades-script
 
 jobs:
   build:
@@ -70,4 +69,4 @@ jobs:
 
       - run:
           name: Deploy application
-          command: sls deploy --stage dev
+          command: sls deploy --stage prod
