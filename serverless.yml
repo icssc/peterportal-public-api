@@ -7,8 +7,9 @@ provider:
   runtime: nodejs12.x
   region: us-east-1
   stage: prod
+  timeout: 10
   memorySize: 512
-  logRetentionInDays: 90
+  logRetentionInDays: 30
   apiGateway:
     binaryMediaTypes:
       - 'image/*'
