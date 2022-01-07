@@ -455,17 +455,17 @@ const queryType = new GraphQLObjectType({
       resolve: (_, args, __, info) => {
         // Get the fields requested in the query
         // This allows us to only fetch what the client wants from sql
-
+        let time = Date.now();
         const requestedFields = Object.keys(parseResolveInfo(info).fieldsByTypeName.GradeDistributionCollection)
       
         // Construct a WHERE clause from the arguments
         const where = parseGradesParamsToSQL(args);
-        
+        console.log("Time after parsing params:", Date.now() - time);
         // If requested, retrieve the grade distributions
         let grade_distributions, gradeResults;
         if (requestedFields.includes('grade_distributions')) {
           gradeResults = fetchGrades(where)
-
+          
           // Format the results to GraphQL
           grade_distributions = gradeResults.map(result => {
             return {
@@ -497,6 +497,8 @@ const queryType = new GraphQLObjectType({
               }
             }
           })
+          
+          console.log("Time after fetching grades:", Date.now() - time);
         }
         
         // If requested, retrieve the aggregate
@@ -516,6 +518,8 @@ const queryType = new GraphQLObjectType({
             average_gpa: aggregateResult['average_gpa'],
             count: aggregateResult['count']
           }
+          
+          console.log("Time after aggregate grades:", Date.now() - time);
         }
         // If requested, retrieve the instructors
         let instructors
@@ -529,6 +533,7 @@ const queryType = new GraphQLObjectType({
           }
         }
         
+        console.log("Returning", Date.now() - time);
         // Return results
         return {
           aggregate,
