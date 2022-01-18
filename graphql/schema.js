@@ -181,11 +181,11 @@ const courseOfferingType = new GraphQLObjectType({
       type: GraphQLList(instructorType),
       resolve: (offering, args, context, info) => {
 
-        let selections = info.fieldNodes[0].selectionSet.selections
+        // let selections = info.fieldNodes[0].selectionSet.selections
 
-        if (selections.length == 1 && selections[0].name.value == "shortened_name") {
-          return offering.instructors.map((name) => ({ "shortened_name": name }));
-        }
+        // if (selections.length == 1 && selections[0].name.value == "shortened_name") {
+        //   return offering.instructors.map((name) => ({ "shortened_name": name }));
+        // }
 
         
         
@@ -252,12 +252,12 @@ const courseOfferingType = new GraphQLObjectType({
     course: { 
       type: courseType,
       resolve: (offering, args, context, info) => {
-        let selections = info.fieldNodes[0].selectionSet.selections.map((selection) => selection.name.value);
-        selections = selections.filter((value) => !(value in offering.course));
+        // let selections = info.fieldNodes[0].selectionSet.selections.map((selection) => selection.name.value);
+        // selections = selections.filter((value) => !(value in offering.course));
 
-        if (selections.length == 0) {
-          return offering.course;
-        }
+        // if (selections.length == 0) {
+        //   return offering.course;
+        // }
         
         // Get the course from the cache.
         const course = getCourse(offering.course.id);

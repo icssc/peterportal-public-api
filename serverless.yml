@@ -5,9 +5,9 @@ useDotenv: true
 provider:
   name: aws
   runtime: nodejs12.x
-  region: us-east-1
+  region: us-west-1
   stage: dev
-  timeout: 10
+  timeout: 15
   memorySize: 512
   logRetentionInDays: 30
   apiGateway:
