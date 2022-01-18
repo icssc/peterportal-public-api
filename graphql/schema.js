@@ -472,6 +472,7 @@ const queryType = new GraphQLObjectType({
         // Get the fields requested in the query
         // This allows us to only fetch what the client wants from sql
         let time = Date.now();
+        console.log("Total Time", time);
         const requestedFields = Object.keys(parseResolveInfo(info).fieldsByTypeName.GradeDistributionCollection)
       
         // Construct a WHERE clause from the arguments

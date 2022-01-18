@@ -54,6 +54,7 @@ function logging(req, res, next) {
   console.log("REQUEST\n" + JSON.stringify(event, null, 2));
   
   res.on('finish', () => {
+    console.log("Time in finish", Date.now());
     const finishEvent = {
       statusCode: res.statusCode,
       statusMessage: res.statusMessage
