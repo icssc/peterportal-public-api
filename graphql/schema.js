@@ -179,7 +179,16 @@ const courseOfferingType = new GraphQLObjectType({
     quarter: { type: GraphQLString },
     instructors: { 
       type: GraphQLList(instructorType),
-      resolve: (offering) => {
+      resolve: (offering, args, context, info) => {
+
+        let selections = info.fieldNodes[0].selectionSet.selections
+
+        if (selections.length == 1 && selections[0].name.value == "shortened_name") {
+          return offering.instructors.map((name) => ({ "shortened_name": name }));
+        }
+
+        
+        
         return offering.instructors.map((name) => {
           
           //Fetch all possible ucinetids from the instructor.
@@ -242,7 +251,14 @@ const courseOfferingType = new GraphQLObjectType({
     units: { type: GraphQLFloat },
     course: { 
       type: courseType,
-      resolve: (offering) => {
+      resolve: (offering, args, context, info) => {
+        let selections = info.fieldNodes[0].selectionSet.selections.map((selection) => selection.name.value);
+        selections = selections.filter((value) => !(value in offering.course));
+
+        if (selections.length == 0) {
+          return offering.course;
+        }
+        
         // Get the course from the cache.
         const course = getCourse(offering.course.id);
         // If it's not in our cache, return whatever information was provided.
