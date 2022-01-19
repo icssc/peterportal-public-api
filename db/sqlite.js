@@ -10,6 +10,7 @@ const gradeDistributionTableSchema = `
         department char(12) NOT NULL,
         department_name varchar(64) NOT NULL,
         number char(6) NOT NULL,
+        number_int int NOT NULL,
         code int NOT NULL,
         section char(6) NOT NULL,
         title varchar(64) NOT NULL,
@@ -39,6 +40,7 @@ const gradeDistributionInsertQuery = `
         department, 
         department_name,
         number, 
+        number_int,
         code, 
         section, 
         title, 
@@ -53,7 +55,7 @@ const gradeDistributionInsertQuery = `
         gradeNPCount,
         gradeWCount,
         averageGPA) 
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
     );
 `;
 
@@ -94,6 +96,7 @@ function insertData() {
                 row.dept_code, 
                 row.dept,
                 row.number, 
+                row.number.replace(/\D/g,''),
                 row.code, 
                 row.section, 
                 row.title, 

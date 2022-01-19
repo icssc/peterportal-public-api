@@ -443,13 +443,14 @@ const queryType = new GraphQLObjectType({
       type: gradeDistributionCollectionType,
 
       args: {
-        year: { type: GraphQLString },
-        quarter: { type: GraphQLString },
-        instructor: { type: GraphQLString },
-        department: { type: GraphQLString },
-        number: { type: GraphQLString },
-        code: { type: GraphQLString }, 
-        excludePNP: { type: GraphQLBoolean }
+        year: { type: GraphQLString, description: "Must be <START_YEAR>-<END_YEAR>. Ex. 2020-2021"},
+        quarter: { type: GraphQLString, description: "Fall | Winter | Spring | Summer"},
+        instructor: { type: GraphQLString, description: "Instructor, must following the format (<last_name>, <first_initial>.)"},
+        department: { type: GraphQLString, description: "Department short-hand"},
+        number: { type: GraphQLString, description: "Course number"},
+        code: { type: GraphQLString, description: "5-digit course code on WebSoC" }, 
+        division: { type: GraphQLString, description: "Filter by Course Level ('LowerDiv'|'UpperDiv')"},
+        excludePNP: { type: GraphQLBoolean, description: "Exclude P/NP Only courses" }
       },
 
       resolve: (_, args, __, info) => {

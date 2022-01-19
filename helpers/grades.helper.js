@@ -14,7 +14,8 @@ function parseGradesParamsToSQL(query) {
         'instructor': query.instructor ? query.instructor.split(";") : null,
         'department': query.department ? query.department.split(";") : null,
         'number': query.number ? query.number.split(";") : null,
-        'code': query.code ? query.code.split(";") : null
+        'code': query.code ? query.code.split(";") : null,
+        'division': query.division ? query.division: null
     }
 
     Object.keys(params).forEach(function(key) {
@@ -81,6 +82,20 @@ function parseGradesParamsToSQL(query) {
                     }
                 }
                 break;
+            case key == 'division' && params[key] !== null:
+                let division = params[key].toLowerCase();
+                if (division == "lowerdiv") {
+                    condition == "" ? 
+                        condition += "number_int < 100" : 
+                        condition += " OR number_int < 100" 
+                } else if (division == "upperdiv") {
+                    condition == "" ? 
+                        condition += "number_int BETWEEN 100 AND 199" : 
+                        condition += " OR number_int BETWEEN 100 AND 199" 
+                } else {
+                    throw new ValidationError(errorMsg(params[key], "division"))
+                }
+
         }
         
         whereClause === "" ?  

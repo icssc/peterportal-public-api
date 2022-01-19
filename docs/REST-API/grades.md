@@ -105,7 +105,8 @@ Try out one of these quick ways to play with our grades endpoints:
 | `instructor` | Instructor, must following the format (<last_name\>, <first_initial\>.) |  PATTIS, R. |
 | `department` | Department short-hand | I&C SCI |
 | `number` | Course number | 32A |
-|  `code` | 5-digit course code on WebSoC | 35540 |
+| `code` | 5-digit course code on WebSoC | 35540 |
+| `division` | Filter by Course Level (Lower and Upper Division) | LowerDiv/UpperDiv |
 | `excludePNP` | Exclude P/NP | true/false |
 
 
