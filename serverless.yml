@@ -29,10 +29,6 @@ plugins:
 custom:
   # Configures throttling settings for the API Gateway stage
   # They apply to all http endpoints, unless specifically overridden
-  apiGatewayCaching:
-    enabled: true
-    ttlInSeconds: 3600
-    dataEncrypted: true
   apiGatewayThrottling:
     maxRequestsPerSecond: 100
     maxConcurrentRequests: 50
@@ -54,20 +50,6 @@ functions:
       - http: 
           path: /
           method: ANY
-          integration: lambda
-          caching:
-            enabled: true
-            cacheKeyParameters:
-              - name: request.path.proxy
-              - name: integration.request.header.bodyValue
-                mappedFrom: method.request.body
       - http: 
           path: /{proxy+}
           method: ANY
-          integration: lambda
-          caching:
-            enabled: true
-            cacheKeyParameters:
-              - name: request.path.proxy
-              - name: integration.request.header.bodyValue
-                mappedFrom: method.request.body
