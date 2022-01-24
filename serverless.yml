@@ -54,6 +54,7 @@ functions:
       - http: 
           path: /
           method: ANY
+          integration: lambda
           caching:
             enabled: true
             cacheKeyParameters:
