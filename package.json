@@ -32,6 +32,7 @@
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.11",
     "nodemon": "^2.0.2",
+    "serverless-api-gateway-caching": "^1.7.5",
     "serverless-api-gateway-throttling": "^1.1.1",
     "serverless-domain-manager": "^5.1.0",
     "serverless-dotenv-plugin": "^3.9.0",
