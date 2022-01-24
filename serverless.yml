@@ -56,6 +56,10 @@ functions:
           method: ANY
           caching:
             enabled: true
+            cacheKeyParameters:
+              - name: request.path.proxy
+              - name: integration.request.header.bodyValue
+                mappedFrom: method.request.body
       - http: 
           path: /{proxy+}
           method: ANY
