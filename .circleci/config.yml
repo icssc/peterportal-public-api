@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@2.0
+  node: circleci/node@5.0.0
   serverless: circleci/serverless-framework@1.0
   lambda_ci: appfolio/lambda_ci@0.3.0
 
@@ -33,23 +34,23 @@ workflows:
 
 jobs:
   build:
-    executor: 
-      name: lambda_ci/lambda_executor
-      lambda_runtime: 'nodejs12.x'
+    docker:
+      - image: 'circleci/python:3.10.2-node'
     steps:
       - checkout
       - create-env-file
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v4-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v4-dependencies-{{ .Branch }}
+      # - restore_cache:
+      #     keys:
+      #     - v4-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+      #     # fallback to using the latest cache if no exact match is found
+      #     - v4-dependencies-{{ .Branch }}
 
       - run:
           name: Install Serverless CLI 
           command: |
             npm install -g serverless
+            pip install awsebcli --upgrade
 
       - run: 
           name: Install dependencies
@@ -70,4 +71,4 @@ jobs:
 
       - run:
           name: Deploy application
-          command: sls deploy --stage dev
+          command: eb deploy

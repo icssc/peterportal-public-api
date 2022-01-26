@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon server",
+    "start": "node server",
     "test": "jest",
     "init_db": "node ./db/sqlite.js",
     "refresh": "node ./utils/refreshESCache.js"

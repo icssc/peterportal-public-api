@@ -1,0 +1,9 @@
+branch-defaults:
+  master:
+    environment: <elasticbeanstalk:environment-name>
+global:
+  application_name: peterportal-api-dev
+  default_ec2_keyname: Peterportalapidev-env
+  default_platform: Node.js 14 running on 64bit Amazon Linux 2
+  default_region: us-west-1
+  sc: git
