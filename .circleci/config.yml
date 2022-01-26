@@ -70,4 +70,4 @@ jobs:
 
       - run:
           name: Deploy application
-          command: eb deploy
+          command: eb deploy Peterportalapidev-env
