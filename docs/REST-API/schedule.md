@@ -147,7 +147,7 @@ Try out one of these quick ways to play with our grades endpoints:
     </div>
 
 
-### /schedule/soc
+### `/schedule/soc`
 
 **GET schedule of classes data**
 
