@@ -29,6 +29,7 @@ workflows:
             branches:
               only:
                 - master
+                - insights-deploy
 
 jobs:
   build:
@@ -69,4 +70,4 @@ jobs:
 
       - run:
           name: Deploy application
-          command: sls deploy --stage prod
+          command: sls deploy --stage dev

@@ -443,13 +443,14 @@ const queryType = new GraphQLObjectType({
       type: gradeDistributionCollectionType,
 
       args: {
-        year: { type: GraphQLString },
-        quarter: { type: GraphQLString },
-        instructor: { type: GraphQLString },
-        department: { type: GraphQLString },
-        number: { type: GraphQLString },
-        code: { type: GraphQLString }, 
-        excludePNP: { type: GraphQLBoolean }
+        year: { type: GraphQLString, description: "Must be <START_YEAR>-<END_YEAR>. Ex. 2020-2021. Multiple values in the arguments can be included by using ; as a separator."},
+        quarter: { type: GraphQLString, description: "Fall | Winter | Spring | Summer Multiple values in the arguments can be included by using ; as a separator."},
+        instructor: { type: GraphQLString, description: "Instructor, must following the format (<last_name>, <first_initial>.) Multiple values in the arguments can be included by using ; as a separator."},
+        department: { type: GraphQLString, description: "Department short-hand. Ex. COMPSCI. Multiple values in the arguments can be included by using ; as a separator."},
+        number: { type: GraphQLString, description: "Course number. Multiple values in the arguments can be included by using ; as a separator."},
+        code: { type: GraphQLString, description: "5-digit course code on WebSoC. Multiple values in the arguments can be included by using ; as a separator." }, 
+        division: { type: GraphQLString, description: "Filter by Course Level ('LowerDiv'|'UpperDiv')"},
+        excludePNP: { type: GraphQLBoolean, description: "Exclude P/NP Only courses" }
       },
 
       resolve: (_, args, __, info) => {
@@ -537,7 +538,7 @@ const queryType = new GraphQLObjectType({
         }
       },
 
-      description: "Search for grades."
+      description: "Search for grade distributions. Multiple values in the arguments can be included by using ; as a separator. "
     }
 })});
 

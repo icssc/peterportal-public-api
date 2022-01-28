@@ -1,6 +1,6 @@
 var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../../helpers/grades.helper')
 
-const expectedSQL = " WHERE (year = '2019-20') AND (quarter = 'SPRING') AND (instructor = 'CARVALHO, J.') AND (department = 'ECON') AND (number = '100B') AND (code = '62110')";
+const expectedSQL = " WHERE (year = '2019-20') AND (quarter = 'SPRING') AND (instructor = 'CARVALHO, J.') AND (department = 'ECON') AND (number = '100B') AND (code = '62110') AND (number_int BETWEEN 100 AND 199)";
 
 describe('Test parseGradesParamsToSQL', () => {
     it('returns SQL from grades parameters', () => {
@@ -10,7 +10,8 @@ describe('Test parseGradesParamsToSQL', () => {
             code: '62110',
             department: 'ECON',
             number: '100B',
-            quarter: 'SPRING'
+            quarter: 'SPRING',
+            division: 'UpperDiv'
         };
         const sqlParams = parseGradesParamsToSQL(rawParams);
         expect(sqlParams).not.toBeNull();

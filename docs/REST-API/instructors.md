@@ -83,7 +83,7 @@ None. 💃
     ]
     ```
 
-### /instructors/{ucinetid}
+### `/instructors/{ucinetid}`
 
 **GET detailed information on a specific instructor**
 
