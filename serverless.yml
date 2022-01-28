@@ -39,12 +39,11 @@ custom:
     certificateName: "*.peterportal.org"
     createRoute53Record: true
     stage: ${self:provider.stage}
-  lambdaInsights:
-    defaultLambdaInsights: true #enables Lambda Insights for all functions
 
 functions:
   app:
     handler: app.handler
+    lambdaInsights: true #enables Lambda Insights for this function
     events: 
       - http: 
           path: /
