@@ -119,8 +119,8 @@ if __name__ == '__main__':
 
     print("Finished scraping")
 
-    # df['base_number'] = df['base_number'].str.replace(r'[^0-9]+', '', regex=True)  # removes letters from number (45C -> 45)
-    # df['base_number'] = pandas.to_numeric(df['base_number'])
+    df['base_number'] = df['base_number'].str.replace(r'[^0-9]+', '', regex=True)  # removes letters from number (45C -> 45)
+    df['base_number'] = pandas.to_numeric(df['base_number'])
     df['avg_gpa'] = pandas.to_numeric(df['avg_gpa'], errors='coerce')
 
     # Format Instructors
