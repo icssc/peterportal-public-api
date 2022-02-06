@@ -1,3 +1,4 @@
+const path = require('path');
 const {
     GraphQLObjectType,
     GraphQLString,
@@ -6,7 +7,12 @@ const {
 
 const {courseType} = require('./course.js')
 const {getInstructor} =  require('../helpers/instructor.helper')
+const { loadFiles } = require('@graphql-tools/load-files')
 
+const loadedFiles = loadFiles(path.join(__dirname, 'course.js'), { extensions: ['js']})
+loadedFiles.then((res) =>{
+  console.log(res)
+})
 const instructorType = new GraphQLObjectType({
     name: 'Instructor',
     fields: () => ({
