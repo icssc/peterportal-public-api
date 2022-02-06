@@ -1,14 +1,9 @@
-const {
-    GraphQLObjectType,
-    GraphQLString,
-    GraphQLFloat,
-    GraphQLList,
-  } = require('graphql');
+import { GraphQLObjectType, GraphQLString, GraphQLFloat, GraphQLList } from 'graphql'
+import { instructorType } from './instructor.js';
+import { courseType } from './course.js';
 
-const {instructorType} = require('./instructor.js')
-
-const {getInstructor, getUCINetIDFromName} = require('../helpers/instructor.helper');
-const {getCourse} = require('../helpers/courses.helper');
+import { getInstructor, getUCINetIDFromName } from '../helpers/instructor.helper';
+import { getCourse } from '../helpers/courses.helper';
 
 const meetingType = new GraphQLObjectType({
     name: "Meeting",
@@ -154,4 +149,4 @@ function scheduleArgsToQuery(args) {
   }
 }
 
-module.exports = {meetingType, sectionInfoType, courseOfferingType, scheduleArgsToQuery, validateScheduleArgs} 
+export {meetingType, sectionInfoType, courseOfferingType, scheduleArgsToQuery, validateScheduleArgs};

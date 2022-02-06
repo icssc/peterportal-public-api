@@ -1,24 +1,15 @@
-const {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLSchema,
-  GraphQLFloat,
-  GraphQLList,
-  GraphQLNonNull,
-  GraphQLBoolean
-} = require("graphql");
-const {
-	parseResolveInfo,
-} = require("graphql-parse-resolve-info");
+import { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLFloat, GraphQLList, GraphQLNonNull, GraphQLBoolean } from 'graphql'
 
-const {courseType} = require("./course.js");
-const {instructorType} = require("./instructor.js");
-const { gradeDistributionCollectionType} = require( './grades.js');
+import { parseResolveInfo } from 'graphql-parse-resolve-info';
 
-const {getAllCourses, getCourse} = require('../helpers/courses.helper')
-const {getAllInstructors, getInstructor} = require('../helpers/instructor.helper')
-const {getCourseSchedules} = require("../helpers/schedule.helper")
-const {parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades} = require('../helpers/grades.helper');
+import { courseType } from "./course.js";
+import { instructorType } from "./instructor.js";
+import { gradeDistributionCollectionAggregateType, gradeDistributionCollectionType } from "./grades.js";
+
+import { getAllCourses, getCourse } from '../helpers/courses.helper';
+import { getAllInstructors, getInstructor } from '../helpers/instructor.helper';
+import { getCourseSchedules } from '../helpers/schedule.helper';
+import { parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades } from '../helpers/grades.helper';
 
 const queryType = new GraphQLObjectType({
   name: 'Query',
@@ -228,8 +219,7 @@ const queryType = new GraphQLObjectType({
 
 const schema = new GraphQLSchema({query: queryType});
 
-module.exports = {schema};
-
+export { schema };
 /*
 Example:
   query {

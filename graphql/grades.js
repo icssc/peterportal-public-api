@@ -1,11 +1,6 @@
-const {
-    GraphQLObjectType,
-    GraphQLString,
-    GraphQLFloat,
-    GraphQLList,
-  } = require ('graphql');
+import { GraphQLObjectType, GraphQLString, GraphQLFloat, GraphQLList } from 'graphql'
 
-const {courseOfferingType} = require ('./schedule.js')
+import { courseOfferingType } from './schedule.js';
 
 const gradeDistributionType = new GraphQLObjectType({
     name: "GradeDistribution",
@@ -53,4 +48,4 @@ const gradeDistributionType = new GraphQLObjectType({
     })
   });
 
-  module.exports = {gradeDistributionType, gradeDistributionCollectionAggregateType, gradeDistributionCollectionType}
+  export {gradeDistributionType, gradeDistributionCollectionAggregateType, gradeDistributionCollectionType};

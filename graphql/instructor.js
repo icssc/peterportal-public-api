@@ -1,19 +1,10 @@
-const path = require('path');
-const {
-    GraphQLObjectType,
-    GraphQLString,
-    GraphQLList
-  } = require('graphql');
+import { GraphQLObjectType, GraphQLString, GraphQLList } from 'graphql'
+  
+import { courseType } from './course.js'
+import { getInstructor } from '../helpers/instructor.helper';
 
-const {courseType} = require('./course.js')
-const {getInstructor} =  require('../helpers/instructor.helper')
-const { loadFiles } = require('@graphql-tools/load-files')
-
-const loadedFiles = loadFiles(path.join(__dirname, 'course.js'), { extensions: ['js']})
-loadedFiles.then((res) =>{
-  console.log(res)
-})
 const instructorType = new GraphQLObjectType({
+    // const courseType = require('./course.js')
     name: 'Instructor',
     fields: () => ({
       name: { type: GraphQLString },
@@ -45,4 +36,4 @@ const instructorType = new GraphQLObjectType({
       }
     })
   });
-  module.exports = {instructorType}
+ export { instructorType };

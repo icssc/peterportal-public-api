@@ -21,6 +21,7 @@
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
+    "esm": "^3.2.25",
     "express": "~4.16.1",
     "express-graphql": "^0.11.0",
     "flat-cache": "^2.0.1",
