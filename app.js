@@ -44,7 +44,28 @@ if (process.env.NODE_ENV == 'production') {
   });
   
 }
-
+function logging(req, res, next) {
+  const event = {
+    referer: req.headers.referer,
+    method: req.method,
+    url: req.originalUrl,
+    body: req.body.query
+  }
+  console.log("REQUEST\n" + JSON.stringify(event, null, 2));
+  
+  res.on('finish', () => {
+    const finishEvent = {
+      statusCode: res.statusCode,
+      statusMessage: res.statusMessage
+    }
+    if (finishEvent.statusCode >= 400) {
+      console.error("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
+    } else {
+      console.log("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
+    }
+  });
+  next();
+}
 
 app.use(cors());
 app.use(compression({
@@ -68,8 +89,8 @@ app.use(express.static("./docs-site"));
 app.use(express.static("./graphql/docs"));
 app.set('view engine', 'ejs')
 
-app.use("/rest", restRouter);
-app.use("/graphql", graphQLRouter);
+app.use("/rest", logging, restRouter);
+app.use("/graphql", logging, graphQLRouter);
 app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
 app.use('/docs', express.static('docs-site'));
 app.use('/error', function(req, res, next) {
@@ -102,6 +123,7 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+module.exports.handler = serverless(app, {binary: ['image/*']});
 
 if (process.env.NODE_ENV == "production") {
   const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app, {binary: ['image/*']}));

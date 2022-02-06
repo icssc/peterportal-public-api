@@ -1,6 +1,7 @@
 # Configuration files
 .env
 .faunarc
+.idea/
 
 
 # Dependencies
@@ -10,6 +11,7 @@ env
 # Generated Files
 docs-site/
 .serverless/
+__pycache__
 
 #OS
 .DS_Store

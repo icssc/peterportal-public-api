@@ -97,6 +97,7 @@ Some queries require arguments that will like our REST endpoints have parameters
         department
       }
     }
+    ```
     
 ??? example "Example Query 2"
     Here is another example which returns sum of students who received As, Bs, Cs, Ds, Fs, and the average GPA of instructor "PATTIS, R." excluding P/NP.

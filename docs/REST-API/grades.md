@@ -80,7 +80,7 @@ Try out one of these quick ways to play with our grades endpoints:
     </div>
 
 
-### /grades/raw
+### `/grades/raw`
 **GET a list of grade distribution results via a query/**
 
 #### Parameters
@@ -105,8 +105,9 @@ Try out one of these quick ways to play with our grades endpoints:
 | `instructor` | Instructor, must following the format (<last_name\>, <first_initial\>.) |  PATTIS, R. |
 | `department` | Department short-hand | I&C SCI |
 | `number` | Course number | 32A |
-|  `code` | 5-digit course code on WebSoC | 35540 |
-| `excludePNP` | Exclude P/NP | true/false |
+| `code` | 5-digit course code on WebSoC | 35540 |
+| `division` | Filter by Course Level (Lower and Upper Division) | LowerDiv/UpperDiv |
+| `excludePNP` | Exclude P/NP Only courses | true/false |
 
 
 !!! tip 
@@ -187,7 +188,7 @@ Try out one of these quick ways to play with our grades endpoints:
     
     ```
 
-### /grades/calculated
+### `/grades/calculated`
 **GET a list of grade distribution results via a query/**
 
 #### Parameters

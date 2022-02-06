@@ -10,6 +10,7 @@ const gradeDistributionTableSchema = `
         department char(12) NOT NULL,
         department_name varchar(64) NOT NULL,
         number char(6) NOT NULL,
+        number_int int NOT NULL,
         code int NOT NULL,
         section char(6) NOT NULL,
         title varchar(64) NOT NULL,
@@ -27,6 +28,11 @@ const gradeDistributionTableSchema = `
     );
 `;
 
+const gradeDistributionIndexes = [
+    `CREATE INDEX idx_department ON gradeDistribution(department);`,
+    `CREATE INDEX idx_instructor ON gradeDistribution(instructor);`
+]
+
 const gradeDistributionInsertQuery = `
     INSERT INTO gradeDistribution (
         year, 
@@ -34,6 +40,7 @@ const gradeDistributionInsertQuery = `
         department, 
         department_name,
         number, 
+        number_int,
         code, 
         section, 
         title, 
@@ -48,7 +55,7 @@ const gradeDistributionInsertQuery = `
         gradeNPCount,
         gradeWCount,
         averageGPA) 
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
     );
 `;
 
@@ -69,6 +76,10 @@ async function initSQLite() {
     console.log("✅ gradeDistribution table created!");
 
     connection.prepare(gradeDistributionTableSchema).run();
+    for (const index of gradeDistributionIndexes) {
+        connection.prepare(index).run();
+    }
+
     
     insertData();
     
@@ -84,7 +95,8 @@ function insertData() {
                 row.quarter.toUpperCase(), 
                 row.dept_code, 
                 row.dept,
-                row.number, 
+                row.number,
+                row.base_number,
                 row.code, 
                 row.section, 
                 row.title, 
