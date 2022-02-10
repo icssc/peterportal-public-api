@@ -90,7 +90,6 @@ function logging(req, res, next) {
 
     cache.get(function (error, entries) {
       if ( error ) throw error;
-      console.log("entries: ");
       entries.forEach((entry) => {
         console.log(entry.name);
       })
@@ -104,11 +103,6 @@ function logging(req, res, next) {
   next();
 }
 
-cache.get(function (error, entries) {
-  if ( error ) throw error;
-  console.log("entries: ");
-  // entries.forEach(console.log.bind(console));
-});
 
 app.use(cors());
 app.use(compression({
