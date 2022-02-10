@@ -27,7 +27,13 @@ const cache = ExpressRedisCache({
   host: CACHE_HOST,
   port: REDIS_PORT,
   auth_pass: REDIS_PASSWORD,
-  expire: 1000, // optional: expire every 10 seconds
+  expire: {
+    "200": 5000,
+    "4xx": 1,
+    "403": 1,
+    "5xx": 1,
+    "xxx": 1
+  }
 })
 
 
