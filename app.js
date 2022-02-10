@@ -27,7 +27,7 @@ const cache = ExpressRedisCache({
   host: CACHE_HOST,
   port: REDIS_PORT,
   auth_pass: REDIS_PASSWORD,
-  expire: 10000, // optional: expire every 10 seconds
+  expire: 1000, // optional: expire every 10 seconds
 })
 
 
@@ -37,14 +37,6 @@ var graphQLRouter = require('./graphql/router');
 var app = express();
 app.set('trust proxy', 1);
 
-cache.on('connected', function () {
-  console.log("connected!")
-});
-
-cache.size(function(error, bytes) {
-  console.log(error);
-  console.log(bytes);
-});
 
 
 const defineCacheEntry = async (req, res, next) => {
@@ -89,6 +81,14 @@ function logging(req, res, next) {
       statusCode: res.statusCode,
       statusMessage: res.statusMessage,
     }
+
+    cache.get(function (error, entries) {
+      if ( error ) throw error;
+      console.log("entries: ");
+      entries.forEach((entry) => {
+        console.log(entry.name);
+      })
+    });
     if (finishEvent.statusCode >= 400) {
       console.error("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
     } else {
@@ -97,6 +97,12 @@ function logging(req, res, next) {
   });
   next();
 }
+
+cache.get(function (error, entries) {
+  if ( error ) throw error;
+  console.log("entries: ");
+  // entries.forEach(console.log.bind(console));
+});
 
 app.use(cors());
 app.use(compression({
