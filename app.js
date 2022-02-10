@@ -46,7 +46,7 @@ app.set('trust proxy', 1);
 
 
 const defineCacheEntry = async (req, res, next) => {
-  let key = req.url + '-' + JSON.stringify(req.body);
+  let key = req.originalUrl + '-' + JSON.stringify(req.body);
   res.express_redis_cache_name = key
   next();
 };
