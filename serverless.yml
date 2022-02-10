@@ -8,7 +8,7 @@ provider:
   region: us-east-1
   stage: dev
   timeout: 20
-  memorySize: 512
+  memorySize: 1024
   logRetentionInDays: 30
   apiGateway:
     binaryMediaTypes:
