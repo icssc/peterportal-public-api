@@ -12,7 +12,8 @@ commands:
           name: Create ENV File
           command: |
             printf "NODE_ENV='$NODE_ENV'\nMOESIF_KEY='$MOESIF_KEY'
-            SENTRY_DSN='$SENTRY_DSN'" > .env
+            SENTRY_DSN='$SENTRY_DSN'\nREDIS_URL='$REDIS_URL'
+            REDIS_PORT='$REDIS_PORT\nREDIS_PASSWORD='$REDIS_PASSWORD'" > .env
   build-docs:
     steps:
       - run:
@@ -34,23 +35,23 @@ workflows:
 
 jobs:
   build:
-    docker:
-      - image: 'cimg/python:3.10.2-node'
+    executor: 
+      name: lambda_ci/lambda_executor
+      lambda_runtime: 'nodejs12.x'
     steps:
       - checkout
       - create-env-file
       # Download and cache dependencies
-      # - restore_cache:
-      #     keys:
-      #     - v4-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
-      #     # fallback to using the latest cache if no exact match is found
-      #     - v4-dependencies-{{ .Branch }}
+      - restore_cache:
+          keys:
+          - v4-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v4-dependencies-{{ .Branch }}
 
       - run:
           name: Install Serverless CLI 
           command: |
-            pip install awsebcli --upgrade
-
+            npm install -g serverless@2.72.2
       - run: 
           name: Install dependencies
           command: |
@@ -70,4 +71,4 @@ jobs:
 
       - run:
           name: Deploy application
-          command: eb deploy Peterportalapidev-env
+          command: sls deploy --stage prod
