@@ -2,6 +2,9 @@
 // variables from a .env file into process.env
 require('dotenv').config();
 
+// enabling ECMAScript Module loader for dynamic imports used in GraphQL API
+require = require("esm")(module/*, options*/)
+module.exports = require("./graphql/router.js")
 
 var createError = require('http-errors');
 const serverless = require('serverless-http');
