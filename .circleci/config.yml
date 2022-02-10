@@ -71,4 +71,4 @@ jobs:
 
       - run:
           name: Deploy application
-          command: sls deploy --stage prod
+          command: sls deploy --stage dev
