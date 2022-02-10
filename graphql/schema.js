@@ -21,7 +21,7 @@ const queryType = new GraphQLObjectType({
 
       // specify args to query by
       args: {
-        id: { type: GraphQLNonNull(GraphQLString), description: "Course Department concatenated with Course Number. Ex: COMPSCI161" }
+        id: { type: new GraphQLNonNull(GraphQLString), description: "Course Department concatenated with Course Number. Ex: COMPSCI161" }
       },
 
       // define function to get a course
@@ -39,7 +39,7 @@ const queryType = new GraphQLObjectType({
 
       // specify args to query by (ucinetid)
       args: {
-        ucinetid: { type: GraphQLNonNull(GraphQLString) }
+        ucinetid: { type: new GraphQLNonNull(GraphQLString) }
       },
 
       // define function to get a instructor
@@ -53,7 +53,7 @@ const queryType = new GraphQLObjectType({
 
     // return all courses
     allCourses: {
-      type: GraphQLList(courseType),
+      type: new GraphQLList(courseType),
 
       // get all courses from courses cache
       resolve: () => {
@@ -66,7 +66,7 @@ const queryType = new GraphQLObjectType({
 
     // return all instructor
     allInstructors: {
-      type: GraphQLList(instructorType),
+      type: new GraphQLList(instructorType),
 
       // get all instructors from cache
       resolve: () => {
@@ -78,11 +78,11 @@ const queryType = new GraphQLObjectType({
     },
 
     schedule: {
-      type: GraphQLList(courseType),
+      type: new GraphQLList(courseType),
 
       args: {
-        year: { type: GraphQLNonNull(GraphQLFloat), description: "Year of the term. Required." },
-        quarter: { type: GraphQLNonNull(GraphQLString), description: "Quarter of the term. ['Fall'|'Winter'|'Spring'|'Summer1'|'Summer2'|'Summer10wk']. Required." },
+        year: { type: new GraphQLNonNull(GraphQLFloat), description: "Year of the term. Required." },
+        quarter: { type: new GraphQLNonNull(GraphQLString), description: "Quarter of the term. ['Fall'|'Winter'|'Spring'|'Summer1'|'Summer2'|'Summer10wk']. Required." },
         ge: { type: GraphQLString, description: "GE type. ['ANY'|'GE-1A'|'GE-1B'|'GE-2'|'GE-3'|'GE-4'|'GE-5A'|'GE-5B'|'GE-6'|'GE-7'|'GE-8']." },
         department: { type: GraphQLString, description: "Department Code." },
         course_number: { type: GraphQLString, description: "Course number or range. Ex: '32A' or '31-33'." },

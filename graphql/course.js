@@ -19,26 +19,26 @@ const courseType = new GraphQLObjectType({
       school: { type: GraphQLString },
       title: { type: GraphQLString },
       course_level: { type: GraphQLString },
-      department_alias: { type: GraphQLList(GraphQLString) },
-      units: { type: GraphQLList(GraphQLFloat) },
+      department_alias: { type: new GraphQLList(GraphQLString) },
+      units: { type: new GraphQLList(GraphQLFloat) },
       description: { type: GraphQLString },
       department_name: { type: GraphQLString },
       instructor_history: { 
-        type: GraphQLList(instructorType),
+        type: new GraphQLList(instructorType),
         resolve: (course) => {
           return course.professor_history.map(instructor_netid => getInstructor(instructor_netid));
         } 
       },
       prerequisite_tree: { type: GraphQLString },
       prerequisite_list: { 
-        type: GraphQLList(courseType),
+        type: new GraphQLList(courseType),
         resolve: (course) => {
           return course.prerequisite_list.map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
         }
       },
       prerequisite_text: { type: GraphQLString },
       prerequisite_for: { 
-        type: GraphQLList(courseType),
+        type: new GraphQLList(courseType),
         resolve: (course) => {
           return course.prerequisite_for.map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
         }
@@ -49,13 +49,13 @@ const courseType = new GraphQLObjectType({
       restriction: { type: GraphQLString },
       overlap: { type: GraphQLString },
       corequisite: { type: GraphQLString },
-      ge_list: { type: GraphQLList(GraphQLString) },
+      ge_list: { type: new GraphQLList(GraphQLString) },
       ge_text: { type: GraphQLString },
-      terms: { type: GraphQLList(GraphQLString) },
+      terms: { type: new GraphQLList(GraphQLString) },
       // can't add "same as" or "grading option" due to whitespace :((
   
       offerings: {
-        type: GraphQLList(courseOfferingType),
+        type: new GraphQLList(courseOfferingType),
         args: {
           year: { type: GraphQLFloat},
           quarter: { type: GraphQLString},

@@ -26,10 +26,10 @@ const instructorType = new GraphQLObjectType({
       email: {type: GraphQLString },
       title: { type: GraphQLString },
       department: { type: GraphQLString },
-      schools: { type: GraphQLList(GraphQLString) },
-      related_departments: { type: GraphQLList(GraphQLString) },
+      schools: { type: new GraphQLList(GraphQLString) },
+      related_departments: { type: new GraphQLList(GraphQLString) },
       course_history: { 
-        type: GraphQLList(courseType),
+        type: new GraphQLList(courseType),
         resolve: (instructor) => {
           return getInstructor(instructor.ucinetid)["course_history"].map(course_id => getCourse(course_id.replace(/ /g, "")));
         }

@@ -40,9 +40,9 @@ const gradeDistributionType = new GraphQLObjectType({
   
     fields: () => ({
       aggregate: { type: gradeDistributionCollectionAggregateType },
-      grade_distributions: {type: GraphQLList(gradeDistributionType)},
+      grade_distributions: {type: new GraphQLList(gradeDistributionType)},
       instructors: { 
-        type: GraphQLList(GraphQLString),
+        type: new GraphQLList(GraphQLString),
         description: "List of instructors present in the Grade Distribution Collection" 
       }
     })

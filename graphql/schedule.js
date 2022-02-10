@@ -37,7 +37,7 @@ const meetingType = new GraphQLObjectType({
       year: { type: GraphQLString },
       quarter: { type: GraphQLString },
       instructors: { 
-        type: GraphQLList(instructorType),
+        type: new GraphQLList(instructorType),
         resolve: (offering) => {
           return offering.instructors.map((name) => {
             
@@ -84,7 +84,7 @@ const meetingType = new GraphQLObjectType({
       }, 
       final_exam: { type: GraphQLString },
       max_capacity: { type: GraphQLFloat },
-      meetings: { type: GraphQLList(meetingType) },
+      meetings: { type: new GraphQLList(meetingType) },
       num_section_enrolled: { type: GraphQLFloat },
       num_total_enrolled: { type: GraphQLFloat },
       num_new_only_reserved: { type: GraphQLFloat },
