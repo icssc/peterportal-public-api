@@ -73,6 +73,9 @@ if (process.env.NODE_ENV == 'production') {
   
 }
 function logging(req, res, next) {
+  if (process.env.NODE_ENV != 'production') {
+    res.use_express_redis_cache = false;
+  }
   const event = {
     referer: req.headers.referer,
     method: req.method,
