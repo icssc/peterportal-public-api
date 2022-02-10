@@ -4,6 +4,7 @@ var path = require('path');
 
 var {ValidationError} = require("./errors.helper")
 
+
 // Constructs a WHERE clause from the query
 function parseGradesParamsToSQL(query) {
     var whereClause = "";
@@ -94,7 +95,27 @@ function parseGradesParamsToSQL(query) {
 }
 
 function fetchGrades(where) {
-    let sqlStatement = "SELECT * FROM gradeDistribution";
+    let sqlStatement = `SELECT 
+    year, 
+    quarter, 
+    department, 
+    department_name,
+    number, 
+    code, 
+    section, 
+    title, 
+    instructor, 
+    type, 
+    gradeACount, 
+    gradeBCount,
+    gradeCCount,
+    gradeDCount,
+    gradeFCount,
+    gradePCount,
+    gradeNPCount,
+    gradeWCount,
+    averageGPA 
+    FROM gradeDistribution`;
     return queryDatabase(where !== null ? sqlStatement + where : sqlStatement).all();
 }
 
@@ -165,7 +186,27 @@ function queryDatabaseAndResponse(where, calculate) {
 
             return result;
         case false:
-            let sqlQueryAll = "SELECT * FROM gradeDistribution";
+            let sqlQueryAll = `SELECT 
+            year, 
+            quarter, 
+            department, 
+            department_name,
+            number, 
+            code, 
+            section, 
+            title, 
+            instructor, 
+            type, 
+            gradeACount, 
+            gradeBCount,
+            gradeCCount,
+            gradeDCount,
+            gradeFCount,
+            gradePCount,
+            gradeNPCount,
+            gradeWCount,
+            averageGPA
+            FROM gradeDistribution`;
             const queryResult = connection.prepare(where !== null ? sqlQueryAll + where : sqlQueryAll).all()
             
             return queryResult;

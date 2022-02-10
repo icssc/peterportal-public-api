@@ -14,16 +14,44 @@ const compression = require("compression");
 const moesif = require('moesif-aws-lambda');
 const expressPlayground = require('graphql-playground-middleware-express').default;
 const Sentry = require("@sentry/serverless");
+const redis = require("redis");
+// const redisClient = require("./db/redis");
+const ExpressRedisCache = require('express-redis-cache');
 
+const PORT = process.env.PORT || 8080;
+const CACHE_HOST = process.env.REDIS_URL || "127.0.0.1";
+const REDIS_PORT = process.env.REDIS_PORT || 6379;
+const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
 
-var port = process.env.PORT || 8080;
+const cache = ExpressRedisCache({
+  host: CACHE_HOST,
+  port: REDIS_PORT,
+  auth_pass: REDIS_PASSWORD,
+  expire: 10000, // optional: expire every 10 seconds
+})
+
 
 var restRouter = require('./rest/versionController');
 var graphQLRouter = require('./graphql/router');
 
 var app = express();
 app.set('trust proxy', 1);
-let moesifOptions = {};
+
+cache.on('connected', function () {
+  console.log("connected!")
+});
+
+cache.size(function(error, bytes) {
+  console.log(error);
+  console.log(bytes);
+});
+
+
+const defineCacheEntry = async (req, res, next) => {
+  let key = req.url + '-' + JSON.stringify(req.body);
+  res.express_redis_cache_name = key
+  next();
+};
 
 
 if (process.env.NODE_ENV == 'production') {
@@ -52,12 +80,11 @@ function logging(req, res, next) {
     body: req.body.query
   }
   console.log("REQUEST\n" + JSON.stringify(event, null, 2));
-  
   res.on('finish', () => {
     console.log("Time in finish", Date.now());
     const finishEvent = {
       statusCode: res.statusCode,
-      statusMessage: res.statusMessage
+      statusMessage: res.statusMessage,
     }
     if (finishEvent.statusCode >= 400) {
       console.error("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
@@ -90,8 +117,8 @@ app.use(express.static("./docs-site"));
 app.use(express.static("./graphql/docs"));
 app.set('view engine', 'ejs')
 
-app.use("/rest", logging, restRouter);
-app.use("/graphql", logging, graphQLRouter);
+app.use("/rest", logging, defineCacheEntry, cache.route(), restRouter);
+app.use("/graphql", logging, defineCacheEntry, cache.route(), graphQLRouter);
 app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
 app.use('/docs', express.static('docs-site'));
 app.use('/error', function(req, res, next) {
@@ -102,10 +129,6 @@ app.get('/', function(req, res) {
   res.redirect('docs');
 });
 
-if (process.env.NODE_ENV == 'production') {
-  // app.use(Sentry.Handlers.errorHandler());
-}
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -115,6 +138,7 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
+  console.error(err);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   Sentry.captureException(err);
