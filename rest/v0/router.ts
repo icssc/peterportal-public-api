@@ -1,10 +1,10 @@
-var express = require("express");
-var router = express.Router();
-var coursesRouter = require("./courses");
-var gradesRouter = require("./grades");
-var instructorRouter = require("./instructor");
-var scheduleRouter = require("./schedule");
-var {createErrorJSON} = require("../../helpers/errors.helper")
+import express from 'express';
+const router = express.Router();
+import coursesRouter from "./courses";
+import gradesRouter from "./grades"
+import instructorRouter from "./instructor"
+import scheduleRouter from "./schedule"
+import createErrorJSON from "../../helpers/errors.helper";
 
 router.get("/", (req,res) => {
     res.redirect('/docs')
@@ -18,4 +18,4 @@ router.use("*", (req, res) => {
     res.status(404).send(createErrorJSON(404, "Not Found", "The requested resource was not found."))
 });
 
-module.exports = router;
+export default router;

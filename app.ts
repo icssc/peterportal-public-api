@@ -1,48 +1,31 @@
 // Dotenv is a zero-dependency module that loads environment
 // variables from a .env file into process.env
-require('dotenv').config();
+import 'dotenv/config'
+import {createError} from 'http-errors'
+import serverless from 'serverless-http';
+import {createErrorJSON} from './helpers/errors.helper';
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import logger from 'morgan';
+import compression from 'compression';
 
-var createError = require('http-errors');
-const serverless = require('serverless-http');
-const {createErrorJSON} = require("./helpers/errors.helper");
-var express = require('express');
-var cors = require('cors');
+import expressPlayground from 'graphql-playground-middleware-express'
+import Sentry from '@sentry/serverless';
+import restRouter from './rest/versionController';
+import graphQLRouter from './graphql/router';
 
-var path = require('path');
-var logger = require('morgan');
-const compression = require("compression");
-const moesif = require('moesif-aws-lambda');
-const expressPlayground = require('graphql-playground-middleware-express').default;
-const Sentry = require("@sentry/serverless");
+const port = process.env.PORT || 8080;
 
-
-var port = process.env.PORT || 8080;
-
-var restRouter = require('./rest/versionController');
-var graphQLRouter = require('./graphql/router');
-
-var app = express();
+const app = express();
 app.set('trust proxy', 1);
-let moesifOptions = {};
 
 
 if (process.env.NODE_ENV == 'production') {
-  moesifOptions = {
-    applicationId: process.env.MOESIF_KEY,
-  
-    // Optional hook to link API calls to users
-    identifyUser: function (event, context) {
-        if (event.requestContext.identity) {
-            return event.requestContext.identity.cognitoIdentityId;
-        }
-        return undefined;
-    }
-  };
   Sentry.AWSLambda.init({
     dsn: process.env.SENTRY_DSN,
     tracesSampleRate: 1.0,
   });
-  
 }
 function logging(req, res, next) {
   const event = {
@@ -101,17 +84,13 @@ app.get('/', function(req, res) {
   res.redirect('docs');
 });
 
-if (process.env.NODE_ENV == 'production') {
-  // app.use(Sentry.Handlers.errorHandler());
-}
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+// // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -122,12 +101,11 @@ app.use(function(err, req, res, next) {
   res.status(status).send(createErrorJSON(status, err.message, ""));
 });
 
-module.exports = app;
+export default app;
 module.exports.handler = serverless(app, {binary: ['image/*']});
 
 if (process.env.NODE_ENV == "production") {
   const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app, {binary: ['image/*']}));
-  const moesif_wrapper = moesif(moesifOptions, sentry_wrapper);
-  module.exports.handler = moesif_wrapper;
+  module.exports.handler = sentry_wrapper;
 }
 
