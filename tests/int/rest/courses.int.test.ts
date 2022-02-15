@@ -1,6 +1,23 @@
-const supertest = require('./api.int.test');
-const request = supertest.request;
-jest.setTimeout(30000)
+import request from '../api.int.helper';
+
+jest.setTimeout(30000);
+
+
+
+describe('GET /nonexistent', () => {
+    it('returns a 404 for unknown route',  () => request
+    .get('/rest/v0/nonexistent')
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(404)
+    .then((response) => {
+        console.log(response.body)
+        expect(response.body).toHaveProperty('timestamp');
+        expect(response.body['status']).toEqual(404);
+        expect(response.body['error']).toEqual("Not Found");
+        expect(response.body['message']).toEqual("The requested resource was not found.");
+    }));
+});
 
 describe('GET /courses/all', () => {
     it('returns a json of all the courses on the catalogue',  () => request

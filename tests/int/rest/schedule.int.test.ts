@@ -1,5 +1,4 @@
-const supertest = require('./api.int.test');
-const request = supertest.request;
+import request from '../api.int.helper';
 
 jest.setTimeout(30000);
 

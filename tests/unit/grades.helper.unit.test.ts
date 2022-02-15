@@ -1,4 +1,4 @@
-var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../../helpers/grades.helper')
+import {parseGradesParamsToSQL, queryDatabaseAndResponse} from '../../helpers/grades.helper';
 
 const expectedSQL = " WHERE (year = '2019-20') AND (quarter = 'SPRING') AND (instructor = 'CARVALHO, J.') AND (department = 'ECON') AND (number = '100B') AND (code = '62110') AND (number_int BETWEEN 100 AND 199)";
 

@@ -1,7 +1,7 @@
 // Dotenv is a zero-dependency module that loads environment
 // variables from a .env file into process.env
 import 'dotenv/config'
-import {createError} from 'http-errors'
+import {CreateHttpError} from 'http-errors'
 import serverless from 'serverless-http';
 import {createErrorJSON} from './helpers/errors.helper';
 import express from 'express';
@@ -28,25 +28,27 @@ if (process.env.NODE_ENV == 'production') {
   });
 }
 function logging(req, res, next) {
-  const event = {
-    referer: req.headers.referer,
-    method: req.method,
-    url: req.originalUrl,
-    body: req.body.query
+  if (process.env.NODE_ENV != 'test') {
+    const event = {
+      referer: req.headers.referer,
+      method: req.method,
+      url: req.originalUrl,
+      body: req.body.query
+    }
+    console.log("REQUEST\n" + JSON.stringify(event, null, 2));
+    
+    res.on('finish', () => {
+      const finishEvent = {
+        statusCode: res.statusCode,
+        statusMessage: res.statusMessage
+      }
+      if (finishEvent.statusCode >= 400) {
+        console.error("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
+      } else {
+        console.log("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
+      }
+    });
   }
-  console.log("REQUEST\n" + JSON.stringify(event, null, 2));
-  
-  res.on('finish', () => {
-    const finishEvent = {
-      statusCode: res.statusCode,
-      statusMessage: res.statusMessage
-    }
-    if (finishEvent.statusCode >= 400) {
-      console.error("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
-    } else {
-      console.log("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
-    }
-  });
   next();
 }
 
@@ -76,33 +78,31 @@ app.use("/rest", logging, restRouter);
 app.use("/graphql", logging, graphQLRouter);
 app.use('/graphql-playground', expressPlayground({endpoint: '/graphql/'}));
 app.use('/docs', express.static('docs-site'));
-app.use('/error', function(req, res, next) {
-  next(createError(500));
-});
 
 app.get('/', function(req, res) {
   res.redirect('docs');
 });
 
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+//The 404 Route (ALWAYS Keep this as the last route)
+app.get('*', function(req, res){
+  res.status(404).json(createErrorJSON(404, "Not Found", "The requested resource was not found."))
 });
 
-// // error handler
+
+
+// error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  Sentry.captureException(err);
   // render the error page
   var status = err.status || 500;
-  res.status(status).send(createErrorJSON(status, err.message, ""));
+  res.status(status).json(createErrorJSON(status, err.message, ""));
 });
 
-export default app;
+module.exports.app = app;
 module.exports.handler = serverless(app, {binary: ['image/*']});
+export default app;
 
 if (process.env.NODE_ENV == "production") {
   const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app, {binary: ['image/*']}));

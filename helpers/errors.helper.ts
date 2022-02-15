@@ -1,12 +1,12 @@
 
-class ValidationError extends Error {
+export class ValidationError extends Error {
     constructor(message) {
         super(message);
         this.name = "ValidationError"
     }
 }
 
-function createErrorJSON(status, error, message) {
+export function createErrorJSON(status, error, message) {
     return {
         "timestamp": new Date().toUTCString(),
         "status": status,
@@ -15,4 +15,3 @@ function createErrorJSON(status, error, message) {
     };
 }
 
-module.exports = {createErrorJSON, ValidationError}
