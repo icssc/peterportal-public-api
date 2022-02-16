@@ -1,28 +1,26 @@
 // Dotenv is a zero-dependency module that loads environment
 // variables from a .env file into process.env
 import 'dotenv/config'
-import {CreateHttpError} from 'http-errors'
 import serverless from 'serverless-http';
-import {createErrorJSON} from './helpers/errors.helper';
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import logger from 'morgan';
 import compression from 'compression';
-
 import expressPlayground from 'graphql-playground-middleware-express'
-import Sentry from '@sentry/serverless';
+import * as sentry from '@sentry/serverless';
+
 import restRouter from './rest/versionController';
 import graphQLRouter from './graphql/router';
+import {createErrorJSON} from './helpers/errors.helper';
 
-const port = process.env.PORT || 8080;
 
 const app = express();
 app.set('trust proxy', 1);
 
 
 if (process.env.NODE_ENV == 'production') {
-  Sentry.AWSLambda.init({
+  sentry.AWSLambda.init({
     dsn: process.env.SENTRY_DSN,
     tracesSampleRate: 1.0,
   });
@@ -100,12 +98,15 @@ app.use(function(err, req, res, next) {
   res.status(status).json(createErrorJSON(status, err.message, ""));
 });
 
-module.exports.app = app;
-module.exports.handler = serverless(app, {binary: ['image/*']});
-export default app;
-
+let serverless_handler;
 if (process.env.NODE_ENV == "production") {
-  const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app, {binary: ['image/*']}));
-  module.exports.handler = sentry_wrapper;
+  serverless_handler = sentry.AWSLambda.wrapHandler(serverless(app, {binary: ['image/*']}));
+} else {
+  serverless_handler = serverless(app, {binary: ['image/*']});
 }
+
+export default app;
+export const handler = serverless_handler;
+
+
 
