@@ -1,4 +1,5 @@
-var {getAllCourses, getCourse} = require('../../helpers/courses.helper')
+import {getAllCourses, getCourse} from '../../helpers/courses.helper';
+
 
 describe('Get all Courses', () => {
     describe('Fetching all courses', () => {

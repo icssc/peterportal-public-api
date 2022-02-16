@@ -4,6 +4,7 @@
       "target": "es6",
       "rootDir": "./",
       "outDir": "./dist",
+      "allowJs": true,
       "esModuleInterop": true,
       "resolveJsonModule": true
     }
