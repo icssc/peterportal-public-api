@@ -1,3 +1,4 @@
+import { Error as ErrorType } from "../types/types";
 
 export class ValidationError extends Error {
     constructor(message) {
@@ -6,7 +7,7 @@ export class ValidationError extends Error {
     }
 }
 
-export function createErrorJSON(status, error, message) {
+export function createErrorJSON(status, error, message) : ErrorType {
     return {
         "timestamp": new Date().toUTCString(),
         "status": status,

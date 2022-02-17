@@ -1,4 +1,5 @@
 import request from '../api.int.helper';
+import {GradeRawData, GradeCalculatedData} from "../../../types/types"
 
 jest.setTimeout(30000)
 
@@ -9,10 +10,11 @@ describe('GET /grades/calculated', () => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-        expect(response.body).toHaveProperty('gradeDistribution')
-        expect(Array.isArray(response.body['courseList'])).toBeTruthy();
-        expect(response.body['courseList'].length).toBeGreaterThan(0);
-        expect(response.body['courseList'][0]).toEqual(expect.objectContaining({
+        const result : GradeCalculatedData = response.body;
+        expect(result).toHaveProperty('gradeDistribution')
+        expect(Array.isArray(result['courseList'])).toBeTruthy();
+        expect(result['courseList'].length).toBeGreaterThan(0);
+        expect(result['courseList'][0]).toEqual(expect.objectContaining({
             "year": expect.any(String),
             "instructor": "PATTIS, R.",
             "code": expect.any(Number)
@@ -27,10 +29,11 @@ describe('GET /grades/calculated', () => {
     .expect('Content-Type', /json/)
     .expect(400)
     .then((response) => {
-        expect(response.body).toHaveProperty('timestamp');
-        expect(response.body['status']).toEqual(400);
-        expect(response.body['error']).toEqual("Bad Request: Invalid syntax in parameters");
-        expect(response.body['message']).toMatch(/year/i);
+        const result: Error = response.body;
+        expect(result).toHaveProperty('timestamp');
+        expect(result['status']).toEqual(400);
+        expect(result['error']).toEqual("Bad Request: Invalid syntax in parameters");
+        expect(result['message']).toMatch(/year/i);
     }));
 });
 

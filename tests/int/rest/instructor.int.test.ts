@@ -1,4 +1,5 @@
 import request from '../api.int.helper';
+import {Error, Instructor} from "../../../types/types";
 
 jest.setTimeout(30000)
 
@@ -9,8 +10,9 @@ describe('GET /instructors/all', () => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-        expect(Array.isArray(response.body)).toBeTruthy();
-        expect(response.body).toContainEqual(
+        const result : Instructor[] = response.body;
+        expect(Array.isArray(result)).toBeTruthy();
+        expect(result).toContainEqual(
             expect.objectContaining({"name": "Michael Shindler", "ucinetid": "mikes"})
         );
     }));
@@ -23,9 +25,10 @@ describe('GET /instructors/mikes', () => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-        expect(response.body['name']).toEqual('Michael Shindler');
-        expect(response.body['department']).toEqual('Computer Science');
-        expect(Array.isArray(response.body['course_history'])).toBeTruthy();
+        const result : Instructor = response.body;
+        expect(result['name']).toEqual('Michael Shindler');
+        expect(result['department']).toEqual('Computer Science');
+        expect(Array.isArray(result['course_history'])).toBeTruthy();
     }));
 });
 
@@ -36,9 +39,10 @@ describe('GET /instructors/randomguy', () => {
     .expect('Content-Type', /json/)
     .expect(404)
     .then((response) => {
-        expect(response.body).toHaveProperty('timestamp');
-        expect(response.body['status']).toEqual(404);
-        expect(response.body['error']).toEqual("Bad Request: Invalid parameter");
-        expect(response.body['message']).toEqual("Instructor not found");
+        const result : Error = response.body;
+        expect(result).toHaveProperty('timestamp');
+        expect(result['status']).toEqual(404);
+        expect(result['error']).toEqual("Bad Request: Invalid parameter");
+        expect(result['message']).toEqual("Instructor not found");
     }));
 });

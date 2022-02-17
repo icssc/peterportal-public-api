@@ -1,10 +1,11 @@
 import {getAllCourses, getCourse} from '../../helpers/courses.helper';
+import {Course} from "../../types/types"
 
 
 describe('Get all Courses', () => {
     describe('Fetching all courses', () => {
         it ('getAllCourses should return a json of all courses', () => {
-            const allCourses = getAllCourses();
+            const allCourses : Course[] = getAllCourses();
             expect(allCourses).not.toBeNull() 
             expect(typeof allCourses).toBe("object");
             expect(Array.isArray(allCourses)).toBe(true);
@@ -21,7 +22,7 @@ describe('Get all Courses', () => {
 describe('Get Courses', () => {
     describe('Fetching course', () => {
         it ('getCourse should return a json of the course requested', () => {
-            const course = getCourse("I&CSCI46");
+            const course : Course = getCourse("I&CSCI46");
             expect(course).not.toBeNull()
             expect(typeof course).toBe("object");
             expect(course).toMatchObject({

@@ -1,4 +1,6 @@
 import request from '../api.int.helper';
+import {Error} from "../../../types/types";
+import {WebsocResponse} from "../../../types/websoc.types"
 
 jest.setTimeout(30000);
 
@@ -9,10 +11,11 @@ describe('GET /schedule/soc', () => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-        expect(response.body).not.toBeNull();
-        expect(response.body).toHaveProperty('schools');
-        expect(Array.isArray(response.body['schools'])).toBeTruthy();
-        expect(response.body['schools'].length).toBeGreaterThan(0);
+        const result : WebsocResponse = response.body;
+        expect(result).not.toBeNull();
+        expect(result).toHaveProperty('schools');
+        expect(Array.isArray(result['schools'])).toBeTruthy();
+        expect(result['schools'].length).toBeGreaterThan(0);
     }));
 });
 
@@ -23,9 +26,10 @@ describe('GET /schedule/soc', () => {
     .expect('Content-Type', /json/)
     .expect(400)
     .then((response) => {
-        expect(response.body).toHaveProperty('timestamp');
-        expect(response.body['status']).toEqual(400);
-        expect(response.body['error']).toEqual("Bad Request: Invalid parameter");
-        expect(response.body['message']).toEqual("Unable to complete websoc-api query");
+        const result : Error = response.body;
+        expect(result).toHaveProperty('timestamp');
+        expect(result['status']).toEqual(400);
+        expect(result['error']).toEqual("Bad Request: Invalid parameter");
+        expect(result['message']).toEqual("Unable to complete websoc-api query");
     }));
 });

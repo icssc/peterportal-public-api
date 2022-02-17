@@ -1,9 +1,10 @@
 import {getAllInstructors, getInstructor} from '../../helpers/instructor.helper';
+import {Instructor} from "../../types/types";
 
 describe('Get all Instructors', () => {
     describe('Fetching all instructors', () => {
         it ('getAllInstructors should return a json of all courses', () => {
-            const allInstructors = getAllInstructors();
+            const allInstructors : Instructor[] = getAllInstructors();
             expect(allInstructors).not.toBeNull() 
             expect(typeof allInstructors).toBe("object");
             expect(Array.isArray(allInstructors)).toBe(true);
@@ -20,7 +21,7 @@ describe('Get all Instructors', () => {
 describe('Get instructors', () => {
     describe('Fetching instructor', () => {
         it ('getInstructor should return a json of the course requested', () => {
-            const instructor = getInstructor("pattis");
+            const instructor : Instructor = getInstructor("pattis");
             expect(instructor).not.toBeNull()
             expect(typeof instructor).toBe("object");
             expect(instructor).toMatchObject({

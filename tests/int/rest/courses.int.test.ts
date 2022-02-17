@@ -1,7 +1,7 @@
 import request from '../api.int.helper';
+import {Error, Course} from "../../../types/types";
 
 jest.setTimeout(30000);
-
 
 
 describe('GET /nonexistent', () => {
@@ -11,11 +11,11 @@ describe('GET /nonexistent', () => {
     .expect('Content-Type', /json/)
     .expect(404)
     .then((response) => {
-        console.log(response.body)
-        expect(response.body).toHaveProperty('timestamp');
-        expect(response.body['status']).toEqual(404);
-        expect(response.body['error']).toEqual("Not Found");
-        expect(response.body['message']).toEqual("The requested resource was not found.");
+        const result : Error = response.body;
+        expect(result).toHaveProperty('timestamp');
+        expect(result['status']).toEqual(404);
+        expect(result['error']).toEqual("Not Found");
+        expect(result['message']).toEqual("The requested resource was not found.");
     }));
 });
 
@@ -26,8 +26,9 @@ describe('GET /courses/all', () => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-        expect(Array.isArray(response.body)).toBeTruthy();
-        expect(response.body).toContainEqual(
+        const result: Course[] = response.body;
+        expect(Array.isArray(result)).toBeTruthy();
+        expect(result).toContainEqual(
             expect.objectContaining({"number": "46", "department": "I&C SCI"})
         );
     }));
@@ -41,9 +42,10 @@ describe('GET /courses/I&CSCI33', () => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-        expect(response.body['id']).toEqual('I&CSCI33');
-        expect(response.body['title']).toEqual('Intermediate Programming');
-        expect(Array.isArray(response.body['prerequisite_for'])).toBeTruthy();
+        const result: Course = response.body;
+        expect(result['id']).toEqual('I&CSCI33');
+        expect(result['title']).toEqual('Intermediate Programming');
+        expect(Array.isArray(result['prerequisite_for'])).toBeTruthy();
     }));
 });
 
@@ -54,9 +56,10 @@ describe('GET /courses/I&CSCI0000000', () => {
     .expect('Content-Type', /json/)
     .expect(404)
     .then((response) => {
-        expect(response.body).toHaveProperty('timestamp');
-        expect(response.body['status']).toEqual(404);
-        expect(response.body['error']).toEqual("Bad Request: Invalid parameter");
-        expect(response.body['message']).toEqual("Course not found");
+        const result : Error = response.body;
+        expect(result).toHaveProperty('timestamp');
+        expect(result['status']).toEqual(404);
+        expect(result['error']).toEqual("Bad Request: Invalid parameter");
+        expect(result['message']).toEqual("Course not found");
     }));
 });
