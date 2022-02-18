@@ -22,7 +22,7 @@ describe('Test parseGradesParamsToSQL', () => {
 
 describe('Test queryDatabaseAndResponse', () => {
     it('returns SQLite database response to grades query if calculated = false', () => {
-        const falseRes : GradeRawData = queryDatabaseAndResponse(expectedSQL, false);
+        const falseRes : GradeRawData | GradeCalculatedData = queryDatabaseAndResponse(expectedSQL, false);
         expect(falseRes).not.toBeNull();
         expect(falseRes).toMatchObject([
             {
@@ -50,7 +50,7 @@ describe('Test queryDatabaseAndResponse', () => {
     });
 
     it('returns SQLite database response to grades query if calculated = true', () => {
-        const trueRes : GradeCalculatedData = queryDatabaseAndResponse(expectedSQL, true);
+        const trueRes : GradeRawData | GradeCalculatedData = queryDatabaseAndResponse(expectedSQL, true);
         expect(trueRes).not.toBeNull();
         expect(trueRes).toMatchObject({
             gradeDistribution: {

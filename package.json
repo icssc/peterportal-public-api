@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon server.ts",
-    "test": "jest",
+    "test": "jest --coverage --detectOpenHandles",
     "init_db": "node ./db/sqlite.js",
     "refresh": "node ./utils/refreshESCache.js"
   },

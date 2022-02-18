@@ -136,3 +136,17 @@ describe('GET /grades/raw', () => {
         expect(response.body['message']).toMatch(/code/i);
     }));
 });
+
+describe('GET /grades/raw', () => {
+    it('invalid parameters to /grades/raw', () => request
+    .get('/rest/v0/grades/raw?year=2017-18&quarter=SpringSummer&instructor=PATTIS, R.')
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(400)
+    .then((response) => {
+        expect(response.body).toHaveProperty('timestamp');
+        expect(response.body['status']).toEqual(400);
+        expect(response.body['error']).toEqual("Bad Request: Invalid syntax in parameters");
+        expect(response.body['message']).toMatch(/quarter/i);
+    }));
+});
