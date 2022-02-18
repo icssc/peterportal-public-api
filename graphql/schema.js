@@ -15,7 +15,7 @@ const {
 
 var {getAllCourses, getCourse} = require('../helpers/courses.helper')
 var {getAllInstructors, getInstructor, getUCINetIDFromName} = require('../helpers/instructor.helper')
-var {getCourseSchedules} = require("../helpers/schedule.helper")
+var {getCourseSchedules, scheduleArgsToQuery} = require("../helpers/schedule.helper")
 var {parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades} = require('../helpers/grades.helper');
 const { ValidationError } = require('../helpers/errors.helper');
 
@@ -263,31 +263,6 @@ function validateScheduleArgs(args) {
   // Assert that GE, Department, Section Codes, or Instructor is provided
   if (!(args.ge || args.department || args.section_codes || args.instructor)){
     throw new ValidationError("Must specify at least one of the following: ge, department, section_codes, or instructor.")
-  }
-}
-
-// Format Schedule query arguments for WebSoc
-function scheduleArgsToQuery(args) {
-  const { year, quarter, ge, department, course_number, division, section_codes, instructor, course_title, section_type, units, days, start_time, end_time, max_capacity, full_courses, cancelled_courses, building, room} = args
-  return {
-    term: year + " " + quarter,
-    ge: ge,
-    department: department,
-    courseNumber: course_number,
-    division: division,
-    sectionCodes: section_codes,
-    instructorName: instructor,
-    courseTitle: course_title,
-    sectionType: section_type,
-    units: units,
-    days: days,
-    startTime: start_time,
-    endTime: end_time,
-    maxCapacity: max_capacity,
-    fullCourses: full_courses,
-    cancelledCourses: cancelled_courses,
-    building: building,
-    room: room,
   }
 }
 

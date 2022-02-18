@@ -1,6 +1,6 @@
-var {callWebSocAPI} = require('websoc-api');
-
-var {getCourse} = require('../helpers/courses.helper')
+import { callWebSocAPI } from 'websoc-api';
+import { WebsocResponse, CourseGQL } from '../types/websoc.types';
+import { getCourse } from './courses.helper';
 
 
 // Format Course Offering
@@ -27,15 +27,40 @@ function _formatCourseOffering(course, additionalArgs) {
     }
 }
 
-async function getCourseSchedules(query) {
-    const results = await callWebSocAPI(query);
+// Format Schedule query arguments for WebSoc
+export function scheduleArgsToQuery(args) {
+    const { year, quarter, ge, department, course_number, division, section_codes, instructor, course_title, section_type, units, days, start_time, end_time, max_capacity, full_courses, cancelled_courses, building, room} = args
+    return {
+      term: year + " " + quarter,
+      ge: ge,
+      department: department,
+      courseNumber: course_number,
+      division: division,
+      sectionCodes: section_codes,
+      instructorName: instructor,
+      courseTitle: course_title,
+      sectionType: section_type,
+      units: units,
+      days: days,
+      startTime: start_time,
+      endTime: end_time,
+      maxCapacity: max_capacity,
+      fullCourses: full_courses,
+      cancelledCourses: cancelled_courses,
+      building: building,
+      room: room,
+    }
+  }
+
+export async function getCourseSchedules(query) : Promise<CourseGQL[]>{
+    const results : WebsocResponse = await callWebSocAPI(query);
     const year = query.term.split(" ")[0]
     const quarter = query.term.split(" ")[1]
-    var courses = [];
+    var courses : CourseGQL[]  = [];
     for (const school of results["schools"]) {
         for (const dept of school["departments"]) {
             for (const course of dept["courses"]) {
-                const courseID = (course["deptCode"] + course["courseNumber"]).replace(/ /g, "", "");
+                const courseID = (course["deptCode"] + course["courseNumber"]).replace(/ /g, "");
                 courses.push({
                     offerings: course["sections"].map(section => _formatCourseOffering(section, {course: courseID, year, quarter})),
                     ...getCourse(courseID),
@@ -45,5 +70,3 @@ async function getCourseSchedules(query) {
     }
     return courses
 }
-  
-module.exports = {getCourseSchedules}

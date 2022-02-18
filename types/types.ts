@@ -1,7 +1,7 @@
 export interface Error {
-    timestamp: string,
-    status: string,
-    error: string,
+    timestamp: string;
+    status: string;
+    error: string;
     message: string
 }
 
@@ -47,33 +47,33 @@ export interface Instructor {
 export type GradeRawData = GradeData[];
 
 export interface GradeCalculatedData {
-    gradeDistribution: GradeDist,
+    gradeDistribution: GradeDist;
     courseList: GradeCourse[]
 }
 
 export interface GradeCourse {
-    year: string,
-    quarter: string,
-    department: string,
-    department_name: string,
-    title: string,
-    number: string,
-    code: number,
-    section: string,
-    instructor: string,
+    year: string;
+    quarter: string;
+    department: string;
+    department_name: string;
+    title: string;
+    number: string;
+    code: number;
+    section: string;
+    instructor: string;
     type: string
 }
 
 export interface GradeDist {
-    sum_grade_a_count: number,
-    sum_grade_b_count: number,
-    sum_grade_c_count: number,
-    sum_grade_d_count: number,
-    sum_grade_f_count: number,
-    sum_grade_p_count: number,
-    sum_grade_np_count: number,
-    sum_grade_w_count: number,
-    average_gpa: number,
+    sum_grade_a_count: number;
+    sum_grade_b_count: number;
+    sum_grade_c_count: number;
+    sum_grade_d_count: number;
+    sum_grade_f_count: number;
+    sum_grade_p_count: number;
+    sum_grade_np_count: number;
+    sum_grade_w_count: number;
+    average_gpa: number;
     count: number
 }
 
