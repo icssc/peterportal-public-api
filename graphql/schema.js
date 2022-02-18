@@ -180,9 +180,8 @@ const courseOfferingType = new GraphQLObjectType({
     instructors: { 
       type: GraphQLList(instructorType),
       resolve: (offering) => {
-        console.log("why isnt this printing")
         return offering.instructors.map((name) => {
-          console.log(name);
+          
           //Fetch all possible ucinetids from the instructor.
           let ucinetids = getUCINetIDFromName(name);
           
@@ -196,15 +195,14 @@ const courseOfferingType = new GraphQLObjectType({
           //If there is more than one and the course exists, 
           //use the course to figure it out.
           else if (ucinetids && ucinetids.length > 1 && (course = getCourse(offering.course))) {
-              console.log("hELLO")
+
               //Filter our instructors by those with related departments.
               let course_dept = course.department;
               let instructors = ucinetids.map(id => getInstructor(id)).filter( temp => temp.related_departments.includes(course_dept));
               
               //If only one is left and it's in the instructor cache, we can return it.
               if (instructors.length == 1) {
-                const instructor = getInstructor(ucinetids[0]);
-                if (instructor) { return instructor; }  
+                return instructors[0];
               } else {
                 //Filter instructors by those that taught the course before.
                 instructors = instructors.filter( inst => {

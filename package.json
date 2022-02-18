@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon server.ts",
-    "test": "jest --coverage --detectOpenHandles",
+    "test": "jest --coverage",
     "init_db": "node ./db/sqlite.js",
     "refresh": "node ./utils/refreshESCache.js"
   },
@@ -13,6 +13,7 @@
     "@sentry/serverless": "^6.17.9",
     "@sentry/tracing": "^6.2.0",
     "@types/better-sqlite3": "^7.4.2",
+    "@types/supertest": "^2.0.11",
     "aws-lambda": "^1.0.7",
     "better-sqlite3": "^7.4.5",
     "bottleneck": "^2.19.5",
