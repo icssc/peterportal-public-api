@@ -1,7 +1,7 @@
 import { Error as ErrorType } from "../types/types";
 
 export class ValidationError extends Error {
-    constructor(message) {
+    constructor(message: string) {
         super(message);
         this.name = "ValidationError"
     }

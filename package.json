@@ -12,6 +12,7 @@
     "@2fd/graphdoc": "^2.4.0",
     "@sentry/serverless": "^6.17.9",
     "@sentry/tracing": "^6.2.0",
+    "@types/better-sqlite3": "^7.4.2",
     "aws-lambda": "^1.0.7",
     "better-sqlite3": "^7.4.5",
     "bottleneck": "^2.19.5",

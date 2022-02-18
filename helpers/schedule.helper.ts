@@ -56,7 +56,7 @@ export async function getCourseSchedules(query) : Promise<CourseGQL[]>{
     const results : WebsocResponse = await callWebSocAPI(query);
     const year = query.term.split(" ")[0]
     const quarter = query.term.split(" ")[1]
-    var courses : CourseGQL[]  = [];
+    let courses : CourseGQL[]  = [];
     for (const school of results["schools"]) {
         for (const dept of school["departments"]) {
             for (const course of dept["courses"]) {
