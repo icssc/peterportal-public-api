@@ -1,4 +1,4 @@
-import {parseGradesParamsToSQL, queryDatabaseAndResponse} from '../../helpers/grades.helper';
+import {parseGradesParamsToSQL, queryDatabaseAndResponse, fetchInstructors} from '../../helpers/grades.helper';
 import {GradeRawData, GradeCalculatedData } from "../../types/types";
 
 const expectedSQL = " WHERE (year = '2019-20') AND (quarter = 'SPRING') AND (instructor = 'CARVALHO, J.') AND (department = 'ECON') AND (number = '100B') AND (code = '62110') AND (number_int BETWEEN 100 AND 199)";
@@ -22,7 +22,7 @@ describe('Test parseGradesParamsToSQL', () => {
 
 describe('Test queryDatabaseAndResponse', () => {
     it('returns SQLite database response to grades query if calculated = false', () => {
-        const falseRes : GradeRawData = queryDatabaseAndResponse(expectedSQL, false);
+        const falseRes : GradeRawData | GradeCalculatedData = queryDatabaseAndResponse(expectedSQL, false);
         expect(falseRes).not.toBeNull();
         expect(falseRes).toMatchObject([
             {
@@ -50,7 +50,7 @@ describe('Test queryDatabaseAndResponse', () => {
     });
 
     it('returns SQLite database response to grades query if calculated = true', () => {
-        const trueRes : GradeCalculatedData = queryDatabaseAndResponse(expectedSQL, true);
+        const trueRes : GradeRawData | GradeCalculatedData = queryDatabaseAndResponse(expectedSQL, true);
         expect(trueRes).not.toBeNull();
         expect(trueRes).toMatchObject({
             gradeDistribution: {
@@ -81,4 +81,22 @@ describe('Test queryDatabaseAndResponse', () => {
             ]
         });
     });
+});
+
+
+describe('Test fetchInstructors', () => {
+  it('return list of instructors', () => {
+      const rawParams = {
+          year: '2019-20',
+          department: 'I&C SCI',
+          number: '46',
+      };
+      const sqlParams : string = parseGradesParamsToSQL(rawParams);
+      const instructors : string[] = fetchInstructors(sqlParams);
+      expect(instructors).not.toBeNull();
+      expect(Array.isArray(instructors)).toBeTruthy();
+      expect(instructors).toContain("PATTIS, R.");
+      expect(instructors).toContain("SHINDLER, M.");
+      expect(instructors).toContain("THORNTON, A.");
+  });
 });

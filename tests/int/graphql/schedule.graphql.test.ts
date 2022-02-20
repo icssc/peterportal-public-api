@@ -96,6 +96,57 @@ describe('POST /graphql/', () => {
 });
 
 describe('POST /graphql/', () => {
+  it('GraphQL: Schedule query on instructors with common names',  () => request
+  .post('/graphql/')
+  .send({query:`{
+      schedule(year: 2022, quarter: "Spring", instructor: "SMITH, J.") {
+          offerings {
+            instructors {
+              name
+            }
+          }
+      }
+      }`})
+  .set('Accept', 'application/json')
+  .expect('Content-Type', /json/)
+  .expect(200)
+  .then((response) => {
+      expect(response.body).toHaveProperty('data');
+      expect(response.body["data"]).toHaveProperty('schedule');
+      expect(response.body["data"]["schedule"].length).toBeGreaterThan(0);
+      expect(response.body)
+      //check that all instructors are present.
+      expect(response.body["data"]["schedule"]).toContainEqual(
+        expect.objectContaining({
+          "offerings": [
+            {
+              "instructors": [ { "name": "Jaymi Lee Smith" } ]
+            }
+          ]
+        })
+      );
+      expect(response.body["data"]["schedule"]).toContainEqual(
+        expect.objectContaining({
+          "offerings": [
+            {
+              "instructors": [ { "name": "John H Smith" } ]
+            }
+          ]
+        })
+      );
+      expect(response.body["data"]["schedule"]).toContainEqual(
+        expect.objectContaining({
+          "offerings": [
+            {
+              "instructors": [ { "name": "James N Smith" } ]
+            }
+          ]
+        })
+      );
+  }));
+});
+
+describe('POST /graphql/', () => {
     it('GraphQL: Schedule query with invalid argument',  () => request
     .post('/graphql/')
     .send({query:`{
@@ -114,4 +165,28 @@ describe('POST /graphql/', () => {
         expect(response.body).toHaveProperty('errors');
         expect(response.body["errors"][0]["message"]).toMatch(/(2019)/i);
     }));
+});
+
+
+
+
+describe('POST /graphql/', () => {
+  it('GraphQL: Schedule query with invalid argument',  () => request
+  .post('/graphql/')
+  .send({query:`{
+      schedule(year: 2019, quarter: 2019, department:"COMPSCI", course_number: "161") {
+          offerings {
+              year
+              max_capacity
+              num_total_enrolled
+          }
+      }
+  }`})
+  .set('Accept', 'application/json')
+  .expect('Content-Type', /json/)
+  .expect(400)
+  .then((response) => {
+      expect(response.body).toHaveProperty('errors');
+      expect(response.body["errors"][0]["message"]).toMatch(/(2019)/i);
+  }));
 });
