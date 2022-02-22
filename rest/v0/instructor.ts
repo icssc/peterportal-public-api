@@ -1,8 +1,8 @@
-var express = require("express");
-var router = express.Router();
+import express from 'express';
+const router = express.Router();
 
-var {createErrorJSON} = require("../../helpers/errors.helper")
-var {getAllInstructors, getInstructor} = require('../../helpers/instructor.helper')
+import { createErrorJSON } from '../../helpers/errors.helper';
+import { getAllInstructors, getInstructor } from '../../helpers/instructor.helper';
 
 
 router.get("/all", function (req, res, next) {
@@ -13,5 +13,4 @@ router.get("/:ucinetid", function (req, res, next) {
     getInstructor(req.params.ucinetid) ? res.json(getInstructor(req.params.ucinetid)) : res.status(404).json(createErrorJSON(404, "Bad Request: Invalid parameter", "Instructor not found"));
 })
 
-
-module.exports = router;
+export default router;
