@@ -1,316 +1,15 @@
-const {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLSchema,
-  GraphQLFloat,
-  GraphQLList,
-  GraphQLScalarType,
-  GraphQLNonNull,
-  GraphQLBoolean
-} = require('graphql');
-const {
-	parseResolveInfo,
-} = require('graphql-parse-resolve-info');
+import { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLFloat, GraphQLList, GraphQLNonNull, GraphQLBoolean } from 'graphql'
 
+import { parseResolveInfo } from 'graphql-parse-resolve-info';
 
-var {getAllCourses, getCourse} = require('../helpers/courses.helper')
-var {getAllInstructors, getInstructor, getUCINetIDFromName} = require('../helpers/instructor.helper')
-var {getCourseSchedules, scheduleArgsToQuery} = require("../helpers/schedule.helper")
-var {parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades} = require('../helpers/grades.helper');
-const { ValidationError } = require('../helpers/errors.helper');
+import { courseType } from "./course.js";
+import { instructorType } from "./instructor.js";
+import { gradeDistributionCollectionAggregateType, gradeDistributionCollectionType } from "./grades.js";
 
-const instructorType = new GraphQLObjectType({
-  name: 'Instructor',
-  fields: () => ({
-    name: { type: GraphQLString },
-    shortened_name: { 
-      type: GraphQLString, 
-      description: "Name as it appears on webreg. Follows the format: `DOE, J.`",
-      resolve: (instructor) => {
-        if (instructor.shortened_name) {
-          return instructor.shortened_name
-        } else {
-          // If the shortened_name wasn't provided, 
-          // we can construct it from the name.
-          const name_parts = instructor.name.split(' ');
-          return `${name_parts[name_parts.length-1]}, ${name_parts[0][0]}.`.toUpperCase()
-        }
-      }
-    },
-    ucinetid: { type: GraphQLString },
-    email: {type: GraphQLString },
-    title: { type: GraphQLString },
-    department: { type: GraphQLString },
-    schools: { type: GraphQLList(GraphQLString) },
-    related_departments: { type: GraphQLList(GraphQLString) },
-    course_history: { 
-      type: GraphQLList(courseType),
-      resolve: (instructor) => {
-        return getInstructor(instructor.ucinetid)["course_history"].map(course_id => getCourse(course_id.replace(/ /g, "")));
-      }
-    }
-  })
-});
-
-const courseType = new GraphQLObjectType({
-  name: 'Course',
-
-  // fields must match schema from database
-  // In this case, we're using a .json cache
-  fields: () => ({
-    id: { type: GraphQLString },
-    department: { type: GraphQLString },
-    number: { type: GraphQLString },
-    school: { type: GraphQLString },
-    title: { type: GraphQLString },
-    course_level: { type: GraphQLString },
-    department_alias: { type: GraphQLList(GraphQLString) },
-    units: { type: GraphQLList(GraphQLFloat) },
-    description: { type: GraphQLString },
-    department_name: { type: GraphQLString },
-    instructor_history: { 
-      type: GraphQLList(instructorType),
-      resolve: (course) => {
-        return course.professor_history.map(instructor_netid => getInstructor(instructor_netid));
-      } 
-    },
-    prerequisite_tree: { type: GraphQLString },
-    prerequisite_list: { 
-      type: GraphQLList(courseType),
-      resolve: (course) => {
-        return course.prerequisite_list.map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
-      }
-    },
-    prerequisite_text: { type: GraphQLString },
-    prerequisite_for: { 
-      type: GraphQLList(courseType),
-      resolve: (course) => {
-        return course.prerequisite_for.map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
-      }
-    },
-    repeatability: { type: GraphQLString },
-    concurrent: { type: GraphQLString },
-    same_as: { type: GraphQLString },
-    restriction: { type: GraphQLString },
-    overlap: { type: GraphQLString },
-    corequisite: { type: GraphQLString },
-    ge_list: { type: GraphQLList(GraphQLString) },
-    ge_text: { type: GraphQLString },
-    terms: { type: GraphQLList(GraphQLString) },
-    // can't add "same as" or "grading option" due to whitespace :((
-
-    offerings: {
-      type: GraphQLList(courseOfferingType),
-      args: {
-        year: { type: GraphQLFloat},
-        quarter: { type: GraphQLString},
-        ge: { type: GraphQLString},
-        division: { type: GraphQLString},
-        section_codes: { type: GraphQLString },
-        instructor: { type: GraphQLString },
-        section_type: { type: GraphQLString },
-        units: { type: GraphQLString },
-        days: { type: GraphQLString },
-        start_time: { type: GraphQLString },
-        end_time: { type: GraphQLString },
-        max_capacity: { type: GraphQLString },
-        full_courses: { type: GraphQLString },
-        cancelled_courses: { type: GraphQLString },
-        building: { type: GraphQLString },
-        room: { type: GraphQLString }
-      },
-      resolve: async (course, args, _, info) => {
-        if ('offerings' in course) {
-          return course.offerings;
-        }
-
-        // Only fetch course schedule if it's a root course query.
-        // This is because we don't want to spam webreg with successive calls from
-        // queries like allCourses/allProfessors.
-        const prev_path_type = info.path.prev.typename;
-
-        if (prev_path_type == 'Query'){
-          const query = scheduleArgsToQuery({
-            department: course.department,
-            course_number: course.number, 
-            ...args
-          })
-          const results = (await getCourseSchedules(query))[0];
-          return results.offerings;
-        }
-
-        // TODO: only return one error for a query, instead of one per item in the list
-        throw new Error(`Accessing a course's offerings from a nested list is not allowed. Please use the schedules query`)
-      }
-    }
-  })
-});
-
-const meetingType = new GraphQLObjectType({
-  name: "Meeting",
-
-  fields: () => ({
-    building: { 
-      type: GraphQLString,
-      resolve: (meeting) => {
-        return meeting["bldg"];
-      }
-    },
-    days: { type: GraphQLString },
-    time: { type: GraphQLString }
-  })
-})
-
-const sectionInfoType = new GraphQLObjectType({
-  name: "SectionInfo",
-  fields: () => ({
-    code: { type: GraphQLString },
-    comment: { type: GraphQLString },
-    number: { type: GraphQLString },
-    type: { type: GraphQLString }
-  })
-})
-
-const courseOfferingType = new GraphQLObjectType({
-  name: "CourseOffering",
-
-  fields: () => ({
-    year: { type: GraphQLString },
-    quarter: { type: GraphQLString },
-    instructors: { 
-      type: GraphQLList(instructorType),
-      resolve: (offering) => {
-        return offering.instructors.map((name) => {
-          
-          //Fetch all possible ucinetids from the instructor.
-          let ucinetids = getUCINetIDFromName(name);
-          
-          //If only one ucinetid exists and it's in the instructor cache, 
-          //then we can return the instructor for it.
-          if (ucinetids && ucinetids.length == 1) { 
-            const instructor = getInstructor(ucinetids[0]);
-            if (instructor) { return instructor; }
-          }
-          
-          //If there is more than one and the course exists, 
-          //use the course to figure it out.
-          else if (ucinetids && ucinetids.length > 1 && (course = getCourse(offering.course))) {
-
-              //Filter our instructors by those with related departments.
-              let course_dept = course.department;
-              let instructors = ucinetids.map(id => getInstructor(id)).filter( temp => temp.related_departments.includes(course_dept));
-              
-              //If only one is left and it's in the instructor cache, we can return it.
-              if (instructors.length == 1) {
-                return instructors[0];
-              } else {
-                //Filter instructors by those that taught the course before.
-                instructors = instructors.filter( inst => {
-                  return inst.course_history.map((course) => getCourse(course.replace(/ /g, ""))).includes(offering.course);
-                });
-              
-                //If only one is left and it's in the instructor cache, we can return it.
-                if (instructors.length == 1) { 
-                  const instructor = getInstructor(ucinetids[0]);
-                  if (instructor) { return instructor; }  
-                }
-              }
-          }
-          
-          //If we haven't found any instructors, then just return the shortened name.
-          return {shortened_name: name};
-        })
-      }
-    }, 
-    final_exam: { type: GraphQLString },
-    max_capacity: { type: GraphQLFloat },
-    meetings: { type: GraphQLList(meetingType) },
-    num_section_enrolled: { type: GraphQLFloat },
-    num_total_enrolled: { type: GraphQLFloat },
-    num_new_only_reserved: { type: GraphQLFloat },
-    num_on_waitlist: { 
-      type: GraphQLFloat, 
-      resolve: (offering) => {
-         return offering.num_on_waitlist === 'n/a' ? null : offering.num_on_waitlist;
-        } 
-    },
-    num_requested: { type: GraphQLFloat },
-    restrictions: { type: GraphQLString },
-    section: { type: sectionInfoType },  
-    status: { type: GraphQLString },
-    units: { type: GraphQLFloat },
-    course: { 
-      type: courseType,
-      resolve: (offering) => {
-        // Get the course from the cache.
-        const course = getCourse(offering.course.id);
-        // If it's not in our cache, return whatever information was provided.
-        // Usually, it will at least have id, department, and number
-        return course ? course : offering.course;
-      }
-    }
-  })
-})
-
-// Validate Schedule Query Arguments
-function validateScheduleArgs(args) {
-  // Assert that a term is provided (year and quarter)
-  // year and quarter are non-nullable, so they should never be false
-  if (!(args.year && args.quarter)) {
-    throw new ValidationError("Must provdide both a year and a quarter.");
-  }
-  // Assert that GE, Department, Section Codes, or Instructor is provided
-  if (!(args.ge || args.department || args.section_codes || args.instructor)){
-    throw new ValidationError("Must specify at least one of the following: ge, department, section_codes, or instructor.")
-  }
-}
-
-const gradeDistributionType = new GraphQLObjectType({
-  name: "GradeDistribution",
-
-  fields: () => ({
-    grade_a_count: { type: GraphQLFloat }, 
-    grade_b_count: { type: GraphQLFloat }, 
-    grade_c_count: { type: GraphQLFloat }, 
-    grade_d_count: { type: GraphQLFloat }, 
-    grade_f_count: { type: GraphQLFloat }, 
-    grade_p_count: { type: GraphQLFloat }, 
-    grade_np_count: { type: GraphQLFloat }, 
-    grade_w_count: { type: GraphQLFloat }, 
-    average_gpa: { type: GraphQLFloat },
-    course_offering: { type: courseOfferingType }
-  })
-});
-
-const gradeDistributionCollectionAggregateType = new GraphQLObjectType({
-  name: "GradeDistributionCollectionAggregate",
-
-  fields: () => ({
-    sum_grade_a_count: { type: GraphQLFloat }, 
-    sum_grade_b_count: { type: GraphQLFloat }, 
-    sum_grade_c_count: { type: GraphQLFloat }, 
-    sum_grade_d_count: { type: GraphQLFloat }, 
-    sum_grade_f_count: { type: GraphQLFloat }, 
-    sum_grade_p_count: { type: GraphQLFloat }, 
-    sum_grade_np_count: { type: GraphQLFloat }, 
-    sum_grade_w_count: { type: GraphQLFloat }, 
-    average_gpa: { type: GraphQLFloat },
-    count: { type: GraphQLFloat }
-  })
-});
-
-const gradeDistributionCollectionType = new GraphQLObjectType({
-  name: 'GradeDistributionCollection',
-
-  fields: () => ({
-    aggregate: { type: gradeDistributionCollectionAggregateType },
-    grade_distributions: {type: GraphQLList(gradeDistributionType)},
-    instructors: { 
-      type: GraphQLList(GraphQLString),
-      description: "List of instructors present in the Grade Distribution Collection" 
-    }
-  })
-});
+import { getAllCourses, getCourse } from '../helpers/courses.helper';
+import { getAllInstructors, getInstructor } from '../helpers/instructor.helper';
+import { getCourseSchedules } from '../helpers/schedule.helper';
+import { parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades } from '../helpers/grades.helper';
 
 const queryType = new GraphQLObjectType({
   name: 'Query',
@@ -322,7 +21,7 @@ const queryType = new GraphQLObjectType({
 
       // specify args to query by
       args: {
-        id: { type: GraphQLNonNull(GraphQLString), description: "Course Department concatenated with Course Number. Ex: COMPSCI161" }
+        id: { type: new GraphQLNonNull(GraphQLString), description: "Course Department concatenated with Course Number. Ex: COMPSCI161" }
       },
 
       // define function to get a course
@@ -340,7 +39,7 @@ const queryType = new GraphQLObjectType({
 
       // specify args to query by (ucinetid)
       args: {
-        ucinetid: { type: GraphQLNonNull(GraphQLString) }
+        ucinetid: { type: new GraphQLNonNull(GraphQLString) }
       },
 
       // define function to get a instructor
@@ -354,7 +53,7 @@ const queryType = new GraphQLObjectType({
 
     // return all courses
     allCourses: {
-      type: GraphQLList(courseType),
+      type: new GraphQLList(courseType),
 
       // get all courses from courses cache
       resolve: () => {
@@ -367,7 +66,7 @@ const queryType = new GraphQLObjectType({
 
     // return all instructor
     allInstructors: {
-      type: GraphQLList(instructorType),
+      type: new GraphQLList(instructorType),
 
       // get all instructors from cache
       resolve: () => {
@@ -379,11 +78,11 @@ const queryType = new GraphQLObjectType({
     },
 
     schedule: {
-      type: GraphQLList(courseType),
+      type: new GraphQLList(courseType),
 
       args: {
-        year: { type: GraphQLNonNull(GraphQLFloat), description: "Year of the term. Required." },
-        quarter: { type: GraphQLNonNull(GraphQLString), description: "Quarter of the term. ['Fall'|'Winter'|'Spring'|'Summer1'|'Summer2'|'Summer10wk']. Required." },
+        year: { type: new GraphQLNonNull(GraphQLFloat), description: "Year of the term. Required." },
+        quarter: { type: new GraphQLNonNull(GraphQLString), description: "Quarter of the term. ['Fall'|'Winter'|'Spring'|'Summer1'|'Summer2'|'Summer10wk']. Required." },
         ge: { type: GraphQLString, description: "GE type. ['ANY'|'GE-1A'|'GE-1B'|'GE-2'|'GE-3'|'GE-4'|'GE-5A'|'GE-5B'|'GE-6'|'GE-7'|'GE-8']." },
         department: { type: GraphQLString, description: "Department Code." },
         course_number: { type: GraphQLString, description: "Course number or range. Ex: '32A' or '31-33'." },
@@ -430,7 +129,6 @@ const queryType = new GraphQLObjectType({
       resolve: (_, args, __, info) => {
         // Get the fields requested in the query
         // This allows us to only fetch what the client wants from sql
-
         const requestedFields = Object.keys(parseResolveInfo(info).fieldsByTypeName.GradeDistributionCollection)
       
         // Construct a WHERE clause from the arguments
@@ -478,6 +176,7 @@ const queryType = new GraphQLObjectType({
         let aggregate;
         if (requestedFields.includes('aggregate')) {
           const aggregateResult = fetchAggregatedGrades(where)
+      
           // Format results to GraphQL
           aggregate = {
             sum_grade_a_count: aggregateResult['sum_grade_a_count'],
@@ -492,6 +191,7 @@ const queryType = new GraphQLObjectType({
             count: aggregateResult['count']
           }
         }
+
         // If requested, retrieve the instructors
         let instructors
         if (requestedFields.includes('instructors')) {
@@ -519,8 +219,7 @@ const queryType = new GraphQLObjectType({
 
 const schema = new GraphQLSchema({query: queryType});
 
-module.exports = {schema};
-
+export { schema };
 /*
 Example:
   query {
