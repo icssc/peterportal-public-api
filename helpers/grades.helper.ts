@@ -4,7 +4,7 @@ import { ValidationError } from "./errors.helper";
 import { GradeDist, GradeCalculatedData, GradeRawData} from "../types/types"
 
 // Constructs a WHERE clause from the query
-export function parseGradesParamsToSQL(query) {
+export function parseGradesParamsToSQL(query) : string{
     let whereClause = "";
 
     const params = {
@@ -141,7 +141,7 @@ function queryDatabase(connection: Database, statement: string) {
     return connection.prepare(statement)
 }
 
-function fetchCalculatedData(where) : GradeCalculatedData{
+export function fetchCalculatedData(where) : GradeCalculatedData{
 
     let result : GradeCalculatedData = {
         gradeDistribution : null,

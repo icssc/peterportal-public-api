@@ -1,12 +1,26 @@
-var express = require("express");
-var router = express.Router();
-var {createErrorJSON} = require("../../helpers/errors.helper")
-var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../../helpers/grades.helper')
+import express from 'express';
+const router = express.Router();
+
+import { createErrorJSON, ValidationError } from '../../helpers/errors.helper';
+import { parseGradesParamsToSQL, fetchCalculatedData, fetchGrades } from '../../helpers/grades.helper';
+import { GradeCalculatedData, GradeRawData } from '../../types/types';
 
 router.get("/raw", async (req, res) => {
+    
+    const params = {
+        'year': req.query.year,
+        'quarter': req.query.quarter,
+        'instructor': req.query.instructor,
+        'department': req.query.department,
+        'number': req.query.number,
+        'code': req.query.code ?? null,
+        'division': req.query.division,
+        'excludePNP': req.query.excludePNP == 'true'
+    }
+
     try {
-        const where = parseGradesParamsToSQL(req.query);
-        const results = queryDatabaseAndResponse(where, false)
+        const where = parseGradesParamsToSQL(params);
+        const results : GradeRawData = fetchGrades(where); // false for raw data
         res.send(results)
     } catch (err) {
         if (err.name === "ValidationError") {
@@ -24,23 +38,33 @@ router.get("/raw", async (req, res) => {
 
 router.get("/calculated", async (req, res) => {
     
+    const params = {
+        'year': req.query.year,
+        'quarter': req.query.quarter,
+        'instructor': req.query.instructor,
+        'department': req.query.department,
+        'number': req.query.number,
+        'code': req.query.code,
+        'division': req.query.division,
+        'excludePNP': req.query.excludePNP == 'true'
+    }
+
     try {
-        req.query.excludePNP = (req.query.excludePNP == 'true') ? true : false // converting excludePNP string -> bool
-        const where = parseGradesParamsToSQL(req.query);
-        const results = queryDatabaseAndResponse(where, true)
+        const where : string = parseGradesParamsToSQL(params);
+        const results : GradeCalculatedData = fetchCalculatedData(where) // true for calculated
         res.send(results)
     } catch (err) {
-        if (err.name === "ValidationError") {
+        if (err instanceof ValidationError) {
             res.status(400).send(createErrorJSON(
                 400,
                 "Bad Request: Invalid syntax in parameters", 
                 err.message
             ));
         } else {
-            res.status(500).send()
-            throw err
+            res.status(500).send();
+            throw err;
         }
     }   
 })
 
-module.exports = router;
+export default router;
