@@ -211,8 +211,7 @@ const courseOfferingType = new GraphQLObjectType({
               
                 //If only one is left and it's in the instructor cache, we can return it.
                 if (instructors.length == 1) { 
-                  const instructor = getInstructor(ucinetids[0]);
-                  if (instructor) { return instructor; }  
+                  return instructors[0];
                 }
               }
           }
