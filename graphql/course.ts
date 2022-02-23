@@ -1,9 +1,9 @@
 import { GraphQLObjectType, GraphQLString, GraphQLFloat, GraphQLList } from 'graphql';
 
 import { instructorType } from './instructor';
-import { scheduleArgsToQuery, courseOfferingType } from './schedule';
+import { courseOfferingType } from './schedule';
 
-import { getCourseSchedules } from '../helpers/schedule.helper';
+import { getCourseSchedules, scheduleArgsToQuery } from '../helpers/schedule.helper';
 import { getInstructor } from '../helpers/instructor.helper';
 import { getCourse } from '../helpers/courses.helper';
 

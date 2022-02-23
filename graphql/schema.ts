@@ -1,5 +1,4 @@
 import { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLFloat, GraphQLList, GraphQLNonNull, GraphQLBoolean } from 'graphql'
-
 import { parseResolveInfo } from 'graphql-parse-resolve-info';
 
 import { courseType } from "./course";
@@ -219,51 +218,10 @@ const queryType = new GraphQLObjectType({
 
       description: "Search for grade distributions. Multiple values in the arguments can be included by using ; as a separator. "
     }
-})});
+  })
+});
 
 
 const schema = new GraphQLSchema({query: queryType});
 
 export default schema;
-/*
-Example:
-  query {
-    allCourses{
-      id
-      name
-      department
-      units
-      description
-      department
-      professorHistory
-      prerequisiteJSON
-      prerequisiteList
-      prerequisite
-      prerequisite_for
-      repeatability
-      concurrent
-      restriction
-      overlaps
-      corequisite
-      ge_types
-      ge_string
-      terms
-    }
-  }
-
-"hits":[{"_index":"professors","_type":"_doc","_id":"kakagi","_score":1,"_source":{"name":"Kei Akagi","ucinetid":"kakagi",
-  "title":"Chancellor's Professor","department":"Arts-Music","schools":["Claire Trevor School of the Arts"]
-
-  {
-    professor(ucinetid: "kakagi"){
-      name
-      ucinetid
-      title
-      department
-      schools
-      relatedDepartments
-      courseHistory
-    }
-  }
-
-*/
