@@ -1,7 +1,7 @@
 import { GraphQLObjectType, GraphQLString, GraphQLFloat, GraphQLList } from 'graphql';
 
-import { instructorType } from './instructor.js';
-import { scheduleArgsToQuery, courseOfferingType } from './schedule.js';
+import { instructorType } from './instructor';
+import { scheduleArgsToQuery, courseOfferingType } from './schedule';
 
 import { getCourseSchedules } from '../helpers/schedule.helper';
 import { getInstructor } from '../helpers/instructor.helper';

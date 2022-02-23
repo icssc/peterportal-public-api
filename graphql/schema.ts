@@ -2,14 +2,18 @@ import { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLFloat, GraphQLL
 
 import { parseResolveInfo } from 'graphql-parse-resolve-info';
 
-import { courseType } from "./course.js";
-import { instructorType } from "./instructor.js";
-import { gradeDistributionCollectionAggregateType, gradeDistributionCollectionType } from "./grades.js";
+import { courseType } from "./course";
+import { instructorType } from "./instructor";
+import { gradeDistributionCollectionType } from "./grades";
+import { validateScheduleArgs } from './schedule';
 
 import { getAllCourses, getCourse } from '../helpers/courses.helper';
 import { getAllInstructors, getInstructor } from '../helpers/instructor.helper';
-import { getCourseSchedules } from '../helpers/schedule.helper';
+import { getCourseSchedules, scheduleArgsToQuery } from '../helpers/schedule.helper';
 import { parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades } from '../helpers/grades.helper';
+import { GradeDist, GradeRawData } from '../types/types';
+import { CourseGQL } from "../types/websoc.types";
+
 
 const queryType = new GraphQLObjectType({
   name: 'Query',
@@ -105,7 +109,7 @@ const queryType = new GraphQLObjectType({
       resolve: async (_, args) => {
         validateScheduleArgs(args)
         const query = scheduleArgsToQuery(args);
-        const results = await getCourseSchedules(query);
+        const results: CourseGQL[] = await getCourseSchedules(query);
         return results
       },
 
@@ -135,7 +139,8 @@ const queryType = new GraphQLObjectType({
         const where = parseGradesParamsToSQL(args);
         
         // If requested, retrieve the grade distributions
-        let grade_distributions, gradeResults;
+        let grade_distributions;
+        let gradeResults : GradeRawData;
         if (requestedFields.includes('grade_distributions')) {
           gradeResults = fetchGrades(where)
 
@@ -150,7 +155,7 @@ const queryType = new GraphQLObjectType({
               grade_p_count: result.gradePCount,
               grade_np_count: result.gradeNPCount,
               grade_w_count: result.gradeWCount,
-              average_gpa: (result.averageGPA && result.averageGPA !== "nan") ? result.averageGPA : null,
+              average_gpa: result.averageGPA ?? null,
               course_offering: {
                 year: result.year,
                 quarter: result.quarter,
@@ -173,7 +178,7 @@ const queryType = new GraphQLObjectType({
         }
         
         // If requested, retrieve the aggregate
-        let aggregate;
+        let aggregate : GradeDist;
         if (requestedFields.includes('aggregate')) {
           const aggregateResult = fetchAggregatedGrades(where)
       
@@ -193,7 +198,7 @@ const queryType = new GraphQLObjectType({
         }
 
         // If requested, retrieve the instructors
-        let instructors
+        let instructors : string[];
         if (requestedFields.includes('instructors')) {
           if (gradeResults) {
             // If the grade results exist, we can get the instructors from there
@@ -219,7 +224,7 @@ const queryType = new GraphQLObjectType({
 
 const schema = new GraphQLSchema({query: queryType});
 
-export { schema };
+export default schema;
 /*
 Example:
   query {

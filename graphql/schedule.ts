@@ -1,9 +1,10 @@
 import { GraphQLObjectType, GraphQLString, GraphQLFloat, GraphQLList } from 'graphql'
-import { instructorType } from './instructor.js';
-import { courseType } from './course.js';
+import { instructorType } from './instructor';
+import { courseType } from './course';
 
 import { getInstructor, getUCINetIDFromName } from '../helpers/instructor.helper';
 import { getCourse } from '../helpers/courses.helper';
+import { ValidationError } from '../helpers/errors.helper';
 
 const meetingType = new GraphQLObjectType({
     name: "Meeting",
@@ -39,21 +40,21 @@ const meetingType = new GraphQLObjectType({
       instructors: { 
         type: new GraphQLList(instructorType),
         resolve: (offering) => {
-          return offering.instructors.map((name) => {
+          return offering.instructors.map((name: string) => {
             
             //Fetch all possible ucinetids from the instructor.
-            let ucinetids = getUCINetIDFromName(name);
+            let ucinetids : string[] = getUCINetIDFromName(name);
             
             //If only one ucinetid exists and it's in the instructor cache, 
             //then we can return the instructor for it.
+            const course = getCourse(offering.course);
             if (ucinetids && ucinetids.length == 1) { 
               const instructor = getInstructor(ucinetids[0]);
               if (instructor) { return instructor; }
             }
-            
             //If there is more than one and the course exists, 
             //use the course to figure it out.
-            else if (ucinetids && ucinetids.length > 1 && (course = getCourse(offering.course))) {
+            else if (ucinetids && ucinetids.length > 1 && course) {
   
                 //Filter our instructors by those with related departments.
                 let course_dept = course.department;
@@ -61,8 +62,7 @@ const meetingType = new GraphQLObjectType({
                 
                 //If only one is left and it's in the instructor cache, we can return it.
                 if (instructors.length == 1) {
-                  const instructor = getInstructor(ucinetids[0]);
-                  if (instructor) { return instructor; }  
+                  return instructors[0];
                 } else {
                   //Filter instructors by those that taught the course before.
                   instructors = instructors.filter( inst => {
@@ -71,8 +71,7 @@ const meetingType = new GraphQLObjectType({
                 
                   //If only one is left and it's in the instructor cache, we can return it.
                   if (instructors.length == 1) { 
-                    const instructor = getInstructor(ucinetids[0]);
-                    if (instructor) { return instructor; }  
+                    return instructors[0];
                   }
                 }
             }

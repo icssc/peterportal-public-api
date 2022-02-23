@@ -81,9 +81,12 @@ export interface GradeData {
     year: string;
     quarter: string;
     department: string;
+    department_name: string;
     number: string;
+    number_int: number;
     code: number;
     section: string;
+    title: string;
     instructor: string;
     type: string;
     gradeACount: number;
