@@ -106,10 +106,10 @@ const queryType = new GraphQLObjectType({
       },
 
       resolve: async (_, args) => {
-        validateScheduleArgs(args)
+        validateScheduleArgs(args);
         const query = scheduleArgsToQuery(args);
         const results: CourseGQL[] = await getCourseSchedules(query);
-        return results
+        return results;
       },
 
       description: "Return schedule from websoc."
@@ -132,10 +132,10 @@ const queryType = new GraphQLObjectType({
       resolve: (_, args, __, info) => {
         // Get the fields requested in the query
         // This allows us to only fetch what the client wants from sql
-        const requestedFields = Object.keys(parseResolveInfo(info).fieldsByTypeName.GradeDistributionCollection)
+        const requestedFields : string[] = Object.keys(parseResolveInfo(info).fieldsByTypeName.GradeDistributionCollection)
       
         // Construct a WHERE clause from the arguments
-        const where = parseGradesParamsToSQL(args);
+        const where : string = parseGradesParamsToSQL(args);
         
         // If requested, retrieve the grade distributions
         let grade_distributions;

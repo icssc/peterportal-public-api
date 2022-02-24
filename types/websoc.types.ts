@@ -2,11 +2,13 @@
 export interface WebsocResponse {
     schools: School[]
 } 
+
 export interface School {
     schoolName: string;
     schoolComment: string;
     departments: Department[];
 }
+
 export interface Department {
     deptName: string;
     deptCode: string;
@@ -15,6 +17,7 @@ export interface Department {
     sectionCodeRangeComments: string[];
     courseNumberRangeComments: string[];
 }
+
 export interface Course {
     courseNumber: string;
     courseTitle: string;
@@ -22,6 +25,7 @@ export interface Course {
     prerequisiteLink: string;
     sections: Section[];
 }
+
 export interface Section {
     sectionCode: string;
     sectionType: string;
@@ -39,17 +43,17 @@ export interface Section {
     status: string;
     sectionComment: string;
 }
+
 export interface Meeting {
     days: string;
     time: string;
     bldg: string;
 }
+
 export interface EnrollmentCount {
     totalEnrolled: string;
     sectionEnrolled: string;
 }
-
-
 
 export interface CourseGQL {
     id: string;
