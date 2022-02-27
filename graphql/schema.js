@@ -41,10 +41,10 @@ const instructorType = new GraphQLObjectType({
     email: {type: GraphQLString },
     title: { type: GraphQLString },
     department: { type: GraphQLString },
-    schools: { type: GraphQLList(GraphQLString) },
-    related_departments: { type: GraphQLList(GraphQLString) },
+    schools: { type: new GraphQLList(GraphQLString) },
+    related_departments: { type: new GraphQLList(GraphQLString) },
     course_history: { 
-      type: GraphQLList(courseType),
+      type: new GraphQLList(courseType),
       resolve: (instructor) => {
         return getInstructor(instructor.ucinetid)["course_history"].map(course_id => getCourse(course_id.replace(/ /g, "")));
       }
@@ -64,26 +64,26 @@ const courseType = new GraphQLObjectType({
     school: { type: GraphQLString },
     title: { type: GraphQLString },
     course_level: { type: GraphQLString },
-    department_alias: { type: GraphQLList(GraphQLString) },
-    units: { type: GraphQLList(GraphQLFloat) },
+    department_alias: { type: new GraphQLList(GraphQLString) },
+    units: { type: new GraphQLList(GraphQLFloat) },
     description: { type: GraphQLString },
     department_name: { type: GraphQLString },
     instructor_history: { 
-      type: GraphQLList(instructorType),
+      type: new GraphQLList(instructorType),
       resolve: (course) => {
         return course.professor_history.map(instructor_netid => getInstructor(instructor_netid));
       } 
     },
     prerequisite_tree: { type: GraphQLString },
     prerequisite_list: { 
-      type: GraphQLList(courseType),
+      type: new GraphQLList(courseType),
       resolve: (course) => {
         return course.prerequisite_list.map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
       }
     },
     prerequisite_text: { type: GraphQLString },
     prerequisite_for: { 
-      type: GraphQLList(courseType),
+      type: new GraphQLList(courseType),
       resolve: (course) => {
         return course.prerequisite_for.map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
       }
@@ -94,13 +94,13 @@ const courseType = new GraphQLObjectType({
     restriction: { type: GraphQLString },
     overlap: { type: GraphQLString },
     corequisite: { type: GraphQLString },
-    ge_list: { type: GraphQLList(GraphQLString) },
+    ge_list: { type: new GraphQLList(GraphQLString) },
     ge_text: { type: GraphQLString },
-    terms: { type: GraphQLList(GraphQLString) },
+    terms: { type: new GraphQLList(GraphQLString) },
     // can't add "same as" or "grading option" due to whitespace :((
 
     offerings: {
-      type: GraphQLList(courseOfferingType),
+      type: new GraphQLList(courseOfferingType),
       args: {
         year: { type: GraphQLFloat},
         quarter: { type: GraphQLString},
@@ -178,7 +178,7 @@ const courseOfferingType = new GraphQLObjectType({
     year: { type: GraphQLString },
     quarter: { type: GraphQLString },
     instructors: { 
-      type: GraphQLList(instructorType),
+      type: new GraphQLList(instructorType),
       resolve: (offering) => {
         return offering.instructors.map((name) => {
           
@@ -225,7 +225,7 @@ const courseOfferingType = new GraphQLObjectType({
     }, 
     final_exam: { type: GraphQLString },
     max_capacity: { type: GraphQLFloat },
-    meetings: { type: GraphQLList(meetingType) },
+    meetings: { type: new GraphQLList(meetingType) },
     num_section_enrolled: { type: GraphQLFloat },
     num_total_enrolled: { type: GraphQLFloat },
     num_new_only_reserved: { type: GraphQLFloat },
@@ -330,9 +330,9 @@ const gradeDistributionCollectionType = new GraphQLObjectType({
 
   fields: () => ({
     aggregate: { type: gradeDistributionCollectionAggregateType },
-    grade_distributions: {type: GraphQLList(gradeDistributionType)},
+    grade_distributions: {type: new GraphQLList(gradeDistributionType)},
     instructors: { 
-      type: GraphQLList(GraphQLString),
+      type: new GraphQLList(GraphQLString),
       description: "List of instructors present in the Grade Distribution Collection" 
     }
   })
@@ -348,7 +348,7 @@ const queryType = new GraphQLObjectType({
 
       // specify args to query by
       args: {
-        id: { type: GraphQLNonNull(GraphQLString), description: "Course Department concatenated with Course Number. Ex: COMPSCI161" }
+        id: { type: new GraphQLNonNull(GraphQLString), description: "Course Department concatenated with Course Number. Ex: COMPSCI161" }
       },
 
       // define function to get a course
@@ -366,7 +366,7 @@ const queryType = new GraphQLObjectType({
 
       // specify args to query by (ucinetid)
       args: {
-        ucinetid: { type: GraphQLNonNull(GraphQLString) }
+        ucinetid: { type: new GraphQLNonNull(GraphQLString) }
       },
 
       // define function to get a instructor
@@ -380,7 +380,7 @@ const queryType = new GraphQLObjectType({
 
     // return all courses
     allCourses: {
-      type: GraphQLList(courseType),
+      type: new GraphQLList(courseType),
 
       // get all courses from courses cache
       resolve: () => {
@@ -393,7 +393,7 @@ const queryType = new GraphQLObjectType({
 
     // return all instructor
     allInstructors: {
-      type: GraphQLList(instructorType),
+      type: new GraphQLList(instructorType),
 
       // get all instructors from cache
       resolve: () => {
@@ -405,11 +405,11 @@ const queryType = new GraphQLObjectType({
     },
 
     schedule: {
-      type: GraphQLList(courseType),
+      type: new GraphQLList(courseType),
 
       args: {
-        year: { type: GraphQLNonNull(GraphQLFloat), description: "Year of the term. Required." },
-        quarter: { type: GraphQLNonNull(GraphQLString), description: "Quarter of the term. ['Fall'|'Winter'|'Spring'|'Summer1'|'Summer2'|'Summer10wk']. Required." },
+        year: { type: new GraphQLNonNull(GraphQLFloat), description: "Year of the term. Required." },
+        quarter: { type: new GraphQLNonNull(GraphQLString), description: "Quarter of the term. ['Fall'|'Winter'|'Spring'|'Summer1'|'Summer2'|'Summer10wk']. Required." },
         ge: { type: GraphQLString, description: "GE type. ['ANY'|'GE-1A'|'GE-1B'|'GE-2'|'GE-3'|'GE-4'|'GE-5A'|'GE-5B'|'GE-6'|'GE-7'|'GE-8']." },
         department: { type: GraphQLString, description: "Department Code." },
         course_number: { type: GraphQLString, description: "Course number or range. Ex: '32A' or '31-33'." },
