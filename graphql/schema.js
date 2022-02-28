@@ -194,7 +194,7 @@ const courseOfferingType = new GraphQLObjectType({
           
           //If there is more than one and the course exists, 
           //use the course to figure it out.
-          else if (ucinetids && ucinetids.length > 1 && (course = getCourse(offering.course))) {
+          else if (ucinetids && ucinetids.length > 1 && (course = offering.course)) {
 
               //Filter our instructors by those with related departments.
               let course_dept = course.department;
@@ -206,7 +206,7 @@ const courseOfferingType = new GraphQLObjectType({
               } else {
                 //Filter instructors by those that taught the course before.
                 instructors = instructors.filter( inst => {
-                  return inst.course_history.map((course) => getCourse(course.replace(/ /g, ""))).includes(offering.course);
+                  return inst.course_history.map((course) => course.replace(/ /g, "")).includes(offering.course.id);
                 });
               
                 //If only one is left and it's in the instructor cache, we can return it.
