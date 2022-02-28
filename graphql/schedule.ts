@@ -48,17 +48,16 @@ const courseOfferingType = new GraphQLObjectType({
           
           //If only one ucinetid exists and it's in the instructor cache, 
           //then we can return the instructor for it.
-          const course = getCourse(offering.course);
           if (ucinetids && ucinetids.length == 1) { 
             const instructor = getInstructor(ucinetids[0]);
             if (instructor) { return instructor; }
           }
           //If there is more than one and the course exists, 
           //use the course to figure it out.
-          else if (ucinetids && ucinetids.length > 1 && course) {
+          else if (ucinetids && ucinetids.length > 1 && offering.course) {
 
               //Filter our instructors by those with related departments.
-              let course_dept = course.department;
+              let course_dept = offering.course.department;
               let instructors = ucinetids.map(id => getInstructor(id)).filter( temp => temp.related_departments.includes(course_dept));
               
               //If only one is left and it's in the instructor cache, we can return it.
@@ -67,7 +66,7 @@ const courseOfferingType = new GraphQLObjectType({
               } else {
                 //Filter instructors by those that taught the course before.
                 instructors = instructors.filter( inst => {
-                  return inst.course_history.map((course) => getCourse(course.replace(/ /g, ""))).includes(offering.course);
+                  return inst.course_history.map((course) => course.replace(/ /g, "")).includes(offering.course.id);
                 });
               
                 //If only one is left and it's in the instructor cache, we can return it.
