@@ -206,7 +206,7 @@ const courseOfferingType = new GraphQLObjectType({
               } else {
                 //Filter instructors by those that taught the course before.
                 instructors = instructors.filter( inst => {
-                  return history = inst.course_history.map((course) => course.replace(/ /g, "")).includes(offering.course.id);
+                  return inst.course_history.map((course) => course.replace(/ /g, "")).includes(offering.course.id);
                 });
               
                 //If only one is left and it's in the instructor cache, we can return it.
