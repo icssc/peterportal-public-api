@@ -4,14 +4,14 @@ import { parseResolveInfo } from 'graphql-parse-resolve-info';
 import { courseType } from "./course";
 import { instructorType } from "./instructor";
 import { gradeDistributionCollectionType } from "./grades";
-import { validateScheduleArgs } from './schedule';
+import { validateScheduleArgs, courseOfferingType } from './schedule';
 
 import { getAllCourses, getCourse } from '../helpers/courses.helper';
 import { getAllInstructors, getInstructor } from '../helpers/instructor.helper';
 import { getCourseSchedules, scheduleArgsToQuery } from '../helpers/schedule.helper';
 import { parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades } from '../helpers/grades.helper';
 import { GradeDist, GradeRawData } from '../types/types';
-import { CourseGQL } from "../types/websoc.types";
+import { CourseGQL, CourseOffering } from "../types/websoc.types";
 
 
 const queryType = new GraphQLObjectType({
@@ -81,7 +81,7 @@ const queryType = new GraphQLObjectType({
     },
 
     schedule: {
-      type: new GraphQLList(courseType),
+      type: new GraphQLList(courseOfferingType),
 
       args: {
         year: { type: new GraphQLNonNull(GraphQLFloat), description: "Year of the term. Required." },
@@ -108,7 +108,7 @@ const queryType = new GraphQLObjectType({
       resolve: async (_, args) => {
         validateScheduleArgs(args);
         const query = scheduleArgsToQuery(args);
-        const results: CourseGQL[] = await getCourseSchedules(query);
+        const results: CourseOffering[] = await getCourseSchedules(query);
         return results;
       },
 
