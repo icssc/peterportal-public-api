@@ -9,35 +9,31 @@ describe('POST /graphql/', () => {
     .post('/graphql/')
     .send({query:`{
         schedule(year: 2019, quarter: "Fall", department:"COMPSCI", course_number: "161") {
-          title
-          id
-          offerings {
-            year
-            quarter
-            instructors {
-              ucinetid
-              name
-              department
-            }
-            final_exam
-            max_capacity
-            meetings {
-              time
-              building
-              days
-            }
-            num_section_enrolled
-            num_total_enrolled
-            num_on_waitlist
-            num_requested
-            num_new_only_reserved
-            units
-            restrictions
-            status
-            course {
-              title
-              id
-            }
+          year
+          quarter
+          instructors {
+            ucinetid
+            name
+            department
+          }
+          final_exam
+          max_capacity
+          meetings {
+            time
+            building
+            days
+          }
+          num_section_enrolled
+          num_total_enrolled
+          num_on_waitlist
+          num_requested
+          num_new_only_reserved
+          units
+          restrictions
+          status
+          course {
+            title
+            id
           }
         }
       }`})
@@ -48,10 +44,9 @@ describe('POST /graphql/', () => {
         expect(response.body).toHaveProperty('data');
         expect(response.body["data"]).toHaveProperty('schedule');
         expect(Array.isArray(response.body["data"]["schedule"])).toBeTruthy();
-        expect(response.body["data"]["schedule"][0]["title"]).toEqual("Design and Analysis of Algorithms");
-        expect(response.body["data"]["schedule"][0]["id"]).toEqual("COMPSCI161");
-        expect(Array.isArray(response.body["data"]["schedule"][0]["offerings"])).toBeTruthy();
-        expect(response.body["data"]["schedule"][0]["offerings"][0]).toEqual(
+        expect(response.body["data"]["schedule"][0]["course"]["title"]).toEqual("Design and Analysis of Algorithms");
+        expect(response.body["data"]["schedule"][0]["course"]["id"]).toEqual("COMPSCI161");
+        expect(response.body["data"]["schedule"][0]).toEqual(
           expect.objectContaining({
             "year": "2019",
             "quarter": "Fall",
@@ -78,13 +73,11 @@ describe('POST /graphql/', () => {
     .post('/graphql/')
     .send({query:`{
         schedule(year: 2019, quarter: "Fall", department:"COMPSCI", course_number: "100") {
-            offerings {
-                year
-                max_capacity
-                num_total_enrolled
-            }
+          year
+          max_capacity
+          num_total_enrolled
         }
-        }`})
+      }`})
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200)

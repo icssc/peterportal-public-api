@@ -135,8 +135,8 @@ const courseType = new GraphQLObjectType({
             course_number: course.number, 
             ...args
           })
-          const results = (await getCourseSchedules(query))[0];
-          return results.offerings;
+          const results = await getCourseSchedules(query);
+          return results;
         }
 
         // TODO: only return one error for a query, instead of one per item in the list
@@ -403,7 +403,7 @@ const queryType = new GraphQLObjectType({
     },
 
     schedule: {
-      type: GraphQLList(courseType),
+      type: GraphQLList(courseOfferingType),
 
       args: {
         year: { type: GraphQLNonNull(GraphQLFloat), description: "Year of the term. Required." },
