@@ -109,12 +109,12 @@ export function parseGradesParamsToSQL(query) : string{
 
 export function fetchGrades(where: string) : GradeRawData {
     let sqlStatement = "SELECT * FROM gradeDistribution";
-    return queryDatabase(null, where !== null ? sqlStatement + where : sqlStatement).all();
+    return queryDatabase(where !== null ? sqlStatement + where : sqlStatement).all();
 }
 
 export function fetchInstructors(where: string) : string[] {
     let sqlStatement = "SELECT DISTINCT instructor FROM gradeDistribution";
-    return queryDatabase(null, where !== null ? sqlStatement + where : sqlStatement).all().map(result => result.instructor);
+    return queryDatabase(where !== null ? sqlStatement + where : sqlStatement).all().map(result => result.instructor);
 }
 
 //For GraphQL API
@@ -131,10 +131,10 @@ export function fetchAggregatedGrades(where: string) : GradeDist {
     AVG(NULLIF(averageGPA, '')) as average_gpa,
     COUNT() as count FROM gradeDistribution`;
     
-    return queryDatabase(null, where != null ? sqlStatement + where : sqlStatement).get();
+    return queryDatabase(where != null ? sqlStatement + where : sqlStatement).get();
 }
 
-function queryDatabase(connection: Database, statement: string) {
+function queryDatabase(statement: string, connection?: Database) {
     if (!connection) {
         connection = new db(path.join(__dirname, '../db/db.sqlite'));
     }
@@ -173,8 +173,8 @@ export function fetchCalculatedData(where) : GradeCalculatedData{
     instructor,
     type FROM gradeDistribution`;
 
-    result.gradeDistribution = queryDatabase(connection, where !== null ? sqlFunction + where : sqlFunction).get();
-    result.courseList = queryDatabase(connection, where !== null ? sqlCourseList + where : sqlCourseList).all();
+    result.gradeDistribution = queryDatabase(where !== null ? sqlFunction + where : sqlFunction, connection).get();
+    result.courseList = queryDatabase(where !== null ? sqlCourseList + where : sqlCourseList, connection).all();
     connection.close();
     return result;
 }
