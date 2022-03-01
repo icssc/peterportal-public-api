@@ -1,5 +1,5 @@
 import { getCourseSchedules } from "../../helpers/schedule.helper";
-import { CourseOffering } from "../../types/websoc.types";
+import { CourseOffering } from "../../types/types";
 
 describe('Get Schedule of Classes', () => {
     it ('getCourseSchedules should return an array of results', async () => {

@@ -11,7 +11,7 @@ import { getAllInstructors, getInstructor } from '../helpers/instructor.helper';
 import { getCourseSchedules, scheduleArgsToQuery } from '../helpers/schedule.helper';
 import { parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades } from '../helpers/grades.helper';
 import { GradeDist, GradeRawData } from '../types/types';
-import { CourseGQL, CourseOffering } from "../types/websoc.types";
+import { CourseOffering } from "../types/types";
 
 
 const queryType = new GraphQLObjectType({

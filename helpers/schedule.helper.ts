@@ -1,5 +1,6 @@
 import { callWebSocAPI } from 'websoc-api';
-import { WebsocResponse, CourseOffering } from '../types/websoc.types';
+import { CourseOffering } from '../types/types';
+import { WebsocResponse } from '../types/websoc.types';
 import { getCourse } from './courses.helper';
 
 

@@ -148,15 +148,32 @@ describe('POST /graphql/', () => {
 
 
 describe('POST /graphql/', () => {
-  it('GraphQL: Schedule query with invalid argument',  () => request
+  it('GraphQL: Schedule query with invalid quarter argument',  () => request
   .post('/graphql/')
   .send({query:`{
       schedule(year: 2019, quarter: 2019, department:"COMPSCI", course_number: "161") {
-          offerings {
-              year
-              max_capacity
-              num_total_enrolled
-          }
+          year
+          max_capacity
+          num_total_enrolled
+      }
+  }`})
+  .set('Accept', 'application/json')
+  .expect('Content-Type', /json/)
+  .expect(400)
+  .then((response) => {
+      expect(response.body).toHaveProperty('errors');
+      expect(response.body["errors"][0]["message"]).toMatch(/(2019)/i);
+  }));
+});
+
+describe('POST /graphql/', () => {
+  it('GraphQL: Schedule query without year',  () => request
+  .post('/graphql/')
+  .send({query:`{
+      schedule(quarter: 2019, department:"COMPSCI", course_number: "161") {
+          year
+          max_capacity
+          num_total_enrolled
       }
   }`})
   .set('Accept', 'application/json')

@@ -1,3 +1,5 @@
+import { Meeting, SectionGQL } from "./websoc.types";
+
 export interface Error {
     timestamp: string;
     status: string;
@@ -30,7 +32,27 @@ export interface Course {
     corequisite: string;
     ge_list: string[];
     ge_text: string;
-    terms: string[]
+    terms: string[];
+    course_offering?: CourseOffering[];
+}
+
+export interface CourseOffering {
+    year: string;
+    quarter: string;
+    instructors: string[];
+    final_exam: string;
+    max_capacity: number;
+    meetings: Meeting[];
+    num_section_enrolled: number;
+    num_total_enrolled: number;
+    num_new_only_reserved: number;
+    num_on_waitlist: number;
+    num_requested: number;
+    restrictions: string;
+    section: SectionGQL;
+    status: string;
+    units: number;
+    course: Course;
 }
 
 export interface Instructor {
