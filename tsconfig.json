@@ -4,8 +4,22 @@
       "target": "es6",
       "rootDir": "./",
       "outDir": "./dist",
+      "sourceMap": true,
+      "watch": true,
+      "alwaysStrict": true,
       "allowJs": true,
       "esModuleInterop": true,
       "resolveJsonModule": true
-    }
+    },
+    "include":[ 
+      "graphql/**/*",
+      "helpers/**/*",
+      "rest/**/*",
+      "tests/**/*",
+      "types/**/*",
+      "./*"
+    ],
+    "exclude":[ 
+        "node_modules"
+    ]
 }
