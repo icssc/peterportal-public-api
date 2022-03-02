@@ -1,6 +1,6 @@
 # Contributing
 
-PeterPortal API is an open source project, [hosted on Github](https://github.com/icssc-projects/peterportal-public-api), created by the ICS Student Council Projects Committee at UCI. We welcome anyone to contribute to our project and improve our API.
+PeterPortal API is an open source project, [hosted on Github](https://github.com/icssc-projects/peterportal-public-api), created by the ICS Student Council Projects Committee at UCI. We welcome all UCI students to contribute to our project and improve our API.
 
 Our goal is to encourage more students and developers to create applications beneficial to the UCI community. 
 
