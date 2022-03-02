@@ -108,7 +108,27 @@ export function parseGradesParamsToSQL(query) : string{
 }
 
 export function fetchGrades(where: string) : GradeRawData {
-    let sqlStatement = "SELECT * FROM gradeDistribution";
+    let sqlStatement = `SELECT 
+    year, 
+    quarter, 
+    department, 
+    department_name,
+    number, 
+    number_int,
+    code, 
+    section, 
+    title, 
+    instructor, 
+    type, 
+    gradeACount, 
+    gradeBCount,
+    gradeCCount,
+    gradeDCount,
+    gradeFCount,
+    gradePCount,
+    gradeNPCount,
+    gradeWCount,
+    NULLIF(averageGPA, '') as averageGPA FROM gradeDistribution`;
     return queryDatabase(where !== null ? sqlStatement + where : sqlStatement).all();
 }
 
