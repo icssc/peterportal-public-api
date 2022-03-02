@@ -45,25 +45,27 @@ if (process.env.NODE_ENV == 'production') {
   
 }
 function logging(req, res, next) {
-  const event = {
-    referer: req.headers.referer,
-    method: req.method,
-    url: req.originalUrl,
-    body: req.body.query
+  if (process.argv.includes("--log") || process.env.NODE_ENV == "production") {
+    const event = {
+      referer: req.headers.referer,
+      method: req.method,
+      url: req.originalUrl,
+      body: req.body.query
+    }
+    console.log("REQUEST\n" + JSON.stringify(event, null, 2));
+    
+    res.on('finish', () => {
+      const finishEvent = {
+        statusCode: res.statusCode,
+        statusMessage: res.statusMessage
+      }
+      if (finishEvent.statusCode >= 400) {
+        console.error("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
+      } else {
+        console.log("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
+      }
+    });
   }
-  console.log("REQUEST\n" + JSON.stringify(event, null, 2));
-  
-  res.on('finish', () => {
-    const finishEvent = {
-      statusCode: res.statusCode,
-      statusMessage: res.statusMessage
-    }
-    if (finishEvent.statusCode >= 400) {
-      console.error("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
-    } else {
-      console.log("RESPONSE\n" + JSON.stringify(finishEvent, null, 2));
-    }
-  });
   next();
 }
 
