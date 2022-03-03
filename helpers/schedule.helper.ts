@@ -1,5 +1,6 @@
 import { callWebSocAPI } from 'websoc-api';
-import { WebsocResponse, CourseGQL } from '../types/websoc.types';
+import { CourseOffering } from '../types/types';
+import { WebsocResponse } from '../types/websoc.types';
 import { getCourse } from './courses.helper';
 
 
@@ -52,21 +53,22 @@ export function scheduleArgsToQuery(args) {
     }
   }
 
-export async function getCourseSchedules(query) : Promise<CourseGQL[]>{
+export async function getCourseSchedules(query) : Promise<CourseOffering[]>{
     const results : WebsocResponse = await callWebSocAPI(query);
     const year = query.term.split(" ")[0]
     const quarter = query.term.split(" ")[1]
-    let courses : CourseGQL[]  = [];
+    let offerings : CourseOffering[] = [];
     for (const school of results["schools"]) {
         for (const dept of school["departments"]) {
             for (const course of dept["courses"]) {
                 const courseID = (course["deptCode"] + course["courseNumber"]).replace(/ /g, "");
-                courses.push({
-                    offerings: course["sections"].map(section => _formatCourseOffering(section, {course: courseID, year, quarter})),
-                    ...getCourse(courseID),
+                course["sections"].forEach(section => {
+                    offerings.push(
+                        _formatCourseOffering(section, {course: getCourse(courseID), year, quarter})
+                    )
                 })
             }
         }
     }
-    return courses
+    return offerings
 }
