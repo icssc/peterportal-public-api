@@ -35,3 +35,30 @@ We consolidate our data directly from official UCI sources such as: UCI Catalogu
 
 ## Terms & Conditions
 📜 There are no hard policies at the moment for utilizing this tool. However, please refrain from abusing the API by methods such as: sending excessive amount of requests in a small period of time or purposely looking to exploit the system. This tool is here mainly to assist developers in bringing their idea to life to benefit all UCI students. Please don't ruin it for others! 🙂
+
+## Setting up to develop the project locally
+1. Clone the `peterportal-public-api` repository to your local machine.
+    ```
+    git clone git@github.com:icssc-projects/peterportal-public-api.git
+    ```
+2. Change into the project directory.
+    ```
+    cd peterportal-public-api
+    ``` 
+3. Install the dependencies
+    ```
+    npm install
+    ```   
+4. Start the development server
+    ```
+    npm start
+    ```
+    If you want to see the logs run 
+    ```
+    npm start -- --log
+    ```
+5. The site should load on http://localhost:8080
+As you make changes to the Express application, those changes will be automatically reflected in the API.
+
+If you're making changes to the documentation, you can upload see how we do it in our documentation. https://api.peterportal.org/Contributing/documenting/
+    
