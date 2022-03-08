@@ -15,7 +15,7 @@ commands:
   build-docs:
     steps:
       - run:
-          name: Install dependencies
+          name: Install Python dependencies
           command: pip install -r docs_requirements.txt
       - run: 
           name: Build docs
@@ -64,7 +64,7 @@ jobs:
 
       - run: 
           name: Run tests with coverage
-          command: npm test --coverage
+          command: npm test
 
       - aws-cli/setup
 
