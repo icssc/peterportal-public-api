@@ -15,6 +15,7 @@ provider:
       - 'image/*'
 package:
   excludeDevDependencies: true
+  individually: true
 
 plugins:
   - serverless-api-gateway-throttling
@@ -23,7 +24,7 @@ plugins:
   - serverless-plugin-common-excludes
   # - serverless-domain-manager
   - serverless-plugin-lambda-insights
-  - serverless-plugin-typescript
+  - serverless-webpack 
 
 
 custom:
@@ -40,6 +41,11 @@ custom:
   #   stage: ${self:provider.stage}
   lambdaInsights:
     defaultLambdaInsights: true #enables Lambda Insights for all functions
+  custom:
+    webpack:
+      packager: 'npm'
+      includeModules: true
+
 
 functions:
   app:

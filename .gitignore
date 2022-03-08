@@ -12,6 +12,7 @@ docs-site/
 __pycache__
 coverage/
 .build/
+.webpack/
 
 #OS
 .DS_Store

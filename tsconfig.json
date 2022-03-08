@@ -3,6 +3,7 @@
       "module": "commonjs",
       "target": "es6",
       "rootDir": "./",
+      "baseUrl": "./",
       "outDir": "./dist",
       "sourceMap": true,
       "watch": true,
@@ -11,9 +12,19 @@
       "esModuleInterop": true,
       "resolveJsonModule": true
     },
+    "include":[ 
+      "db/**/*",
+      "cache/**/*",
+      "docs-site/**/*",
+      "graphql/**/*",
+      "helpers/**/*",
+      "rest/**/*",
+      "tests/**/*",
+      "types/**/*",
+      "app.ts",
+      "server.ts"
+    ],
     "exclude":[ 
-        "node_modules",
-        "utils/**/*",
-        "db/grades.csv"
+        "node_modules"
     ]
 }
