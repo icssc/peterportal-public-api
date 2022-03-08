@@ -42,7 +42,7 @@ const queryType = new GraphQLObjectType({
 
       // specify args to query by (ucinetid)
       args: {
-        ucinetid: { type: new GraphQLNonNull(GraphQLString) }
+        ucinetid: { type: new GraphQLNonNull(GraphQLString), description: "ucinetid of a specific instructor. Ex: mikes"}
       },
 
       // define function to get a instructor

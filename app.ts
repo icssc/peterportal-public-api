@@ -26,7 +26,7 @@ if (process.env.NODE_ENV == 'production') {
   });
 }
 function logging(req, res, next) {
-  if (process.env.NODE_ENV != 'test') {
+  if (process.argv.includes("--log") || process.env.NODE_ENV == "production") {
     const event = {
       referer: req.headers.referer,
       method: req.method,
