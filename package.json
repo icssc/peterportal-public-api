@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon server.ts",
-    "test": "jest --coverage",
+    "test": "jest",
     "init_db": "node ./db/sqlite.js",
     "refresh": "node ./utils/refreshESCache.js"
   },
@@ -37,11 +37,11 @@
     "@types/better-sqlite3": "^7.4.2",
     "@types/express": "^4.17.13",
     "@types/http-errors": "^1.8.2",
-    "@types/jest": "^27.4.0",
+    "@types/jest": "^27.4.1",
     "@types/node": "^17.0.19",
     "@types/supertest": "^2.0.11",
     "csv-parser": "^2.3.5",
-    "jest": "^27.5.1",
+    "jest": "^27.4.1",
     "serverless-offline": "^8.5.0",
     "serverless-plugin-typescript": "^2.1.1",
     "supertest": "^6.2.2",
@@ -49,8 +49,11 @@
   },
   "jest": {
     "verbose": true,
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "isolatedModules": true
+      }
     }
   }
 }

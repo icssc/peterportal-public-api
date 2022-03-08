@@ -17,7 +17,8 @@
       "rest/**/*",
       "tests/**/*",
       "types/**/*",
-      "./*"
+      "app.ts",
+      "server.ts"
     ],
     "exclude":[ 
         "node_modules"
