@@ -176,15 +176,21 @@ function queryDatabaseAndResponse(where, calculate) {
             type FROM gradeDistribution
             ?`;
 
-            result.gradeDistribution = connection.prepare(where !== null ? sqlFunction + where : sqlFunction).bind(where).get();
-            
-            result.courseList = connection.prepare(where !== null ? sqlCourseList + where : sqlCourseList).bind(where).all();
-
+            if (where != null) {
+                result.gradeDistribution = connection.prepare(sqlFunction).bind(where).get();
+                result.courseList = connection.prepare(sqlCourseList).bind(where).all();
+            } else {
+                result.gradeDistribution = connection.prepare(sqlFunction).get();
+                result.courseList = connection.prepare(sqlCourseList).all();
+            }
             return result;
         case false:
             let sqlQueryAll = "SELECT * FROM gradeDistribution ?";
-            const queryResult = connection.prepare(where !== null ? sqlQueryAll + where : sqlQueryAll).bind(where).all()
-            
+            if (where != null) {
+                const queryResult = connection.prepare(sqlQueryAll).bind(where).all()
+            } else {
+                const queryResult = connection.prepare(sqlQueryAll).all()
+            }
             return queryResult;
     }
 
