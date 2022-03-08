@@ -11,16 +11,9 @@
       "esModuleInterop": true,
       "resolveJsonModule": true
     },
-    "include":[ 
-      "graphql/**/*",
-      "helpers/**/*",
-      "rest/**/*",
-      "tests/**/*",
-      "types/**/*",
-      "app.ts",
-      "server.ts"
-    ],
     "exclude":[ 
-        "node_modules"
+        "node_modules",
+        "utils/**/*",
+        "db/grades.csv"
     ]
 }
