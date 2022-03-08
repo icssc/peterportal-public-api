@@ -16,6 +16,10 @@ provider:
 package:
   excludeDevDependencies: true
   individually: true
+  include:
+     - docs-site/**/*
+     - db/*.sqlite
+     - public/**/*
 
 plugins:
   - serverless-api-gateway-throttling
@@ -24,7 +28,7 @@ plugins:
   - serverless-plugin-common-excludes
   # - serverless-domain-manager
   - serverless-plugin-lambda-insights
-  - serverless-webpack 
+  - serverless-plugin-typescript 
 
 
 custom:
@@ -41,10 +45,6 @@ custom:
   #   stage: ${self:provider.stage}
   lambdaInsights:
     defaultLambdaInsights: true #enables Lambda Insights for all functions
-  custom:
-    webpack:
-      packager: 'npm'
-      includeModules: true
 
 
 functions:
