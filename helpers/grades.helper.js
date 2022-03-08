@@ -160,7 +160,8 @@ function queryDatabaseAndResponse(where, calculate) {
             SUM(gradeNPCount) as sum_grade_np_count,
             SUM(gradeWCount) as sum_grade_w_count,
             AVG(NULLIF(averageGPA, '')) as average_gpa,
-            COUNT() as count FROM gradeDistribution`;
+            COUNT() as count FROM gradeDistribution
+            ?`;
         
             let sqlCourseList = `SELECT 
             year, 
@@ -172,16 +173,17 @@ function queryDatabaseAndResponse(where, calculate) {
             section,
             title,
             instructor,
-            type FROM gradeDistribution`;
+            type FROM gradeDistribution
+            ?`;
 
-            result.gradeDistribution = connection.prepare(where !== null ? sqlFunction + where : sqlFunction).get();
+            result.gradeDistribution = connection.prepare(where !== null ? sqlFunction + where : sqlFunction).bind(where).get();
             
-            result.courseList = connection.prepare(where !== null ? sqlCourseList + where : sqlCourseList).all();
+            result.courseList = connection.prepare(where !== null ? sqlCourseList + where : sqlCourseList).bind(where).all();
 
             return result;
         case false:
-            let sqlQueryAll = "SELECT * FROM gradeDistribution";
-            const queryResult = connection.prepare(where !== null ? sqlQueryAll + where : sqlQueryAll).all()
+            let sqlQueryAll = "SELECT * FROM gradeDistribution ?";
+            const queryResult = connection.prepare(where !== null ? sqlQueryAll + where : sqlQueryAll).bind(where).all()
             
             return queryResult;
     }
