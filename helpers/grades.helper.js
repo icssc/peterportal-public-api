@@ -27,8 +27,8 @@ function parseGradesParamsToSQL(query) {
                 for (year of params[key]) {
                     if (year.match(/\d{4}-\d{2}/)) {
                         condition == "" ? 
-                            condition += "year = '" + year + "'" : 
-                            condition += " OR year = '" + year + "'" 
+                            condition += "year = ?" :
+                            condition += " OR year = ?"
                     } else {
                         throw new ValidationError(errorMsg(year, "year"))
                     }
@@ -38,8 +38,8 @@ function parseGradesParamsToSQL(query) {
                 for (quarter of params[key]) {
                     if (quarter.match(/[a-zA-Z]{4,6}/)) {
                         condition == "" ? 
-                            condition += "quarter = '" + quarter.toUpperCase() + "'" : 
-                            condition += " OR quarter = '" + quarter.toUpperCase() + "'"
+                            condition += "quarter = ?" :
+                            condition += " OR quarter = ?"
                     } else {
                         throw new ValidationError(errorMsg(quarter, "quarter"));
                     }
@@ -49,8 +49,8 @@ function parseGradesParamsToSQL(query) {
                 for (instructor of params[key]) {
                     if (instructor.match(/[a-zA-Z]+, [a-zA-Z]\./)) {
                         condition == "" ? 
-                            condition += "instructor = '" + instructor.toUpperCase() + "'" : 
-                            condition += " OR instructor = '" + instructor.toUpperCase() + "'" 
+                            condition += "instructor = ?" :
+                            condition += " OR instructor = ?"
                     } else {
                         throw new ValidationError(errorMsg(instructor, "instructor"));
                     }
@@ -60,23 +60,23 @@ function parseGradesParamsToSQL(query) {
                 for (department of params[key]) {
                     // TODO: Implement UCI Dept code param validation
                     condition == "" ? 
-                        condition += "department = '" + department.toUpperCase() + "'" : 
-                        condition += " OR department = '" + department.toUpperCase() + "'"
+                        condition += "department = ?" :
+                        condition += " OR department = ?"
                 }
                 break;
             case key === 'number' && params[key] !== null:
                 for (number of params[key]) {
                     condition == "" ? 
-                        condition += "number = '" + number.toUpperCase() + "'" : 
-                        condition += " OR number = '" + number.toUpperCase() + "'"
+                        condition += "number = ?" :
+                        condition += " OR number = ?"
                 }
                 break;
             case key === 'code' && params[key] !== null:
                 for (code of params[key]) {
                     if (code.match(/\d{5}/)) {
                         condition == "" ? 
-                            condition += "code = '" + code.toUpperCase() + "'" : 
-                            condition += " OR code = '" + code.toUpperCase() + "'" 
+                            condition += "code = ?" :
+                            condition += " OR code = ?"
                     } else {
                         throw new ValidationError(errorMsg(code, "code"));
                     }
@@ -103,8 +103,10 @@ function parseGradesParamsToSQL(query) {
             (condition.length > 0 ? whereClause += " AND " + "(" + condition + ")" : null)
     })
     
-    var retVal = whereClause === "" ? null : " WHERE " + whereClause;
-    retVal = (query.excludePNP && retVal !== null) ? retVal += ` AND (averageGPA != '')` : retVal
+    var retVal = {
+        "where": whereClause,
+        "params": params
+    }
     return retVal;
 }
 
@@ -160,8 +162,7 @@ function queryDatabaseAndResponse(where, calculate) {
             SUM(gradeNPCount) as sum_grade_np_count,
             SUM(gradeWCount) as sum_grade_w_count,
             AVG(NULLIF(averageGPA, '')) as average_gpa,
-            COUNT() as count FROM gradeDistribution
-            ?`;
+            COUNT() as count FROM gradeDistribution`;
         
             let sqlCourseList = `SELECT 
             year, 
@@ -173,24 +174,17 @@ function queryDatabaseAndResponse(where, calculate) {
             section,
             title,
             instructor,
-            type FROM gradeDistribution
-            ?`;
+            type FROM gradeDistribution`;
 
-            if (where != null) {
-                result.gradeDistribution = connection.prepare(sqlFunction).bind(where).get();
-                result.courseList = connection.prepare(sqlCourseList).bind(where).all();
-            } else {
-                result.gradeDistribution = connection.prepare(sqlFunction).get();
-                result.courseList = connection.prepare(sqlCourseList).all();
-            }
+            result.gradeDistribution = connection.prepare(where !== null ? sqlFunction + where : sqlFunction).get();
+
+            result.courseList = connection.prepare(where !== null ? sqlCourseList + where : sqlCourseList).all();
+
             return result;
         case false:
-            let sqlQueryAll = "SELECT * FROM gradeDistribution ?";
-            if (where != null) {
-                const queryResult = connection.prepare(sqlQueryAll).bind(where).all()
-            } else {
-                const queryResult = connection.prepare(sqlQueryAll).all()
-            }
+            let sqlQueryAll = "SELECT * FROM gradeDistribution";
+            const queryResult = connection.prepare(where !== null ? sqlQueryAll + where : sqlQueryAll).all();
+
             return queryResult;
     }
 
