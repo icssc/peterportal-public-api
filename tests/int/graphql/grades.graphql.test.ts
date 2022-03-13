@@ -65,6 +65,7 @@ describe('POST /graphql/', () => {
   .expect(200)
   .then((response) => {
       expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty("errors");
       expect(response.body["data"]).toHaveProperty('grades');
       expect(response.body["data"]["grades"]["aggregate"]).toEqual(
           expect.objectContaining({
@@ -124,6 +125,7 @@ describe('POST /graphql/', () => {
   .expect(200)
   .then((response) => {
       expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty("errors");
       expect(response.body["data"]).toHaveProperty('grades');
       response.body["data"]["grades"]["grade_distributions"].forEach( grade_dist => {
           let year = grade_dist["course_offering"]["year"];
@@ -159,6 +161,7 @@ describe('POST /graphql/', () => {
   .expect(200)
   .then((response) => {
       expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty("errors");
       expect(response.body["data"]).toHaveProperty('grades');
       expect(response.body["data"]["grades"]["aggregate"]["average_gpa"]).toBeNull();
       expect(response.body["data"]["grades"]["grade_distributions"].length).toEqual(0);
@@ -198,4 +201,29 @@ describe('POST /graphql/', () => {
 });
 
 
-
+describe('POST /graphql/', () => {
+  it('GraphQL: Grades Query, all grades instructors',  () => request
+  .post('/graphql/')
+  .send({query:`{
+    grades {
+      grade_distributions {
+        course_offering {
+          instructors {
+            shortened_name
+            name
+          }
+        }
+      }
+    }
+  }`})
+  .set('Accept', 'application/json')
+  .expect('Content-Type', /json/)
+  .expect(200)
+  .then((response) => {
+      console.log(response.body);
+      expect(response.body).not.toHaveProperty("errors");
+      expect(response.body).toHaveProperty("data");
+      expect(response.body["data"]).toHaveProperty('grades');
+      expect(response.body["data"]["grades"]["grade_distributions"].length).toBeGreaterThan(0);
+  }));
+});

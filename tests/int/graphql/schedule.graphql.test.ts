@@ -42,6 +42,7 @@ describe('POST /graphql/', () => {
     .expect(200)
     .then((response) => {
         expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty("errors");
         expect(response.body["data"]).toHaveProperty('schedule');
         expect(Array.isArray(response.body["data"]["schedule"])).toBeTruthy();
         expect(response.body["data"]["schedule"][0]["course"]["title"]).toEqual("Design and Analysis of Algorithms");
@@ -83,6 +84,7 @@ describe('POST /graphql/', () => {
     .expect(200)
     .then((response) => {
         expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty("errors");
         expect(response.body["data"]).toHaveProperty('schedule');
         expect(response.body["data"]["schedule"].length).toEqual(0);
     }));
@@ -103,6 +105,7 @@ describe('POST /graphql/', () => {
   .expect(200)
   .then((response) => {
       expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty("errors");
       expect(response.body["data"]).toHaveProperty('schedule');
       expect(response.body["data"]["schedule"].length).toBeGreaterThan(0);
       expect(response.body)

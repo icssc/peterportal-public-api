@@ -29,6 +29,7 @@ describe('POST /graphql/', () => {
   .expect(200)
   .then((response) => {
       expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty("errors");
       expect(response.body["data"]).toHaveProperty('instructor');
       expect(response.body["data"]["instructor"]).toEqual(
           expect.objectContaining({
@@ -75,6 +76,7 @@ describe('POST /graphql/', () => {
   .expect(200)
   .then((response) => {
       expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty("errors");
       expect(response.body["data"]).toHaveProperty('instructor');
       expect(response.body["data"]["instructor"]).toBeNull();
   }));
@@ -138,6 +140,7 @@ describe('POST /graphql/', () => {
   .expect(200)
   .then((response) => {
       expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty("errors");
       expect(response.body["data"]).toHaveProperty('allInstructors');
       expect(Array.isArray(response.body["data"]["allInstructors"])).toBeTruthy();
       expect(response.body["data"]["allInstructors"]).toEqual(

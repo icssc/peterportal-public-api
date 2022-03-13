@@ -52,6 +52,7 @@ describe('POST /graphql/', () => {
     .expect(200)
     .then((response) => {
         expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty("errors");
         expect(response.body["data"]).toHaveProperty('course');
         expect(response.body["data"]["course"]).toEqual(
             expect.objectContaining({
@@ -107,6 +108,7 @@ describe('POST /graphql/', () => {
     .expect(200)
     .then((response) => {
         expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty("errors");
         expect(response.body["data"]).toHaveProperty('course');
         expect(response.body["data"]["course"]).toBeNull();
     }));
@@ -180,6 +182,7 @@ describe('POST /graphql/', () => {
     .expect(200)
     .then((response) => {
         expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty("errors");
         expect(response.body["data"]).toHaveProperty('allCourses');
         expect(Array.isArray(response.body["data"]["allCourses"])).toBeTruthy();
         expect(response.body["data"]["allCourses"]).toEqual(
@@ -271,6 +274,7 @@ describe('POST /graphql/', () => {
   .expect(200)
   .then((response) => {
         expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty("errors");
         expect(response.body["data"]).toHaveProperty('course');
         expect(response.body["data"]["course"]["title"]).toEqual("Python Programming and Libraries (Accelerated)");
         expect(response.body["data"]["course"]["id"]).toEqual("I&CSCI32A");
