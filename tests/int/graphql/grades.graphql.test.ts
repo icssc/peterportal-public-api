@@ -7,7 +7,7 @@ describe('POST /graphql/', () => {
   it('GraphQL: Grades Query on I&C SCI 33',  () => request
   .post('/graphql/')
   .send({query:`{
-        grades(year:"2019-20", department: "I&C SCI", number:"33") {
+        grades(year:"2019-20", department: "I&C SCI") {
             aggregate {
                 sum_grade_a_count
                 sum_grade_b_count
@@ -92,8 +92,7 @@ describe('POST /graphql/', () => {
       );
       expect(response.body["data"]["grades"]["grade_distributions"][0]["course_offering"]["course"]).toEqual(
         expect.objectContaining({
-            "department": "I&C SCI",
-            "number": "33",
+            "department": "I&C SCI"
         })
       );
       expect(Array.isArray(response.body["data"]["grades"]["instructors"])).toBeTruthy();
@@ -208,6 +207,11 @@ describe('POST /graphql/', () => {
     grades {
       grade_distributions {
         course_offering {
+          year
+          quarter
+          course {
+            department
+          }
           instructors {
             shortened_name
             name
@@ -220,10 +224,24 @@ describe('POST /graphql/', () => {
   .expect('Content-Type', /json/)
   .expect(200)
   .then((response) => {
-      console.log(response.body);
       expect(response.body).not.toHaveProperty("errors");
       expect(response.body).toHaveProperty("data");
       expect(response.body["data"]).toHaveProperty('grades');
       expect(response.body["data"]["grades"]["grade_distributions"].length).toBeGreaterThan(0);
+      expect(response.body["data"]["grades"]["grade_distributions"]).toContainEqual(
+        expect.objectContaining({
+          "course_offering" : {
+            "year": expect.any(String),
+            "quarter": expect.any(String),
+            "course": {
+              "department": expect.any(String)
+            },
+            "instructors": expect.arrayContaining([{
+              "shortened_name": expect.any(String),
+              "name": expect.any(String)
+            }])
+          }
+        })
+      );
   }));
 });

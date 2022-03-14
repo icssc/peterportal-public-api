@@ -5,10 +5,10 @@ jest.setTimeout(30000)
 
 // Schedule
 describe('POST /graphql/', () => {
-    it('GraphQL: Schedule Query on COMPSCI 161',  () => request
+    it('GraphQL: Schedule Query on COMPSCI Department',  () => request
     .post('/graphql/')
     .send({query:`{
-        schedule(year: 2019, quarter: "Fall", department:"COMPSCI", course_number: "161") {
+        schedule(year: 2019, quarter: "Fall", department:"COMPSCI") {
           year
           quarter
           instructors {
@@ -34,6 +34,7 @@ describe('POST /graphql/', () => {
           course {
             title
             id
+            department
           }
         }
       }`})
@@ -46,7 +47,7 @@ describe('POST /graphql/', () => {
         expect(response.body["data"]).toHaveProperty('schedule');
         expect(Array.isArray(response.body["data"]["schedule"])).toBeTruthy();
         expect(response.body["data"]["schedule"][0]["course"]["title"]).toEqual("Design and Analysis of Algorithms");
-        expect(response.body["data"]["schedule"][0]["course"]["id"]).toEqual("COMPSCI161");
+        expect(response.body["data"]["schedule"][0]["course"]["department"]).toEqual("COMPSCI");
         expect(response.body["data"]["schedule"][0]).toEqual(
           expect.objectContaining({
             "year": "2019",
@@ -66,6 +67,13 @@ describe('POST /graphql/', () => {
             "course": expect.any(Object)
           })
         );
+        expect(response.body["data"]["schedule"][0]["instructors"]).toContainEqual(
+          expect.objectContaining({
+            "name": expect.any(String),
+            "ucinetid": expect.any(String),
+            "department": expect.any(String),
+          })
+        )
     }));
   });
 
