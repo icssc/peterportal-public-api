@@ -11,13 +11,13 @@ async function storeData(data, path) {
 }
 
 // Remove ES response metadata -> parse and save relevant data
-function parsedData(data, path) {
+async function parsedData(data, path) {
     var result = {};
     data['hits']['hits'].forEach((e) => {
         result[e['_id']] = e["_source"]
     })
 
-    storeData(result, path)
+    await storeData(result, path)
 }
 
 module.exports = {storeData, parsedData}
