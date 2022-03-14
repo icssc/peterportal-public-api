@@ -11,7 +11,7 @@ function mapInstructorName() {
         if (shortened_name in name_to_ucinetid) {
             console.log("KEY EXISTS: ", shortened_name , data["name"], data["ucinetid"]);
             console.log("DUPLICATE: ", name_to_ucinetid[shortened_name]);
-            name_to_ucinetid[shortened_name] = name_to_ucinetid[shortened_name ].concat([data["ucinetid"]]);
+            name_to_ucinetid[shortened_name] = name_to_ucinetid[shortened_name].concat([data["ucinetid"]]);
         } else {
             name_to_ucinetid[shortened_name] = [data["ucinetid"]];
         }
