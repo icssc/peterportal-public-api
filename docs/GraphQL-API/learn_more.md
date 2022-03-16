@@ -2,7 +2,7 @@
 
 ## What is GraphQL?
 
-GraphQL is a query language for APIs. It provides the user exactly what they need and nothing more. What's so special about GraphQL? Here are some of it's defining features: 
+GraphQL is a query language for APIs. It provides the user exactly what they need and nothing more. What's so special about GraphQL? Here are some of its defining features: 
 
 * Ask for exactly what you need, and you will get exactly that. Anything GraphQL returns is completely predictable.
 * Get multiple resources in only one request. Unlike REST, a single request can return multiple resources.
