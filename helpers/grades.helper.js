@@ -7,6 +7,7 @@ var {ValidationError} = require("./errors.helper")
 // Constructs a WHERE clause from the query
 function parseGradesParamsToSQL(query) {
     var whereClause = "";
+    var paramsList = [];
 
     const params = {
         'year': query.year ? query.year.split(";") : null,
@@ -19,6 +20,7 @@ function parseGradesParamsToSQL(query) {
     }
 
     Object.keys(params).forEach(function(key) {
+        paramsList.push(params[key])
         let condition = "";
         let errorMsg = (param, paramName) => `Invalid syntax found in parameters. Exception occured at '${param}' in the [${paramName}] query value`;
 
@@ -102,10 +104,13 @@ function parseGradesParamsToSQL(query) {
             (condition.length > 0 ? whereClause += "(" + condition + ")" : null) : 
             (condition.length > 0 ? whereClause += " AND " + "(" + condition + ")" : null)
     })
-    
+
+    var whereString = whereClause === "" ? null : " WHERE " + whereClause;
+    whereString = (query.excludePNP && retVal !== null) ? whereString += "AND (averageGPA != '')" : whereString;
+
     var retVal = {
-        "where": whereClause,
-        "params": params
+        "where": whereString,
+        "params": paramsList
     }
     return retVal;
 }
