@@ -66,6 +66,3 @@ extra_css:
   - css/admonitions.css
 
 extra_javascript:
-  - js/termynal.js
-  - js/forms.js
-  - js/custom.js
