@@ -20,7 +20,11 @@ function parseGradesParamsToSQL(query) {
     }
 
     Object.keys(params).forEach(function(key) {
-        paramsList.push(params[key])
+        if (params[key] !== null && key !== 'division') {
+            params[key].forEach((value) => {
+                paramsList.push(value.toUpperCase());
+            });
+        }
         let condition = "";
         let errorMsg = (param, paramName) => `Invalid syntax found in parameters. Exception occured at '${param}' in the [${paramName}] query value`;
 
@@ -106,7 +110,7 @@ function parseGradesParamsToSQL(query) {
     })
 
     var whereString = whereClause === "" ? null : " WHERE " + whereClause;
-    whereString = (query.excludePNP && retVal !== null) ? whereString += "AND (averageGPA != '')" : whereString;
+    whereString = (query.excludePNP && whereString !== null) ? whereString += "AND (averageGPA != '')" : whereString;
 
     var retVal = {
         "where": whereString,

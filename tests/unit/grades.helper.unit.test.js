@@ -1,5 +1,4 @@
 var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../../helpers/grades.helper')
-
 const expectedSQL = " WHERE (year = ?) AND (quarter = ?) AND (instructor = ?) AND (department = ?) AND (number = ?) AND (code = ?) AND (number_int BETWEEN 100 AND 199)";
 const resObj = {"where": expectedSQL,
                 "params": ['2019-20', 'SPRING', 'CARVALHO, J.', 'ECON', '100B', '62110']};
@@ -17,7 +16,7 @@ describe('Test parseGradesParamsToSQL', () => {
         };
         const sqlParams = parseGradesParamsToSQL(rawParams);
         expect(sqlParams).not.toBeNull();
-        expect(sqlParams.where).toEqual(expectedSQL);
+        expect(sqlParams).toEqual(resObj);
     });
 });
 
