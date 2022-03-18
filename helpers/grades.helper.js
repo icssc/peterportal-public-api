@@ -20,7 +20,7 @@ function parseGradesParamsToSQL(query) {
     }
 
     Object.keys(params).forEach(function(key) {
-        if (params[key] !== null && key !== 'division') {
+        if (key !== 'division' && params[key] !== null) {
             params[key].forEach((value) => {
                 paramsList.push(value.toUpperCase());
             });
