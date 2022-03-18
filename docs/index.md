@@ -1,6 +1,6 @@
 ![petr](https://github.com/icssc-projects/peterportal-public-api/blob/master/public/images/peterportal-banner-logo.png?raw=true)
 
-PeterPortal Public API provides software developers with easy-access to UC Irvine publicly available data such as: courses information, professor information, grade distribution, and schedule of classes.
+PeterPortal Public API provides software developers with easy-access to UC Irvine publicly available data such as: course information, professor information, grade distribution, and schedule of classes.
 
 🔨 Built with:
 
