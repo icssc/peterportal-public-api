@@ -6,11 +6,14 @@ PeterPortal Public API provides software developers with easy-access to UC Irvin
 
 * Express.js
 * GraphQL
+* Serverless
+* MkDocs
 
 👯‍♂️ Works with:
 
 * ElasticSearch
 * SQL
+* AWS
 
 !!! abstract "Our Misson"
     🎇 Our mission is to improve the UCI student experience with course planning and encourage student software developers to create open-source applications that are beneficial to the Anteater community.
