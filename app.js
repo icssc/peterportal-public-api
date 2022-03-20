@@ -116,5 +116,6 @@ module.exports.handler = serverless(app, {binary: ['image/*']});
 
 if (process.env.NODE_ENV == "production") {
   const sentry_wrapper = Sentry.AWSLambda.wrapHandler(serverless(app, {binary: ['image/*']}));
+  module.exports.handler = sentry_wrapper;
 }
 
