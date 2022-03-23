@@ -1,6 +1,7 @@
 var {parseGradesParamsToSQL, queryDatabaseAndResponse} = require('../../helpers/grades.helper')
-
-const expectedSQL = " WHERE (year = '2019-20') AND (quarter = 'SPRING') AND (instructor = 'CARVALHO, J.') AND (department = 'ECON') AND (number = '100B') AND (code = '62110') AND (number_int BETWEEN 100 AND 199)";
+const expectedSQL = " WHERE (year = ?) AND (quarter = ?) AND (instructor = ?) AND (department = ?) AND (number = ?) AND (code = ?) AND (number_int BETWEEN 100 AND 199)";
+const resObj = {"where": expectedSQL,
+                "params": ['2019-20', 'SPRING', 'CARVALHO, J.', 'ECON', '100B', '62110']};
 
 describe('Test parseGradesParamsToSQL', () => {
     it('returns SQL from grades parameters', () => {
@@ -15,13 +16,13 @@ describe('Test parseGradesParamsToSQL', () => {
         };
         const sqlParams = parseGradesParamsToSQL(rawParams);
         expect(sqlParams).not.toBeNull();
-        expect(sqlParams).toEqual(expectedSQL);
+        expect(sqlParams).toEqual(resObj);
     });
 });
 
 describe('Test queryDatabaseAndResponse', () => {
     it('returns SQLite database response to grades query if calculated = false', () => {
-        const falseRes = queryDatabaseAndResponse(expectedSQL, false);
+        const falseRes = queryDatabaseAndResponse(resObj, false);
         expect(falseRes).not.toBeNull();
         expect(falseRes).toMatchObject([
             {
@@ -49,7 +50,7 @@ describe('Test queryDatabaseAndResponse', () => {
     });
 
     it('returns SQLite database response to grades query if calculated = true', () => {
-        const trueRes = queryDatabaseAndResponse(expectedSQL, true);
+        const trueRes = queryDatabaseAndResponse(resObj, true);
         expect(trueRes).not.toBeNull();
         expect(trueRes).toMatchObject({
             gradeDistribution: {

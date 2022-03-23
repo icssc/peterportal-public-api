@@ -7,6 +7,7 @@ var {ValidationError} = require("./errors.helper")
 // Constructs a WHERE clause from the query
 function parseGradesParamsToSQL(query) {
     var whereClause = "";
+    var paramsList = [];
 
     const params = {
         'year': query.year ? query.year.split(";") : null,
@@ -19,6 +20,11 @@ function parseGradesParamsToSQL(query) {
     }
 
     Object.keys(params).forEach(function(key) {
+        if (key !== 'division' && params[key] !== null) {
+            params[key].forEach((value) => {
+                paramsList.push(value.toUpperCase());
+            });
+        }
         let condition = "";
         let errorMsg = (param, paramName) => `Invalid syntax found in parameters. Exception occured at '${param}' in the [${paramName}] query value`;
 
@@ -27,8 +33,8 @@ function parseGradesParamsToSQL(query) {
                 for (year of params[key]) {
                     if (year.match(/\d{4}-\d{2}/)) {
                         condition == "" ? 
-                            condition += "year = '" + year + "'" : 
-                            condition += " OR year = '" + year + "'" 
+                            condition += "year = ?" :
+                            condition += " OR year = ?"
                     } else {
                         throw new ValidationError(errorMsg(year, "year"))
                     }
@@ -38,8 +44,8 @@ function parseGradesParamsToSQL(query) {
                 for (quarter of params[key]) {
                     if (quarter.match(/[a-zA-Z]{4,6}/)) {
                         condition == "" ? 
-                            condition += "quarter = '" + quarter.toUpperCase() + "'" : 
-                            condition += " OR quarter = '" + quarter.toUpperCase() + "'"
+                            condition += "quarter = ?" :
+                            condition += " OR quarter = ?"
                     } else {
                         throw new ValidationError(errorMsg(quarter, "quarter"));
                     }
@@ -49,8 +55,8 @@ function parseGradesParamsToSQL(query) {
                 for (instructor of params[key]) {
                     if (instructor.match(/[a-zA-Z]+, [a-zA-Z]\./)) {
                         condition == "" ? 
-                            condition += "instructor = '" + instructor.toUpperCase() + "'" : 
-                            condition += " OR instructor = '" + instructor.toUpperCase() + "'" 
+                            condition += "instructor = ?" :
+                            condition += " OR instructor = ?"
                     } else {
                         throw new ValidationError(errorMsg(instructor, "instructor"));
                     }
@@ -60,23 +66,23 @@ function parseGradesParamsToSQL(query) {
                 for (department of params[key]) {
                     // TODO: Implement UCI Dept code param validation
                     condition == "" ? 
-                        condition += "department = '" + department.toUpperCase() + "'" : 
-                        condition += " OR department = '" + department.toUpperCase() + "'"
+                        condition += "department = ?" :
+                        condition += " OR department = ?"
                 }
                 break;
             case key === 'number' && params[key] !== null:
                 for (number of params[key]) {
                     condition == "" ? 
-                        condition += "number = '" + number.toUpperCase() + "'" : 
-                        condition += " OR number = '" + number.toUpperCase() + "'"
+                        condition += "number = ?" :
+                        condition += " OR number = ?"
                 }
                 break;
             case key === 'code' && params[key] !== null:
                 for (code of params[key]) {
                     if (code.match(/\d{5}/)) {
                         condition == "" ? 
-                            condition += "code = '" + code.toUpperCase() + "'" : 
-                            condition += " OR code = '" + code.toUpperCase() + "'" 
+                            condition += "code = ?" :
+                            condition += " OR code = ?"
                     } else {
                         throw new ValidationError(errorMsg(code, "code"));
                     }
@@ -102,20 +108,25 @@ function parseGradesParamsToSQL(query) {
             (condition.length > 0 ? whereClause += "(" + condition + ")" : null) : 
             (condition.length > 0 ? whereClause += " AND " + "(" + condition + ")" : null)
     })
-    
-    var retVal = whereClause === "" ? null : " WHERE " + whereClause;
-    retVal = (query.excludePNP && retVal !== null) ? retVal += ` AND (averageGPA != '')` : retVal
+
+    var whereString = whereClause === "" ? null : " WHERE " + whereClause;
+    whereString = (query.excludePNP && whereString !== null) ? whereString += "AND (averageGPA != '')" : whereString;
+
+    var retVal = {
+        "where": whereString,
+        "params": paramsList
+    }
     return retVal;
 }
 
 function fetchGrades(where) {
     let sqlStatement = "SELECT * FROM gradeDistribution";
-    return queryDatabase(where !== null ? sqlStatement + where : sqlStatement).all();
+    return queryDatabase(where.where !== null ? sqlStatement + where.where : sqlStatement).bind(where.params).all();
 }
 
 function fetchInstructors(where) {
     let sqlStatement = "SELECT DISTINCT instructor FROM gradeDistribution";
-    return queryDatabase(where !== null ? sqlStatement + where : sqlStatement).all().map(result => result.instructor);
+    return queryDatabase(where.where !== null ? sqlStatement + where.where : sqlStatement).bind(where.params).all().map(result => result.instructor);
 }
 
 //For GraphQL API
@@ -132,7 +143,7 @@ function fetchAggregatedGrades(where) {
     AVG(NULLIF(averageGPA, '')) as average_gpa,
     COUNT() as count FROM gradeDistribution`;
     
-    return queryDatabase(where != null ? sqlStatement + where : sqlStatement).get();
+    return queryDatabase(where.where != null ? sqlStatement + where.where : sqlStatement).bind(where.params).get();
 }
 
 function queryDatabase(statement) {
@@ -174,15 +185,15 @@ function queryDatabaseAndResponse(where, calculate) {
             instructor,
             type FROM gradeDistribution`;
 
-            result.gradeDistribution = connection.prepare(where !== null ? sqlFunction + where : sqlFunction).get();
-            
-            result.courseList = connection.prepare(where !== null ? sqlCourseList + where : sqlCourseList).all();
+            result.gradeDistribution = connection.prepare(where.where !== null ? sqlFunction + where.where : sqlFunction).bind(where.params).get();
+
+            result.courseList = connection.prepare(where.where !== null ? sqlCourseList + where.where : sqlCourseList).bind(where.params).all();
 
             return result;
         case false:
             let sqlQueryAll = "SELECT * FROM gradeDistribution";
-            const queryResult = connection.prepare(where !== null ? sqlQueryAll + where : sqlQueryAll).all()
-            
+            const queryResult = connection.prepare(where.where !== null ? sqlQueryAll + where.where : sqlQueryAll).bind(where.params).all();
+
             return queryResult;
     }
 
