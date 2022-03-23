@@ -121,12 +121,12 @@ function parseGradesParamsToSQL(query) {
 
 function fetchGrades(where) {
     let sqlStatement = "SELECT * FROM gradeDistribution";
-    return queryDatabase(where !== null ? sqlStatement + where.where : sqlStatement).bind(where.params).all();
+    return queryDatabase(where.where !== null ? sqlStatement + where.where : sqlStatement).bind(where.params).all();
 }
 
 function fetchInstructors(where) {
     let sqlStatement = "SELECT DISTINCT instructor FROM gradeDistribution";
-    return queryDatabase(where !== null ? sqlStatement + where.where : sqlStatement).bind(where.params).all().map(result => result.instructor);
+    return queryDatabase(where.where !== null ? sqlStatement + where.where : sqlStatement).bind(where.params).all().map(result => result.instructor);
 }
 
 //For GraphQL API
@@ -143,7 +143,7 @@ function fetchAggregatedGrades(where) {
     AVG(NULLIF(averageGPA, '')) as average_gpa,
     COUNT() as count FROM gradeDistribution`;
     
-    return queryDatabase(where != null ? sqlStatement + where.where : sqlStatement).bind(where.params).get();
+    return queryDatabase(where.where != null ? sqlStatement + where.where : sqlStatement).bind(where.params).get();
 }
 
 function queryDatabase(statement) {
@@ -185,14 +185,14 @@ function queryDatabaseAndResponse(where, calculate) {
             instructor,
             type FROM gradeDistribution`;
 
-            result.gradeDistribution = connection.prepare(where !== null ? sqlFunction + where.where : sqlFunction).bind(where.params).get();
+            result.gradeDistribution = connection.prepare(where.where !== null ? sqlFunction + where.where : sqlFunction).bind(where.params).get();
 
-            result.courseList = connection.prepare(where !== null ? sqlCourseList + where.where : sqlCourseList).bind(where.params).all();
+            result.courseList = connection.prepare(where.where !== null ? sqlCourseList + where.where : sqlCourseList).bind(where.params).all();
 
             return result;
         case false:
             let sqlQueryAll = "SELECT * FROM gradeDistribution";
-            const queryResult = connection.prepare(where !== null ? sqlQueryAll + where.where : sqlQueryAll).bind(where.params).all();
+            const queryResult = connection.prepare(where.where !== null ? sqlQueryAll + where.where : sqlQueryAll).bind(where.params).all();
 
             return queryResult;
     }

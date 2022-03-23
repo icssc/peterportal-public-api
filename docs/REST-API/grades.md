@@ -188,7 +188,7 @@ Try out one of these quick ways to play with our grades endpoints:
     
     ```
 
-### `/grades/{calculated}`
+### `/grades/calculated`
 **GET a list of grade distribution results via a query/**
 
 #### Parameters
