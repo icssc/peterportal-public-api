@@ -10,8 +10,7 @@ import { getAllCourses, getCourse } from '../helpers/courses.helper';
 import { getAllInstructors, getInstructor } from '../helpers/instructor.helper';
 import { getCourseSchedules, scheduleArgsToQuery } from '../helpers/schedule.helper';
 import { parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades } from '../helpers/grades.helper';
-import { GradeDist, GradeRawData } from '../types/types';
-import { CourseOffering } from "../types/types";
+import { GradeDist, GradeRawData, GradeParams, CourseOffering } from '../types/types';
 
 
 const queryType = new GraphQLObjectType({
@@ -135,7 +134,7 @@ const queryType = new GraphQLObjectType({
         const requestedFields : string[] = Object.keys(parseResolveInfo(info).fieldsByTypeName.GradeDistributionCollection)
       
         // Construct a WHERE clause from the arguments
-        const where : string = parseGradesParamsToSQL(args);
+        const where : GradeParams = parseGradesParamsToSQL(args);
         
         // If requested, retrieve the grade distributions
         let grade_distributions;

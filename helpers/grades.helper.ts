@@ -1,11 +1,12 @@
 import db, { Database } from "better-sqlite3";
 import path from 'path';
 import { ValidationError } from "./errors.helper";
-import { GradeDist, GradeCalculatedData, GradeRawData} from "../types/types"
+import { GradeDist, GradeCalculatedData, GradeRawData, GradeParams} from "../types/types"
 
 // Constructs a WHERE clause from the query
-export function parseGradesParamsToSQL(query) : string{
+export function parseGradesParamsToSQL(query) : GradeParams{
     let whereClause = "";
+    var paramsList = [];
 
     const params = {
         'year': query.year ? query.year.split(";") : null,
@@ -18,6 +19,11 @@ export function parseGradesParamsToSQL(query) : string{
     }
 
     Object.keys(params).forEach(function(key) {
+        if (Array.isArray(params[key]) && params[key] !== null) {
+            params[key].forEach((value) => {
+                paramsList.push(value.toUpperCase());
+            });
+        }
         let condition = "";
         let errorMsg = (param, paramName) => `Invalid syntax found in parameters. Exception occured at '${param}' in the [${paramName}] query value`;
 
@@ -26,8 +32,8 @@ export function parseGradesParamsToSQL(query) : string{
                 for (let year of params[key]) {
                     if (year.match(/^\d{4}-\d{2}$/)) {
                         condition == "" ? 
-                            condition += "year = '" + year + "'" : 
-                            condition += " OR year = '" + year + "'" 
+                            condition += "year = ?" :
+                            condition += " OR year = ?"
                     } else {
                         throw new ValidationError(errorMsg(year, "year"))
                     }
@@ -37,8 +43,8 @@ export function parseGradesParamsToSQL(query) : string{
                 for (let quarter of params[key]) {
                     if (quarter.match(/^[a-zA-Z]{4,6}$/)) {
                         condition == "" ? 
-                            condition += "quarter = '" + quarter.toUpperCase() + "'" : 
-                            condition += " OR quarter = '" + quarter.toUpperCase() + "'"
+                            condition += "quarter = ?" :
+                            condition += " OR quarter = ?"
                     } else {
                         throw new ValidationError(errorMsg(quarter, "quarter"));
                     }
@@ -48,8 +54,8 @@ export function parseGradesParamsToSQL(query) : string{
                 for (let instructor of params[key]) {
                     if (instructor.match(/^[a-zA-Z]+, [a-zA-Z]\.$/)) {
                         condition == "" ? 
-                            condition += "instructor = '" + instructor.toUpperCase() + "'" : 
-                            condition += " OR instructor = '" + instructor.toUpperCase() + "'" 
+                            condition += "instructor = ?" :
+                            condition += " OR instructor = ?"
                     } else {
                         throw new ValidationError(errorMsg(instructor, "instructor"));
                     }
@@ -59,23 +65,23 @@ export function parseGradesParamsToSQL(query) : string{
                 for (let department of params[key]) {
                     // TODO: Implement UCI Dept code param validation
                     condition == "" ? 
-                        condition += "department = '" + department.toUpperCase() + "'" : 
-                        condition += " OR department = '" + department.toUpperCase() + "'"
+                        condition += "department = ?" :
+                        condition += " OR department = ?"
                 }
                 break;
             case key === 'number' && params[key] !== null:
                 for (let number of params[key]) {
                     condition == "" ? 
-                        condition += "number = '" + number.toUpperCase() + "'" : 
-                        condition += " OR number = '" + number.toUpperCase() + "'"
+                        condition += "number = ?" :
+                        condition += " OR number = ?"
                 }
                 break;
             case key === 'code' && params[key] !== null:
                 for (let code of params[key]) {
                     if (code.match(/^\d{5}$/)) {
                         condition == "" ? 
-                            condition += "code = '" + code.toUpperCase() + "'" : 
-                            condition += " OR code = '" + code.toUpperCase() + "'" 
+                            condition += "code = ?" :
+                            condition += " OR code = ?"
                     } else {
                         throw new ValidationError(errorMsg(code, "code"));
                     }
@@ -101,13 +107,18 @@ export function parseGradesParamsToSQL(query) : string{
             (condition.length > 0 ? whereClause += "(" + condition + ")" : null) : 
             (condition.length > 0 ? whereClause += " AND " + "(" + condition + ")" : null)
     });
-    
-    let retVal = whereClause === "" ? null : " WHERE " + whereClause;
-    retVal = (query.excludePNP && retVal !== null) ? retVal += ` AND (averageGPA != '')` : retVal
+
+    let whereString = whereClause === "" ? null : " WHERE " + whereClause;
+    whereString = (query.excludePNP && whereString !== null) ? whereString += "AND (averageGPA != '')" : whereString;
+
+    let retVal = {
+        "where": whereString,
+        "params": paramsList
+    }
     return retVal;
 }
 
-export function fetchGrades(where: string) : GradeRawData {
+export function fetchGrades(where: GradeParams) : GradeRawData {
     let sqlStatement = `SELECT 
     year, 
     quarter, 
@@ -129,16 +140,18 @@ export function fetchGrades(where: string) : GradeRawData {
     gradeNPCount,
     gradeWCount,
     NULLIF(averageGPA, '') as averageGPA FROM gradeDistribution`;
-    return queryDatabase(where !== null ? sqlStatement + where : sqlStatement).all();
+    return queryDatabase(where.where !== null ? sqlStatement + where.where : sqlStatement).bind(where.params).all();
+    
 }
 
-export function fetchInstructors(where: string) : string[] {
+
+export function fetchInstructors(where: GradeParams) : string[] {
     let sqlStatement = "SELECT DISTINCT instructor FROM gradeDistribution";
-    return queryDatabase(where !== null ? sqlStatement + where : sqlStatement).all().map(result => result.instructor);
+    return queryDatabase(where.where !== null ? sqlStatement + where.where : sqlStatement).bind(where.params).all().map(result => result.instructor);
 }
 
 //For GraphQL API
-export function fetchAggregatedGrades(where: string) : GradeDist {
+export function fetchAggregatedGrades(where: GradeParams) : GradeDist {
     let sqlStatement = `SELECT 
     SUM(gradeACount) as sum_grade_a_count, 
     SUM(gradeBCount) as sum_grade_b_count, 
@@ -151,7 +164,7 @@ export function fetchAggregatedGrades(where: string) : GradeDist {
     AVG(NULLIF(averageGPA, '')) as average_gpa,
     COUNT() as count FROM gradeDistribution`;
     
-    return queryDatabase(where != null ? sqlStatement + where : sqlStatement).get();
+    return queryDatabase(where.where != null ? sqlStatement + where.where : sqlStatement).bind(where.params).get();
 }
 
 function queryDatabase(statement: string, connection?: Database) {
@@ -161,7 +174,7 @@ function queryDatabase(statement: string, connection?: Database) {
     return connection.prepare(statement)
 }
 
-export function fetchCalculatedData(where) : GradeCalculatedData{
+export function fetchCalculatedData(where: GradeParams) : GradeCalculatedData{
 
     let result : GradeCalculatedData = {
         gradeDistribution : null,
@@ -193,13 +206,13 @@ export function fetchCalculatedData(where) : GradeCalculatedData{
     instructor,
     type FROM gradeDistribution`;
 
-    result.gradeDistribution = queryDatabase(where !== null ? sqlFunction + where : sqlFunction, connection).get();
-    result.courseList = queryDatabase(where !== null ? sqlCourseList + where : sqlCourseList, connection).all();
+    result.gradeDistribution = connection.prepare(where.where !== null ? sqlFunction + where.where : sqlFunction).bind(where.params).get();
+    result.courseList = connection.prepare(where.where !== null ? sqlCourseList + where.where : sqlCourseList).bind(where.params).all();
     connection.close();
     return result;
 }
 
 //For REST API 
-export function queryDatabaseAndResponse(where: string, calculate: boolean) : GradeRawData | GradeCalculatedData {
+export function queryDatabaseAndResponse(where: GradeParams, calculate: boolean) : GradeRawData | GradeCalculatedData {
     return calculate ? fetchCalculatedData(where) : fetchGrades(where);
 }

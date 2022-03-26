@@ -1,6 +1,6 @@
 ![petr](https://github.com/icssc-projects/peterportal-public-api/blob/master/public/images/peterportal-banner-logo.png?raw=true)
 
-PeterPortal Public API provides software developers with easy-access to UC Irvine publicly available data such as: courses information, professor information, grade distribution, and schedule of classes.
+PeterPortal Public API provides software developers with easy-access to UC Irvine publicly available data such as: course information, professor information, grade distribution, and schedule of classes.
 
 🔨 Built with:
 
@@ -8,11 +8,13 @@ PeterPortal Public API provides software developers with easy-access to UC Irvin
 * TypeScript
 * GraphQL
 * Serverless
+* MkDocs
 
 👯‍♂️ Works with:
 
 * ElasticSearch
 * SQL
+* AWS
 
 !!! abstract "Our Misson"
     🎇 Our mission is to improve the UCI student experience with course planning and encourage student software developers to create open-source applications that are beneficial to the Anteater community.
@@ -26,7 +28,7 @@ Peterportal Public API offers two Web APIs to help you build your app!
 
 ## Where does the data come from?
 
-We consolidate our data directly from official UCI sources such as: UCI Catalogue, UCI Public Records Office, and UCI Webreg. We routinely monitor for updates to ensure you get the most accurate information to serve on your application.
+We consolidate our data directly from official UCI sources such as: UCI Catalogue, UCI Public Records Office, and UCI WebSoc. We routinely monitor for updates to ensure you get the most accurate information to serve on your application.
 
 ## Disclaimer
 👩‍💻 We are currently in the early stages for this project. Anyone is welcome to integrate this API into your project as a tool. However, if you choose to do so, please be aware that this project is currently in its early release phase. Every user will be considered as testers and are highly encouraged to do their part and submit a bug report if you encounter any issues. Our team will respond as quickly as possible to resolve the issue. 

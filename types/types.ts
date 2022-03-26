@@ -121,3 +121,8 @@ export interface GradeData {
     gradeWCount: number;
     averageGPA: number;
 }
+
+export interface GradeParams {
+    where: string;
+    params: string[];
+}

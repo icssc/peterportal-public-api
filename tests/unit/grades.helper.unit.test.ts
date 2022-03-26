@@ -1,7 +1,9 @@
 import {parseGradesParamsToSQL, queryDatabaseAndResponse, fetchInstructors} from '../../helpers/grades.helper';
-import {GradeRawData, GradeCalculatedData } from "../../types/types";
+import {GradeRawData, GradeCalculatedData, GradeParams } from "../../types/types";
 
-const expectedSQL = " WHERE (year = '2019-20') AND (quarter = 'SPRING') AND (instructor = 'CARVALHO, J.') AND (department = 'ECON') AND (number = '100B') AND (code = '62110') AND (number_int BETWEEN 100 AND 199)";
+const expectedSQL = " WHERE (year = ?) AND (quarter = ?) AND (instructor = ?) AND (department = ?) AND (number = ?) AND (code = ?) AND (number_int BETWEEN 100 AND 199)";
+const resObj : GradeParams = {"where": expectedSQL,
+                "params": ['2019-20', 'SPRING', 'CARVALHO, J.', 'ECON', '100B', '62110']};
 
 describe('Test parseGradesParamsToSQL', () => {
     it('returns SQL from grades parameters', () => {
@@ -14,15 +16,15 @@ describe('Test parseGradesParamsToSQL', () => {
             quarter: 'SPRING',
             division: 'UpperDiv'
         };
-        const sqlParams : string = parseGradesParamsToSQL(rawParams);
+        const sqlParams : GradeParams = parseGradesParamsToSQL(rawParams);
         expect(sqlParams).not.toBeNull();
-        expect(sqlParams).toEqual(expectedSQL);
+        expect(sqlParams).toEqual(resObj);
     });
 });
 
 describe('Test queryDatabaseAndResponse', () => {
     it('returns SQLite database response to grades query if calculated = false', () => {
-        const falseRes : GradeRawData | GradeCalculatedData = queryDatabaseAndResponse(expectedSQL, false);
+        const falseRes : GradeRawData | GradeCalculatedData = queryDatabaseAndResponse(resObj, false);
         expect(falseRes).not.toBeNull();
         expect(falseRes).toMatchObject([
             {
@@ -50,7 +52,7 @@ describe('Test queryDatabaseAndResponse', () => {
     });
 
     it('returns SQLite database response to grades query if calculated = true', () => {
-        const trueRes : GradeRawData | GradeCalculatedData = queryDatabaseAndResponse(expectedSQL, true);
+        const trueRes : GradeRawData | GradeCalculatedData = queryDatabaseAndResponse(resObj, true);
         expect(trueRes).not.toBeNull();
         expect(trueRes).toMatchObject({
             gradeDistribution: {
@@ -91,7 +93,7 @@ describe('Test fetchInstructors', () => {
           department: 'I&C SCI',
           number: '46',
       };
-      const sqlParams : string = parseGradesParamsToSQL(rawParams);
+      const sqlParams : GradeParams = parseGradesParamsToSQL(rawParams);
       const instructors : string[] = fetchInstructors(sqlParams);
       expect(instructors).not.toBeNull();
       expect(Array.isArray(instructors)).toBeTruthy();
