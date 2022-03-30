@@ -6,7 +6,8 @@ const {
   GraphQLList,
   GraphQLScalarType,
   GraphQLNonNull,
-  GraphQLBoolean
+  GraphQLBoolean,
+  GraphQLInt
 } = require('graphql');
 const {
 	parseResolveInfo,
@@ -18,6 +19,9 @@ var {getAllInstructors, getInstructor, getUCINetIDFromName} = require('../helper
 var {getCourseSchedules} = require("../helpers/schedule.helper")
 var {parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades} = require('../helpers/grades.helper');
 const { ValidationError } = require('../helpers/errors.helper');
+var {createErrorJSON} = require("../helpers/errors.helper")
+const { getWeek } = require('../helpers/week.helper');
+const { json } = require('express');
 
 const instructorType = new GraphQLObjectType({
   name: 'Instructor',
@@ -253,6 +257,16 @@ const courseOfferingType = new GraphQLObjectType({
   })
 })
 
+const weekType = new GraphQLObjectType({
+  name: 'Week',
+  fields: () => ({
+    week: { type: GraphQLInt },
+    quarter: { type: GraphQLString },
+    display: { type: GraphQLString }
+  })
+});
+
+
 // Validate Schedule Query Arguments
 function validateScheduleArgs(args) {
   // Assert that a term is provided (year and quarter)
@@ -439,6 +453,26 @@ const queryType = new GraphQLObjectType({
       description: "Return schedule from websoc."
     },
 
+    // return week of 'date' argument or current week if 'date' is empty.
+    week: {
+      type: weekType,
+
+      //date argument
+      args: {
+        year: { type: GraphQLString, description: "Must be in ISO 8601 extended format `YYYY-MM-DDTHH:mm:ss.sssZ`. If argument is empty, current date is used. "},
+        month: { type: GraphQLString, description: "Must be in ISO 8601 extended format `YYYY-MM-DDTHH:mm:ss.sssZ`. If argument is empty, current date is used. "},
+        day: { type: GraphQLString, description: "Must be in ISO 8601 extended format `YYYY-MM-DDTHH:mm:ss.sssZ`. If argument is empty, current date is used. "}
+      },
+
+      //calls getWeek(), fetching from UCI's academic calendar
+      resolve: (_, {year, month, day}) => {
+       return getWeek(year, month, day).then(val =>{
+         return val
+      //  }).catch( err => {
+      //   return createErrorJSON(400, "Bad Request: Invalid parameter", "Unable to complete websoc-api query");
+       })
+      }
+    },
     grades: {
       type: gradeDistributionCollectionType,
 
