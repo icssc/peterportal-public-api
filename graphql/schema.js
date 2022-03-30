@@ -459,9 +459,9 @@ const queryType = new GraphQLObjectType({
 
       //date argument
       args: {
-        year: { type: GraphQLString, description: "Must be in ISO 8601 extended format `YYYY-MM-DDTHH:mm:ss.sssZ`. If argument is empty, current date is used. "},
-        month: { type: GraphQLString, description: "Must be in ISO 8601 extended format `YYYY-MM-DDTHH:mm:ss.sssZ`. If argument is empty, current date is used. "},
-        day: { type: GraphQLString, description: "Must be in ISO 8601 extended format `YYYY-MM-DDTHH:mm:ss.sssZ`. If argument is empty, current date is used. "}
+        year: { type: GraphQLString, description: "Must be in ISO 8601 extended format `YYYY`. Must include all year, month and day or none. "},
+        month: { type: GraphQLString, description: "Must be in ISO 8601 extended format `MM`. Must include all year, month and day or none. "},
+        day: { type: GraphQLString, description: "Must be in ISO 8601 extended format `DD`. Must include all year, month and day or none. "}
       },
 
       //calls getWeek(), fetching from UCI's academic calendar
