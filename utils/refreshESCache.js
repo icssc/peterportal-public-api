@@ -9,19 +9,19 @@ const dotenv = require('dotenv').config();
 const {storeData, parsedData} = require("./fileStore.helper");
 const {mapInstructorName} = require("./mapInstructorID");
 
-// Send request to ES server to query the 'courses' index for all courses in the database
-// to be stored locally in the ./cache directory.
-fetch(process.env.ELASTIC_ENDPOINT_URL + 'courses/_search/', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        "size": 10000
-    })
-})
-.then((res) => res.json())
-.then((data) => {
+async function fetchCourses() {
+    // Send request to ES server to query the 'courses' index for all courses in the database
+    // to be stored locally in the ./cache directory.
+    const res = await fetch(process.env.ELASTIC_ENDPOINT_URL + 'courses/_search/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "size": 10000
+        })
+    });
+    const data = await res.json();
     console.log("Received response from ES/courses, saving data... ")
     // Save raw response from ES
     // storeData(data, path.resolve('cache', 'raw_es_courses_cache.json'))
@@ -35,27 +35,31 @@ fetch(process.env.ELASTIC_ENDPOINT_URL + 'courses/_search/', {
     storeData(result, path.resolve('cache', 'course_lookup.json'))
     
     parsedData(data, path.resolve('cache', 'parsed_courses_cache.json'))
-})
+}
 
-// Send request to ES server to query the 'professors' index for all professors in the database
-// to be stored locally in the ./cache directory.
-fetch(process.env.ELASTIC_ENDPOINT_URL + 'professors/_search/', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        "size": 10000
+async function fetchInstructors() {
+    // Send request to ES server to query the 'professors' index for all professors in the database
+    // to be stored locally in the ./cache directory.
+    const res = await fetch(process.env.ELASTIC_ENDPOINT_URL + 'professors/_search/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "size": 10000
+        })
     })
-})
-.then((res) => res.json())
-.then((data) => {
+    const data = await res.json();
     // Save raw response from ES
     // storeData(data, path.resolve('cache', 'professors_cache.json'))
     console.log("Received response from ES/professors, saving data... ")
 
-    parsedData(data, path.resolve('./cache', 'parsed_professor_cache.json'))
-})
+    await parsedData(data, path.resolve('./cache', 'parsed_professor_cache.json'))
 
+    //Create the mapping from shortened instructor names to ucinetids.
+    mapInstructorName();
+}
 
-mapInstructorName();
+fetchCourses();
+fetchInstructors();
+

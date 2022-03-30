@@ -67,5 +67,4 @@ extra_css:
 
 extra_javascript:
   - js/termynal.js
-  - js/forms.js
   - js/custom.js
