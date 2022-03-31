@@ -21,6 +21,10 @@ function getWeek(yearInput, month, day){
         //if none of year/month/day are missing
         else{
             //validate year, month, day
+            if (yearInput.length != 4 || month.length != 2 || day.length != 2){
+                reject(new Error())
+                return;
+            }
             let dateString = yearInput + "/" + month + "/" + day
             date = new Date(dateString)
             if (isNaN(date)){
@@ -99,7 +103,14 @@ async function getQuarterMapping(year){
         // maps quarter description to day range
         let quarterToDayMapping = {}
         // url to academic calendar
-        let url = `https://reg.uci.edu/calendars/quarterly/${year}-${year + 1}/quarterly${year % 100}-${(year % 100) + 1}.html`
+        let currYear = year % 100
+        let nextYear = (year % 100) + 1
+
+        let currYearString = currYear.toString().padStart(2, '0')
+        let nextYearString = nextYear.toString().padStart(2, '0')
+
+
+        let url = `https://reg.uci.edu/calendars/quarterly/${year}-${year + 1}/quarterly${currYearString}-${nextYearString}.html`
         let res = await fetch(url);
         let text = await res.text();
         // scrape the calendar
