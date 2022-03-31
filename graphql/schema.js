@@ -461,8 +461,12 @@ const queryType = new GraphQLObjectType({
 
       //calls getWeek(), fetching from UCI's academic calendar
       resolve: async (_, {year, month, day}) => {
-        const results = await getWeek(year, month, day);
-        return results;
+        try{
+          return await getWeek(year, month, day);
+        }
+        catch(e) {
+          throw new ValidationError("Invalid year, month or day. Must include all year, month and day or none.")
+        }
       },
       description: "Must include all, year, month and day or none. "
     },

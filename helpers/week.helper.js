@@ -15,6 +15,7 @@ function getWeek(yearInput, month, day){
             //if one of year/month/day is missing
             else{
                 reject(new Error())
+                return;
             }
         }
         //if none of year/month/day are missing
@@ -24,6 +25,7 @@ function getWeek(yearInput, month, day){
             date = new Date(dateString)
             if (isNaN(date)){
                 reject(new Error())
+                return;
             }
         }
 
