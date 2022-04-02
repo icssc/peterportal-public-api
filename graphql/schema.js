@@ -6,7 +6,8 @@ const {
   GraphQLList,
   GraphQLScalarType,
   GraphQLNonNull,
-  GraphQLBoolean
+  GraphQLBoolean,
+  GraphQLInt
 } = require('graphql');
 const {
 	parseResolveInfo,
@@ -18,6 +19,7 @@ var {getAllInstructors, getInstructor, getUCINetIDFromName} = require('../helper
 var {getCourseSchedules} = require("../helpers/schedule.helper")
 var {parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades} = require('../helpers/grades.helper');
 const { ValidationError } = require('../helpers/errors.helper');
+const { getWeek } = require('../helpers/week.helper');
 
 const instructorType = new GraphQLObjectType({
   name: 'Instructor',
@@ -251,6 +253,16 @@ const courseOfferingType = new GraphQLObjectType({
   })
 })
 
+const weekType = new GraphQLObjectType({
+  name: 'Week',
+  fields: () => ({
+    week: { type: GraphQLInt, description: "School week between 1-10" },
+    quarter: { type: GraphQLString, description: "Quarter and year" },
+    display: { type: GraphQLString, description: "Displays the week and quarter formatted" }
+  })
+});
+
+
 // Validate Schedule Query Arguments
 function validateScheduleArgs(args) {
   // Assert that a term is provided (year and quarter)
@@ -364,7 +376,8 @@ const queryType = new GraphQLObjectType({
 
       // specify args to query by (ucinetid)
       args: {
-        ucinetid: { type: GraphQLNonNull(GraphQLString), description: "ucinetid of a specific instructor. Ex: mikes"}
+        ucinetid: { type: GraphQLNonNull(GraphQLString),
+        description: "ucinetid of a specific instructor. Ex: mikes"}
       },
 
       // define function to get a instructor
@@ -403,7 +416,7 @@ const queryType = new GraphQLObjectType({
     },
 
     schedule: {
-      type: GraphQLList(courseOfferingType),
+      type:  GraphQLList(courseOfferingType),
 
       args: {
         year: { type: GraphQLNonNull(GraphQLFloat), description: "Year of the term. Required." },
@@ -435,6 +448,28 @@ const queryType = new GraphQLObjectType({
       },
 
       description: "Return schedule from websoc."
+    },
+
+    // return week of 'date' argument or current week if 'date' is empty.
+    week: {
+      type: weekType,
+      //date argument
+      args: {
+        year: { type: GraphQLString, description: "Must be in ISO 8601 extended format `YYYY`. "},
+        month: { type: GraphQLString, description: "Must be in ISO 8601 extended format `MM`. "},
+        day: { type: GraphQLString, description: "Must be in ISO 8601 extended format `DD`. "}
+      },
+
+      //calls getWeek(), fetching from UCI's academic calendar
+      resolve: async (_, {year, month, day}) => {
+        try{
+          return await getWeek(year, month, day);
+        }
+        catch(e) {
+          throw new ValidationError("Invalid year, month or day. Must include all year, month and day or none.")
+        }
+      },
+      description: "Must include all, year, month and day or none. "
     },
 
     grades: {

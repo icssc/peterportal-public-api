@@ -2,7 +2,6 @@ var {callWebSocAPI} = require('websoc-api');
 
 var {getCourse} = require('../helpers/courses.helper')
 
-
 // Format Course Offering
 // Given a course from the websoc api, we need to format it for graphql
 // and inject some addtional information such as the course id, year, and quarter
@@ -46,5 +45,5 @@ async function getCourseSchedules(query) {
     }
     return offerings
 }
-  
+
 module.exports = {getCourseSchedules}
