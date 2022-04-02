@@ -40,7 +40,7 @@
     "serverless-plugin-include-dependencies": "^4.1.0",
     "serverless-plugin-lambda-insights": "^1.0.10",
     "underscore": "^1.11.0",
-    "websoc-api": "^1.0.1"
+    "websoc-api": "^1.0.3"
   },
   "devDependencies": {
     "jest": "^27.4.5",
