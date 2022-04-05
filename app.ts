@@ -8,7 +8,7 @@ import path from 'path';
 import logger from 'morgan';
 import compression from 'compression';
 import expressPlayground from 'graphql-playground-middleware-express'
-import sentry from '@sentry/serverless';
+import * as Sentry from '@sentry/serverless';
 
 import restRouter from './rest/versionController';
 import graphQLRouter from './graphql/router';
@@ -20,7 +20,7 @@ app.set('trust proxy', 1);
 
 
 if (process.env.NODE_ENV == 'production') {
-  sentry.AWSLambda.init({
+  Sentry.AWSLambda.init({
     dsn: process.env.SENTRY_DSN,
     tracesSampleRate: 1.0,
   });
@@ -98,12 +98,10 @@ app.use(function(err, req, res, next) {
   res.status(status).json(createErrorJSON(status, err.message, ""));
 });
 
-let serverless_handler;
+let serverless_handler: any = serverless(app, {binary: ['image/*']});
 if (process.env.NODE_ENV == "production") {
-  serverless_handler = sentry.AWSLambda.wrapHandler(serverless(app, {binary: ['image/*']}));
-} else {
-  serverless_handler = serverless(app, {binary: ['image/*']});
-}
+  serverless_handler = Sentry.AWSLambda.wrapHandler(serverless_handler);
+} 
 
 export default app;
 export const handler = serverless_handler;
