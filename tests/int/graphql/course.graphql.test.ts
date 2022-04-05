@@ -292,7 +292,7 @@ describe('POST /graphql/', () => {
             "num_on_waitlist": expect.any(Number),
             "num_requested": expect.any(Number),
             "num_new_only_reserved": expect.any(Number),
-            "units": expect.any(Number),
+            "units": expect.any(String),
             "restrictions": expect.any(String),
             "status": expect.any(String),
             "course": expect.any(Object)

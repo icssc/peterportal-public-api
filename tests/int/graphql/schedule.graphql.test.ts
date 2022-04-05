@@ -46,7 +46,6 @@ describe('POST /graphql/', () => {
         expect(response.body).not.toHaveProperty("errors");
         expect(response.body["data"]).toHaveProperty('schedule');
         expect(Array.isArray(response.body["data"]["schedule"])).toBeTruthy();
-        expect(response.body["data"]["schedule"][0]["course"]["title"]).toEqual("Design and Analysis of Algorithms");
         expect(response.body["data"]["schedule"][0]["course"]["department"]).toEqual("COMPSCI");
         expect(response.body["data"]["schedule"][0]).toEqual(
           expect.objectContaining({
@@ -61,7 +60,7 @@ describe('POST /graphql/', () => {
             "num_on_waitlist": expect.any(Number),
             "num_requested": expect.any(Number),
             "num_new_only_reserved": expect.any(Number),
-            "units": expect.any(Number),
+            "units": expect.any(String),
             "restrictions": expect.any(String),
             "status": expect.any(String),
             "course": expect.any(Object)

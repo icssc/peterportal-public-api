@@ -97,7 +97,7 @@ const courseOfferingType = new GraphQLObjectType({
     restrictions: { type: GraphQLString },
     section: { type: sectionInfoType },  
     status: { type: GraphQLString },
-    units: { type: GraphQLFloat },
+    units: { type: GraphQLString },
     course: { 
       type: courseType,
       resolve: (offering) => {
