@@ -3,7 +3,6 @@ import { CourseOffering } from '../types/types';
 import { WebsocResponse } from '../types/websoc.types';
 import { getCourse } from './courses.helper';
 
-
 // Format Course Offering
 // Given a course from the websoc api, we need to format it for graphql
 // and inject some addtional information such as the course id, year, and quarter

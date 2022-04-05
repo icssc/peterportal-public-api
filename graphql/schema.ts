@@ -5,11 +5,14 @@ import { courseType } from "./course";
 import { instructorType } from "./instructor";
 import { gradeDistributionCollectionType } from "./grades";
 import { validateScheduleArgs, courseOfferingType } from './schedule';
+import { weekType } from './week';
+import { ValidationError } from '../helpers/errors.helper';
 
 import { getAllCourses, getCourse } from '../helpers/courses.helper';
 import { getAllInstructors, getInstructor } from '../helpers/instructor.helper';
 import { getCourseSchedules, scheduleArgsToQuery } from '../helpers/schedule.helper';
 import { parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades } from '../helpers/grades.helper';
+import { getWeek } from '../helpers/week.helper';
 import { GradeDist, GradeRawData, GradeParams, CourseOffering } from '../types/types';
 
 
@@ -112,6 +115,28 @@ const queryType = new GraphQLObjectType({
       },
 
       description: "Return schedule from websoc."
+    },
+
+    // return week of 'date' argument or current week if 'date' is empty.
+    week: {
+      type: weekType,
+      //date argument
+      args: {
+        year: { type: GraphQLString, description: "Must be in ISO 8601 extended format `YYYY`. "},
+        month: { type: GraphQLString, description: "Must be in ISO 8601 extended format `MM`. "},
+        day: { type: GraphQLString, description: "Must be in ISO 8601 extended format `DD`. "}
+      },
+
+      //calls getWeek(), fetching from UCI's academic calendar
+      resolve: async (_, {year, month, day}) => {
+        try{
+          return await getWeek(year, month, day);
+        }
+        catch(e) {
+          throw new ValidationError("Invalid year, month or day. Must include all year, month and day or none.")
+        }
+      },
+      description: "Must include all, year, month and day or none. "
     },
 
     grades: {
