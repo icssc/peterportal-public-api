@@ -28,7 +28,7 @@ plugins:
   - serverless-plugin-common-excludes
   # - serverless-domain-manager
   - serverless-plugin-lambda-insights
-  - serverless-esbuild 
+  - serverless-webpack
 
 
 custom:
