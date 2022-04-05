@@ -45,6 +45,8 @@ custom:
   #   stage: ${self:provider.stage}
   lambdaInsights:
     defaultLambdaInsights: true #enables Lambda Insights for all functions
+  webpack:
+    includeModules: true
 
 
 functions:
