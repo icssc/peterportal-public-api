@@ -6,7 +6,7 @@ module.exports = {
   mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
   entry: slsw.lib.entries,
   resolve: {
-    extensions: ['.ts', 'tsx']
+    extensions: ['.ts', 'tsx', '.js']
   },
   target: 'node',
   module: {

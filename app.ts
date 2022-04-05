@@ -8,7 +8,7 @@ import path from 'path';
 import logger from 'morgan';
 import compression from 'compression';
 import expressPlayground from 'graphql-playground-middleware-express'
-import * as sentry from '@sentry/serverless';
+import sentry from '@sentry/serverless';
 
 import restRouter from './rest/versionController';
 import graphQLRouter from './graphql/router';
