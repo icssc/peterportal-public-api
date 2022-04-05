@@ -1,5 +1,4 @@
-var fetch = require('node-fetch')
-var cheerio = require('cheerio')
+import cheerio from "cheerio";
 
 /**
  * Get the current week and quarter. A display string is also provided.
@@ -244,4 +243,5 @@ function addDays(date, days) {
     date.setDate(date.getDate() + days);
     return date;
 }
-module.exports = {getWeek}
+
+export { getWeek };
