@@ -1,4 +1,5 @@
 import cheerio from "cheerio";
+import fetch from "node-fetch";
 
 /**
  * Get the current week and quarter. A display string is also provided.
