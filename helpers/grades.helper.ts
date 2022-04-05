@@ -111,7 +111,7 @@ export function parseGradesParamsToSQL(query) : GradeParams{
     let whereString = whereClause === "" ? null : " WHERE " + whereClause;
     whereString = (query.excludePNP && whereString !== null) ? whereString += "AND (averageGPA != '')" : whereString;
 
-    let retVal = {
+    let retVal: GradeParams = {
         "where": whereString,
         "params": paramsList
     }
