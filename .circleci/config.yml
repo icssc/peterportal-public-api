@@ -44,10 +44,10 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v4-dependencies-{{ .Branch }}
 
-      - run:
-          name: Install Serverless CLI 
-          command: |
-            npm install -g serverless
+      # - run:
+      #     name: Install Serverless CLI 
+      #     command: |
+      #       npm install -g serverless
 
       - run: 
           name: Install dependencies
