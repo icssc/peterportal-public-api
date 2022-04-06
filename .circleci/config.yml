@@ -33,9 +33,7 @@ workflows:
 
 jobs:
   build:
-    executor: 
-      name: lambda_ci/lambda_executor
-      lambda_runtime: 'nodejs12.x'
+    executor: serverless/default
     steps:
       - checkout
       - create-env-file
