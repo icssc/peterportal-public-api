@@ -28,7 +28,6 @@ workflows:
             branches:
               only:
                 - master
-                - typescript-rewrite
 
 jobs:
   build:
@@ -57,7 +56,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v4-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+          key: v4-dependencies-{{ .Branch }}-{{ checksum "package-lock.json" }}
 
       - run: 
           name: Run tests with coverage
