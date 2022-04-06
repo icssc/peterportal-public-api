@@ -65,7 +65,7 @@ jobs:
           command: npm test
 
       - aws-cli/setup
-
+      - serverless/setup
       - run:
           name: Deploy application
           command: sls deploy
