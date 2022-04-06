@@ -7,7 +7,7 @@ export class ValidationError extends Error {
     }
 }
 
-export function createErrorJSON(status, error, message) : ErrorType {
+export function createErrorJSON(status: number, error: string, message: string) : ErrorType {
     return {
         "timestamp": new Date().toUTCString(),
         "status": status,

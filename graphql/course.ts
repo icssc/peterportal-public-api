@@ -7,7 +7,7 @@ import { getCourseSchedules, scheduleArgsToQuery } from '../helpers/schedule.hel
 import { getInstructor } from '../helpers/instructor.helper';
 import { getCourse } from '../helpers/courses.helper';
 
-const courseType = new GraphQLObjectType({
+const courseType: GraphQLObjectType = new GraphQLObjectType({
     name: 'Course',
   
     // fields must match schema from database
@@ -26,21 +26,21 @@ const courseType = new GraphQLObjectType({
       instructor_history: { 
         type: new GraphQLList(instructorType),
         resolve: (course) => {
-          return course.professor_history.map(instructor_netid => getInstructor(instructor_netid));
+          return course.professor_history.map((instructor_netid: string) => getInstructor(instructor_netid));
         } 
       },
       prerequisite_tree: { type: GraphQLString },
       prerequisite_list: { 
         type: new GraphQLList(courseType),
         resolve: (course) => {
-          return course.prerequisite_list.map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
+          return course.prerequisite_list.map((prereq_id: string) => getCourse(prereq_id.replace(/ /g, "")));
         }
       },
       prerequisite_text: { type: GraphQLString },
       prerequisite_for: { 
         type: new GraphQLList(courseType),
         resolve: (course) => {
-          return course.prerequisite_for.map(prereq_id => getCourse(prereq_id.replace(/ /g, "", "")));
+          return course.prerequisite_for.map((prereq_id: string) => getCourse(prereq_id.replace(/ /g, "")));
         }
       },
       repeatability: { type: GraphQLString },

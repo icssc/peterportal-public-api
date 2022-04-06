@@ -23,7 +23,7 @@ router.get("/raw", async (req, res) => {
         const results : GradeRawData = fetchGrades(where); // false for raw data
         res.send(results)
     } catch (err) {
-        if (err.name === "ValidationError") {
+        if (err instanceof ValidationError) {
             res.status(400).send(createErrorJSON(
                 400, 
                 "Bad Request: Invalid syntax in parameters", 

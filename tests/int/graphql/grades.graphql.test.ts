@@ -126,7 +126,7 @@ describe('POST /graphql/', () => {
       expect(response.body).toHaveProperty('data');
       expect(response.body).not.toHaveProperty("errors");
       expect(response.body["data"]).toHaveProperty('grades');
-      response.body["data"]["grades"]["grade_distributions"].forEach( grade_dist => {
+      response.body["data"]["grades"]["grade_distributions"].forEach( (grade_dist: any) => {
           let year = grade_dist["course_offering"]["year"];
           expect(year == "2019-20" || year == "2018-19").toBeTruthy();
       });

@@ -6,9 +6,9 @@ import { GradeDist, GradeCalculatedData, GradeRawData, GradeParams} from "../typ
 // Constructs a WHERE clause from the query
 export function parseGradesParamsToSQL(query) : GradeParams{
     let whereClause = "";
-    var paramsList = [];
+    var paramsList: string[] = [];
 
-    const params = {
+    const params : { [key: string]: any; } = {
         'year': query.year ? query.year.split(";") : null,
         'quarter': query.quarter ? query.quarter.split(";") : null,
         'instructor': query.instructor ? query.instructor.split(";") : null,
@@ -20,12 +20,12 @@ export function parseGradesParamsToSQL(query) : GradeParams{
 
     Object.keys(params).forEach(function(key) {
         if (Array.isArray(params[key]) && params[key] !== null) {
-            params[key].forEach((value) => {
+            params[key].forEach((value: string) => {
                 paramsList.push(value.toUpperCase());
             });
         }
         let condition = "";
-        let errorMsg = (param, paramName) => `Invalid syntax found in parameters. Exception occured at '${param}' in the [${paramName}] query value`;
+        let errorMsg = (param: string, paramName: string) => `Invalid syntax found in parameters. Exception occured at '${param}' in the [${paramName}] query value`;
 
         switch(true) {
             case key === 'year' && params[key] !== null:

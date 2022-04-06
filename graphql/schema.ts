@@ -163,7 +163,7 @@ const queryType = new GraphQLObjectType({
         
         // If requested, retrieve the grade distributions
         let grade_distributions;
-        let gradeResults : GradeRawData;
+        let gradeResults : GradeRawData = undefined;
         if (requestedFields.includes('grade_distributions')) {
           gradeResults = fetchGrades(where)
 
@@ -201,7 +201,7 @@ const queryType = new GraphQLObjectType({
         }
         
         // If requested, retrieve the aggregate
-        let aggregate : GradeDist;
+        let aggregate : GradeDist = undefined;
         if (requestedFields.includes('aggregate')) {
           const aggregateResult = fetchAggregatedGrades(where)
       
@@ -221,7 +221,7 @@ const queryType = new GraphQLObjectType({
         }
 
         // If requested, retrieve the instructors
-        let instructors : string[];
+        let instructors : string[] = undefined;
         if (requestedFields.includes('instructors')) {
           if (gradeResults) {
             // If the grade results exist, we can get the instructors from there

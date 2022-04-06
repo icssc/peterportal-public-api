@@ -60,7 +60,7 @@ export async function getCourseSchedules(query) : Promise<CourseOffering[]>{
     for (const school of results["schools"]) {
         for (const dept of school["departments"]) {
             for (const course of dept["courses"]) {
-                const courseID = (course["deptCode"] + course["courseNumber"]).replace(/ /g, "");
+                const courseID = (dept["deptCode"] + course["courseNumber"]).replace(/ /g, "");
                 course["sections"].forEach(section => {
                     offerings.push(
                         _formatCourseOffering(section, {course: getCourse(courseID), year, quarter})

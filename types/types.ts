@@ -2,7 +2,7 @@ import { Meeting, SectionGQL } from "./websoc.types";
 
 export interface Error {
     timestamp: string;
-    status: string;
+    status: number;
     error: string;
     message: string
 }

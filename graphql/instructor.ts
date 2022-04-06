@@ -4,7 +4,7 @@ import { courseType } from './course'
 import { getInstructor } from '../helpers/instructor.helper';
 import { getCourse } from '../helpers/courses.helper';
 
-const instructorType = new GraphQLObjectType({
+const instructorType: GraphQLObjectType = new GraphQLObjectType({
   name: 'Instructor',
   
   fields: () => ({

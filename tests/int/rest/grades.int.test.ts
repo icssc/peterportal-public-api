@@ -1,5 +1,6 @@
 import request from '../api.int.helper';
-import {GradeRawData, GradeCalculatedData} from "../../../types/types"
+import {GradeRawData, GradeCalculatedData, GradeData} from "../../../types/types"
+import { Error } from 'types/types'
 
 jest.setTimeout(30000)
 
@@ -112,7 +113,7 @@ describe('GET /grades/raw', () => {
     .then((response) => {
         expect(Array.isArray(response.body)).toBeTruthy();
         expect(response.body.length).toBeGreaterThan(0);
-        response.body.map((resp) => {
+        response.body.map((resp: GradeData) => {
             expect(resp).toEqual(expect.objectContaining({
                 "year": expect.any(String),
                 "instructor": "PATTIS, R.",
