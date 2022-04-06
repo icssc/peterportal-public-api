@@ -4,7 +4,7 @@ service: peterportal-api
 useDotenv: true
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs16.x
   region: us-east-1
   stage: dev
   timeout: 10
