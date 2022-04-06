@@ -12,7 +12,7 @@ router.get("/all", function (req, res, next) {
 
 router.get("/:ucinetid", function (req, res, next) {
     const instructor : Instructor = getInstructor(req.params.ucinetid);
-    instructor ? res.json(instructor) : res.status(404).json(createErrorJSON(404, "Bad Request: Invalid parameter", "Instructor not found"));
+    instructor ? res.json(instructor) : res.status(404).json(createErrorJSON(404, "Not Found", "Instructor not found"));
 })
 
 export default router;

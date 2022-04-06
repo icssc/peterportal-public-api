@@ -10,7 +10,6 @@
       "watch": true,
       "alwaysStrict": true,
       "allowJs": true,
-      "strict": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
       "esModuleInterop": true,

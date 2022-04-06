@@ -42,7 +42,7 @@ describe('GET /instructors/randomguy', () => {
         const result : Error = response.body;
         expect(result).toHaveProperty('timestamp');
         expect(result['status']).toEqual(404);
-        expect(result['error']).toEqual("Bad Request: Invalid parameter");
+        expect(result['error']).toEqual("Not Found");
         expect(result['message']).toEqual("Instructor not found");
     }));
 });

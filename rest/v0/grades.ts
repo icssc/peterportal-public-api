@@ -3,7 +3,7 @@ const router = express.Router();
 
 import { createErrorJSON, ValidationError } from '../../helpers/errors.helper';
 import { parseGradesParamsToSQL, fetchCalculatedData, fetchGrades } from '../../helpers/grades.helper';
-import { GradeCalculatedData, GradeRawData, GradeParams } from '../../types/types';
+import { GradeCalculatedData, GradeRawData, WhereParams } from '../../types/types';
 
 router.get("/raw", async (req, res) => {
     
@@ -19,7 +19,7 @@ router.get("/raw", async (req, res) => {
     }
 
     try {
-        const where : GradeParams = parseGradesParamsToSQL(params);
+        const where : WhereParams = parseGradesParamsToSQL(params);
         const results : GradeRawData = fetchGrades(where); // false for raw data
         res.send(results)
     } catch (err) {
@@ -50,7 +50,7 @@ router.get("/calculated", async (req, res) => {
     }
 
     try {
-        const where : GradeParams = parseGradesParamsToSQL(params);
+        const where : WhereParams = parseGradesParamsToSQL(params);
         const results : GradeCalculatedData = fetchCalculatedData(where) // true for calculated
         res.send(results)
     } catch (err) {

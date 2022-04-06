@@ -9,11 +9,11 @@ export function getAllInstructors() : Instructor[] {
 
 //Return an array of all courses in our cache
 export function getInstructor(ucinetid: string) : Instructor {
-    return cache[ucinetid] ? cache[ucinetid] : null;
+    return cache[ucinetid] ?? null;
 }
 
 //Returns an array of possible UCINetIDs matching a name like "PATTIS, R."
 export function getUCINetIDFromName(name: string) : string[] {
-    return name_map[name] ? name_map[name] : null;
+    return name_map[name] ?? null;
 }
 

@@ -12,7 +12,7 @@ import * as Sentry from '@sentry/serverless';
 
 import restRouter from './rest/versionController';
 import graphQLRouter from './graphql/router';
-import {createErrorJSON} from './helpers/errors.helper';
+import { createErrorJSON } from './helpers/errors.helper';
 
 
 const app = express();
@@ -25,7 +25,7 @@ if (process.env.NODE_ENV == 'production') {
     tracesSampleRate: 1.0,
   });
 }
-function logging(req, res, next) {
+const logging = (req, res, next) => {
   if (process.argv.includes("--log") || process.env.NODE_ENV == "production") {
     const event = {
       referer: req.headers.referer,
@@ -89,14 +89,15 @@ app.get('*', function(req, res){
 
 
 // error handler
-app.use(function(err, req, res, next) {
+const errorHandler = (err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   // render the error page
   let status = err.status || 500;
   res.status(status).json(createErrorJSON(status, err.message, ""));
-});
+}
+app.use(errorHandler);
 
 let serverless_handler: any = serverless(app, {binary: ['image/*']});
 if (process.env.NODE_ENV == "production") {

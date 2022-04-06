@@ -8,5 +8,5 @@ export function getAllCourses() : Course[] {
 
 //Return a course matching courseID "COMPSCI161"
 export function getCourse(courseID: string) : Course {
-    return cache[courseID] ? cache[courseID] : null;
+    return cache[courseID] ?? null;
 }

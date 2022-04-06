@@ -1,10 +1,10 @@
 import db, { Database } from "better-sqlite3";
 import path from 'path';
 import { ValidationError } from "./errors.helper";
-import { GradeDist, GradeCalculatedData, GradeRawData, GradeParams} from "../types/types"
+import { GradeDist, GradeCalculatedData, GradeRawData, WhereParams} from "../types/types"
 
 // Constructs a WHERE clause from the query
-export function parseGradesParamsToSQL(query) : GradeParams{
+export function parseGradesParamsToSQL(query) : WhereParams{
     let whereClause = "";
     var paramsList: string[] = [];
 
@@ -108,17 +108,25 @@ export function parseGradesParamsToSQL(query) : GradeParams{
             (condition.length > 0 ? whereClause += " AND " + "(" + condition + ")" : null)
     });
 
-    let whereString = whereClause === "" ? null : " WHERE " + whereClause;
-    whereString = (query.excludePNP && whereString !== null) ? whereString += "AND (averageGPA != '')" : whereString;
+    let whereString = whereClause === "" ? "" : " WHERE " + whereClause;
+    whereString += query.excludePNP ? 
+        (whereString !== "" ? " AND (averageGPA != '')" : " WHERE (averageGPA != '')") : ""
 
-    let retVal: GradeParams = {
+    let retVal: WhereParams = {
         "where": whereString,
         "params": paramsList
     }
     return retVal;
 }
 
-export function fetchGrades(where: GradeParams) : GradeRawData {
+function queryDatabase(statement: string, connection?: Database) {
+    if (!connection) {
+        connection = new db(path.join(__dirname, '../db/db.sqlite'));
+    }
+    return connection.prepare(statement)
+}
+
+export function fetchGrades(where: WhereParams) : GradeRawData {
     let sqlStatement = `SELECT 
     year, 
     quarter, 
@@ -140,18 +148,18 @@ export function fetchGrades(where: GradeParams) : GradeRawData {
     gradeNPCount,
     gradeWCount,
     NULLIF(averageGPA, '') as averageGPA FROM gradeDistribution`;
-    return queryDatabase(where.where !== null ? sqlStatement + where.where : sqlStatement).bind(where.params).all();
+    return queryDatabase(sqlStatement + where.where).bind(where.params).all();
     
 }
 
 
-export function fetchInstructors(where: GradeParams) : string[] {
+export function fetchInstructors(where: WhereParams) : string[] {
     let sqlStatement = "SELECT DISTINCT instructor FROM gradeDistribution";
-    return queryDatabase(where.where !== null ? sqlStatement + where.where : sqlStatement).bind(where.params).all().map(result => result.instructor);
+    return queryDatabase(sqlStatement + where.where).bind(where.params).all().map(result => result.instructor);
 }
 
 //For GraphQL API
-export function fetchAggregatedGrades(where: GradeParams) : GradeDist {
+export function fetchAggregatedGrades(where: WhereParams) : GradeDist {
     let sqlStatement = `SELECT 
     SUM(gradeACount) as sum_grade_a_count, 
     SUM(gradeBCount) as sum_grade_b_count, 
@@ -164,22 +172,11 @@ export function fetchAggregatedGrades(where: GradeParams) : GradeDist {
     AVG(NULLIF(averageGPA, '')) as average_gpa,
     COUNT() as count FROM gradeDistribution`;
     
-    return queryDatabase(where.where != null ? sqlStatement + where.where : sqlStatement).bind(where.params).get();
+    return queryDatabase(sqlStatement + where.where).bind(where.params).get();
 }
 
-function queryDatabase(statement: string, connection?: Database) {
-    if (!connection) {
-        connection = new db(path.join(__dirname, '../db/db.sqlite'));
-    }
-    return connection.prepare(statement)
-}
+export function fetchCalculatedData(where: WhereParams) : GradeCalculatedData {
 
-export function fetchCalculatedData(where: GradeParams) : GradeCalculatedData{
-
-    let result : GradeCalculatedData = {
-        gradeDistribution : null,
-        courseList : []
-    };
     const connection : Database = new db(path.join(__dirname, '../db/db.sqlite'));
 
     let sqlFunction = `SELECT 
@@ -206,13 +203,14 @@ export function fetchCalculatedData(where: GradeParams) : GradeCalculatedData{
     instructor,
     type FROM gradeDistribution`;
 
-    result.gradeDistribution = connection.prepare(where.where !== null ? sqlFunction + where.where : sqlFunction).bind(where.params).get();
-    result.courseList = connection.prepare(where.where !== null ? sqlCourseList + where.where : sqlCourseList).bind(where.params).all();
+    let gradeDistribution = connection.prepare(sqlFunction + where.where).bind(where.params).get();
+    let courseList = connection.prepare(sqlCourseList + where.where).bind(where.params).all();
     connection.close();
-    return result;
+    return { gradeDistribution, courseList };
 }
 
 //For REST API 
-export function queryDatabaseAndResponse(where: GradeParams, calculate: boolean) : GradeRawData | GradeCalculatedData {
+export function queryDatabaseAndResponse(where: WhereParams, calculate: boolean) : GradeRawData | GradeCalculatedData {
     return calculate ? fetchCalculatedData(where) : fetchGrades(where);
 }
+

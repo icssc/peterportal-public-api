@@ -1,8 +1,8 @@
 import {parseGradesParamsToSQL, queryDatabaseAndResponse, fetchInstructors} from '../../helpers/grades.helper';
-import {GradeRawData, GradeCalculatedData, GradeParams } from "../../types/types";
+import {GradeRawData, GradeCalculatedData, WhereParams } from "../../types/types";
 
-const expectedSQL = " WHERE (year = ?) AND (quarter = ?) AND (instructor = ?) AND (department = ?) AND (number = ?) AND (code = ?) AND (number_int BETWEEN 100 AND 199)";
-const resObj : GradeParams = {"where": expectedSQL,
+const expectedSQL = " WHERE (year = ?) AND (quarter = ?) AND (instructor = ?) AND (department = ?) AND (number = ?) AND (code = ?) AND (number_int BETWEEN 100 AND 199) AND (averageGPA != '')";
+const resObj : WhereParams = {"where": expectedSQL,
                 "params": ['2019-20', 'SPRING', 'CARVALHO, J.', 'ECON', '100B', '62110']};
 
 describe('Test parseGradesParamsToSQL', () => {
@@ -14,9 +14,10 @@ describe('Test parseGradesParamsToSQL', () => {
             department: 'ECON',
             number: '100B',
             quarter: 'SPRING',
-            division: 'UpperDiv'
+            division: 'UpperDiv',
+            excludePNP: true
         };
-        const sqlParams : GradeParams = parseGradesParamsToSQL(rawParams);
+        const sqlParams : WhereParams = parseGradesParamsToSQL(rawParams);
         expect(sqlParams).not.toBeNull();
         expect(sqlParams).toEqual(resObj);
     });
@@ -93,7 +94,7 @@ describe('Test fetchInstructors', () => {
           department: 'I&C SCI',
           number: '46',
       };
-      const sqlParams : GradeParams = parseGradesParamsToSQL(rawParams);
+      const sqlParams : WhereParams = parseGradesParamsToSQL(rawParams);
       const instructors : string[] = fetchInstructors(sqlParams);
       expect(instructors).not.toBeNull();
       expect(Array.isArray(instructors)).toBeTruthy();
