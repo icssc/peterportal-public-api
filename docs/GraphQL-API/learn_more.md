@@ -78,6 +78,7 @@ Our API has 6 queries you can use to make a request for data.
 * `allInstructors`
 * `schedule`
 * `grades`
+* `week`
 
 Each query returns an object of a certain type. For example, a `course` query will return a `Course` type, and an `allCourses` query will return a list of `Course` types. 
 
