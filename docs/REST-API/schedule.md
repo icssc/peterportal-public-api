@@ -303,7 +303,7 @@ This API gets the week and quarter of the school year given a certain date. Defa
 
 
 ??? success "200 Successful Response"
-To get the week and quarter of October 6, 2021:
+    To get the week and quarter of October 6, 2021:
 
     `/schedule/week/?year=2021&month=10&day=06` returns
 
