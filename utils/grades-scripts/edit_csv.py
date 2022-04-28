@@ -2,12 +2,19 @@ from numpy import NaN
 import pandas
 import time
 import requests
+import os
+from dotenv import load_dotenv
+load_dotenv()  # take environment variables from .env.
+
+
+
+port = os.getenv("PORT") or "8080"
 
 def scrape(term, code):
     time.sleep(0.4)
 
     # send request to peterportal api locally
-    url = "http://localhost:8000/rest/v0/schedule/soc"
+    url = "http://localhost:" + port +"/rest/v0/schedule/soc"
     res = requests.get(url, params={"term": term, "sectionCodes": code})
 
     data = res.json()
