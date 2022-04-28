@@ -2,11 +2,14 @@ var express = require("express");
 var router = express.Router();
 
 var {createErrorJSON} = require("../../helpers/errors.helper")
-var {getAllInstructors, getInstructor} = require('../../helpers/instructor.helper')
+var {getAllInstructors, getInstructor, getBatchInstructors} = require('../../helpers/instructor.helper')
 
 
 router.get("/all", function (req, res, next) {
-    res.json(getAllInstructors());
+    if (req.query.instructor != null)
+        res.json(getBatchInstructors(req.query.instructor));
+    else 
+        res.json(getAllInstructors());
 })
 
 router.get("/:ucinetid", function (req, res, next) {

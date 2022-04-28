@@ -2,10 +2,13 @@ var express = require("express");
 var router = express.Router();
 
 var {createErrorJSON} = require("../../helpers/errors.helper")
-var {getAllCourses, getCourse} = require('../../helpers/courses.helper')
+var {getAllCourses, getCourse, getBatchCourses} = require('../../helpers/courses.helper')
 
 router.get("/all", function (req, res, next) {
-    res.json(getAllCourses());
+    if (req.query.course != null)
+        res.json(getBatchCourses(req.query.course));
+    else
+        res.json(getAllCourses());
 })
 
 router.get("/:courseID", function (req, res, next) {
