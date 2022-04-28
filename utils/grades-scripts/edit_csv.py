@@ -143,8 +143,8 @@ if __name__ == '__main__':
     df['instructor'] = df['instructor'].str.replace(' ', ' ,', 1)
     df['instructor'] = df.loc[:, 'instructor'].apply(lambda x: x[::-1])
 
-    df.drop(columns=['professor', 'prof', 'department', 'base_number'])  # no longer needed
-    df = df[['year', 'exact_year', 'quarter', 'dept', 'dept_code', 'number', 'code', 'section', 'title',
+    df.drop(columns=['professor', 'prof', 'department'])  # no longer needed
+    df = df[['year', 'exact_year', 'quarter', 'dept', 'dept_code', 'number', 'base_number', 'code', 'section', 'title',
              'type', 'instructor', 'A', 'B', 'C', 'D', 'F', 'P', 'NP', 'W', 'avg_gpa']]
 
 
@@ -152,5 +152,5 @@ if __name__ == '__main__':
     df2 = pandas.read_csv(OLD_FILE_INPUT, index_col=None)
     df2 = df2.append(df, ignore_index=True)
 
-    # df.to_csv('./utils/grades-scripts/last_quarter.csv', index=False)  # csv for only the new data
+    df.to_csv('./utils/grades-scripts/last_quarter.csv', index=False)  # csv for only the new data
     df2.to_csv('./db/updated_grades.csv', index=False)  # csv for combined old and new data
