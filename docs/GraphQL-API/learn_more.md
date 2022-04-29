@@ -70,7 +70,7 @@ Here, we will talk more about how to use GraphQL for the PeterPortal API. I reco
 
 ### Queries
 
-Our API has 6 queries you can use to make a request for data. 
+Our API has 7 queries you can use to make a request for data. 
 
 * `course`
 * `instructor`
