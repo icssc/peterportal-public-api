@@ -2,12 +2,19 @@ from numpy import NaN
 import pandas
 import time
 import requests
+import os
+from dotenv import load_dotenv
+load_dotenv()  # take environment variables from .env.
+
+
+
+port = os.getenv("PORT") or "8080"
 
 def scrape(term, code):
     time.sleep(0.4)
 
     # send request to peterportal api locally
-    url = "http://localhost:8000/rest/v0/schedule/soc"
+    url = "http://localhost:" + port +"/rest/v0/schedule/soc"
     res = requests.get(url, params={"term": term, "sectionCodes": code})
 
     data = res.json()
@@ -136,8 +143,8 @@ if __name__ == '__main__':
     df['instructor'] = df['instructor'].str.replace(' ', ' ,', 1)
     df['instructor'] = df.loc[:, 'instructor'].apply(lambda x: x[::-1])
 
-    df.drop(columns=['professor', 'prof', 'department', 'base_number'])  # no longer needed
-    df = df[['year', 'exact_year', 'quarter', 'dept', 'dept_code', 'number', 'code', 'section', 'title',
+    df.drop(columns=['professor', 'prof', 'department'])  # no longer needed
+    df = df[['year', 'exact_year', 'quarter', 'dept', 'dept_code', 'number', 'base_number', 'code', 'section', 'title',
              'type', 'instructor', 'A', 'B', 'C', 'D', 'F', 'P', 'NP', 'W', 'avg_gpa']]
 
 
@@ -145,5 +152,5 @@ if __name__ == '__main__':
     df2 = pandas.read_csv(OLD_FILE_INPUT, index_col=None)
     df2 = df2.append(df, ignore_index=True)
 
-    # df.to_csv('./utils/grades-scripts/last_quarter.csv', index=False)  # csv for only the new data
+    df.to_csv('./utils/grades-scripts/last_quarter.csv', index=False)  # csv for only the new data
     df2.to_csv('./db/updated_grades.csv', index=False)  # csv for combined old and new data
