@@ -2,7 +2,7 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt} from 'graphql'
 
 
-const weekType = new GraphQLObjectType({
+const weekType: GraphQLObjectType = new GraphQLObjectType({
     name: 'Week',
     fields: () => ({
       week: { type: GraphQLInt, description: "School week between 1-10" },

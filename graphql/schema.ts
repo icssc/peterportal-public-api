@@ -16,7 +16,7 @@ import { getWeek } from '../helpers/week.helper';
 import { GradeDist, GradeRawData, CourseOffering, WhereParams } from '../types/types';
 
 
-const queryType = new GraphQLObjectType({
+const queryType: GraphQLObjectType = new GraphQLObjectType({
   name: 'Query',
   fields: () =>  ({
 

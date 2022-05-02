@@ -6,7 +6,7 @@ import { getInstructor, getUCINetIDFromName } from '../helpers/instructor.helper
 import { getCourse } from '../helpers/courses.helper';
 import { ValidationError } from '../helpers/errors.helper';
 
-const meetingType = new GraphQLObjectType({
+const meetingType: GraphQLObjectType = new GraphQLObjectType({
   name: "Meeting",
 
   fields: () => ({
@@ -21,7 +21,7 @@ const meetingType = new GraphQLObjectType({
   })
 });
   
-const sectionInfoType = new GraphQLObjectType({
+const sectionInfoType: GraphQLObjectType = new GraphQLObjectType({
   name: "SectionInfo",
   
   fields: () => ({
@@ -32,7 +32,7 @@ const sectionInfoType = new GraphQLObjectType({
   })
 });
 
-const courseOfferingType = new GraphQLObjectType({
+const courseOfferingType: GraphQLObjectType = new GraphQLObjectType({
   name: "CourseOffering",
 
   fields: () => ({

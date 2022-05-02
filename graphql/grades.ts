@@ -2,7 +2,7 @@ import { GraphQLObjectType, GraphQLString, GraphQLFloat, GraphQLList } from 'gra
 
 import { courseOfferingType } from './schedule';
 
-const gradeDistributionType = new GraphQLObjectType({
+const gradeDistributionType: GraphQLObjectType = new GraphQLObjectType({
   name: "GradeDistribution",
 
   fields: () => ({
@@ -19,7 +19,7 @@ const gradeDistributionType = new GraphQLObjectType({
   })
 });
 
-const gradeDistributionCollectionAggregateType = new GraphQLObjectType({
+const gradeDistributionCollectionAggregateType: GraphQLObjectType = new GraphQLObjectType({
   name: "GradeDistributionCollectionAggregate",
 
   fields: () => ({
@@ -35,7 +35,7 @@ const gradeDistributionCollectionAggregateType = new GraphQLObjectType({
   })
 });
 
-const gradeDistributionCollectionType = new GraphQLObjectType({
+const gradeDistributionCollectionType: GraphQLObjectType = new GraphQLObjectType({
   name: 'GradeDistributionCollection',
 
   fields: () => ({
