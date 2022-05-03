@@ -4,7 +4,7 @@ import fetch from "node-fetch";
 /**
  * Get the current week and quarter. A display string is also provided.
  */
-function getWeek(yearInput, month, day){
+function getWeek(yearInput: string, month: string, day: string){
     return new Promise(async (resolve, reject) => {
         let date;
         if (!yearInput || !month || !day){
@@ -21,7 +21,8 @@ function getWeek(yearInput, month, day){
         //if none of year/month/day are missing
         else{
             //validate year, month, day
-            if (yearInput.length != 4 || month.length != 2 || day.length != 2){
+            if (typeof yearInput != "string" || typeof month != "string" || typeof day != "string" ||
+                    yearInput.length != 4 || month.length != 2 || day.length != 2) {
                 reject(new Error())
                 return;
             }

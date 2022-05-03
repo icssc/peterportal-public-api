@@ -155,3 +155,9 @@ export interface WhereParams {
     where: string;
     params: string[];
 }
+
+export interface WeekParams {
+    year: string;
+    month: string;
+    day: string;
+}
