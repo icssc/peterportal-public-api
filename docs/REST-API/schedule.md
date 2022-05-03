@@ -278,7 +278,7 @@ Descriptions found [here](https://www.reg.uci.edu/help/WebSoc-Glossary.shtml)
     
     ```
 
-This endpoint is based off of this [npm package](https://github.com/icssc-projects/websoc-api) with help from AntAlmanac developers.
+This endpoint is based off of this [npm package](https://github.com/icssc/websoc-api) with help from AntAlmanac developers.
 
 ### `/schedule/week`
 

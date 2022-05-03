@@ -1,7 +1,7 @@
 site_name: PeterPortal API Docs
 
-repo_url: https://github.com/icssc-projects/peterportal-public-api
-repo_name: icssc-projects/peterportal-public-api
+repo_url: https://github.com/icssc/peterportal-public-api
+repo_name: icssc/peterportal-public-api
 
 theme:
   name: material
@@ -57,7 +57,7 @@ extra:
     - icon: fontawesome/brands/medium
       link: https://icsscprojects.medium.com/
     - icon: fontawesome/brands/github
-      link: https://github.com/icssc-projects
+      link: https://github.com/icssc
 
 
 copyright: Copyright &copy; 2020 - 2021 ICSSC Projects

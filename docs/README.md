@@ -1,4 +1,4 @@
-![petr](https://github.com/icssc-projects/peterportal-public-api/blob/master/public/images/peterportal-banner-logo.png?raw=true)
+![petr](https://github.com/icssc/peterportal-public-api/blob/master/public/images/peterportal-banner-logo.png?raw=true)
 
 PeterPortal Public API provides software developers with easy-access to UC Irvine publicly available data such as: courses information, professor information, grade distribution, and schedule of classes.
 
@@ -30,7 +30,7 @@ We consolidate our data directly from official UCI sources such as: UCI Catalogu
 👩‍💻 We are currently in the early stages for this project. Anyone is welcome to integrate this API into your project as a tool. However, if you choose to do so, please be aware that this project is currently in its early release phase. Every user will be considered as testers and are highly encouraged to do their part and submit a bug report if you encounter any issues. Our team will respond as quickly as possible to resolve the issue.
 
 ## Bug Report
-🐞 If you encountered any issues or bug, please open an issue @ https://github.com/icssc-projects/peterportal-public-api/issues/new
+🐞 If you encountered any issues or bug, please open an issue @ https://github.com/icssc/peterportal-public-api/issues/new
 
 
 ## Other Disclaimer
@@ -42,7 +42,7 @@ We consolidate our data directly from official UCI sources such as: UCI Catalogu
 ## Setting up to develop the project locally
 1. Clone the `peterportal-public-api` repository to your local machine.
    ```
-   git clone git@github.com:icssc-projects/peterportal-public-api.git
+   git clone git@github.com:icssc/peterportal-public-api.git
    ```
 2. Change into the project directory.
    ```
