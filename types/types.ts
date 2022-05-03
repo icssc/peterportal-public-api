@@ -69,7 +69,7 @@ export interface Instructor {
 export type GradeRawData = GradeData[];
 
 export interface GradeCalculatedData {
-    gradeDistribution: GradeDist;
+    gradeDistribution: GradeDistAggregate;
     courseList: GradeCourse[]
 }
 
@@ -86,7 +86,7 @@ export interface GradeCourse {
     type: string
 }
 
-export interface GradeDist {
+export interface GradeDistAggregate {
     sum_grade_a_count: number;
     sum_grade_b_count: number;
     sum_grade_c_count: number;
@@ -120,6 +120,35 @@ export interface GradeData {
     gradeNPCount: number;
     gradeWCount: number;
     averageGPA: number;
+}
+
+export interface GradeGQLData {
+    grade_a_count: number;
+    grade_b_count: number;
+    grade_c_count: number;
+    grade_d_count: number;
+    grade_f_count: number;
+    grade_p_count: number;
+    grade_np_count: number;
+    grade_w_count: number;
+    average_gpa: number;
+    course_offering: {
+      year: string;
+      quarter: string;
+      section: {
+        code: number;
+        number: string;
+        type: string;
+      };
+      instructors: string[];
+      course: {
+        id: string;
+        department: string;
+        number: string;
+        department_name: string;
+        title: string
+      }
+    }
 }
 
 export interface WhereParams {

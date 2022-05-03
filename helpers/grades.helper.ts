@@ -1,7 +1,7 @@
 import db, { Database } from "better-sqlite3";
 import path from 'path';
 import { ValidationError } from "./errors.helper";
-import { GradeDist, GradeCalculatedData, GradeRawData, WhereParams} from "../types/types"
+import { GradeDistAggregate, GradeCalculatedData, GradeRawData, WhereParams} from "../types/types"
 
 // Constructs a WHERE clause from the query
 export function parseGradesParamsToSQL(query) : WhereParams{
@@ -159,7 +159,7 @@ export function fetchInstructors(where: WhereParams) : string[] {
 }
 
 //For GraphQL API
-export function fetchAggregatedGrades(where: WhereParams) : GradeDist {
+export function fetchAggregatedGrades(where: WhereParams) : GradeDistAggregate {
     let sqlStatement = `SELECT 
     SUM(gradeACount) as sum_grade_a_count, 
     SUM(gradeBCount) as sum_grade_b_count, 

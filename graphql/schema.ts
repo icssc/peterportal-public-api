@@ -13,7 +13,7 @@ import { getAllInstructors, getInstructor } from '../helpers/instructor.helper';
 import { getCourseSchedules, scheduleArgsToQuery } from '../helpers/schedule.helper';
 import { parseGradesParamsToSQL, fetchAggregatedGrades, fetchInstructors, fetchGrades } from '../helpers/grades.helper';
 import { getWeek } from '../helpers/week.helper';
-import { GradeDist, GradeRawData, CourseOffering, WhereParams } from '../types/types';
+import { GradeGQLData, GradeDistAggregate, GradeRawData, CourseOffering, WhereParams } from '../types/types';
 
 
 const queryType: GraphQLObjectType = new GraphQLObjectType({
@@ -162,13 +162,13 @@ const queryType: GraphQLObjectType = new GraphQLObjectType({
         const where : WhereParams = parseGradesParamsToSQL(args);
         
         // If requested, retrieve the grade distributions
-        let grade_distributions;
-        let gradeResults : GradeRawData = undefined;
+        let grade_distributions: GradeGQLData[];
+        let rawGrades : GradeRawData = undefined;
         if (requestedFields.includes('grade_distributions')) {
-          gradeResults = fetchGrades(where)
+          rawGrades = fetchGrades(where)
 
           // Format the results to GraphQL
-          grade_distributions = gradeResults.map(result => {
+          grade_distributions = rawGrades.map(result => {
             return {
               grade_a_count: result.gradeACount,
               grade_b_count: result.gradeBCount,
@@ -201,7 +201,7 @@ const queryType: GraphQLObjectType = new GraphQLObjectType({
         }
         
         // If requested, retrieve the aggregate
-        let aggregate : GradeDist = undefined;
+        let aggregate : GradeDistAggregate = undefined;
         if (requestedFields.includes('aggregate')) {
           const aggregateResult = fetchAggregatedGrades(where)
       
@@ -223,9 +223,9 @@ const queryType: GraphQLObjectType = new GraphQLObjectType({
         // If requested, retrieve the instructors
         let instructors : string[] = undefined;
         if (requestedFields.includes('instructors')) {
-          if (gradeResults) {
+          if (rawGrades) {
             // If the grade results exist, we can get the instructors from there
-            instructors = [...new Set(gradeResults.map(result => result.instructor))]
+            instructors = [...new Set(rawGrades.map(result => result.instructor))]
           } else {
             // Else query sql for the instructors
             instructors = fetchInstructors(where)
