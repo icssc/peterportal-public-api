@@ -18,6 +18,7 @@ describe('POST /graphql/', () => {
                 sum_grade_p_count
                 sum_grade_w_count
                 average_gpa
+                count
             }
             grade_distributions {
                 grade_a_count
