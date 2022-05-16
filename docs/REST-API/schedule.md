@@ -278,5 +278,52 @@ Descriptions found [here](https://www.reg.uci.edu/help/WebSoc-Glossary.shtml)
     
     ```
 
+This endpoint is based off of this [npm package](https://github.com/icssc/websoc-api) with help from AntAlmanac developers.
 
-This endpoint is based off of this [npm package](https://github.com/icssc-projects/websoc-api) with help from AntAlmanac developers.
+### `/schedule/week`
+
+**GET week and quarter data**
+
+This API gets the week and quarter of the school year given a certain date. Default date is today's date.
+
+#### Parameters
+
+| Name             | Formatting                                                                                                                                                                                                                                                                                                                                                      | Notes                                                                                         |
+|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| year           | YYYY<br/>Example: '2021' <br/> Default: ' '                                                                                                                                                                                                                     | If out of range will interpret as a school break                     |
+| month               | MM<br/>Example: '10' <br/> Default: ' '                                                                                                                                                                     |                   |
+| day               |DD<br/>Example: '08' <br/> Default: ' '                                                                                                                                                                       |                 |
+
+#### Response
+
+| Code | Description |
+|------|-------------|
+| `200` | A JSON object containing the week number, and quarter term. |
+| `400` | Invalid parameter syntax. |
+
+
+??? success "200 Successful Response"
+    To get the week and quarter of October 6, 2021:
+
+    `/schedule/week/?year=2021&month=10&day=06` returns
+
+    ``` JSON
+    {
+        "week":2,
+        "quarter":"Fall 2021",
+        "display":"Week 2 • Fall 2021"
+    }
+    ```
+
+??? fail "400 Bad Request"
+
+    `/schedule/week/?year=2021&month=20&day=6` returns
+
+    ``` JSON
+    {
+        "timestamp":"Mon, 25 Apr 2022 01:19:21 GMT",
+        "status":400,
+        "error":"Bad Request: Invalid parameter",
+        "message":"Invalid year, month or day. Must include all year, month and day or none."}
+    
+    ```

@@ -4,7 +4,7 @@
 
 If you're wondering how to contribute to open source project and this is your first time, you're at the right place. 
 
-1. First, you'll want to fork the repository to your own account. You can do that by clicking the fork button in the top right of our [repository](https://github.com/icssc-projects/peterportal-public-api). 
+1. First, you'll want to fork the repository to your own account. You can do that by clicking the fork button in the top right of our [repository](https://github.com/icssc/peterportal-public-api). 
 2. Clone the forked respository to your local machine. Click the green **Code** button, and copy the URL. Open up a terminal on your local computer to where you want the repository to be and enter: 
 
      ```
@@ -25,7 +25,7 @@ If you're wondering how to contribute to open source project and this is your fi
 4. Add the project repository as the "upstream" remote. You can do that by entering this command: 
 
     ```
-    git remote add upstream https://github.com/icssc-projects/peterportal-public-api.git
+    git remote add upstream https://github.com/icssc/peterportal-public-api.git
     ```
     
 5. Use `git remote -v` to check that you have 2 remotes. An origin that points to your forked repository on your account, and upstream that points to this project repository. 

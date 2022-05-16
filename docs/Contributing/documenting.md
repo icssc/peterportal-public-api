@@ -13,7 +13,7 @@ For GraphQL documentation, the playground generates the documentation for us aut
 
 **📝 Writing documentation is simple with MkDocs.**
 
-1. Open up the project, and navigate to the [`/docs`](https://github.com/icssc-projects/peterportal-public-api/tree/master/docs) folder.
+1. Open up the project, and navigate to the [`/docs`](https://github.com/icssc/peterportal-public-api/tree/master/docs) folder.
 2. Make your changes to the markdown (`.md`) files within this folder.
 3. Create a pull request to `master`. Once your pull request is merged with `master`, the documentation site will be automatically rebuilt.
 
@@ -31,5 +31,5 @@ For GraphQL documentation, the playground generates the documentation for us aut
 
 Preview your changes with `mkdocs serve`, and see the generated documentation locally with `mkdocs build -d docs-site`. 
 
-Configure documentation site settings in [`/mkdocs.yml`](https://github.com/icssc-projects/peterportal-public-api/blob/master/mkdocs.yml).
+Configure documentation site settings in [`/mkdocs.yml`](https://github.com/icssc/peterportal-public-api/blob/master/mkdocs.yml).
 
