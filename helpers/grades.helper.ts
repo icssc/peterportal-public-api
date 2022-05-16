@@ -4,7 +4,7 @@ import { ValidationError } from "./errors.helper";
 import { GradeDistAggregate, GradeCalculatedData, GradeRawData, WhereParams} from "../types/types"
 
 // Constructs a WHERE clause from the query
-export function parseGradesParamsToSQL(query) : WhereParams{
+export function parseGradesParamsToSQL(query: {[key: string]: any;}) : WhereParams{
     let whereClause = "";
     var paramsList: string[] = [];
 
@@ -148,14 +148,14 @@ export function fetchGrades(where: WhereParams) : GradeRawData {
     gradeNPCount,
     gradeWCount,
     NULLIF(averageGPA, '') as averageGPA FROM gradeDistribution`;
-    return queryDatabase(sqlStatement + where.where).bind(where.params).all();
+    return queryDatabase(where.where != null ? sqlStatement + where.where : sqlStatement).bind(where.params).all();
     
 }
 
 
 export function fetchInstructors(where: WhereParams) : string[] {
     let sqlStatement = "SELECT DISTINCT instructor FROM gradeDistribution";
-    return queryDatabase(sqlStatement + where.where).bind(where.params).all().map(result => result.instructor);
+    return queryDatabase(where.where != null ? sqlStatement + where.where : sqlStatement).bind(where.params).all().map(result => result.instructor);
 }
 
 //For GraphQL API
@@ -172,7 +172,7 @@ export function fetchAggregatedGrades(where: WhereParams) : GradeDistAggregate {
     AVG(NULLIF(averageGPA, '')) as average_gpa,
     COUNT() as count FROM gradeDistribution`;
     
-    return queryDatabase(sqlStatement + where.where).bind(where.params).get();
+    return queryDatabase(where.where != null ? sqlStatement + where.where : sqlStatement).bind(where.params).get();
 }
 
 export function fetchCalculatedData(where: WhereParams) : GradeCalculatedData {
@@ -202,9 +202,8 @@ export function fetchCalculatedData(where: WhereParams) : GradeCalculatedData {
     title,
     instructor,
     type FROM gradeDistribution`;
-
-    let gradeDistribution = connection.prepare(sqlFunction + where.where).bind(where.params).get();
-    let courseList = connection.prepare(sqlCourseList + where.where).bind(where.params).all();
+    let gradeDistribution = connection.prepare(where.where != null ? sqlFunction + where.where : sqlFunction).bind(where.params).get();
+    let courseList = connection.prepare(where.where != null ? sqlCourseList + where.where : sqlCourseList).bind(where.params).all();
     connection.close();
     return { gradeDistribution, courseList };
 }
