@@ -5,6 +5,7 @@ PeterPortal Public API provides software developers with easy-access to UC Irvin
 🔨 Built with:
 
 * Express.js
+* TypeScript
 * GraphQL
 * Serverless
 * MkDocs

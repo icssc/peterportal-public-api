@@ -1,8 +1,6 @@
 # Configuration files
 .env
 .faunarc
-.idea/
-
 
 # Dependencies
 node_modules
@@ -12,6 +10,11 @@ env
 docs-site/
 .serverless/
 __pycache__
+coverage/
+.build/
+.webpack/
+dist/
 
 #OS
 .DS_Store
+.idea/

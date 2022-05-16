@@ -2,7 +2,6 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@2.0
   serverless: circleci/serverless-framework@1.0
-  lambda_ci: appfolio/lambda_ci@0.3.0
 
 commands:
   create-env-file:
@@ -15,7 +14,7 @@ commands:
   build-docs:
     steps:
       - run:
-          name: Install dependencies
+          name: Install Python dependencies
           command: pip install -r docs_requirements.txt
       - run: 
           name: Build docs
@@ -33,22 +32,20 @@ workflows:
 jobs:
   build:
     executor: 
-      name: lambda_ci/lambda_executor
-      lambda_runtime: 'nodejs12.x'
+      name: serverless/default
+      python-version: 3.7.12-node
     steps:
       - checkout
       - create-env-file
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v4-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v4-dependencies-{{ .Branch }}
+          - v4-dependencies-{{ .Branch }}-{{ checksum "package-lock.json" }}
 
-      - run:
-          name: Install Serverless CLI 
-          command: |
-            npm install -g serverless@2.72.2
+      # - run:
+      #     name: Install Serverless CLI 
+      #     command: |
+      #       npm install -g serverless
 
       - run: 
           name: Install dependencies
@@ -59,14 +56,14 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v4-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+          key: v4-dependencies-{{ .Branch }}-{{ checksum "package-lock.json" }}
 
       - run: 
           name: Run tests with coverage
-          command: npm test --coverage
+          command: npm test
 
       - aws-cli/setup
-
+      - serverless/setup
       - run:
           name: Deploy application
-          command: sls deploy --stage prod
+          command: sls deploy
