@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "target": "es2019",
+      "rootDir": "./",
+      "removeComments": true,
+      "baseUrl": "./",
+      "outDir": "./dist",
+      "sourceMap": true,
+      "watch": true,
+      "alwaysStrict": true,
+      "allowJs": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "esModuleInterop": true,
+      "resolveJsonModule": true
+    },
+    "include":[ 
+      "db/**/*",
+      "cache/**/*",
+      "docs-site/**/*",
+      "graphql/**/*",
+      "helpers/**/*",
+      "rest/**/*",
+      "tests/**/*",
+      "types/**/*",
+      "app.ts",
+      "server.ts"
+    ],
+    "exclude":[ 
+        "node_modules"
+    ]
+}
