@@ -7,13 +7,12 @@ export function getAllInstructors() : Instructor[] {
    return Object.values(cache);
 }
 
-export function getBatchInstructors(instructorList) {
-    let instructorInfo = {} 
-    const instructors = instructorList.split(";")
-    for (let instructorID of instructors){
-        instructorInfo[instructorID] = cache[instructorID] ? cache[instructorID] : null
+export function getInstructors(instructorList: string[]) : Instructor | Instructor[] {
+    let instructors: Instructor[] = []
+    for (let instructorID of instructorList){
+        instructors.push(cache[instructorID] ? cache[instructorID] : null)
     }
-    return instructorInfo 
+    return instructors.length == 1 ? instructors[0] : instructors
 }
 //Return an array of all courses in our cache
 export function getInstructor(ucinetid: string) : Instructor {

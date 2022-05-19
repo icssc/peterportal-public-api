@@ -6,8 +6,8 @@ export function getAllCourses() : Course[] {
    return Object.values(cache);
 }
 
-export function getCourses(coursesList) {
-    let courses = []
+export function getCourses(coursesList: string[]) : Course | Course[]{
+    let courses: Course[] = []
     for (let courseID of coursesList){
         courses.push(cache[courseID] ? cache[courseID]: null)
     }

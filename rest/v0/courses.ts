@@ -15,7 +15,6 @@ router.get("/all", function (req, res, next) {
 
 router.get("/:courseID", function (req, res, next) {
     const courses : string[] = req.params.courseID.split(";")
-
     const course : Course | Course[] = getCourses(courses);
     course ? res.json(course) : res.status(404).json(createErrorJSON(404, "Not Found", "Course not found"));
 })
