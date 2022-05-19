@@ -6,13 +6,12 @@ export function getAllCourses() : Course[] {
    return Object.values(cache);
 }
 
-export function getBatchCourses(coursesList) {
-    let coursesInfo = {} 
-    const courses = coursesList.split(";")
-    for (let courseID of courses){
-        coursesInfo[courseID] = cache[courseID] ? cache[courseID] : null
+export function getCourses(coursesList) {
+    let courses = []
+    for (let courseID of coursesList){
+        courses.push(cache[courseID] ? cache[courseID]: null)
     }
-    return coursesInfo
+    return courses.length == 1 ? courses[0] : courses
 }
 //Return a course matching courseID "COMPSCI161"
 export function getCourse(courseID: string) : Course {
