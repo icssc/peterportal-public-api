@@ -73,7 +73,7 @@ def scrapeAndSave(num, code, year, quarter):
 if __name__ == '__main__':
     NEW_FILE_INPUT = './utils/grades-scripts/small.xlsx'
     OLD_FILE_INPUT = './db/grades.csv'
-    df = pandas.read_excel(NEW_FILE_INPUT, index_col=None)
+    df = pandas.read_excel(NEW_FILE_INPUT, index_col=None, thousands=',')
 
     cols = df.columns
     df = df.rename(columns={
