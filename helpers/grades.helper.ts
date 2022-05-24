@@ -52,7 +52,7 @@ export function parseGradesParamsToSQL(query: {[key: string]: any;}) : WherePara
                 break;
             case key === 'instructor' && params[key] !== null:
                 for (let instructor of params[key]) {
-                    if (instructor.match(/^[a-zA-Z]+, [a-zA-Z]\.$/)) {
+                    if (instructor.match(/^[a-zA-Z\-]+, [a-zA-Z]\.$/)) {
                         condition == "" ? 
                             condition += "instructor = ?" :
                             condition += " OR instructor = ?"
