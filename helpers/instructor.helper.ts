@@ -7,12 +7,12 @@ export function getAllInstructors() : Instructor[] {
    return Object.values(cache);
 }
 
-export function getInstructors(instructorList: string[]) : Instructor | Instructor[] {
-    let instructors: Instructor[] = []
+export function getInstructors(instructorList: string[]): {[key: string]: Instructor } {
+    let instructors = {};
     for (let instructorID of instructorList){
-        instructors.push(cache[instructorID] ? cache[instructorID] : null)
+        instructors[instructorID] = cache[instructorID] ? cache[instructorID] : null;
     }
-    return instructors.length == 1 ? instructors[0] : instructors
+    return instructors
 }
 //Return an array of all courses in our cache
 export function getInstructor(ucinetid: string) : Instructor {
