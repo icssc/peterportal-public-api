@@ -7,6 +7,13 @@ export function getAllInstructors() : Instructor[] {
    return Object.values(cache);
 }
 
+export function getInstructors(instructorList: string[]): {[key: string]: Instructor } {
+    let instructors = {};
+    for (let instructorID of instructorList){
+        instructors[instructorID] = cache[instructorID] ? cache[instructorID] : null;
+    }
+    return instructors
+}
 //Return an array of all courses in our cache
 export function getInstructor(ucinetid: string) : Instructor {
     return cache[ucinetid] ?? null;
