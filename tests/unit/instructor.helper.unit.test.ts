@@ -1,4 +1,4 @@
-import {getAllInstructors, getInstructor} from '../../helpers/instructor.helper';
+import {getAllInstructors, getInstructor, getInstructors} from '../../helpers/instructor.helper';
 import {Instructor} from "../../types/types";
 
 describe('Fetching all instructors', () => {
@@ -13,6 +13,16 @@ describe('Fetching all instructors', () => {
         expect(allInstructors).toContainEqual(
             expect.objectContaining({"name": "Alexander W Thornton", "ucinetid": "thornton"})
         );
+    });
+});
+
+describe('Fetching some instructors', () => {
+    it ('getInstructors should return a json of few courses requested', () => {
+        const instructors : {[key: string]: Instructor} = getInstructors(["pattis", "thornton"]);
+        expect(instructors).not.toBeNull() 
+        expect(typeof instructors).toBe("object");
+        expect(instructors["pattis"]).toMatchObject({"name": "Richard Eric Pattis", "ucinetid": "pattis"});
+        expect(instructors["thornton"]).toMatchObject({"name": "Alexander W Thornton", "ucinetid": "thornton"});
     });
 });
 
