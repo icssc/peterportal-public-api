@@ -1,4 +1,4 @@
-import {getAllCourses, getCourse} from '../../helpers/courses.helper';
+import {getAllCourses, getCourse, getCourses} from '../../helpers/courses.helper';
 import {Course} from "../../types/types"
 
 
@@ -15,6 +15,18 @@ describe('Get all Courses', () => {
             expect(allCourses).toContainEqual(
                 expect.objectContaining({"number": "134E", "department": "ART HIS"})
             );
+        });
+    });
+});
+
+describe('Get some Courses', () => {
+    describe('Fetching some courses', () => {
+        it ('getAllCourses should return a json of all courses', () => {
+            const courses : {[key: string]: Course} = getCourses(["I&CSCI46", "ARTHIS134E"]);
+            expect(courses).not.toBeNull() 
+            expect(typeof courses).toBe("object");
+            expect(courses["I&CSCI46"]).toMatchObject({"number": "46", "department": "I&C SCI"});
+            expect(courses["ARTHIS134E"]).toMatchObject({"number": "134E", "department": "ART HIS"});
         });
     });
 });

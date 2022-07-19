@@ -63,3 +63,31 @@ describe('GET /courses/I&CSCI0000000', () => {
         expect(result['message']).toEqual("Course not found");
     }));
 });
+
+describe('GET /courses/I&CSCI46;I&CSCI53', () => {
+    it('returns an error message for a course that does not exist',  () => request
+    .get('/rest/v0/courses/I&CSCI46;I&CSCI53')
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+        const result: {[key: string]: Course} = response.body;
+        expect(result["I&CSCI46"]).toMatchObject({"number": "46", "department": "I&C SCI"});
+        expect(result["I&CSCI53"]).toMatchObject({"number": "53", "department": "I&C SCI"});
+        expect(Object.keys(result).length).toEqual(2);
+    }));
+});
+
+describe('GET /courses/I&CSCI46;I&CSCI0000000', () => {
+    it('returns correct for one course, and null for nonexistent course',  () => request
+    .get('/rest/v0/courses/I&CSCI46;I&CSCI0000000')
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+        const result: {[key: string]: Course} = response.body;
+        expect(result["I&CSCI46"]).toMatchObject({"number": "46", "department": "I&C SCI"});
+        expect(result["I&CSCI0000000"]).toBeNull();
+        expect(Object.keys(result).length).toEqual(2);
+    }));
+});

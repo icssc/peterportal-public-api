@@ -46,3 +46,31 @@ describe('GET /instructors/randomguy', () => {
         expect(result['message']).toEqual("Instructor not found");
     }));
 });
+
+describe('GET /instructors/pattis;mikes', () => {
+    it('returns an error message for a course that does not exist',  () => request
+    .get('/rest/v0/instructors/pattis;mikes')
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+        const result: {[key: string]: Instructor} = response.body;
+        expect(result["pattis"]).toMatchObject({"name": "Richard Eric Pattis", "ucinetid": "pattis"});
+        expect(result["mikes"]).toMatchObject({"name": "Michael Shindler", "ucinetid": "mikes"});
+        expect(Object.keys(result).length).toEqual(2);
+    }));
+});
+
+describe('GET /instructors/pattis;nonexistent', () => {
+    it('returns correct for one course, and null for nonexistent course',  () => request
+    .get('/rest/v0/instructors/pattis;nonexistent')
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+        const result: {[key: string]: Instructor} = response.body;
+        expect(result["pattis"]).toMatchObject({"name": "Richard Eric Pattis", "ucinetid": "pattis"});
+        expect(result["nonexistent"]).toBeNull();
+        expect(Object.keys(result).length).toEqual(2);
+    }));
+});
