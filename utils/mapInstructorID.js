@@ -1,10 +1,10 @@
-const {getAllInstructors} = require("../helpers/instructor.helper");
+const cache = require("../cache/parsed_professor_cache.json");
 const {storeData} = require("./fileStore.helper.js");
-var path = require('path');
+const path = require('path');
 
 function mapInstructorName() {
-    let instructors = getAllInstructors()
-    var name_to_ucinetid = {};
+    let instructors = Object.values(cache);
+    let name_to_ucinetid = {};
     // create a mapping from instructor shortened name to ucinetid
     instructors.map((data) => {
         const shortened_name = data["shortened_name"];
@@ -18,9 +18,9 @@ function mapInstructorName() {
     });
     
     console.log("Storing data...");
-    file_path = path.resolve('cache', 'instructor_name_map.json');
+    const file_path = path.resolve('cache', 'instructor_name_map.json');
     storeData(name_to_ucinetid, file_path);
     console.log("Finished writing to file");
 }
 
-module.exports = {mapInstructorName};
+mapInstructorName()
