@@ -34,7 +34,7 @@ jobs:
   build:
     executor: 
       name: serverless/default
-      python-version: 3.7.12-node
+      python-version: 3.8.13-node 
     steps:
       - checkout
       - create-env-file
