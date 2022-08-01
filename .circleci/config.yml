@@ -28,7 +28,6 @@ workflows:
             branches:
               only:
                 - master
-                - maintenance
 
 jobs:
   build:
