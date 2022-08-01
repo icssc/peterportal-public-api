@@ -41,7 +41,7 @@
     "csv-parser": "^2.3.5",
     "eslint": "^8.10.0",
     "jest": "^27.5.1",
-    "serverless": "^3.7.2",
+    "serverless": "^3.17.0",
     "serverless-api-gateway-throttling": "^1.2.2",
     "serverless-domain-manager": "^5.8.0",
     "serverless-dotenv-plugin": "^3.12.2",
