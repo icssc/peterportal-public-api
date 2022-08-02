@@ -4,7 +4,7 @@ service: peterportal-api
 useDotenv: true
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs16.x
   region: us-east-1
   stage: prod
   timeout: 15
@@ -37,7 +37,7 @@ custom:
   apiGatewayThrottling:
     maxRequestsPerSecond: 100
     maxConcurrentRequests: 50
-  customDomain: 
+  customDomain:
     domainName: api.peterportal.org
     basepath: ""
     certificateName: "*.peterportal.org"
