@@ -86,15 +86,15 @@ if __name__ == '__main__':
         cols[6]: 'title',
         cols[7]: 'type',
         cols[8]: 'professor',
-        cols[9]: 'A',
-        cols[10]: 'B',
-        cols[11]: 'C',
-        cols[12]: 'D',
-        cols[13]: 'F',
-        cols[14]: 'P',
-        cols[15]: 'NP',
-        cols[16]: 'W',
-        cols[17]: 'avg_gpa'
+        cols[10]: 'A',
+        cols[11]: 'B',
+        cols[12]: 'C',
+        cols[13]: 'D',
+        cols[14]: 'F',
+        cols[15]: 'P',
+        cols[16]: 'NP',
+        cols[17]: 'W',
+        cols[18]: 'avg_gpa'
     })
 
     df['number'] = [0]*len(df.index)
