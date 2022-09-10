@@ -1,3 +1,3 @@
 module.exports = {
-  "*.[js,ts]": ["eslint --fix", "prettier --write"],
+  "**/*.(js|ts)": ["eslint --fix", "prettier --write"],
 };

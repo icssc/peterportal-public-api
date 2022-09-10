@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  env: { amd: true, es6: true, node: true },
+  env: { amd: true, es2019: true, node: true },
   plugins: ["import", "simple-import-sort"],
   extends: ["eslint:recommended"],
   rules: {
