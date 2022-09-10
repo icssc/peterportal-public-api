@@ -1,153 +1,199 @@
-import request from '../api.int.helper';
-import {GradeRawData, GradeCalculatedData, GradeData} from "../../../types/types"
-import { Error } from 'types/types'
+import {
+  Error,
+  GradeCalculatedData,
+  GradeData,
+  GradeRawData,
+} from "types/types";
 
-jest.setTimeout(30000)
+import request from "../api.int.helper";
 
-describe('GET /grades/calculated', () => {
-    it('returns a json of filtered grades distribution',  () => request
-    .get('/rest/v0/grades/calculated?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200)
-    .then((response) => {
-        const result : GradeCalculatedData = response.body;
-        expect(result).toHaveProperty('gradeDistribution')
-        expect(Array.isArray(result['courseList'])).toBeTruthy();
-        expect(result['courseList'].length).toBeGreaterThan(0);
-        expect(result['courseList'][0]).toEqual(expect.objectContaining({
-            "year": expect.any(String),
-            "instructor": "PATTIS, R.",
-            "code": expect.any(Number)
-        }));
-    }));
+jest.setTimeout(30000);
+
+describe("GET /grades/calculated", () => {
+  it("returns a json of filtered grades distribution", () =>
+    request
+      .get(
+        "/rest/v0/grades/calculated?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33"
+      )
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((response) => {
+        const result: GradeCalculatedData = response.body;
+        expect(result).toHaveProperty("gradeDistribution");
+        expect(Array.isArray(result["courseList"])).toBeTruthy();
+        expect(result["courseList"].length).toBeGreaterThan(0);
+        expect(result["courseList"][0]).toEqual(
+          expect.objectContaining({
+            year: expect.any(String),
+            instructor: "PATTIS, R.",
+            code: expect.any(Number),
+          })
+        );
+      }));
 });
 
-describe('GET /grades/calculated', () => {
-    it('invalid parameters to /grades/calculated', () => request
-    .get('/rest/v0/grades/calculated?year=2017&instructor=PATTIS, R.')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(400)
-    .then((response) => {
+describe("GET /grades/calculated", () => {
+  it("invalid parameters to /grades/calculated", () =>
+    request
+      .get("/rest/v0/grades/calculated?year=2017&instructor=PATTIS, R.")
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .then((response) => {
         const result: Error = response.body;
-        expect(result).toHaveProperty('timestamp');
-        expect(result['status']).toEqual(400);
-        expect(result['error']).toEqual("Bad Request: Invalid syntax in parameters");
-        expect(result['message']).toMatch(/year/i);
-    }));
+        expect(result).toHaveProperty("timestamp");
+        expect(result["status"]).toEqual(400);
+        expect(result["error"]).toEqual(
+          "Bad Request: Invalid syntax in parameters"
+        );
+        expect(result["message"]).toMatch(/year/i);
+      }));
 });
 
-describe('GET /grades/calculated', () => {
-    it('invalid parameters to /grades/calculated', () => request
-    .get('/rest/v0/grades/calculated?year=2017-18&instructor=PATTIS,R')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(400)
-    .then((response) => {
-        expect(response.body).toHaveProperty('timestamp');
-        expect(response.body['status']).toEqual(400);
-        expect(response.body['error']).toEqual("Bad Request: Invalid syntax in parameters");
-        expect(response.body['message']).toMatch(/instructor/i);
-    }));
+describe("GET /grades/calculated", () => {
+  it("invalid parameters to /grades/calculated", () =>
+    request
+      .get("/rest/v0/grades/calculated?year=2017-18&instructor=PATTIS,R")
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .then((response) => {
+        expect(response.body).toHaveProperty("timestamp");
+        expect(response.body["status"]).toEqual(400);
+        expect(response.body["error"]).toEqual(
+          "Bad Request: Invalid syntax in parameters"
+        );
+        expect(response.body["message"]).toMatch(/instructor/i);
+      }));
 });
 
-describe('GET /grades/raw', () => {
-    it('returns a json of filtered grades distribution',  () => request
-    .get('/rest/v0/grades/raw?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200)
-    .then((response) => {
+describe("GET /grades/raw", () => {
+  it("returns a json of filtered grades distribution", () =>
+    request
+      .get(
+        "/rest/v0/grades/raw?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33"
+      )
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((response) => {
         expect(Array.isArray(response.body)).toBeTruthy();
         expect(response.body.length).toBeGreaterThan(0);
-        expect(response.body[0]).toEqual(expect.objectContaining({
-            "year": expect.any(String),
-            "instructor": "PATTIS, R.",
-            "code": expect.any(Number)
-        }));
-    }));
+        expect(response.body[0]).toEqual(
+          expect.objectContaining({
+            year: expect.any(String),
+            instructor: "PATTIS, R.",
+            code: expect.any(Number),
+          })
+        );
+      }));
 });
 
-describe('GET /grades/raw', () => {
-    it('returns a json of filtered grades distribution',  () => request
-    .get('/rest/v0/grades/raw?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33&division=LowerDiv')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200)
-    .then((response) => {
+describe("GET /grades/raw", () => {
+  it("returns a json of filtered grades distribution", () =>
+    request
+      .get(
+        "/rest/v0/grades/raw?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&number=33&division=LowerDiv"
+      )
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((response) => {
         expect(Array.isArray(response.body)).toBeTruthy();
         expect(response.body.length).toBeGreaterThan(0);
-        expect(response.body[0]).toEqual(expect.objectContaining({
-            "year": expect.any(String),
-            "instructor": "PATTIS, R.",
-            "code": expect.any(Number)
-        }));
-    }));
+        expect(response.body[0]).toEqual(
+          expect.objectContaining({
+            year: expect.any(String),
+            instructor: "PATTIS, R.",
+            code: expect.any(Number),
+          })
+        );
+      }));
 });
 
-describe('GET /grades/raw', () => {
-    it('returns a json of filtered grades distribution',  () => request
-    .get('/rest/v0/grades/raw?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&division=UpperDiv')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200)
-    .then((response) => {
+describe("GET /grades/raw", () => {
+  it("returns a json of filtered grades distribution", () =>
+    request
+      .get(
+        "/rest/v0/grades/raw?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&division=UpperDiv"
+      )
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((response) => {
         expect(Array.isArray(response.body)).toBeTruthy();
         expect(response.body.length).toBeGreaterThan(0);
-        expect(response.body[0]).toEqual(expect.objectContaining({
-            "year": expect.any(String),
-            "instructor": "PATTIS, R.",
-            "code": expect.any(Number)
-        }));
-        expect(parseInt(response.body[0].number.replace(/\D/g,''))).toBeGreaterThan(99);
-    }));
+        expect(response.body[0]).toEqual(
+          expect.objectContaining({
+            year: expect.any(String),
+            instructor: "PATTIS, R.",
+            code: expect.any(Number),
+          })
+        );
+        expect(
+          parseInt(response.body[0].number.replace(/\D/g, ""))
+        ).toBeGreaterThan(99);
+      }));
 });
 
-describe('GET /grades/raw', () => {
-    it('returns a json of filtered grades distribution',  () => request
-    .get('/rest/v0/grades/raw?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&division=LowerDiv')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200)
-    .then((response) => {
+describe("GET /grades/raw", () => {
+  it("returns a json of filtered grades distribution", () =>
+    request
+      .get(
+        "/rest/v0/grades/raw?year=2018-19;2019-20&instructor=PATTIS, R.&department=I%26C SCI&quarter=Fall&division=LowerDiv"
+      )
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((response) => {
         expect(Array.isArray(response.body)).toBeTruthy();
         expect(response.body.length).toBeGreaterThan(0);
         response.body.map((resp: GradeData) => {
-            expect(resp).toEqual(expect.objectContaining({
-                "year": expect.any(String),
-                "instructor": "PATTIS, R.",
-                "code": expect.any(Number)
-            }));
-            expect(parseInt(resp.number.replace(/\D/g,''))).toBeLessThan(99);
-        })
-    }));
+          expect(resp).toEqual(
+            expect.objectContaining({
+              year: expect.any(String),
+              instructor: "PATTIS, R.",
+              code: expect.any(Number),
+            })
+          );
+          expect(parseInt(resp.number.replace(/\D/g, ""))).toBeLessThan(99);
+        });
+      }));
 });
 
-describe('GET /grades/raw', () => {
-    it('invalid parameters to /grades/raw', () => request
-    .get('/rest/v0/grades/raw?year=2017-18&instructor=PATTIS, R.&code=33')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(400)
-    .then((response) => {
-        expect(response.body).toHaveProperty('timestamp');
-        expect(response.body['status']).toEqual(400);
-        expect(response.body['error']).toEqual("Bad Request: Invalid syntax in parameters");
-        expect(response.body['message']).toMatch(/code/i);
-    }));
+describe("GET /grades/raw", () => {
+  it("invalid parameters to /grades/raw", () =>
+    request
+      .get("/rest/v0/grades/raw?year=2017-18&instructor=PATTIS, R.&code=33")
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .then((response) => {
+        expect(response.body).toHaveProperty("timestamp");
+        expect(response.body["status"]).toEqual(400);
+        expect(response.body["error"]).toEqual(
+          "Bad Request: Invalid syntax in parameters"
+        );
+        expect(response.body["message"]).toMatch(/code/i);
+      }));
 });
 
-describe('GET /grades/raw', () => {
-    it('invalid parameters to /grades/raw', () => request
-    .get('/rest/v0/grades/raw?year=2017-18&quarter=SpringSummer&instructor=PATTIS, R.')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(400)
-    .then((response) => {
-        expect(response.body).toHaveProperty('timestamp');
-        expect(response.body['status']).toEqual(400);
-        expect(response.body['error']).toEqual("Bad Request: Invalid syntax in parameters");
-        expect(response.body['message']).toMatch(/quarter/i);
-    }));
+describe("GET /grades/raw", () => {
+  it("invalid parameters to /grades/raw", () =>
+    request
+      .get(
+        "/rest/v0/grades/raw?year=2017-18&quarter=SpringSummer&instructor=PATTIS, R."
+      )
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .then((response) => {
+        expect(response.body).toHaveProperty("timestamp");
+        expect(response.body["status"]).toEqual(400);
+        expect(response.body["error"]).toEqual(
+          "Bad Request: Invalid syntax in parameters"
+        );
+        expect(response.body["message"]).toMatch(/quarter/i);
+      }));
 });
