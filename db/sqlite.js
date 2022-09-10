@@ -1,7 +1,7 @@
-const db = require('better-sqlite3'); 
-const fs = require('fs');
-const csv = require('csv-parser');
-var path = require('path');
+const db = require("better-sqlite3");
+const csv = require("csv-parser");
+const fs = require("fs");
+const path = require("path");
 
 const gradeDistributionTableSchema = `
     CREATE TABLE gradeDistribution (
@@ -29,9 +29,9 @@ const gradeDistributionTableSchema = `
 `;
 
 const gradeDistributionIndexes = [
-    `CREATE INDEX idx_department ON gradeDistribution(department);`,
-    `CREATE INDEX idx_instructor ON gradeDistribution(instructor);`
-]
+  `CREATE INDEX idx_department ON gradeDistribution(department);`,
+  `CREATE INDEX idx_instructor ON gradeDistribution(instructor);`,
+];
 
 const gradeDistributionInsertQuery = `
     INSERT INTO gradeDistribution (
@@ -59,63 +59,68 @@ const gradeDistributionInsertQuery = `
     );
 `;
 
-var connection; 
+let connection;
 
 async function initSQLite() {
-    console.log("🧠 Creating in-memory SQLite instance...")
+  console.log("🧠 Creating in-memory SQLite instance...");
 
-    await fs.open(path.join(__dirname, 'db.sqlite'), 'w', function (err, file) {
-        if (err) throw err;
-        console.log("✅ SQLite file created!");
-      });
+  await fs.open(path.join(__dirname, "db.sqlite"), "w", function (err) {
+    if (err) throw err;
+    console.log("✅ SQLite file created!");
+  });
 
-    console.log("🗄️ Creating gradeDistribution table...");
+  console.log("🗄️ Creating gradeDistribution table...");
 
-    connection = new db(path.join(__dirname, 'db.sqlite'));
+  connection = new db(path.join(__dirname, "db.sqlite"));
 
-    console.log("✅ gradeDistribution table created!");
+  console.log("✅ gradeDistribution table created!");
 
-    connection.prepare(gradeDistributionTableSchema).run();
-    for (const index of gradeDistributionIndexes) {
-        connection.prepare(index).run();
-    }
+  connection.prepare(gradeDistributionTableSchema).run();
+  for (const index of gradeDistributionIndexes) {
+    connection.prepare(index).run();
+  }
 
-    
-    insertData();
-    
+  insertData();
 }
 
 function insertData() {
-    console.log("🗄️ Inserting gradeDistribution data from CSV...")
-    let stream = fs.createReadStream(path.join(__dirname, 'grades.csv')).pipe(csv());
+  console.log("🗄️ Inserting gradeDistribution data from CSV...");
+  const stream = fs
+    .createReadStream(path.join(__dirname, "grades.csv"))
+    .pipe(csv());
 
-    stream.on('data', (row) => {
-            connection.prepare(gradeDistributionInsertQuery).run(
-                row.year, 
-                row.quarter.toUpperCase(), 
-                row.dept_code, 
-                row.dept,
-                row.number,
-                row.base_number,
-                row.code, 
-                row.section, 
-                row.title, 
-                row.instructor, 
-                row.type, 
-                row.A, 
-                row.B, 
-                row.C, 
-                row.D, 
-                row.F, 
-                row.P, 
-                row.NP, 
-                row.W, 
-                row.avg_gpa);
-    });
+  stream.on("data", (row) => {
+    connection
+      .prepare(gradeDistributionInsertQuery)
+      .run(
+        row.year,
+        row.quarter.toUpperCase(),
+        row.dept_code,
+        row.dept,
+        row.number,
+        row.base_number,
+        row.code,
+        row.section,
+        row.title,
+        row.instructor,
+        row.type,
+        row.A,
+        row.B,
+        row.C,
+        row.D,
+        row.F,
+        row.P,
+        row.NP,
+        row.W,
+        row.avg_gpa
+      );
+  });
 
-    stream.on('error', (err) => console.log(err));
+  stream.on("error", (err) => console.log(err));
 
-    stream.on('close', () => console.log("✅ All gradeDistribution data inserted!"));
+  stream.on("close", () =>
+    console.log("✅ All gradeDistribution data inserted!")
+  );
 }
 
 initSQLite();
