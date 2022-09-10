@@ -3,9 +3,10 @@
 import "dotenv/config";
 
 import * as Sentry from "@sentry/serverless";
+import aws_lambda from "aws-lambda";
 import compression from "compression";
 import cors from "cors";
-import express from "express";
+import express, { ErrorRequestHandler, Request, RequestHandler } from "express";
 import expressPlayground from "graphql-playground-middleware-express";
 import logger from "morgan";
 import path from "path";
@@ -24,7 +25,11 @@ if (process.env.NODE_ENV == "production") {
     tracesSampleRate: 1.0,
   });
 }
-const logging = (req, res, next) => {
+const logging: RequestHandler = (
+  req: Request<unknown, unknown, { query: string }>,
+  res,
+  next
+) => {
   if (process.argv.includes("--log") || process.env.NODE_ENV == "production") {
     const event = {
       referer: req.headers.referer,
@@ -52,7 +57,7 @@ const logging = (req, res, next) => {
 app.use(cors());
 app.use(
   compression({
-    level: 4, //using fourth fastest compression level: https://www.npmjs.com/package/compression
+    level: 4, // using fourth fastest compression level: https://www.npmjs.com/package/compression
     threshold: "128kb",
     filter: (req, res) => {
       if (req.headers["x-no-compression"]) {
@@ -82,7 +87,7 @@ app.get("/", function (req, res) {
   res.redirect("docs");
 });
 
-//The 404 Route (ALWAYS Keep this as the last route)
+// the 404 Route (ALWAYS keep this as the last route)
 app.get("*", function (req, res) {
   res
     .status(404)
@@ -92,7 +97,11 @@ app.get("*", function (req, res) {
 });
 
 // error handler
-const errorHandler = (err, req, res, next) => {
+const errorHandler: ErrorRequestHandler = (
+  err: { message: string; status: number },
+  req,
+  res
+) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
@@ -102,7 +111,12 @@ const errorHandler = (err, req, res, next) => {
 };
 app.use(errorHandler);
 
-let serverless_handler: any = serverless(app, { binary: ["image/*"] });
+let serverless_handler: aws_lambda.Handler | serverless.Handler = serverless(
+  app,
+  {
+    binary: ["image/*"],
+  }
+);
 if (process.env.NODE_ENV == "production") {
   serverless_handler = Sentry.AWSLambda.wrapHandler(serverless_handler);
 }
