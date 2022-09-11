@@ -11,6 +11,7 @@ import {
   getCourseSchedules,
   scheduleArgsToQuery,
 } from "../helpers/schedule.helper";
+import { Course } from "../types/types";
 import { instructorType } from "./instructor";
 import { courseOfferingType } from "./schedule";
 
@@ -32,7 +33,7 @@ const courseType: GraphQLObjectType = new GraphQLObjectType({
     department_name: { type: GraphQLString },
     instructor_history: {
       type: new GraphQLList(instructorType),
-      resolve: (course) => {
+      resolve: (course: Course) => {
         return course.professor_history.map((instructor_netid: string) =>
           getInstructor(instructor_netid)
         );
@@ -88,10 +89,6 @@ const courseType: GraphQLObjectType = new GraphQLObjectType({
         room: { type: GraphQLString },
       },
       resolve: async (course, args, _, info) => {
-        if ("offerings" in course) {
-          return course.offerings;
-        }
-
         // Only fetch course schedule if it's a root course query.
         // This is because we don't want to spam webreg with successive calls from
         // queries like allCourses/allProfessors.
@@ -103,8 +100,7 @@ const courseType: GraphQLObjectType = new GraphQLObjectType({
             course_number: course.number,
             ...args,
           });
-          const results = await getCourseSchedules(query);
-          return results;
+          return await getCourseSchedules(query);
         }
 
         // TODO: only return one error for a query, instead of one per item in the list

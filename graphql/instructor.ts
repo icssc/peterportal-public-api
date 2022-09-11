@@ -2,6 +2,7 @@ import { GraphQLList, GraphQLObjectType, GraphQLString } from "graphql";
 
 import { getCourse } from "../helpers/courses.helper";
 import { getInstructor } from "../helpers/instructor.helper";
+import { Instructor } from "../types/types";
 import { courseType } from "./course";
 
 const instructorType: GraphQLObjectType = new GraphQLObjectType({
@@ -13,7 +14,7 @@ const instructorType: GraphQLObjectType = new GraphQLObjectType({
       type: GraphQLString,
       description:
         "Name as it appears on webreg. Follows the format: `DOE, J.`",
-      resolve: (instructor) => {
+      resolve: (instructor: Instructor) => {
         if (instructor.shortened_name) {
           return instructor.shortened_name;
         } else {

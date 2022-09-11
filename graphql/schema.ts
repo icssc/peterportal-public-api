@@ -24,7 +24,6 @@ import {
 } from "../helpers/schedule.helper";
 import { getWeek } from "../helpers/week.helper";
 import {
-  CourseOffering,
   GradeDistAggregate,
   GradeGQLData,
   GradeRawData,
@@ -53,8 +52,8 @@ const queryType: GraphQLObjectType = new GraphQLObjectType({
       },
 
       // define function to get a course
-      resolve: (_, { id }) => {
-        return getCourse(id);
+      resolve: (_, params: { id: string }) => {
+        return getCourse(params.id);
       },
 
       // documentation
@@ -73,9 +72,9 @@ const queryType: GraphQLObjectType = new GraphQLObjectType({
         },
       },
 
-      // define function to get a instructor
-      resolve: (_, { ucinetid }) => {
-        return getInstructor(ucinetid);
+      // define function to get an instructor
+      resolve: (_, params: { ucinetid: string }) => {
+        return getInstructor(params.ucinetid);
       },
 
       // documentation for instructor
@@ -167,12 +166,12 @@ const queryType: GraphQLObjectType = new GraphQLObjectType({
         start_time: {
           type: GraphQLString,
           description:
-            "Start time of a couse in 12 hour format. Ex: '10:00AM' or '5:00PM'",
+            "Start time of a course in 12 hour format. Ex: '10:00AM' or '5:00PM'",
         },
         end_time: {
           type: GraphQLString,
           description:
-            "End time of a couse in 12 hour format. Ex: '10:00AM' or '5:00PM'",
+            "End time of a course in 12 hour format. Ex: '10:00AM' or '5:00PM'",
         },
         max_capacity: {
           type: GraphQLString,
@@ -203,8 +202,7 @@ const queryType: GraphQLObjectType = new GraphQLObjectType({
       resolve: async (_, args) => {
         validateScheduleArgs(args);
         const query = scheduleArgsToQuery(args);
-        const results: CourseOffering[] = await getCourseSchedules(query);
-        return results;
+        return await getCourseSchedules(query);
       },
 
       description: "Return schedule from websoc.",
@@ -230,8 +228,12 @@ const queryType: GraphQLObjectType = new GraphQLObjectType({
       },
 
       //calls getWeek(), fetching from UCI's academic calendar
-      resolve: async (_, { year, month, day }) => {
+      resolve: async (
+        _,
+        params: { year: string; month: string; day: string }
+      ) => {
         try {
+          const { year, month, day } = params;
           return await getWeek(year, month, day);
         } catch (e) {
           throw new ValidationError(
@@ -260,7 +262,7 @@ const queryType: GraphQLObjectType = new GraphQLObjectType({
         instructor: {
           type: GraphQLString,
           description:
-            "Instructor, must following the format (<last_name>, <first_initial>.) Multiple values in the arguments can be included by using ; as a separator.",
+            "Instructor, must follow the format (<last_name>, <first_initial>.) Multiple values in the arguments can be included by using ; as a separator.",
         },
         department: {
           type: GraphQLString,

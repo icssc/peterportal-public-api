@@ -5,12 +5,11 @@ import schema from "./schema";
 
 const router = express.Router();
 
-router.use(
-  "/",
+router.use("/", (req, res, next) => {
   graphqlHTTP({
-    schema: schema,
+    schema,
     graphiql: true,
-  })
-);
+  })(req, res).catch(next);
+});
 
 export default router;

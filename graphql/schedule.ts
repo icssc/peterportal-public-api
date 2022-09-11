@@ -11,6 +11,8 @@ import {
   getInstructor,
   getUCINetIDFromName,
 } from "../helpers/instructor.helper";
+import { CourseOffering } from "../types/types";
+import { Meeting } from "../types/websoc.types";
 import { courseType } from "./course";
 import { instructorType } from "./instructor";
 
@@ -20,8 +22,8 @@ const meetingType: GraphQLObjectType = new GraphQLObjectType({
   fields: () => ({
     building: {
       type: GraphQLString,
-      resolve: (meeting) => {
-        return meeting["bldg"];
+      resolve: (meeting: Meeting) => {
+        return meeting.bldg;
       },
     },
     days: { type: GraphQLString },
@@ -48,7 +50,7 @@ const courseOfferingType: GraphQLObjectType = new GraphQLObjectType({
     quarter: { type: GraphQLString },
     instructors: {
       type: new GraphQLList(instructorType),
-      resolve: (offering) => {
+      resolve: (offering: CourseOffering) => {
         return offering.instructors.map((name: string) => {
           //Fetch all possible ucinetids from the instructor.
           const ucinetids: string[] = getUCINetIDFromName(name);
@@ -102,7 +104,7 @@ const courseOfferingType: GraphQLObjectType = new GraphQLObjectType({
     num_on_waitlist: {
       type: GraphQLFloat,
       resolve: (offering) => {
-        return offering.num_on_waitlist === "n/a"
+        return <number | string>offering.num_on_waitlist === "n/a"
           ? null
           : offering.num_on_waitlist;
       },
@@ -126,7 +128,7 @@ const courseOfferingType: GraphQLObjectType = new GraphQLObjectType({
 });
 
 // Validate Schedule Query Arguments
-function validateScheduleArgs(args) {
+function validateScheduleArgs(args: { [argName: string]: unknown }) {
   // Assert that a term is provided (year and quarter)
   // year and quarter are non-nullable, so they should never be false
   if (!(args.year && args.quarter)) {
