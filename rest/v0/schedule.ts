@@ -1,4 +1,5 @@
 import express from "express";
+import { ParsedQs } from "qs";
 import { WeekParams } from "types/types";
 import { callWebSocAPI } from "websoc-api";
 
@@ -8,12 +9,12 @@ import { WebsocResponse } from "../../types/websoc.types";
 
 const router = express.Router();
 
-router.get("/soc", function (req, res, next) {
-  callWebSocAPI(req.query)
+router.get("/soc", function (req, res) {
+  (<(query: ParsedQs) => Promise<WebsocResponse>>callWebSocAPI)(req.query)
     .then((response: WebsocResponse) => {
       res.json(response);
     })
-    .catch((err) => {
+    .catch(() => {
       res
         .status(400)
         .json(
@@ -26,10 +27,10 @@ router.get("/soc", function (req, res, next) {
     });
 });
 
-router.get("/week", function (req, res, next) {
+router.get("/week", function (req, res) {
   const query = req.query as unknown as WeekParams;
   getWeek(query.year, query.month, query.day)
-    .then((response: WebsocResponse) => {
+    .then((response) => {
       res.json(response);
     })
     .catch((err) => {

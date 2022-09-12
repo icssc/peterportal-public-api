@@ -6,15 +6,11 @@ import {
   fetchGrades,
   parseGradesParamsToSQL,
 } from "../../helpers/grades.helper";
-import {
-  GradeCalculatedData,
-  GradeRawData,
-  WhereParams,
-} from "../../types/types";
+import { GradeCalculatedData, WhereParams } from "../../types/types";
 
 const router = express.Router();
 
-router.get("/raw", async (req, res) => {
+router.get("/raw", (req, res) => {
   const params = {
     year: req.query.year,
     quarter: req.query.quarter,
@@ -27,8 +23,8 @@ router.get("/raw", async (req, res) => {
   };
 
   try {
-    const where: WhereParams = parseGradesParamsToSQL(params);
-    const results: GradeRawData = fetchGrades(where); // false for raw data
+    const where = parseGradesParamsToSQL(params);
+    const results = fetchGrades(where); // false for raw data
     res.send(results);
   } catch (err) {
     if (err instanceof ValidationError) {
@@ -48,7 +44,7 @@ router.get("/raw", async (req, res) => {
   }
 });
 
-router.get("/calculated", async (req, res) => {
+router.get("/calculated", (req, res) => {
   const params = {
     year: req.query.year,
     quarter: req.query.quarter,

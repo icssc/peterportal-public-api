@@ -10,11 +10,11 @@ import { Instructor } from "../../types/types";
 
 const router = express.Router();
 
-router.get("/all", function (req, res, next) {
+router.get("/all", function (req, res) {
   res.json(getAllInstructors());
 });
 
-router.get("/:ucinetid", function (req, res, next) {
+router.get("/:ucinetid", function (req, res) {
   const instructorList: string[] = req.params.ucinetid.split(";");
   const instructors: { [key: string]: Instructor } | Instructor =
     instructorList.length > 1

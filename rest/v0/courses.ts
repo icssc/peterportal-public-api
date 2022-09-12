@@ -10,11 +10,11 @@ import { Course } from "../../types/types";
 
 const router = express.Router();
 
-router.get("/all", function (req, res, next) {
+router.get("/all", function (req, res) {
   res.json(getAllCourses());
 });
 
-router.get("/:courseID", function (req, res, next) {
+router.get("/:courseID", function (req, res) {
   const courseList: string[] = req.params.courseID.split(";");
   const courses: { [key: string]: Course } | Course =
     courseList.length > 1
