@@ -27,6 +27,7 @@ import {
   GradeDistAggregate,
   GradeGQLData,
   GradeRawData,
+  GradesParams,
   WhereParams,
 } from "../types/types";
 import { courseType } from "./course";
@@ -289,7 +290,7 @@ const queryType: GraphQLObjectType = new GraphQLObjectType({
         },
       },
 
-      resolve: (_, args, __, info) => {
+      resolve: (_, args: GradesParams, __, info) => {
         // Get the fields requested in the query
         // This allows us to only fetch what the client wants from sql
         const requestedFields: string[] = Object.keys(

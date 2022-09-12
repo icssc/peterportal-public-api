@@ -169,3 +169,14 @@ export type ParsedQueryStringOrArray =
   | ParsedQs
   | string[]
   | ParsedQs[];
+
+export interface GradesParams {
+  division?: ParsedQueryStringOrArray;
+  number?: ParsedQueryStringOrArray;
+  excludePNP?: boolean;
+  code?: ParsedQueryStringOrArray;
+  instructor?: ParsedQueryStringOrArray;
+  year?: ParsedQueryStringOrArray;
+  department?: ParsedQueryStringOrArray;
+  quarter?: ParsedQueryStringOrArray;
+}

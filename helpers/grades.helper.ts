@@ -7,22 +7,13 @@ import {
   GradeData,
   GradeDistAggregate,
   GradeRawData,
-  ParsedQueryStringOrArray,
+  GradesParams,
   WhereParams,
 } from "../types/types";
 import { ValidationError } from "./errors.helper";
 
 // Constructs a WHERE clause from the query
-export function parseGradesParamsToSQL(query: {
-  division: ParsedQueryStringOrArray;
-  number: ParsedQueryStringOrArray;
-  excludePNP: boolean;
-  code: ParsedQueryStringOrArray;
-  instructor: ParsedQueryStringOrArray;
-  year: ParsedQueryStringOrArray;
-  department: ParsedQueryStringOrArray;
-  quarter: ParsedQueryStringOrArray;
-}): WhereParams {
+export function parseGradesParamsToSQL(query: GradesParams): WhereParams {
   let whereClause = "";
   const paramsList: string[] = [];
 
