@@ -3,6 +3,8 @@ import path from "path";
 
 import {
   GradeCalculatedData,
+  GradeCourse,
+  GradeData,
   GradeDistAggregate,
   GradeRawData,
   WhereParams,
@@ -11,12 +13,12 @@ import { ValidationError } from "./errors.helper";
 
 // Constructs a WHERE clause from the query
 export function parseGradesParamsToSQL(query: {
-  [key: string]: any;
+  [key: string]: string;
 }): WhereParams {
   let whereClause = "";
   const paramsList: string[] = [];
 
-  const params: { [key: string]: any } = {
+  const params: { [key: string]: string | string[] } = {
     year: query.year ? query.year.split(";") : null,
     quarter: query.quarter ? query.quarter.split(";") : null,
     instructor: query.instructor ? query.instructor.split(";") : null,
@@ -28,13 +30,13 @@ export function parseGradesParamsToSQL(query: {
 
   Object.keys(params).forEach(function (key) {
     if (Array.isArray(params[key]) && params[key] !== null) {
-      params[key].forEach((value: string) => {
+      (<string[]>params[key]).forEach((value: string) => {
         paramsList.push(value.toUpperCase());
       });
     }
     let condition = "";
     const errorMsg = (param: string, paramName: string) =>
-      `Invalid syntax found in parameters. Exception occured at '${param}' in the [${paramName}] query value`;
+      `Invalid syntax found in parameters. Exception occurred at '${param}' in the [${paramName}] query value`;
 
     switch (true) {
       case key === "year" && params[key] !== null:
@@ -61,7 +63,7 @@ export function parseGradesParamsToSQL(query: {
         break;
       case key === "instructor" && params[key] !== null:
         for (const instructor of params[key]) {
-          if (instructor.match(/^[a-zA-Z\-]+, [a-zA-Z]\.$/)) {
+          if (instructor.match(/^[a-zA-Z-]+, [a-zA-Z]\.$/)) {
             condition == ""
               ? (condition += "instructor = ?")
               : (condition += " OR instructor = ?");
@@ -71,19 +73,19 @@ export function parseGradesParamsToSQL(query: {
         }
         break;
       case key === "department" && params[key] !== null:
-        for (const department of params[key]) {
+        (<string[]>params[key]).forEach(() => {
           // TODO: Implement UCI Dept code param validation
           condition == ""
             ? (condition += "department = ?")
             : (condition += " OR department = ?");
-        }
+        });
         break;
       case key === "number" && params[key] !== null:
-        for (const number of params[key]) {
+        (<string[]>params[key]).forEach(() => {
           condition == ""
             ? (condition += "number = ?")
             : (condition += " OR number = ?");
-        }
+        });
         break;
       case key === "code" && params[key] !== null:
         for (const code of params[key]) {
@@ -97,17 +99,16 @@ export function parseGradesParamsToSQL(query: {
         }
         break;
       case key == "division" && params[key] !== null:
-        const division = params[key].toLowerCase();
-        if (division == "lowerdiv") {
+        if ((<string>params[key]).toLowerCase() == "lowerdiv") {
           condition == ""
             ? (condition += "number_int < 100")
             : (condition += " OR number_int < 100");
-        } else if (division == "upperdiv") {
+        } else if ((<string>params[key]).toLowerCase() == "upperdiv") {
           condition == ""
             ? (condition += "number_int BETWEEN 100 AND 199")
             : (condition += " OR number_int BETWEEN 100 AND 199");
         } else {
-          throw new ValidationError(errorMsg(params[key], "division"));
+          throw new ValidationError(errorMsg(<string>params[key], "division"));
         }
     }
 
@@ -163,7 +164,7 @@ export function fetchGrades(where: WhereParams): GradeRawData {
     gradeNPCount,
     gradeWCount,
     NULLIF(averageGPA, '') as averageGPA FROM gradeDistribution`;
-  return queryDatabase(
+  return <GradeRawData>queryDatabase(
     where.where != null ? sqlStatement + where.where : sqlStatement
   )
     .bind(where.params)
@@ -177,7 +178,7 @@ export function fetchInstructors(where: WhereParams): string[] {
   )
     .bind(where.params)
     .all()
-    .map((result) => result.instructor);
+    .map((result: GradeData) => result.instructor);
 }
 
 //For GraphQL API
@@ -194,7 +195,7 @@ export function fetchAggregatedGrades(where: WhereParams): GradeDistAggregate {
     AVG(NULLIF(averageGPA, '')) as average_gpa,
     COUNT() as count FROM gradeDistribution`;
 
-  return queryDatabase(
+  return <GradeDistAggregate>queryDatabase(
     where.where != null ? sqlStatement + where.where : sqlStatement
   )
     .bind(where.params)
@@ -227,11 +228,11 @@ export function fetchCalculatedData(where: WhereParams): GradeCalculatedData {
     title,
     instructor,
     type FROM gradeDistribution`;
-  const gradeDistribution = connection
+  const gradeDistribution = <GradeDistAggregate>connection
     .prepare(where.where != null ? sqlFunction + where.where : sqlFunction)
     .bind(where.params)
     .get();
-  const courseList = connection
+  const courseList = <GradeCourse[]>connection
     .prepare(where.where != null ? sqlCourseList + where.where : sqlCourseList)
     .bind(where.params)
     .all();

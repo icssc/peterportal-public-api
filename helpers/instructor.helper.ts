@@ -10,20 +10,20 @@ export function getAllInstructors(): Instructor[] {
 export function getInstructors(instructorList: string[]): {
   [key: string]: Instructor;
 } {
-  const instructors = {};
+  const instructors: Record<string, Instructor> = {};
   for (const instructorID of instructorList) {
     instructors[instructorID] = cache[instructorID]
-      ? cache[instructorID]
+      ? <Instructor>cache[instructorID]
       : null;
   }
   return instructors;
 }
 //Return an array of all courses in our cache
 export function getInstructor(ucinetid: string): Instructor {
-  return cache[ucinetid] ?? null;
+  return <Instructor>cache[ucinetid] ?? null;
 }
 
 //Returns an array of possible UCINetIDs matching a name like "PATTIS, R."
 export function getUCINetIDFromName(name: string): string[] {
-  return name_map[name] ?? null;
+  return <string[]>name_map[name] ?? null;
 }

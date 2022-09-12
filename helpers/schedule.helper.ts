@@ -1,31 +1,38 @@
 import { callWebSocAPI } from "websoc-api";
 
-import { CourseOffering } from "../types/types";
-import { WebsocResponse } from "../types/websoc.types";
+import { Course, CourseOffering } from "../types/types";
+import { Section, WebsocResponse } from "../types/websoc.types";
 import { getCourse } from "./courses.helper";
 
 // Format Course Offering
 // Given a course from the websoc api, we need to format it for graphql
 // and inject some addtional information such as the course id, year, and quarter
-function _formatCourseOffering(course, additionalArgs) {
+function _formatCourseOffering(
+  course: Section,
+  additionalArgs: { year: string; course: Course; quarter: string }
+): CourseOffering {
   return {
     ...additionalArgs,
     final_exam: course.finalExam,
     instructors: course.instructors,
-    max_capacity: course.maxCapacity,
+    max_capacity: parseInt(course.maxCapacity),
     meetings: course.meetings,
     num_section_enrolled:
       course.numCurrentlyEnrolled.sectionEnrolled === ""
         ? 0
-        : course.numCurrentlyEnrolled.sectionEnrolled,
+        : parseInt(course.numCurrentlyEnrolled.sectionEnrolled),
     num_total_enrolled:
       course.numCurrentlyEnrolled.totalEnrolled === ""
         ? 0
-        : course.numCurrentlyEnrolled.totalEnrolled,
+        : parseInt(course.numCurrentlyEnrolled.totalEnrolled),
     num_new_only_reserved:
-      course.numNewOnlyReserved === "" ? 0 : course.numNewOnlyReserved,
-    num_on_waitlist: course.numOnWaitlist === "" ? 0 : course.numOnWaitlist,
-    num_requested: course.numRequested === "" ? 0 : course.numRequested,
+      course.numNewOnlyReserved === ""
+        ? 0
+        : parseInt(course.numNewOnlyReserved),
+    num_on_waitlist:
+      course.numOnWaitlist === "" ? 0 : parseInt(course.numOnWaitlist),
+    num_requested:
+      course.numRequested === "" ? 0 : parseInt(course.numRequested),
     restrictions: course.restrictions,
     section: {
       code: course.sectionCode,
@@ -34,12 +41,12 @@ function _formatCourseOffering(course, additionalArgs) {
       type: course.sectionType,
     },
     status: course.status,
-    units: course.units,
+    units: parseInt(course.units),
   };
 }
 
 // Format Schedule query arguments for WebSoc
-export function scheduleArgsToQuery(args) {
+export function scheduleArgsToQuery(args: Record<string, string>) {
   const {
     year,
     quarter,
@@ -83,8 +90,12 @@ export function scheduleArgsToQuery(args) {
   };
 }
 
-export async function getCourseSchedules(query): Promise<CourseOffering[]> {
-  const results: WebsocResponse = await callWebSocAPI(query);
+export async function getCourseSchedules(
+  query: Record<string, string>
+): Promise<CourseOffering[]> {
+  const results = await (<
+    (query: Record<string, string>) => Promise<WebsocResponse>
+  >callWebSocAPI)(query);
   const year = query.term.split(" ")[0];
   const quarter = query.term.split(" ")[1];
   const offerings: CourseOffering[] = [];

@@ -1,76 +1,83 @@
-import cheerio from "cheerio";
+import cheerio, { CheerioAPI, Element } from "cheerio";
 import fetch from "node-fetch";
+
+declare interface Week {
+  week: number;
+  quarter: string;
+  display: string;
+}
+
+declare type QuarterMapping = Record<string, { begin: Date; end: Date }>;
 
 /**
  * Get the current week and quarter. A display string is also provided.
  */
-function getWeek(yearInput: string, month: string, day: string) {
-  return new Promise(async (resolve, reject) => {
-    let date;
-    if (!yearInput || !month || !day) {
-      //if all are empty
-      if (!yearInput && !month && !day) {
-        date = new Date(Date.now());
-      }
-      //if one of year/month/day is missing
-      else {
-        reject(new Error());
-        return;
-      }
+async function getWeek(
+  yearInput: string,
+  month: string,
+  day: string
+): Promise<Week> {
+  let date: Date;
+  if (!yearInput || !month || !day) {
+    //if all are empty
+    if (!yearInput && !month && !day) {
+      date = new Date(Date.now());
     }
-    //if none of year/month/day are missing
+    //if one of year/month/day is missing
     else {
-      //validate year, month, day
-      if (
-        typeof yearInput != "string" ||
-        typeof month != "string" ||
-        typeof day != "string" ||
-        yearInput.length != 4 ||
-        month.length != 2 ||
-        day.length != 2
-      ) {
-        reject(new Error());
-        return;
-      }
-      const dateString = yearInput + "/" + month + "/" + day;
-      date = new Date(dateString);
-      if (isNaN(date)) {
-        reject(new Error());
-        return;
-      }
+      throw new Error();
     }
+  }
+  //if none of year/month/day are missing
+  else {
+    //validate year, month, day
+    if (
+      typeof yearInput != "string" ||
+      typeof month != "string" ||
+      typeof day != "string" ||
+      yearInput.length != 4 ||
+      month.length != 2 ||
+      day.length != 2
+    ) {
+      throw new Error();
+    }
+    const dateString = yearInput + "/" + month + "/" + day;
+    date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      throw new Error();
+    }
+  }
 
-    const year = date.getFullYear();
-    // check for current year to current year + 1
-    const quarterMapping1 = await getQuarterMapping(year);
-    let potentialWeek = findWeek(date, quarterMapping1);
-    // if the date lies within this page
-    if (potentialWeek) {
-      resolve(potentialWeek);
-      return;
-    }
-    // check for current year - 1 to current year
-    const quarterMapping2 = await getQuarterMapping(year - 1);
-    potentialWeek = findWeek(date, quarterMapping2);
-    if (potentialWeek) {
-      resolve(potentialWeek);
-    } else {
-      // date not in any school term, probably in break
-      resolve({
-        week: -1,
-        quarter: "N/A",
-        display: "Enjoy your break!😎",
-      });
-    }
-  });
+  const year = date.getFullYear();
+  // check for current year to current year + 1
+  const quarterMapping1 = await getQuarterMapping(year);
+  let potentialWeek = findWeek(date, quarterMapping1);
+  // if the date lies within this page
+  if (potentialWeek) {
+    return potentialWeek;
+  }
+  // check for current year - 1 to current year
+  const quarterMapping2 = await getQuarterMapping(year - 1);
+  potentialWeek = findWeek(date, quarterMapping2);
+  if (potentialWeek) {
+    return potentialWeek;
+  } else {
+    // date not in any school term, probably in break
+    return {
+      week: -1,
+      quarter: "N/A",
+      display: "Enjoy your break!😎",
+    };
+  }
 }
+
 /**
  *
  * @param date Today's date
  * @param quarterMapping Maps a quarter to its start and end date
  * @returns Week description if it lies within the quarter
  */
-function findWeek(date, quarterMapping) {
+function findWeek(date: Date, quarterMapping: QuarterMapping): Week {
   let result = undefined;
   // iterate through each quarter
   Object.keys(quarterMapping).forEach(function (quarter) {
@@ -96,7 +103,7 @@ function findWeek(date, quarterMapping) {
       };
     }
   });
-  return result;
+  return <Week>result;
 }
 
 /**
@@ -104,35 +111,32 @@ function findWeek(date, quarterMapping) {
  * @param year Academic year to search for
  * @returns Mapping of quarters to its start and end date
  */
-async function getQuarterMapping(year) {
-  return new Promise(async (resolve) => {
-    // maps quarter description to day range
-    const quarterToDayMapping = {};
-    // url to academic calendar
-    const currYear = year % 100;
-    const nextYear = (year % 100) + 1;
+async function getQuarterMapping(year: number): Promise<QuarterMapping> {
+  // maps quarter description to day range
+  const quarterToDayMapping = {};
+  // url to academic calendar
+  const currYear = year % 100;
+  const nextYear = (year % 100) + 1;
 
-    const currYearString = currYear.toString().padStart(2, "0");
-    const nextYearString = nextYear.toString().padStart(2, "0");
+  const currYearString = currYear.toString().padStart(2, "0");
+  const nextYearString = nextYear.toString().padStart(2, "0");
 
-    const url = `https://reg.uci.edu/calendars/quarterly/${year}-${
-      year + 1
-    }/quarterly${currYearString}-${nextYearString}.html`;
-    const res = await fetch(url);
-    const text = await res.text();
-    // scrape the calendar
-    const $ = cheerio.load(text);
-    // load all tables on the page
-    const tables = $('table[class="calendartable"]').toArray();
+  const url = `https://reg.uci.edu/calendars/quarterly/${year}-${
+    year + 1
+  }/quarterly${currYearString}-${nextYearString}.html`;
+  const res = await fetch(url);
+  const text = await res.text();
+  // scrape the calendar
+  const $ = cheerio.load(text);
+  // load all tables on the page
+  const tables = $('table[class="calendartable"]').toArray();
 
-    // process each table
-    tables.forEach((table) => {
-      processTable(table, $, quarterToDayMapping, year);
-    });
-    //await setValue(COLLECTION_NAMES.SCHEDULE, cacheKey, quarterToDayMapping);
-    resolve(quarterToDayMapping);
-    return;
+  // process each table
+  tables.forEach((table) => {
+    processTable(table, $, quarterToDayMapping, year);
   });
+  //await setValue(COLLECTION_NAMES.SCHEDULE, cacheKey, quarterToDayMapping);
+  return quarterToDayMapping;
 }
 
 /**
@@ -142,7 +146,12 @@ async function getQuarterMapping(year) {
  * @param quarterToDayMapping Mapping to store data into
  * @param year Beginning academic year
  */
-function processTable(table, $, quarterToDayMapping, year) {
+function processTable(
+  table: Element,
+  $: CheerioAPI,
+  quarterToDayMapping: QuarterMapping,
+  year: number
+) {
   // find the tbody
   const tbody = $(table).find("tbody");
   // reference all rows in the table
@@ -163,7 +172,13 @@ function processTable(table, $, quarterToDayMapping, year) {
  * @param tableLabels Column labels in the current table
  * @param year Beginning academic year
  */
-function processRow(row, $, quarterToDayMapping, tableLabels, year) {
+function processRow(
+  row: Element,
+  $: CheerioAPI,
+  quarterToDayMapping: QuarterMapping,
+  tableLabels: Element[],
+  year: number
+) {
   // get all information from row
   const rowInfo = $(row).find("td").toArray();
   // start date
@@ -206,7 +221,7 @@ function processRow(row, $, quarterToDayMapping, tableLabels, year) {
  * @param year Beginning academic year
  * @returns Date for the corresponding table entry
  */
-function processDate(dateEntry, dateLabel, year) {
+function processDate(dateEntry: string, dateLabel: string, year: number) {
   const splitDateEntry = dateEntry.split(" ");
   const month = splitDateEntry[0];
   const day = splitDateEntry[1];
@@ -222,7 +237,7 @@ function processDate(dateEntry, dateLabel, year) {
  * @param str Original string
  * @returns New string with whitespace removed
  */
-function strip(str) {
+function strip(str: string): string {
   return str.replace(/^\s+|\s+$/g, "");
 }
 
@@ -231,7 +246,7 @@ function strip(str) {
  * @param num Number to test
  * @returns True if is an integer
  */
-function isInteger(num) {
+function isInteger(num: string): boolean {
   return !isNaN(parseInt(num, 10));
 }
 
@@ -241,7 +256,7 @@ function isInteger(num) {
  * @param date2 Later date
  * @returns Number of days between date1 and date2
  */
-function dateSubtract(date1, date2) {
+function dateSubtract(date1: Date, date2: Date): number {
   // To calculate the time difference of two dates
   const Difference_In_Time = date2.getTime() - date1.getTime();
   // To calculate the no. of days between two dates
@@ -254,7 +269,7 @@ function dateSubtract(date1, date2) {
  * @param days Number of days to add
  * @returns Same date as the one passed in
  */
-function addDays(date, days) {
+function addDays(date: Date, days: number): Date {
   date.setDate(date.getDate() + days);
   return date;
 }
