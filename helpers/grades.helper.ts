@@ -7,25 +7,33 @@ import {
   GradeData,
   GradeDistAggregate,
   GradeRawData,
+  ParsedQueryStringOrArray,
   WhereParams,
 } from "../types/types";
 import { ValidationError } from "./errors.helper";
 
 // Constructs a WHERE clause from the query
 export function parseGradesParamsToSQL(query: {
-  [key: string]: string;
+  division: ParsedQueryStringOrArray;
+  number: ParsedQueryStringOrArray;
+  excludePNP: boolean;
+  code: ParsedQueryStringOrArray;
+  instructor: ParsedQueryStringOrArray;
+  year: ParsedQueryStringOrArray;
+  department: ParsedQueryStringOrArray;
+  quarter: ParsedQueryStringOrArray;
 }): WhereParams {
   let whereClause = "";
   const paramsList: string[] = [];
 
   const params: { [key: string]: string | string[] } = {
-    year: query.year ? query.year.split(";") : null,
-    quarter: query.quarter ? query.quarter.split(";") : null,
-    instructor: query.instructor ? query.instructor.split(";") : null,
-    department: query.department ? query.department.split(";") : null,
-    number: query.number ? query.number.split(";") : null,
-    code: query.code ? query.code.split(";") : null,
-    division: query.division ? query.division : null,
+    year: query.year ? (<string>query.year).split(";") : null,
+    quarter: query.quarter ? (<string>query.quarter).split(";") : null,
+    instructor: query.instructor ? (<string>query.instructor).split(";") : null,
+    department: query.department ? (<string>query.department).split(";") : null,
+    number: query.number ? (<string>query.number).split(";") : null,
+    code: query.code ? (<string>query.code).split(";") : null,
+    division: query.division ? <string | string[]>query.division : null,
   };
 
   Object.keys(params).forEach(function (key) {
