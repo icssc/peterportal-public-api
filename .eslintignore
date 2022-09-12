@@ -1,3 +1,4 @@
-docs/
+docs/*
 docs-site/*
 env/*
+tests/*
