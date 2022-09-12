@@ -1,5 +1,5 @@
 # serverless.yml
-component: 
+component:
 service: peterportal-api
 useDotenv: true
 provider:
@@ -12,14 +12,14 @@ provider:
   logRetentionInDays: 30
   apiGateway:
     binaryMediaTypes:
-      - 'image/*'
+      - "image/*"
 package:
   excludeDevDependencies: true
   individually: true
   include:
-     - docs-site/**/*
-     - db/*.sqlite
-     - public/**/*
+    - docs-site/**/*
+    - db/*.sqlite
+    - public/**/*
 
 plugins:
   - serverless-api-gateway-throttling
@@ -29,7 +29,6 @@ plugins:
   - serverless-domain-manager
   - serverless-plugin-lambda-insights
   - serverless-plugin-typescript
-
 
 custom:
   # Configures throttling settings for the API Gateway stage
@@ -46,14 +45,13 @@ custom:
   lambdaInsights:
     defaultLambdaInsights: true #enables Lambda Insights for all functions
 
-
 functions:
   app:
     handler: app.handler
-    events: 
-      - http: 
+    events:
+      - http:
           path: /
           method: ANY
-      - http: 
+      - http:
           path: /{proxy+}
           method: ANY

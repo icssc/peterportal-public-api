@@ -7,7 +7,7 @@ Try out one of these quick ways to play with our courses endpoints:
     <div class="termy">
 
     ```console
-    $ curl https://api.peterportal.org/rest/v0/courses/all 
+    $ curl https://api.peterportal.org/rest/v0/courses/all
 
     [
     ...
@@ -20,7 +20,7 @@ Try out one of these quick ways to play with our courses endpoints:
     ...
     ]
     ```
-    
+
     </div>
 
 === "python"
@@ -30,8 +30,8 @@ Try out one of these quick ways to play with our courses endpoints:
     ```console
     $ python -m pip install requests
     ---> 100%
-    $ python 
-    Python 3.8.5 
+    $ python
+    Python 3.8.5
     # >>>$ import requests
     # >>>$ response = requests.get("https://api.peterportal.org/rest/v0/courses/all")
     # >>>$ response.json()
@@ -50,18 +50,13 @@ Try out one of these quick ways to play with our courses endpoints:
 
     </div>
 
-
 ### `/courses/all`
 
 **GET all courses**
 
-| Code | Description |
-|------|-------------|
+| Code  | Description                                                                                                                                                            |
+| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `200` | A list of all courses available on the UCI Catalogue. Each element is a JSON object containing information on each course (department, number, title, and description) |
-
-
-
-
 
 ??? success "200 Successful Response"
 
@@ -84,17 +79,16 @@ Try out one of these quick ways to play with our courses endpoints:
 
 #### Parameters
 
-| Parameter | Description | Example |
-|------|-------------|---------|
+| Parameter  | Description                                        | Example                         |
+| ---------- | -------------------------------------------------- | ------------------------------- |
 | `courseID` | Course department + course number (without spaces) | I&CSCI53, COMPSCI122B, BIOSCI43 |
 
 #### Responses
 
-| Code | Description |
-|------|-------------|
-| `200` |  A JSON object containing every information available on a specific course. |
-| `404` | Invaild ID/Course not found |
-
+| Code  | Description                                                                |
+| ----- | -------------------------------------------------------------------------- |
+| `200` | A JSON object containing every information available on a specific course. |
+| `404` | Invaild ID/Course not found                                                |
 
 ??? success "200 Successful Response"
 
@@ -154,7 +148,7 @@ Try out one of these quick ways to play with our courses endpoints:
         ]
     }
     ```
-    
+
 ??? fail "404 Not Found"
 
     `/courses/I&CSCI5555` returns
@@ -163,7 +157,7 @@ Try out one of these quick ways to play with our courses endpoints:
     {
         "timestamp": "Thu, 31 Dec 2020 00:00:00 GMT",
         "status": 404,
-        "error": "Bad Request: Invalid parameter", 
+        "error": "Bad Request: Invalid parameter",
         "message": "Course not found",
     }
     ```

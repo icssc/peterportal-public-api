@@ -1,12 +1,14 @@
-import request from '../api.int.helper';
+import request from "../api.int.helper";
 
-jest.setTimeout(30000)
+jest.setTimeout(30000);
 
 // Instructors
-describe('POST /graphql/', () => {
-  it('GraphQL: Instructor Query on pattis(all fields)',  () => request
-  .post('/graphql/')
-  .send({query:`{
+describe("POST /graphql/", () => {
+  it("GraphQL: Instructor Query on pattis(all fields)", () =>
+    request
+      .post("/graphql/")
+      .send({
+        query: `{
       instructor(ucinetid:"pattis") {
         name
         shortened_name
@@ -23,46 +25,54 @@ describe('POST /graphql/', () => {
           number
         }
       }
-    }`})
-  .set('Accept', 'application/json')
-  .expect('Content-Type', /json/)
-  .expect(200)
-  .then((response) => {
-      expect(response.body).toHaveProperty('data');
-      expect(response.body).not.toHaveProperty("errors");
-      expect(response.body["data"]).toHaveProperty('instructor');
-      expect(response.body["data"]["instructor"]).toEqual(
+    }`,
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((response) => {
+        expect(response.body).toHaveProperty("data");
+        expect(response.body).not.toHaveProperty("errors");
+        expect(response.body["data"]).toHaveProperty("instructor");
+        expect(response.body["data"]["instructor"]).toEqual(
           expect.objectContaining({
-              "department": "Computer Science",
-              "name": "Richard Eric Pattis",
-              "shortened_name": "PATTIS, R.",
-              "email": "pattis@uci.edu",
-              "ucinetid": "pattis",
-              "title": expect.any(String),
-              "schools": expect.any(Array),
-              "related_departments": expect.any(Array),
-              "course_history": expect.any(Array),
-            })
-      );
-      expect(response.body["data"]["instructor"]).not.toHaveProperty('description');
-      expect(Array.isArray(response.body["data"]["instructor"]["course_history"])).toBeTruthy();
-      expect(Array.isArray(response.body["data"]["instructor"]["schools"])).toBeTruthy();
-      expect(response.body["data"]["instructor"]["course_history"]).toEqual(
-          expect.arrayContaining([  
-              expect.objectContaining({
-                  "id": "I&CSCI33",
-                  "department": "I&C SCI"
-              })
+            department: "Computer Science",
+            name: "Richard Eric Pattis",
+            shortened_name: "PATTIS, R.",
+            email: "pattis@uci.edu",
+            ucinetid: "pattis",
+            title: expect.any(String),
+            schools: expect.any(Array),
+            related_departments: expect.any(Array),
+            course_history: expect.any(Array),
+          })
+        );
+        expect(response.body["data"]["instructor"]).not.toHaveProperty(
+          "description"
+        );
+        expect(
+          Array.isArray(response.body["data"]["instructor"]["course_history"])
+        ).toBeTruthy();
+        expect(
+          Array.isArray(response.body["data"]["instructor"]["schools"])
+        ).toBeTruthy();
+        expect(response.body["data"]["instructor"]["course_history"]).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              id: "I&CSCI33",
+              department: "I&C SCI",
+            }),
           ])
-      );
-  }));
+        );
+      }));
 });
 
-
-describe('POST /graphql/', () => {
-  it('GraphQL: Instructor query on nonexistent instructor',  () => request
-  .post('/graphql/')
-  .send({query:`{
+describe("POST /graphql/", () => {
+  it("GraphQL: Instructor query on nonexistent instructor", () =>
+    request
+      .post("/graphql/")
+      .send({
+        query: `{
       instructor(ucinetid:"johndoe"){
         ucinetid
         course_history {
@@ -70,22 +80,25 @@ describe('POST /graphql/', () => {
             department
         }
       }
-    }`})
-  .set('Accept', 'application/json')
-  .expect('Content-Type', /json/)
-  .expect(200)
-  .then((response) => {
-      expect(response.body).toHaveProperty('data');
-      expect(response.body).not.toHaveProperty("errors");
-      expect(response.body["data"]).toHaveProperty('instructor');
-      expect(response.body["data"]["instructor"]).toBeNull();
-  }));
+    }`,
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((response) => {
+        expect(response.body).toHaveProperty("data");
+        expect(response.body).not.toHaveProperty("errors");
+        expect(response.body["data"]).toHaveProperty("instructor");
+        expect(response.body["data"]["instructor"]).toBeNull();
+      }));
 });
 
-describe('POST /graphql/', () => {
-  it('GraphQL: Instructor query for nested offerings', () => request
-  .post('/graphql/')
-  .send({query:`{
+describe("POST /graphql/", () => {
+  it("GraphQL: Instructor query for nested offerings", () =>
+    request
+      .post("/graphql/")
+      .send({
+        query: `{
     instructor(ucinetid:"pattis") {
         course_history {
           offerings {
@@ -93,39 +106,47 @@ describe('POST /graphql/', () => {
           }
         }
       }
-    }`})
-  .set('Accept', 'application/json')
-  .expect('Content-Type', /json/)
-  .expect(200)
-  .then((response) => {
-    expect(response.body).toHaveProperty('errors');
-    expect(response.body["errors"][0]["path"]).toEqual(expect.arrayContaining(["offerings"]));
-  }));
+    }`,
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((response) => {
+        expect(response.body).toHaveProperty("errors");
+        expect(response.body["errors"][0]["path"]).toEqual(
+          expect.arrayContaining(["offerings"])
+        );
+      }));
 });
 
-describe('POST /graphql/', () => {
-  it('GraphQL: Incorrect argument',  () => request
-  .post('/graphql/')
-  .send({query:`query {
+describe("POST /graphql/", () => {
+  it("GraphQL: Incorrect argument", () =>
+    request
+      .post("/graphql/")
+      .send({
+        query: `query {
       instructor(name:"pattis"){
         ucinetid
         department
         title
       }
-    }`})
-  .set('Accept', 'application/json')
-  .expect('Content-Type', /json/)
-  .expect(400)
-  .then((response) => {
-      expect(response.body).toHaveProperty('errors');
-      expect(response.body["errors"][0]["message"]).toMatch(/(argument)/i);
-  }));
+    }`,
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .then((response) => {
+        expect(response.body).toHaveProperty("errors");
+        expect(response.body["errors"][0]["message"]).toMatch(/(argument)/i);
+      }));
 });
 
-describe('POST /graphql/', () => {
-  it('GraphQL: All Instructors query',  () => request
-  .post('/graphql/')
-  .send({query:`{
+describe("POST /graphql/", () => {
+  it("GraphQL: All Instructors query", () =>
+    request
+      .post("/graphql/")
+      .send({
+        query: `{
       allInstructors{
         ucinetid
         name
@@ -134,28 +155,39 @@ describe('POST /graphql/', () => {
             department
         }
       }
-    }`})
-  .set('Accept', 'application/json')
-  .expect('Content-Type', /json/)
-  .expect(200)
-  .then((response) => {
-      expect(response.body).toHaveProperty('data');
-      expect(response.body).not.toHaveProperty("errors");
-      expect(response.body["data"]).toHaveProperty('allInstructors');
-      expect(Array.isArray(response.body["data"]["allInstructors"])).toBeTruthy();
-      expect(response.body["data"]["allInstructors"]).toEqual(
-          expect.arrayContaining([  
-              expect.objectContaining({
-              "ucinetid": "kakagi",
-              "name": "Kei Akagi"
-          })])
-      );
-      expect(response.body["data"]["allInstructors"][0]).toHaveProperty('ucinetid');
-      expect(response.body["data"]["allInstructors"][0]).toHaveProperty('name');
-      expect(response.body["data"]["allInstructors"][0]).toHaveProperty('course_history');
-      expect(Array.isArray(response.body["data"]["allInstructors"][0]['course_history']));
-  }));
+    }`,
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((response) => {
+        expect(response.body).toHaveProperty("data");
+        expect(response.body).not.toHaveProperty("errors");
+        expect(response.body["data"]).toHaveProperty("allInstructors");
+        expect(
+          Array.isArray(response.body["data"]["allInstructors"])
+        ).toBeTruthy();
+        expect(response.body["data"]["allInstructors"]).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              ucinetid: "kakagi",
+              name: "Kei Akagi",
+            }),
+          ])
+        );
+        expect(response.body["data"]["allInstructors"][0]).toHaveProperty(
+          "ucinetid"
+        );
+        expect(response.body["data"]["allInstructors"][0]).toHaveProperty(
+          "name"
+        );
+        expect(response.body["data"]["allInstructors"][0]).toHaveProperty(
+          "course_history"
+        );
+        expect(
+          Array.isArray(
+            response.body["data"]["allInstructors"][0]["course_history"]
+          )
+        );
+      }));
 });
-
-
-
