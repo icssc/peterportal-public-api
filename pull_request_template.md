@@ -1,5 +1,5 @@
 ## Reference Issues
 
-## Summary of Change/Fix 
+## Summary of Change/Fix
 
 ## Test Plan

@@ -7,14 +7,13 @@ on:
       - master
       - main
   pull_request:
-    branches: 
+    branches:
       - github-ci
       - master
       - main
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -22,14 +21,14 @@ jobs:
         node-version: [14.x, 16.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm install
-    - run: npm test
-      env:
-        MOESIF_KEY: ${{ secrets.MOESIF_KEY }}
-        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm install
+      - run: npm test
+        env:
+          MOESIF_KEY: ${{ secrets.MOESIF_KEY }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}

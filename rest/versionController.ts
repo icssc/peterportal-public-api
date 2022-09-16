@@ -1,9 +1,11 @@
-import express from 'express';
-const router = express.Router();
-import version1Router from './v0/router'
+import express from "express";
 
-router.get('/', function(req, res) {
-    res.redirect('/rest/v0');
+import version1Router from "./v0/router";
+
+const router = express.Router();
+
+router.get("/", function (req, res) {
+  res.redirect("/rest/v0");
 });
 
 router.use("/v0", version1Router);

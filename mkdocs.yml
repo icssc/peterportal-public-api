@@ -35,22 +35,21 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Getting Started: Introduction/Getting-Started.md 
+  - Getting Started: Introduction/Getting-Started.md
   - REST API:
-    - Start Here: REST-API/start_here.md
-    - Courses: REST-API/courses.md
-    - Instructors: REST-API/instructors.md
-    - Grades: REST-API/grades.md
-    - Schedule of Classes: REST-API/schedule.md
+      - Start Here: REST-API/start_here.md
+      - Courses: REST-API/courses.md
+      - Instructors: REST-API/instructors.md
+      - Grades: REST-API/grades.md
+      - Schedule of Classes: REST-API/schedule.md
   - GraphQL API:
-    - Start Here: GraphQL-API/start_here.md
-    - Learn More: GraphQL-API/learn_more.md
-    - Playground: /graphql-playground
-  - Contributing: 
-    - Start Here: Contributing/start_here.md
-    - How to Contribute: Contributing/how_to_contribute.md
-    - Documenting: Contributing/documenting.md
-
+      - Start Here: GraphQL-API/start_here.md
+      - Learn More: GraphQL-API/learn_more.md
+      - Playground: /graphql-playground
+  - Contributing:
+      - Start Here: Contributing/start_here.md
+      - How to Contribute: Contributing/how_to_contribute.md
+      - Documenting: Contributing/documenting.md
 
 extra:
   social:
@@ -58,7 +57,6 @@ extra:
       link: https://icsscprojects.medium.com/
     - icon: fontawesome/brands/github
       link: https://github.com/icssc
-
 
 copyright: Copyright &copy; 2020 - 2021 ICSSC Projects
 extra_css:
