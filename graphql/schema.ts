@@ -253,7 +253,7 @@ const queryType: GraphQLObjectType = new GraphQLObjectType({
         year: {
           type: GraphQLString,
           description:
-            "Must be <START_YEAR>-<END_YEAR>. Ex. 2020-2021. Multiple values in the arguments can be included by using ; as a separator.",
+            "Must be <START_YEAR>-<END_YEAR>. Ex. 2020-21. Multiple values in the arguments can be included by using ; as a separator.",
         },
         quarter: {
           type: GraphQLString,
