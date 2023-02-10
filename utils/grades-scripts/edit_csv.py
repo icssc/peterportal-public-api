@@ -113,6 +113,7 @@ if __name__ == '__main__':
         quarter = df.at[i, 'quarter']
 
         try:
+            print(f"Scraping {code}")
             scrapeAndSave(i, code, year, quarter)
             # print(i, code, year, quarter)
             time.sleep(1)
